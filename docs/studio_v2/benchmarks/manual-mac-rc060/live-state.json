@@ -1,19 +1,15 @@
 {
-  "state": "blocked_waiting_for_manual_result",
+  "state": "session_finished_and_exact_root_removed",
   "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y",
   "session_id": 61381,
-  "live_processes": {
-    "driver": 59295,
-    "core": 59297,
-    "ui": 59772
-  },
-  "temporary_bytes_retained_while_in_use": 54113342,
-  "cleanup_deferred_reason": "Humanacceptance session remainsopen foruser; not an idle cache. No shutdownorcleanup until session ends; exactroot already has creationownership.",
-  "system_free_bytes": 38288375808,
+  "live_processes": {},
+  "temporary_bytes_retained_while_in_use": 0,
+  "cleanup_deferred_reason": null,
+  "system_free_bytes": 38290616320,
   "automatic_AT_IME_or_scale_changes": false,
   "gates_accepted_this_round": [],
-  "pending_question": "Suppliercolumnrightedge manualdrag on WorkBuddy Proxy QA92 Manual port56290; response can be changed/nochange/notvisible",
-  "observed_manual_outcome": "unknown, no humanreply; one passive followup screenshot unchangedcolumns proves currentstateonly",
+  "pending_question": null,
+  "observed_manual_outcome": "human-observations.json; finalfixedfullscreenandwindowedconfirmed",
   "prior_turn_classification": "No new acceptance; repeated humanresponse dependency. Process checks onlyproved fixturelive, not testprogress.",
   "config_models_bytes_equal": true,
   "read_only_UI_commands": [
@@ -29,5 +25,13 @@
     "workbuddy_check"
   ],
   "audit_requests_at_observation": 346,
-  "observed_at": "2026-11-01T15:39:41+08:00"
+  "observed_at": "2026-11-01T15:39:41+08:00",
+  "closed_UI_pids": [
+    59772,
+    78318
+  ],
+  "Core_exit_code": 0,
+  "driver_exit_code": 0,
+  "session_handle_terminal": true,
+  "cleanup": "cleanup.json"
 }

@@ -1,0 +1,15 @@
+{
+  "candidate_bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y/fixture/WorkBuddy Proxy QA92 Fixed.app",
+  "bundle_id": "com.workbuddy.codexreview.qa92.fixed.74f1106974",
+  "input_ui_sha256": "f756a70901da78e19185b9b9c1e4a29b1cfaaa0ee8fce35b0f8f2cd7772c491c",
+  "signed_ui_sha256": "6dfb190bc45dc5bc104fce118ea7a120f13155c3471b14fad021bb9a2ce6b100",
+  "version": "0.6.0",
+  "core_stays_same_pid": 59297,
+  "same_synthetic_profile_and12records": true,
+  "changed_source_sha256": "63c4c357a15ca249f913bdc19e4fb17923008361d5d0997ba65c0d57f1a21d15",
+  "fmt_exit": 0,
+  "release_exit": 0,
+  "Core_or_dependency_changed": false,
+  "pixel_helper_note": "OptionalPythonPillow pixelanalysis unavailable in systemPython; no install, no image altered. Originalred/green review used.",
+  "runtime_source": "85540e1256842a5e6553bffd9749088af545084e"
+}

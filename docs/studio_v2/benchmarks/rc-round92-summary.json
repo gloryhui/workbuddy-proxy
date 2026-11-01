@@ -1,0 +1,72 @@
+{
+  "task": 92,
+  "state": "recorded",
+  "runtime_UI_source": "85540e1256842a5e6553bffd9749088af545084e",
+  "Mac_UI_input_sha256": "f756a70901da78e19185b9b9c1e4a29b1cfaaa0ee8fce35b0f8f2cd7772c491c",
+  "Mac_UI_signed_sha256": "6dfb190bc45dc5bc104fce118ea7a120f13155c3471b14fad021bb9a2ce6b100",
+  "Mac_Core_sha256": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff",
+  "initial_manual_UI_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "initial_UI_sha256": "f5fa721fa5f4d314badbdcc70621e9e91ae24feb1532681449f8eb5138139db5",
+  "manual_cases": "manual-mac-rc060/human-observations.json",
+  "manual_scope": "Userreportsrealdrag/refreshresize retention, singleproviderTooltip,QingjianmodeldisplaynameEsc/Enter/cancel,minimizeDock/fullscreenroundtrip; not allfields/engines/AT. Initialdragimageunchangedvsreportandactualresizeimage layoutreflowexplicit, notclaimedindependentquantitativeproof.",
+  "bug": "Nativefullscreenredshiftedtitlebar paint due Kit innerpl_3. Windowanchoredbackgroundfix removedlightstripe; bothnativeoriginals and userfinalconfirmation forfullscreen/windowed.",
+  "new_product_scope": "Onlyui.rs titlebarpaint; Core/manifests/dependencies/registry/data/inputcodeunchanged.",
+  "UI_CI": {
+    "run": 41288999354,
+    "attempt": 1,
+    "jobs_success": 3,
+    "watch_exit": 0,
+    "Windows_tests": 215,
+    "Mac_tests_each": 216,
+    "existing_ignored_each": 2,
+    "validation": "manual-mac-rc060/ci/ui/validation.json"
+  },
+  "Windows_native": {
+    "run": 41290170711,
+    "test_source": "f9d3f58fb85785b6559d345807daf9f224f6b3a8",
+    "attempt": 1,
+    "watch_exit": 0,
+    "Core_SHA": "ed1d6440180db79d5fe940488161aa2d84cb97c30682beceb9a545f37ab4640e",
+    "UI_SHA": "215b15d6ad1ac91e1c01d2d5bcc78ddb43e0ffa71396515819b8d90ee7b51557",
+    "validation": "manual-mac-rc060/ci/windows-native/validation.json"
+  },
+  "local_builds": "OneARMUIRelease+fmt/CLI, noCorebuild/localfullunitrepeat",
+  "data_proof": "manual-mac-rc060/data-proof.json",
+  "data": "Configandentiresyntheticmodelsbytes,all12request/costfieldsand5businesstablesequalafterCorestop;1normalrun/12admitted/0drop/0writefailure; UIreadonly3076commands/nativeopen-terminate0. Core/driverexit0, UIexitunknown/PIDgone.",
+  "images": "11originalCUAJPEG+1userPNG+2nativeWindowsPNG, originalsizes/bytes/hashbound",
+  "first_errors_retained": [
+    "Firstsyntheticpricecreate400revisionconflict(existingcatalogrule),incldiagnosticrepeat; no change torealdata",
+    "OldCUACtrlCmdFnotconfirmedexit; useractualexitseparatelypassed",
+    "EarlynewUIunknownCorestatuswindowedimagepreserved, thenrunningfullscreen",
+    "OptionalPillowanalysisunavailable, noinstalleddependency/editedimage",
+    "Missing.cargo-checksum metadata usedexactlockedoriginal.crateinstead",
+    "OneTLSfirstpushfailure, verifiedremote855thenordinarypushsuccess",
+    "Oneprogresscommentaryprematureallunitpass, correctedfromexactjobs; finalstatesverified",
+    "WindowsreportpathcollectorusedhostPathfirst, correctedPureWindowsPath,noCIrerun"
+  ],
+  "cleanup": {
+    "local_removed_bytes": 97003904,
+    "local_session_temporary_remaining": 0,
+    "remote_removed_bytes": 205997568,
+    "remote_session_temporary_remaining": 0,
+    "necessary_baseline_bytes_retained": 101859410,
+    "QA91_candidate_package_bytes_retained": 140896314,
+    "shared_Cargo": "retained",
+    "system_free_after_bytes": 38316158976,
+    "system_free_after_verification_bytes": 38313635840
+  },
+  "frames_verified": 40,
+  "frames_remaining": 0,
+  "release_pending": 15,
+  "pending_by_batch": {
+    "R01": 4,
+    "R02": 4,
+    "R03": 3,
+    "R04": 4
+  },
+  "R04.1": "ReopenedfornewUI; originaldd9fullRCandpackagesretainedunrelabelled. StageUI/nativepassnotfullmatrix.",
+  "goal": "active",
+  "VoiceOver_AT_input_source_system_scale_automatic_changes": false,
+  "public_release": false,
+  "next": "OnlyactualremainingR01states/focus/otherIME/realAT; R02systemlogin/multimonitor/physicalWin/Intel/scales/realWorkBuddy; R03validforeground/firstpaint/peak/finalperformance; finalcandidatefullRC anddistributiongates. No repeats of40frames/21themes/background90/900s orQA92passedcurrentMacpaths; donotreopenremovedfixture."
+}

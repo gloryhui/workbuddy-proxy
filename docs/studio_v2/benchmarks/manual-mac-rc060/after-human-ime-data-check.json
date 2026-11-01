@@ -1,0 +1,10 @@
+{
+  "check_scope": "LiveUI/Core, notfinalexitproof",
+  "all5business_tables_12requests_costs_equal": true,
+  "config_models_byte_equal": true,
+  "all_UIcommands_actual_Core_readonly": true,
+  "audit_requests": 2474,
+  "UI_save_apply_install_set_port": 0,
+  "QingjianEnterresult": "notexplicit_yet",
+  "gates_remaining": 14
+}

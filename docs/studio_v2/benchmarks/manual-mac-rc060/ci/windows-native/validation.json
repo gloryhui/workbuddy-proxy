@@ -1,0 +1,70 @@
+{
+  "test_source": "f9d3f58fb85785b6559d345807daf9f224f6b3a8",
+  "UI_source": "85540e1256842a5e6553bffd9749088af545084e",
+  "Core_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "run": 41290170711,
+  "attempt": 1,
+  "watch_exit": 0,
+  "jobs": [
+    {
+      "id": 124799590400,
+      "name": "windows-native / capture",
+      "conclusion": "success"
+    },
+    {
+      "id": 124799591305,
+      "name": "released-upgrades",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 124799591634,
+      "name": "desktop",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 124799591638,
+      "name": "ui-checks",
+      "conclusion": "skipped"
+    }
+  ],
+  "UI_exe_sha256": "215b15d6ad1ac91e1c01d2d5bcc78ddb43e0ffa71396515819b8d90ee7b51557",
+  "Core_exe_sha256": "ed1d6440180db79d5fe940488161aa2d84cb97c30682beceb9a545f37ab4640e",
+  "frozen_downloads_source_run_size_SHA_guard_passed": true,
+  "helper_source_hash_matchesLF_or_exactCRLF": true,
+  "artifact_download_independently_size_SHA_verified": true,
+  "artifact_id": 13077375494,
+  "images": [
+    {
+      "file": "reports/native/windows-ci-1440x900.png",
+      "dimensions": [
+        1442,
+        901
+      ],
+      "sha256": "817df0aaadedbd3e5a22278e86cf35b1d9391c8f47d675fc914985dab3d189ed",
+      "bytes": 79195,
+      "viewed_by_parent": true,
+      "review": "Caption top row distinctfromtoolbar; lefttopdarkrail alignsbody, smallfilterwraps. DefaultEnglish synthetic1provider64models0requests; noKeyvisible. SmallStatusbeyondhorizontalviewport, scrollnotvalidated."
+    },
+    {
+      "file": "reports/native/windows-ci-1100x700.png",
+      "dimensions": [
+        1102,
+        701
+      ],
+      "sha256": "28a1f12d604aaa3365eadbe57301b73f30e2067555f3372502a67d30c4f2c278",
+      "bytes": 74593,
+      "viewed_by_parent": true,
+      "review": "Caption top row distinctfromtoolbar; lefttopdarkrail alignsbody, smallfilterwraps. DefaultEnglish synthetic1provider64models0requests; noKeyvisible. SmallStatusbeyondhorizontalviewport, scrollnotvalidated."
+    }
+  ],
+  "GDI_backend": "Windows GDI via existing windows_screenshot.py",
+  "display_restored": true,
+  "DPI": [
+    96,
+    96
+  ],
+  "cleanup_bytes_removed": 205997568,
+  "remote_temporary_bytes_remaining": 0,
+  "scope": "TwoWindows96DPI GDIviewsandexistinglifecycle; no newbuild/installer/package/physicalinputIMEHiDPI/fullRC acceptance.",
+  "first_collector_error": "HostPath.name didnotparseWindowsbackslashes; correctedtoPureWindowsPath fororiginalreportfilenames. NoCI/testrerun, originalsunchanged."
+}

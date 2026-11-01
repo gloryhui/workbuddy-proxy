@@ -1,0 +1,20 @@
+{
+  "editable_source_and_docs": "passed",
+  "raw_evidence_warnings": 2,
+  "paths": [
+    "docs/studio_v2/benchmarks/manual-mac-rc060/after-human-drag.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/after-human-fullscreen.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/after-human-ime-cancel.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/after-human-refresh-resize.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/ci/ui/run.log.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/ci/windows-native/reports/frozen-native.json",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/ci/windows-native/reports/native/windows-ci-lifecycle.json",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/ci/windows-native/reports/native/windows-ci-screenshot.json",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/fix-after-human-exit.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/fix-fullscreen.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/fix-windowed.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/fullscreen-before-fix.ax.txt",
+    "docs/studio_v2/benchmarks/manual-mac-rc060/ime-ready.ax.txt"
+  ],
+  "reason": "PreserveoriginalAXspaces/CIlogCRLF/patchcontext; report/sourcehashbindingchecked, nohook/signature/CIbypass."
+}

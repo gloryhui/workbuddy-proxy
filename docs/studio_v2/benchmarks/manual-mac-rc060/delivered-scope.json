@@ -1,0 +1,14 @@
+{
+  "runtime_UI_source": "85540e1256842a5e6553bffd9749088af545084e",
+  "input_UI_sha256": "f756a70901da78e19185b9b9c1e4a29b1cfaaa0ee8fce35b0f8f2cd7772c491c",
+  "Core_input_sha256": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff",
+  "Core_manifests_locks_packaging_equal_dd9": true,
+  "only_product_changed_file": "gpui/src/ui.rs",
+  "locked_Kit_archive_sha256_equal_Cargo_lock": "465a363235cd4062ef5f0953fc096fc764ed6f53dfbd9f409f669f93ea3b1ff9",
+  "Kit_titlebar_registry_byte_equal_original_archive": true,
+  "Kit_titlebar_sha256": "3a5ffefe22cb460ecd63a76453304574bb135205b655de56005cd4b7341b37b2",
+  "registry_verification_note": "No.cargo-checksum.jsonpresent; directoriginalcrateSHAagainstlock+exacttar member comparison used, archive/sourceunmodified.",
+  "native_red_green": "fullscreen-red-green-review.json",
+  "no_automatic_AT_input_source_or_system_scale_changes": true,
+  "public_release": false
+}

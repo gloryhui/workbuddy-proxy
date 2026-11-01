@@ -1,0 +1,15 @@
+{
+  "cause": "LockedKitTitleBarfullscreeninnerbarpl_3 movespaintedchild; rootbackgroundexposeslightstrip",
+  "red": "fullscreen-before-fix.jpg",
+  "green": [
+    "fix-windowed.jpg",
+    "fix-fullscreen.jpg"
+  ],
+  "user_original": "user-fullscreen-corner.png",
+  "review": "Viewedoriginals: red topdark beginsabout10px andextendsto266 vsbody0..256; greenfullscreen topdark0..256 alignsbody. No crops/rewrittenimages.",
+  "user_final_confirmation": "全屏和退出后都已对齐，浅色条消失",
+  "fix_scope": "ui.rs titlebarpaint only; nativeTitleBar handling preserved; manifests/Core/registryunchanged",
+  "input_ui_sha256": "f756a70901da78e19185b9b9c1e4a29b1cfaaa0ee8fce35b0f8f2cd7772c491c",
+  "runtime_source": "85540e1256842a5e6553bffd9749088af545084e",
+  "limits": "NativecurrentMac+human; Windows/Intel UIstageCIpending, notfullreleasegate orHiDPI."
+}

@@ -1,0 +1,289 @@
+{
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y",
+  "type": "session-createdQA92 compiler/helpers/twoisolatedUIbundles/Corecopy/syntheticHOMEandprofiles",
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "ownership": {
+    "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y",
+    "uid": 501,
+    "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+    "created_by_this_session": true,
+    "purpose": "QA92 human-assisted Mac R01/R02 isolated synthetic fixture",
+    "created_before_launch": true
+  },
+  "parent_chain": [
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y",
+      "uid": 501,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/",
+      "uid": 0,
+      "mount": true
+    }
+  ],
+  "files": [
+    {
+      "relative": "process-start",
+      "bytes": 33664,
+      "sha256": "27d74106ec8689ae16666fe476de77562a96c01c6beb26de4861388fb4a29a26"
+    },
+    {
+      "relative": "fixture.py",
+      "bytes": 22099,
+      "sha256": "2b90b703b1ab6b1a68346195629a40ebfe91520dcf56f7be60236959d51a005d"
+    },
+    {
+      "relative": "ownership.json",
+      "bytes": 334,
+      "sha256": "e26d675824cdb2d454aa2dcb35b63094bb639062ed6994d6f83177dfc190f7a9"
+    },
+    {
+      "relative": "core-protection.json",
+      "bytes": 1468,
+      "sha256": "7603537767254b2cd902eef5928c6cb194713766664e23cdb28434ff9e05dafb"
+    },
+    {
+      "relative": "guard-mode.json",
+      "bytes": 28,
+      "sha256": "56192fa34a5aca9b419b4d6ccb76e27fc1346168f25bd027aa2d85970b98584c"
+    },
+    {
+      "relative": "restart-identity-guard.m",
+      "bytes": 6090,
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+    },
+    {
+      "relative": "restart-env-private.json",
+      "bytes": 723,
+      "sha256": "7ab27aea45c20738bbb50df8727f388c6f42a2d3d404dc645aabd6cdf2c46c38"
+    },
+    {
+      "relative": "restart-guard.dylib",
+      "bytes": 73888,
+      "sha256": "c71be3a33ddd7c70a1117d2cf8564f675b797eb9f32c8dd85894bd134e0f8552"
+    },
+    {
+      "relative": "baseline-private.json",
+      "bytes": 25787,
+      "sha256": "38d02177887addd432aab96577da366914b592e46cd02ec49cbd36486cee5890"
+    },
+    {
+      "relative": "process-start.c",
+      "bytes": 339,
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a"
+    },
+    {
+      "relative": "restart-audit.jsonl",
+      "bytes": 570,
+      "sha256": "26e3d479e2875b9847fe145160c57b2fc6918b7551ee155ef670e24c940bcf17"
+    },
+    {
+      "relative": "phase-apps.json",
+      "bytes": 344,
+      "sha256": "fd04ee3291c97f83c0fa3c592dd57fd9f02dfcc3021dc5d9eabdc593e5f799ca"
+    },
+    {
+      "relative": "fixture/fixture.json",
+      "bytes": 3044,
+      "sha256": "f995e836103b3e88148f832eef4358aa3e962304abd5e90111fe86604b6a6daf"
+    },
+    {
+      "relative": "fixture/synthetic-import-inputs.json",
+      "bytes": 246,
+      "sha256": "fc40305b15eb45806e4df5a9629239dede012ed103b186a6061f3d746328efcc"
+    },
+    {
+      "relative": "fixture/native-acceptance-finished",
+      "bytes": 81,
+      "sha256": "382534c93fee95e0ccc6c2dfb2355fa18c0c5a3490583004bc4593ab5e38c911"
+    },
+    {
+      "relative": "fixture/terminal-status.json",
+      "bytes": 316,
+      "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+    },
+    {
+      "relative": "fixture/core.log",
+      "bytes": 41,
+      "sha256": "e5dccac2b2e391e8c0271930a6f54c3d29aa702dafff4213328864fb98e7173a"
+    },
+    {
+      "relative": "fixture/management-bridge.json",
+      "bytes": 353,
+      "sha256": "67c6b6b1a953b08221e5491fd407e68932342a0220136d78789221fb50f41a54"
+    },
+    {
+      "relative": "fixture/source-protection.sb",
+      "bytes": 327,
+      "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+    },
+    {
+      "relative": "fixture/cua-launch-ready.json",
+      "bytes": 237,
+      "sha256": "6f2052f96080d702a12392033f54f0632b75b965d994360900e2c292a6496d4f"
+    },
+    {
+      "relative": "fixture/instance-before-bridge-private.json",
+      "bytes": 100,
+      "sha256": "e79a5304326814199b0003750fec8860bc2a6c9c0eb85ebcab8b408c3e7fca22"
+    },
+    {
+      "relative": "fixture/review-core",
+      "bytes": 8428112,
+      "sha256": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff"
+    },
+    {
+      "relative": "fixture/mock-posts.jsonl",
+      "bytes": 1008,
+      "sha256": "7987562a9f29a4efac54609c4140e61916ac330336e3bdb9823ec0d9dedf486d"
+    },
+    {
+      "relative": "fixture/mock-gets.jsonl",
+      "bytes": 110,
+      "sha256": "d18d5ee6f32f99b7ceb5aee9831a6ff6bb4cae2fa3a40ca2765547df7273fb5d"
+    },
+    {
+      "relative": "fixture/signature-identity.json",
+      "bytes": 1450,
+      "sha256": "a940a3db26c65279cc7fc1ac14098f0b9f228c0bf3e4bf208a386e910e86f91c"
+    },
+    {
+      "relative": "fixture/gpui.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relative": "fixture/management-audit.jsonl",
+      "bytes": 343929,
+      "sha256": "3d039a57c40023f219038c55173540292a20b47ac7602c001fa10864954ba2d2"
+    },
+    {
+      "relative": "fixture/home/.workbuddy/models.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "relative": "fixture/home/.workbuddy/projects/demo/pending.jsonl",
+      "bytes": 277,
+      "sha256": "73b48725493b1f84db66590996036eaf14da76c299b81eb03e3e6593784c920c"
+    },
+    {
+      "relative": "fixture/home/.workbuddy/projects/demo/builtin.jsonl",
+      "bytes": 1325,
+      "sha256": "28d78f2e1809db02570d7496c86a1d898d2ec11259e8c01883288c373ac9201d"
+    },
+    {
+      "relative": "fixture/config/gpui.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relative": "fixture/config/config.json",
+      "bytes": 1363,
+      "sha256": "bcb9e836dd11252badb6cda26d0a3509a76a57f888a94250374eb8b3553e9553"
+    },
+    {
+      "relative": "fixture/config/startup.log",
+      "bytes": 49,
+      "sha256": "042673f0c8778e6c5c812f9242d7b70e22702467571bc115f61c25dd346bf78e"
+    },
+    {
+      "relative": "fixture/config/model-catalog.json",
+      "bytes": 143886,
+      "sha256": "e816deb78c431efc864c3dd669acc8b4b4e75947e91e035b06c4761222fbe67b"
+    },
+    {
+      "relative": "fixture/config/instance.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relative": "fixture/config/gpui-drafts.json",
+      "bytes": 2404,
+      "sha256": "804e3ef73212945d3c2286bf5642a5e9261abe1c5c72df2781337ddcf61a9d7b"
+    },
+    {
+      "relative": "fixture/config/appearance.json",
+      "bytes": 39,
+      "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+    },
+    {
+      "relative": "fixture/config/usage.sqlite3",
+      "bytes": 237568,
+      "sha256": "79d62c3886b00b89a87243c7c6eb0ef89e7b4c792381bc412594e48e8dbca781"
+    },
+    {
+      "relative": "fixture/WorkBuddy Proxy QA92 Fixed.app/Contents/Info.plist",
+      "bytes": 3444,
+      "sha256": "e8a2fd7fa81e63a17358e0625cd7ce992d8ff0521d761d87e2f3e82625016c37"
+    },
+    {
+      "relative": "fixture/WorkBuddy Proxy QA92 Fixed.app/Contents/_CodeSignature/CodeResources",
+      "bytes": 2200,
+      "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+    },
+    {
+      "relative": "fixture/WorkBuddy Proxy QA92 Fixed.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 43828976,
+      "sha256": "6dfb190bc45dc5bc104fce118ea7a120f13155c3471b14fad021bb9a2ce6b100"
+    },
+    {
+      "relative": "fixture/WorkBuddy Proxy QA92 Manual.app/Contents/Info.plist",
+      "bytes": 3447,
+      "sha256": "30bf47543b0ef712167c04c8a25ae67ed0b5e431ca8679c9f4d5dabba0efa180"
+    },
+    {
+      "relative": "fixture/WorkBuddy Proxy QA92 Manual.app/Contents/_CodeSignature/CodeResources",
+      "bytes": 2200,
+      "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+    },
+    {
+      "relative": "fixture/WorkBuddy Proxy QA92 Manual.app/Contents/MacOS/workbuddy-proxy-gpui",
+      "bytes": 43828992,
+      "sha256": "40f22bc10ba3135172ebb85f01813b0347a729d44256b195cd50f756eb4f7b9e"
+    },
+    {
+      "relative": "review/ui-live-current.json",
+      "bytes": 3044,
+      "sha256": "f995e836103b3e88148f832eef4358aa3e962304abd5e90111fe86604b6a6daf"
+    }
+  ],
+  "files_count": 45,
+  "directories": 23,
+  "logical_bytes": 97003904,
+  "lsof_references": 0,
+  "process_references": 0,
+  "regenerable": "Current frozen source/binaries plus recorded synthetic fixture/harness; originalusercapture/evidence retained outside root. No real userdata.",
+  "free_before_bytes": 38187835392
+}

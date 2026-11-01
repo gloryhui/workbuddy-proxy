@@ -1,0 +1,25 @@
+{
+  "purpose": "Cross-platform visualregression ofshared titlebarpaint change; nativeGDIonly, norebuild",
+  "UI_source": "85540e1256842a5e6553bffd9749088af545084e",
+  "UI_run": 41288999354,
+  "UI_Windows_artifact": 13076059258,
+  "UI_artifact_bytes": 29805541,
+  "UI_artifact_sha256": "7e9c69bf8e629db0ce26586f1564e82fc7be38bc617e2863edf3e8cb9e2ec10a",
+  "Core_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "Core_artifact": 13072713023,
+  "helper_test_source": "f9d3f58fb85785b6559d345807daf9f224f6b3a8",
+  "preconditions": [
+    "OriginalUIruncompleted success; no restart basedonpolltimeout",
+    "Remotebranch==localtesthead, exact-sourceruns0 beforedispatch",
+    "Helperindependentlychecksmetadatarun/source/name/digest/size anddownloadbytes; sourceguardrejectsdrift"
+  ],
+  "dispatches_planned": 1,
+  "inputs": {
+    "windows_native_only": true,
+    "ui_only": false,
+    "upgrade_only": false
+  },
+  "scope": "TwoexistingGDIviews+package lifecycle syntheticfixture; no Core/installer/upgrade orphysicalIME/scale/performance claim",
+  "Windows_capture": "GDI/Pillow existingPID/DWM/DPI harness; disposableCI displaychange/restoration withcleanup gates unchanged",
+  "no_local_GUI_or_temporary_fixture_created": true
+}

@@ -1,0 +1,53 @@
+{
+  "state": "humanstepspartlyrecorded_waitingfullscreenresult",
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "product_builds": 0,
+  "CI_dispatches": 0,
+  "images": [
+    {
+      "file": "initial.jpg",
+      "bytes": 171382,
+      "sha256": "4cc68ff0f0f76b521a1c5b4a1576a8b2cfc1eb963a806df6d9292e16ae16f366"
+    },
+    {
+      "file": "awaiting-manual.jpg",
+      "bytes": 171305,
+      "sha256": "e985b1b3680ad9c94c1fc83cfc42ffd4b90125081c378d8d15a402ff048038ad"
+    },
+    {
+      "file": "after-human-drag.jpg",
+      "bytes": 171365,
+      "sha256": "5a5993c13e04fde7203dfa30fa0fed23aa78d68bec9b13a6a918dbf0c48adbc7"
+    },
+    {
+      "file": "after-human-refresh-resize.jpg",
+      "bytes": 139734,
+      "sha256": "ea2b2917e7f6b9e96543b06eb8b0a534538fa70c4f7d6951244f7d3c1662f13b"
+    },
+    {
+      "file": "ime-ready.jpg",
+      "bytes": 139062,
+      "sha256": "ee5976efeee5f83261c17658614c6a302921e460fe4d9287aea3884c50802ebc"
+    },
+    {
+      "file": "after-human-ime-cancel.jpg",
+      "bytes": 156998,
+      "sha256": "b5b1283bec4af0c903e2d798d0d68ad4e83dbfbbe16823bb7d2f5749480ea6c5"
+    }
+  ],
+  "human_reports": "human-observations.json",
+  "independent_checks": [
+    "actual1273x810resizeimage",
+    "postIMEcancel no dialog/no residual shell",
+    "sameUI59772/Core59297 stilllive",
+    "configuration/models bytes and all5business tables12requests/costs equal"
+  ],
+  "unresolved": [
+    "dragwidthnotindependentlyquantified; userreportswideandretained, screenshotsinitialdragunchanged",
+    "no capturedIMEcandidate/Enter frame, onlyexplicituserreport",
+    "fullscreenoutcomepending"
+  ],
+  "all_UIcommands_actual_Core_readonly": true,
+  "not_final_after_exit_proof": true,
+  "new_whole_gates_accepted": []
+}

@@ -1,0 +1,10 @@
+{
+  "observation": "UIstilllive, not finalafterexitproof",
+  "all12_requests_costs_and5business_tables_equal": true,
+  "UIcommands_all_read_only": true,
+  "audit_requests": 1806,
+  "config_byte_equal": true,
+  "models_byte_equal": true,
+  "pending": "Humanrefresh/resizeandportconfirmation",
+  "acceptance": "unresolvedobserverdiscrepancy, no gateaccepted"
+}

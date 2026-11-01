@@ -21,7 +21,13 @@
 
 40 帧签收保持。只有全部要求实际通过、最终包与说明可审查后，才请求并执行单独授权的公开发布动作。
 
-## 当前可审查候选
+## QA92 后的来源区别
+
+当前 UI 已因全屏顶栏背景错位修复变为 `85540e1`，本机输入程序 SHA256 为 `f756a70901da78e19185b9b9c1e4a29b1cfaaa0ee8fce35b0f8f2cd7772c491c`，Core 仍沿用 dd9 的 b920。原生红绿与用户确认见[全屏修复](benchmarks/manual-mac-rc060/fullscreen-red-green-review.json)。这是新的 UI 阶段候选；最终完整矩阵因此重新待验。
+
+下述 dd9 四个已保留包及升级／回滚结果仍有效，但仅证明那些原包，不能冒称包含本次 UI 修复的新最终安装包。阶段检查不会重复未改 Core 或原包六例升级；正式出厂时再冻结实际最终包并绑定相应门禁。
+
+## QA91 可审查候选包（原来源保留）
 
 冻结运行／打包源为 `dd9debade83e91b0d11c6b28f18f97edb227abbd`。唯一 [Core 检查](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41278921019) 与[三平台完整 Desktop](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41278929532) 均首轮成功，原始报告和产物来源见[矩阵核验](benchmarks/rc-060/ci/desktop/validation.json)。这不替代前述人工、硬件与性能门禁。
 
