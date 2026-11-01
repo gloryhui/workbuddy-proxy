@@ -1,0 +1,62 @@
+{
+  "files": [
+    {
+      "file": "harness-audit/headless-check.mjs.txt",
+      "bytes": 4510,
+      "sha256": "908badf36ca471a916e64f5f86f6b43e8963e97476b44bc85dc40c9543c13d96"
+    },
+    {
+      "file": "headless-render-result.json",
+      "bytes": 4821,
+      "sha256": "b5b39e45a8f24a539b2d8054a0f4216a4d16bd27c4d5a55e398981a9a9bb3cfd"
+    },
+    {
+      "file": "headless-render-stable-result.json",
+      "bytes": 4823,
+      "sha256": "a883c9093f6cb93a715482ca414915cfc95a3a7ae22107e9ffad40e5d14730bd"
+    },
+    {
+      "file": "native-preview-result.json",
+      "bytes": 621,
+      "sha256": "fff01fd4f2c650b46db811476fd592838e9fe4e69af9dc3c3a98d6e6c55504c9"
+    },
+    {
+      "file": "parent-review.json",
+      "bytes": 1097,
+      "sha256": "803b04b8951ef1e5a5985858658cee916b201c8f8301e6a59d73d8d7dee72a1f"
+    },
+    {
+      "file": "profile-cleanup.json",
+      "bytes": 1070,
+      "sha256": "6fc7dcb0ab7dd6c382b1bf9aa59e48e5801e3fc27d9a49f939373bc03d6d2d64"
+    },
+    {
+      "file": "profile-precleanup.json",
+      "bytes": 3599,
+      "sha256": "f19ad984fd403e052bc3d6c29f5109f5e44cefacb086cb4f345c669b288a0711"
+    },
+    {
+      "file": "release-1100.png",
+      "bytes": 283722,
+      "sha256": "c63e3e578a1a37e1a91fe8eac5369090644c3c7a2f500b3f9c4ab0b1821c9fef"
+    },
+    {
+      "file": "release-1440.png",
+      "bytes": 230526,
+      "sha256": "60b7b3fc4b1dba05102240be0e4a70bae8b2852643992c2c29810feedf0f6716"
+    },
+    {
+      "file": "release-stable-1100.png",
+      "bytes": 238315,
+      "sha256": "1fad412be19c438f05219021623b71b657818552558f9262aaf6d234df82486f"
+    },
+    {
+      "file": "release-stable-1440.png",
+      "bytes": 261618,
+      "sha256": "afdbe929928671409a6b52cf623993b7ed9ca26f701a71c14e33e3492bd2a90f"
+    }
+  ],
+  "scope": "Manifest excludes itself; nativeIAB unavailable and initialsmoothscrollcaptures preserved; stablePNG captures are original headlessbrowser outputs, no image editing. Audit script contains historical dedicated profile path, not a current rerun entrypoint.",
+  "profile_removed": true,
+  "external_socket_retained_logical_bytes": 20
+}

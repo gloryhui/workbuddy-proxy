@@ -1,0 +1,13 @@
+{
+  "requested_url": "http://127.0.0.1:63383/progress_timeline.html",
+  "attempt": "cua.createBrowserTab('iab', url, {visible:false})",
+  "result": "Browser is not available: iab",
+  "created_tab": false,
+  "background_alternative": "Chrome extension appears in earlier CUA inventory; public API documentation does not guarantee a background Chrome tab. No alternate browser or user tab was operated.",
+  "card_rendering": "unverified",
+  "release_gate_filter": "unverified",
+  "overflow": "unverified",
+  "viewport_1100_and_1440": "unverified",
+  "screenshots": [],
+  "observed_at": "2026-11-01T08:52:54.901522+08:00"
+}

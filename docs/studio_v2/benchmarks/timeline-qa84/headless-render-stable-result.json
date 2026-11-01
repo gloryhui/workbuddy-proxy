@@ -1,0 +1,158 @@
+{
+  "browser": "Chrome/156.0.8078.74",
+  "headless": true,
+  "isolatedProfile": true,
+  "source": "http://127.0.0.1:63383/progress_timeline.html",
+  "snapshots": [
+    {
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "devicePixelRatio": 1,
+        "scrollX": 0,
+        "scrollY": 1716
+      },
+      "document": {
+        "scrollWidth": 1425,
+        "clientWidth": 1425
+      },
+      "filter": "发布门禁4批",
+      "filterPressed": "true",
+      "result": "显示4 / 9批；当前5批完成本轮签收。",
+      "cards": [
+        {
+          "id": "R01",
+          "summary": "›\nR01\n全局状态、输入与无障碍\n集中施工中\n\n全局发布门禁 · 5个任务（通过1 / 待验4） · 依赖B01 / B02 / B03 / B04 / B05",
+          "rect": {
+            "x": 290,
+            "y": 203.890625,
+            "width": 1093,
+            "height": 98.84375,
+            "right": 1383,
+            "bottom": 302.734375
+          },
+          "scrollWidth": 1091,
+          "clientWidth": 1091
+        },
+        {
+          "id": "R02",
+          "summary": "›\nR02\nWindows、macOS与HiDPI\n集中施工中\n\n全局发布门禁 · 4个任务（通过0 / 待验4） · 依赖R01",
+          "rect": {
+            "x": 290,
+            "y": 318.734375,
+            "width": 1093,
+            "height": 98.84375,
+            "right": 1383,
+            "bottom": 417.578125
+          },
+          "scrollWidth": 1091,
+          "clientWidth": 1091
+        },
+        {
+          "id": "R03",
+          "summary": "›\nR03\n最终性能与Core兼容回归\n集中施工中\n\n全局发布门禁 · 5个任务（通过2 / 待验3） · 依赖R01",
+          "rect": {
+            "x": 290,
+            "y": 433.578125,
+            "width": 1093,
+            "height": 98.84375,
+            "right": 1383,
+            "bottom": 532.421875
+          },
+          "scrollWidth": 1091,
+          "clientWidth": 1091
+        },
+        {
+          "id": "R04",
+          "summary": "›\nR04\nRC安装包到正式发布准备\n集中施工中\n\n全局发布门禁 · 5个任务（通过2 / 待验3） · 依赖R02 / R03",
+          "rect": {
+            "x": 290,
+            "y": 548.421875,
+            "width": 1093,
+            "height": 98.84375,
+            "right": 1383,
+            "bottom": 647.265625
+          },
+          "scrollWidth": 1091,
+          "clientWidth": 1091
+        }
+      ],
+      "screenshot": "release-stable-1440.png"
+    },
+    {
+      "viewport": {
+        "innerWidth": 1100,
+        "innerHeight": 900,
+        "devicePixelRatio": 1,
+        "scrollX": 0,
+        "scrollY": 1929
+      },
+      "document": {
+        "scrollWidth": 1085,
+        "clientWidth": 1085
+      },
+      "filter": "发布门禁4批",
+      "filterPressed": "true",
+      "result": "显示4 / 9批；当前5批完成本轮签收。",
+      "cards": [
+        {
+          "id": "R01",
+          "summary": "›\nR01\n全局状态、输入与无障碍\n集中施工中\n\n全局发布门禁 · 5个任务（通过1 / 待验4） · 依赖B01 / B02 / B03 / B04 / B05",
+          "rect": {
+            "x": 290,
+            "y": 204.15625,
+            "width": 753,
+            "height": 98.84375,
+            "right": 1043,
+            "bottom": 303
+          },
+          "scrollWidth": 751,
+          "clientWidth": 751
+        },
+        {
+          "id": "R02",
+          "summary": "›\nR02\nWindows、macOS与HiDPI\n集中施工中\n\n全局发布门禁 · 4个任务（通过0 / 待验4） · 依赖R01",
+          "rect": {
+            "x": 290,
+            "y": 319,
+            "width": 753,
+            "height": 98.84375,
+            "right": 1043,
+            "bottom": 417.84375
+          },
+          "scrollWidth": 751,
+          "clientWidth": 751
+        },
+        {
+          "id": "R03",
+          "summary": "›\nR03\n最终性能与Core兼容回归\n集中施工中\n\n全局发布门禁 · 5个任务（通过2 / 待验3） · 依赖R01",
+          "rect": {
+            "x": 290,
+            "y": 433.84375,
+            "width": 753,
+            "height": 98.84375,
+            "right": 1043,
+            "bottom": 532.6875
+          },
+          "scrollWidth": 751,
+          "clientWidth": 751
+        },
+        {
+          "id": "R04",
+          "summary": "›\nR04\nRC安装包到正式发布准备\n集中施工中\n\n全局发布门禁 · 5个任务（通过2 / 待验3） · 依赖R02 / R03",
+          "rect": {
+            "x": 290,
+            "y": 548.6875,
+            "width": 753,
+            "height": 98.84375,
+            "right": 1043,
+            "bottom": 647.53125
+          },
+          "scrollWidth": 751,
+          "clientWidth": 751
+        }
+      ],
+      "screenshot": "release-stable-1100.png"
+    }
+  ]
+}

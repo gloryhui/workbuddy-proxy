@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-01T08:57:42.695375+08:00",
+  "html_sha256": "39e85bb8ad6b1f374e36c4d8a4286f02ea8fb4e91bb2954379c32b2db26f9128",
+  "QA": 84,
+  "expected_counts": {
+    "R01": [
+      5,
+      1,
+      4
+    ],
+    "R02": [
+      4,
+      0,
+      4
+    ],
+    "R03": [
+      5,
+      2,
+      3
+    ],
+    "R04": [
+      5,
+      2,
+      3
+    ]
+  },
+  "two_widths": [
+    1440,
+    1100
+  ],
+  "all_four_cards_visible": true,
+  "no_document_or_card_horizontal_overflow": true,
+  "parent_viewed_original_screenshots": [
+    "release-stable-1100.png",
+    "release-stable-1440.png"
+  ],
+  "IAB_unavailable_retained": true,
+  "headless_fallback_uses_private_profile_only": true,
+  "first_smooth_scroll_capture_retained": "First images captured before smooth scrolling reached target. Stable pass changes only scroll behavior to instant for capture; original layout/style/counts unchanged. No image editing/redrawing.",
+  "preview_server": "Ownedloopback63383 stopped afterrender, processwaited0",
+  "scope": "Timeline card count text only; no native product/platform/whole-release acceptance."
+}

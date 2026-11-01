@@ -9,7 +9,8 @@
 - 下一步针对未变子树验证有明确失效通知的缓存/渲染边界，保留500ms光标、正常输入/IME、选择和4096负载；不能关光标/减负载/降门槛过关。GPUI mark_view_dirty会标记祖先，简单缓存整个root仍被输入失效传播；先验证边界，再做最终性能回归。启动慢marker和长期驻留结论仍缺，**R03.2/.3/.5不签收**，R01状态/slot/拖列/逐引擎IME/真实AT仍保留。
 - 10张原始JPEG均1440×900及各AX已保留，最终Cancel/原生close，没有添加/保存；退出后配置字节与1014请求/成本全字段相同。Core0/driver0，CUA拥有UI只证PIDgone、退出码未知。A1初sampler预检枚举名不匹配在计时前停下、两个诊断helper编译配置错误均记录，实际4轮协议不变；无产品失败重跑。[数据/退出](benchmarks/focus-profile/data-proof.json)。
 - 专用根`studio-v2-focus-profile.fmt6q01u`经完整及即时预检，精确非强制删除50文件/20目录、157,128,912B约149.85MiB，临时0、系统盘约35.78GiB；必要基线50,905,007B/共享Cargo/非本轮preview保留。**不要重开已删除bundle；禁止自动开启旁白、辅助功能或切输入源。**[清理](benchmarks/focus-profile/cleanup.json)。
-- 用户询问时间线卡片：5/4/5/5是各批次总任务数，实际待验R01=4、R02=4、R03=3、R04=3，共14；40帧均已签收。Goal active，本轮无整项新增签收、无新CI或公开发布。时间线在本批证据提交后统一生成QA84，以Git和HTML updated_at核对最终状态。
+- 用户询问时间线卡片：5/4/5/5是各批次总任务数，实际待验R01=4、R02=4、R03=3、R04=3，共14；40帧均已签收。HTML已于08:51:49统一生成QA84，卡片增加实际通过/待验数。IAB不可用原记录保留；已有Chrome独立headless/私有profile两尺寸1100/1440渲染及DOM核对通过，原图已查看，无横向溢出；首组smooth scroll未到目标的原图保留，stable仅用即时滚动重采。[时间线核对](benchmarks/timeline-qa84/parent-review.json)。Goal active，无新增整项签收/CI或公开发布。
+- 时间线预览server已退出0、独立headless进程均结束；额外专用profile经完整及即时预检已精确清理9,341,455B约8.91MiB，连同主fixture本轮专用产物逻辑约158.76MiB均清理。其外部Chrome临时socket目录`com.google.Chrome.16SEjC`约20B因归属/边界未扩展删除而保留，不能说系统临时文件绝对0；两专用根均不存在。必要基线/共享缓存照旧保留。[浏览器清理](benchmarks/timeline-qa84/profile-cleanup.json)。
 
 ## 上一轮进展（QA83）
 

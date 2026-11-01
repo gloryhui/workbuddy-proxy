@@ -196,7 +196,7 @@
 <script id="progress-data" type="application/json">
 {
   "version": 2,
-  "updated_at": "2026-11-01T08:27:05+08:00",
+  "updated_at": "2026-11-01T08:51:49+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "9570451e5006e25118cb2cafa6b3da69353836da",
@@ -209,7 +209,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 83,
+  "recorded_tasks": 84,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -222,33 +222,33 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 83,
-    "title": "真实三平台完整备份冷回滚与旧包恢复",
+    "id": 84,
+    "title": "真实键盘焦点对照与冻结程序符号化诊断",
     "status": "recorded",
-    "description": "测试代码70712b8新增--verify-rollback与真实旧包恢复回调，runtime仍957，未改Core/GPUI/打包/正式版本。候选先经过QA82同类实际升级及已装GUI生命周期，再冷恢复原程序与完整profile；不只恢复SQLite表、不把旧版直接指向新DB。总结、操作文档。"
+    "description": "使用冻结UI4658/Core1146、64供应商/256模型/1014真实合成请求及成本/4096候选，新唯一wrapper仅ad-hoc签名变化，所有非签名字节一致；Core有真实用户目录kernel deny，GUI使用隔离LSEnvironment与deny-only真实WorkBuddy AppKit保护，不冒称GUI kernel sandbox。预检、总结。"
   },
   "latest_task": {
-    "id": 83,
-    "title": "真实三平台完整备份冷回滚与旧包恢复",
+    "id": 84,
+    "title": "真实键盘焦点对照与冻结程序符号化诊断",
     "status": "recorded",
-    "summary": "测试代码70712b8新增--verify-rollback与真实旧包恢复回调，runtime仍957，未改Core/GPUI/打包/正式版本。候选先经过QA82同类实际升级及已装GUI生命周期，再冷恢复原程序与完整profile；不只恢复SQLite表、不把旧版直接指向新DB。总结、操作文档。",
+    "summary": "使用冻结UI4658/Core1146、64供应商/256模型/1014真实合成请求及成本/4096候选，新唯一wrapper仅ad-hoc签名变化，所有非签名字节一致；Core有真实用户目录kernel deny，GUI使用隔离LSEnvironment与deny-only真实WorkBuddy AppKit保护，不冒称GUI kernel sandbox。预检、总结。",
     "highlights": [
-      "测试代码70712b8新增--verify-rollback与真实旧包恢复回调，runtime仍957，未改Core/GPUI/打包/正式版本。候选先经过QA82同类实际升级及已装GUI生命周期，再冷恢复原程序与完整profile；不只恢复SQLite表、不把旧版直接指向新DB。总结、操作文档。",
-      "Windows实际卸载候选、以原setup同路径重装，v056原244文件/v057原16文件SHA及Core版本、注册和快捷方式保持；Mac将候选app留独立目录并恢复原app，完整资源/链接/strict签名与版本核对。恢复后旧Core三平台各两版本真实运行，不冒称旧GUI或Finder/物理键鼠验收。",
-      "每例升级前真实旧Core写12条USD .0028请求/成本、手工USD2/8价格、731天/OBSERVE/Unicode配置，完整目录冷复制并逐文件/空目录核对。候选schema11新写第13条并运行已装GUI；回滚时当前目录整体保留，原目录从备份复制，启动前全树字节相同，schema6/11及全部旧业务/配置字节一致。旧Core可再录一条有价请求，原12保持；候选新增request_id没有混入旧目录，独立候选13行目录与备份原件字节均保持。没有数据库降级、自动合并或无损保留全部新历史的承诺。"
+      "使用冻结UI4658/Core1146、64供应商/256模型/1014真实合成请求及成本/4096候选，新唯一wrapper仅ad-hoc签名变化，所有非签名字节一致；Core有真实用户目录kernel deny，GUI使用隔离LSEnvironment与deny-only真实WorkBuddy AppKit保护，不冒称GUI kernel sandbox。预检、总结。",
+      "测量前固定A1/B1/A2/B2顺序、各10秒稳定+90秒、每5秒ps累积CPU/RSS。A真实pressKey z使搜索匹配0，Backspace恢复long-discovery-/4096/0；B真实Tab×2后Space使0→4096→0，query/匹配不变。AX仅报window焦点，具体反选按钮身份按Tab顺序/视觉/行为推断；非文本按键路由则由实际选择变化证明。每轮计时期间无截图、AX、输入或profiler，同UI/Core PID与出生时间保持。",
+      "CPU单核百分比A1=6.455、B1=1.522、A2=6.355、B2=1.478；搜索均值6.405、非文本1.500，差4.905个百分点。各19个原始样本/四轮90秒全部保留，反向复测复现焦点依赖；不是性能改进或最终通过。RSS受操作历史/系统压力影响，A1约123.78→125、B1约122.48→119.42、A2约118.88→118.55、B2约109.73→105.80MiB，不能由下降签无泄漏。原对照。"
     ],
     "limits": [
-      "完整备份/原包SHA与URL、实际配置路径确认、完整退出、无覆盖恢复、候选新增历史独立保留、默认路径/WorkBuddy模型目录边界已写入UPGRADE_ROLLBACK并链接README。正式版本/changelog、代表性公开截图和最终固定分发包仍待，R04.4整项保持pending；仍剩0/40界面、14发布待验，Goal active。"
+      "用户时间线截图的5/4/5/5表示各批次总数；仍待验R01=4/R02=4/R03=3/R04=3，共14，40界面签收保持。Goal active，本轮不新增整项通过、不开旁白/辅助功能/切源，不派新CI或公开发布。证据提交后仅统一更新时间线一次，HTML/JSON/release_plan.md一起提交。"
     ],
     "evidence": [
       {
         "label": "总结",
-        "href": "benchmarks/rc-round83-summary.json"
+        "href": "benchmarks/rc-round84-summary.json"
       }
     ],
-    "commit": "3537e144c2956467ccc47d935ffc3905db5fa201",
-    "date": "2026-11-01T08:27:04+08:00",
-    "commit_subject": "docs(studio): record six verified cold package rollbacks",
+    "commit": "6f791df6f0cc3fe8f309d1175862d09c5caeaf1f",
+    "date": "2026-11-01T08:51:48+08:00",
+    "commit_subject": "docs(studio): localize focus-dependent idle redraw cost",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2468,7 +2468,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 83,
+    "historical_tasks": 84,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3450,7 +3450,7 @@
             "id": "R01.1",
             "title": "共享状态与层级矩阵",
             "acceptance": "pending",
-            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。",
+            "completed": "e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。 QA84 actualsearch0match/restoration, invert4096overlimitwarning/restoration0 in64/256/1014 fixture captured; a state subset, notwholeapplicablematrix/slot acceptance.",
             "remaining": "本轮真实Tooltip仍未观察成功；共享全适用状态/实际slot仍待，不能把筛选缓存、AX和编译当全矩阵签收。",
             "acceptance_check": "共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。",
             "history_tasks": [
@@ -3464,14 +3464,15 @@
               76,
               77,
               80,
-              81
+              81,
+              84
             ]
           },
           {
             "id": "R01.2",
             "title": "完整键盘与焦点恢复",
             "acceptance": "pending",
-            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。",
+            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged.",
             "remaining": "真实可拖列拖宽及刷新/resize保持仍待。旧x444第一边界是刻意固定的时间列，不能作可拖列失败证据；QA77改试provider/model右边界仍无可见变化，当前CUA只支持两点drag，未辨明工具投递与产品原因。能力未变不重复同类尝试；其余完整焦点回归仍按缺口收口。",
             "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
             "history_tasks": [
@@ -3484,7 +3485,8 @@
               67,
               75,
               76,
-              77
+              77,
+              84
             ]
           },
           {
@@ -3672,22 +3674,23 @@
             "id": "R03.2",
             "title": "峰值差异诊断与最终结论",
             "acceptance": "pending",
-            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。 QA80 最终同Core1146/UI4658对a6eUIba525主P2/C3/C4/P3各n2：UI空闲中位差+0.000MiB、合计-0.515MiB、峰值-1.865MiB、进程→记录+209.764ms、proxy p95-0.0035ms。新UI启动marker1562.402/779.425ms对旧1103.449/818.850ms，全部慢样本保留，未重跑到理想数值。4096最终900秒RSS+1.25MiB，footprint144.8→145.6M，allocated27.3→27.3M、objects78043→77995、fragmentation22.2→23.0M；仅解释该观察中驻留/碎片组成，不作普遍无泄漏结论。",
-            "remaining": "保留全部历史成本与最终7轮样本；当前启动慢样本、焦点CPU差异及长时驻留尚不足统一无回退结论，继续诊断，不以微测试/峰值下降抵消。",
+            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。 QA80 最终同Core1146/UI4658对a6eUIba525主P2/C3/C4/P3各n2：UI空闲中位差+0.000MiB、合计-0.515MiB、峰值-1.865MiB、进程→记录+209.764ms、proxy p95-0.0035ms。新UI启动marker1562.402/779.425ms对旧1103.449/818.850ms，全部慢样本保留，未重跑到理想数值。4096最终900秒RSS+1.25MiB，footprint144.8→145.6M，allocated27.3→27.3M、objects78043→77995、fragmentation22.2→23.0M；仅解释该观察中驻留/碎片组成，不作普遍无泄漏结论。 QA84 closes the missing focus-routing evidence: preregistered sameprocess A1/B1/A2/B2 90s each at64/256/1014/4096, actualkey editing vs Space invert0to4096to0, CPU6.455/1.522/6.355/1.478% singlecore. Frozen4658 section-identical symboltwin resolves realA BlinkCursor/Proxy render/Taffy paths absent inB. No runtimefix, startupslowmarker and finalperformance verdict remain.",
+            "remaining": "Retain all historical costs and final7rounds. QA84 identifies repeatable focus-dependent redraw CPU cost with actual keyboard routing and code-identical symbols, but no fix yet. Diagnose/verify a cache boundary preserving caret and full workload; slow startup marker and final peak/performance verdict still pending.",
             "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
             "history_tasks": [
               67,
               78,
               79,
-              80
+              80,
+              84
             ]
           },
           {
             "id": "R03.3",
             "title": "长列表、重开与静置观察",
             "acceptance": "pending",
-            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。 QA80同Core1146依次4905/6d93/4658三个900秒实际4096观察：CPU6.853/6.514/6.707%单核，RSS首末分钟中位差−4.984/+3.688/+1.250MiB，进程/操作历史和OS状态并非严格A/B。最终同进程一次Tab后300秒CPU1.693%、RSS−.063MiB，但AX/截图不能确立具体焦点，不断言光标根因。最终4658功能与冷重开两进程通过；全部五个长fixture UI与Core/driver均退出。",
-            "remaining": "R03.3仍待最终长时/焦点与输入响应结论；四点liveallocated稳定不代表无持续内存增长，未证明明确CPU改进；不再进行未经证据支持的猜测优化。",
+            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。 QA80同Core1146依次4905/6d93/4658三个900秒实际4096观察：CPU6.853/6.514/6.707%单核，RSS首末分钟中位差−4.984/+3.688/+1.250MiB，进程/操作历史和OS状态并非严格A/B。最终同进程一次Tab后300秒CPU1.693%、RSS−.063MiB，但AX/截图不能确立具体焦点，不断言光标根因。最终4658功能与冷重开两进程通过；全部五个长fixture UI与Core/driver均退出。 QA84 sameprocess keyboard-proven focus alternation replicates meanCPU6.405% search vs1.500% nontext. Ten original1440x900JPEGs, rawps samples/4rawprofiles and code-identical symbolmaps retained; config and1014 request/cost fields equal through shutdown. 90s is diagnostic, not900s longresidence/leakfree proof; highCPU remains unfixed.",
+            "remaining": "QA84 focus-routing and symbolic profile gaps narrowed; search focus still consumes6.4% ofonecore versus1.5% nontext. Fix/validate redraw work while preserving caret/input/IME/selection, then complete final longresidence and responsiveness verdict. 90s phases and declining RSS do not sign leakfree performance.",
             "acceptance_check": "无可复现持续内存增长、无空闲异常高CPU、交互无明显阻塞；请求延迟不冒充FPS或输入时延。",
             "history_tasks": [
               20,
@@ -3698,7 +3701,8 @@
               58,
               78,
               79,
-              80
+              80,
+              84
             ]
           },
           {
@@ -3730,7 +3734,7 @@
             "id": "R03.5",
             "title": "最终构建和性能报告",
             "acceptance": "pending",
-            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。 QA79最终Core7fa463/当前UI4905已冻结；24项本地检查通过、Core577pass，两个GPUI既有ignored在真实Core条件补验通过。新CoreCI集成锁恢复未过，最终native性能无样本，不能签收最终报告。 QA80运行时代码957/UI4658+Core13c/1146已冻结，Core580/GPUI213pass+2既有ignore、27+6本地命令/strictClippy/Intelcheck/release及最终四CIjob全部成功；QA80完整原始报告/当前7轮对照/长时CPU与heap/首次失败/清理归档。",
+            "completed": "GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。 QA79最终Core7fa463/当前UI4905已冻结；24项本地检查通过、Core577pass，两个GPUI既有ignored在真实Core条件补验通过。新CoreCI集成锁恢复未过，最终native性能无样本，不能签收最终报告。 QA80运行时代码957/UI4658+Core13c/1146已冻结，Core580/GPUI213pass+2既有ignore、27+6本地命令/strictClippy/Intelcheck/release及最终四CIjob全部成功；QA80完整原始报告/当前7轮对照/长时CPU与heap/首次失败/清理归档。 QA84 diagnostic-only unstrippedbuild0, all23filebacked section bytes/addresses equal, shared frozen flatoutput restored. No productsource/registry edits or newCI. New focus/symbol evidence does not sign overall performance.",
             "remaining": "构建与报告已齐，整体性能结论仍受R03.2/R03.3待验限制；后续若改运行时代码须重新绑定相应最终验证。",
             "acceptance_check": "既有忽略说明/所需真实Core fixture补跑单列；测试/链接/硬件/GUI证据范围分明，无虚假全绿。",
             "history_tasks": [
@@ -3738,7 +3742,8 @@
               67,
               78,
               79,
-              80
+              80,
+              84
             ]
           }
         ],
@@ -7743,6 +7748,30 @@
       "date": "2026-11-01T08:27:04+08:00",
       "commit_subject": "docs(studio): record six verified cold package rollbacks",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 84,
+      "title": "真实键盘焦点对照与冻结程序符号化诊断",
+      "status": "recorded",
+      "summary": "使用冻结UI4658/Core1146、64供应商/256模型/1014真实合成请求及成本/4096候选，新唯一wrapper仅ad-hoc签名变化，所有非签名字节一致；Core有真实用户目录kernel deny，GUI使用隔离LSEnvironment与deny-only真实WorkBuddy AppKit保护，不冒称GUI kernel sandbox。预检、总结。",
+      "highlights": [
+        "使用冻结UI4658/Core1146、64供应商/256模型/1014真实合成请求及成本/4096候选，新唯一wrapper仅ad-hoc签名变化，所有非签名字节一致；Core有真实用户目录kernel deny，GUI使用隔离LSEnvironment与deny-only真实WorkBuddy AppKit保护，不冒称GUI kernel sandbox。预检、总结。",
+        "测量前固定A1/B1/A2/B2顺序、各10秒稳定+90秒、每5秒ps累积CPU/RSS。A真实pressKey z使搜索匹配0，Backspace恢复long-discovery-/4096/0；B真实Tab×2后Space使0→4096→0，query/匹配不变。AX仅报window焦点，具体反选按钮身份按Tab顺序/视觉/行为推断；非文本按键路由则由实际选择变化证明。每轮计时期间无截图、AX、输入或profiler，同UI/Core PID与出生时间保持。",
+        "CPU单核百分比A1=6.455、B1=1.522、A2=6.355、B2=1.478；搜索均值6.405、非文本1.500，差4.905个百分点。各19个原始样本/四轮90秒全部保留，反向复测复现焦点依赖；不是性能改进或最终通过。RSS受操作历史/系统压力影响，A1约123.78→125、B1约122.48→119.42、A2约118.88→118.55、B2约109.73→105.80MiB，不能由下降签无泄漏。原对照。"
+      ],
+      "limits": [
+        "用户时间线截图的5/4/5/5表示各批次总数；仍待验R01=4/R02=4/R03=3/R04=3，共14，40界面签收保持。Goal active，本轮不新增整项通过、不开旁白/辅助功能/切源，不派新CI或公开发布。证据提交后仅统一更新时间线一次，HTML/JSON/release_plan.md一起提交。"
+      ],
+      "evidence": [
+        {
+          "label": "总结",
+          "href": "benchmarks/rc-round84-summary.json"
+        }
+      ],
+      "commit": "6f791df6f0cc3fe8f309d1175862d09c5caeaf1f",
+      "date": "2026-11-01T08:51:48+08:00",
+      "commit_subject": "docs(studio): localize focus-dependent idle redraw cost",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -9125,6 +9154,21 @@
         "reviewed_with_differences": 2,
         "reviewed": 38
       }
+    },
+    {
+      "date": "2026-11-01T08:51:49+08:00",
+      "note": "QA84：真实按键同进程A/B/A/B四轮复现焦点重绘CPU6.405%对1.500%，等节符号副本定位布局绘制；尚未修复，0/40剩余、14发布待验，禁止自动开启旁白。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
     }
   ],
   "verification": [
@@ -9205,7 +9249,7 @@ $('working-rules').append(...plan.working_rules.slice(2).map(rule=>node('li',{},
 let batchFilter='all';
 function renderBatchFilters(){const values=[['all','全部'+plan.batches.length+'批'],['feature','功能'+plan.metrics.functional_batches+'批'],['release','发布门禁'+plan.metrics.release_batches+'批']];$('batch-filters').replaceChildren(...values.map(([value,label])=>{const b=node('button',{type:'button',class:'filter','aria-pressed':value===batchFilter},label);b.onclick=()=>{batchFilter=value;renderBatches()};return b}))}
 function taskElement(t,query){const d=node('details',{class:'work-item',id:t.id});if(query)d.open=true;d.append(node('summary',{},[node('span',{class:'work-code'},t.id),node('strong',{},t.title),pill(t.acceptance==='passed'?'passed':t.acceptance==='blocked'?'blocked':'planned',t.acceptance==='passed'?'本轮已签收':t.acceptance==='blocked'?'受阻待补验':'已有成果 · 待本批终验')]),node('div',{class:'work-columns'},[node('div',{},[node('h4',{class:'existing'},'已完成 / 已有证据'),node('p',{},t.completed)]),node('div',{},[node('h4',{},'剩余工作'),node('p',{},t.remaining)])]),node('p',{class:'work-check'},[node('b',{},'这一步怎样算通过'),t.acceptance_check]),node('div',{class:'work-history'},t.history_tasks.length?[node('span',{},'历史依据：'),...t.history_tasks.map(id=>link('UI-'+id,'#task-'+id))]:[node('span',{},'最终候选的证据待补，不冒用历史通过。')]));return d}
-function renderBatches(){renderBatchFilters();const q=$('batch-search').value.trim().toLowerCase();const rows=plan.batches.filter(b=>(batchFilter==='all'||b.kind===batchFilter)&&JSON.stringify([b.id,b.title,b.frames,b.delivery,b.tasks]).toLowerCase().includes(q));$('batch-total').textContent=plan.batches.length+'个批次 · '+plan.metrics.tasks+'个小任务';$('batch-result').textContent='显示'+rows.length+' / '+plan.batches.length+'批；当前'+plan.metrics.passed_batches+'批完成本轮签收。';$('batches').replaceChildren(...rows.map(b=>{const d=node('details',{class:'phase batch',id:b.id,'data-status':b.status==='passed'?'done':b.status==='developing'||b.status==='validating'?'active':'pending'});if(q)d.open=true;d.append(node('summary',{},[node('div',{class:'phase-heading'},[node('span',{class:'chevron','aria-hidden':true},'›'),node('span',{class:'phase-code'},b.id),node('h3',{class:'batch-title'},b.title),pill(b.status)]),node('p',{class:'phase-summary'},(b.kind==='feature'?b.frames.length+'张画板 · '+b.reviewed_frames+'张已首审':'全局发布门禁')+' · '+b.tasks.length+'个任务 · 依赖'+b.depends_on.join(' / '))]));const body=node('div',{class:'batch-body'},[node('p',{},[node('b',{},'已有成果：'),b.completed_summary]),node('p',{},[node('b',{},'本批交付：'),b.delivery])]);if(b.frame_details.length)body.append(node('div',{class:'frame-chips'},b.frame_details.map(f=>node('span',{title:f.title},f.id+' '+f.title.replace(/^\d+\s*\/\s*STUDIO V2 · /,'')))));body.append(...b.tasks.map(t=>taskElement(t,q)));d.append(body);return d}));if(!rows.length)$('batches').append(node('div',{class:'empty'},'没有匹配的批次或任务。'))}
+function renderBatches(){renderBatchFilters();const q=$('batch-search').value.trim().toLowerCase();const rows=plan.batches.filter(b=>(batchFilter==='all'||b.kind===batchFilter)&&JSON.stringify([b.id,b.title,b.frames,b.delivery,b.tasks]).toLowerCase().includes(q));$('batch-total').textContent=plan.batches.length+'个批次 · '+plan.metrics.tasks+'个小任务';$('batch-result').textContent='显示'+rows.length+' / '+plan.batches.length+'批；当前'+plan.metrics.passed_batches+'批完成本轮签收。';$('batches').replaceChildren(...rows.map(b=>{const d=node('details',{class:'phase batch',id:b.id,'data-status':b.status==='passed'?'done':b.status==='developing'||b.status==='validating'?'active':'pending'});if(q)d.open=true;d.append(node('summary',{},[node('div',{class:'phase-heading'},[node('span',{class:'chevron','aria-hidden':true},'›'),node('span',{class:'phase-code'},b.id),node('h3',{class:'batch-title'},b.title),pill(b.status)]),node('p',{class:'phase-summary'},(b.kind==='feature'?b.frames.length+'张画板 · '+b.reviewed_frames+'张已首审':'全局发布门禁')+' · '+b.tasks.length+'个任务（通过'+b.tasks.filter(t=>t.acceptance==='passed').length+' / 待验'+b.tasks.filter(t=>t.acceptance!=='passed').length+'） · 依赖'+b.depends_on.join(' / '))]));const body=node('div',{class:'batch-body'},[node('p',{},[node('b',{},'已有成果：'),b.completed_summary]),node('p',{},[node('b',{},'本批交付：'),b.delivery])]);if(b.frame_details.length)body.append(node('div',{class:'frame-chips'},b.frame_details.map(f=>node('span',{title:f.title},f.id+' '+f.title.replace(/^\d+\s*\/\s*STUDIO V2 · /,'')))));body.append(...b.tasks.map(t=>taskElement(t,q)));d.append(body);return d}));if(!rows.length)$('batches').append(node('div',{class:'empty'},'没有匹配的批次或任务。'))}
 $('batch-search').oninput=renderBatches;renderBatches();
 $('batch-expand').onclick=()=>{const items=[...$('batches').querySelectorAll('details')];const open=items.some(d=>!d.open);items.forEach(d=>d.open=open);$('batch-expand').textContent=open?'收起全部任务':'展开全部任务'};
 const modelNames={implementation:'实现与历史证据',frame:'界面验收',release:'正式版发布',native_fidelity:'视觉一致标准',severity:'问题修复顺序'};

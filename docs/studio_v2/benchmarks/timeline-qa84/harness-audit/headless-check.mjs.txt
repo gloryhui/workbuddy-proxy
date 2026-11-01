@@ -1,0 +1,27 @@
+import {spawn} from 'node:child_process';
+import {readFile,writeFile} from 'node:fs/promises';
+import {setTimeout as delay} from 'node:timers/promises';
+const profile='/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-timeline-headless-2nd8dqqh';
+const output='/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/docs/studio_v2/benchmarks/timeline-qa84';
+const chrome=spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',['--headless=new',`--user-data-dir=${profile}`,'--remote-debugging-port=0','--no-first-run','--no-default-browser-check','--disable-background-networking','--disable-component-update','--disable-sync','--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE localhost, EXCLUDE 127.0.0.1','about:blank'],{stdio:'ignore'});
+let ws; let next=0; const pending=new Map();
+try {
+ let v; for(let i=0;i<100;i++){try{const port=(await readFile(profile+'/DevToolsActivePort','utf8')).split('\n')[0]; v=await (await fetch(`http://127.0.0.1:${port}/json/version`)).json();break}catch{await delay(100)}}
+ if(!v) throw Error('DevTools endpoint unavailable');
+ ws=new WebSocket(v.webSocketDebuggerUrl); await new Promise((ok,bad)=>{ws.onopen=ok;ws.onerror=bad});
+ ws.onmessage=e=>{const o=JSON.parse(e.data);if(o.id&&pending.has(o.id)){const [ok,bad]=pending.get(o.id);pending.delete(o.id);o.error?bad(Error(JSON.stringify(o.error))):ok(o.result)}};
+ function send(method,params={},sessionId){const id=++next;return new Promise((ok,bad)=>{pending.set(id,[ok,bad]);ws.send(JSON.stringify({id,method,params,...(sessionId?{sessionId}:{})}))})}
+ const target=await send('Target.createTarget',{url:'about:blank'}); const {sessionId}=await send('Target.attachToTarget',{targetId:target.targetId,flatten:true});
+ await send('Page.enable',{},sessionId); await send('Runtime.enable',{},sessionId);
+ const snapshots=[];
+ for(const width of [1440,1100]){
+  await send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false},sessionId);
+  await send('Page.navigate',{url:'http://127.0.0.1:63383/progress_timeline.html'},sessionId);
+  let loaded=false; for(let i=0;i<100;i++){let v=await send('Runtime.evaluate',{expression:"document.readyState==='complete' && !!document.querySelector('#batch-filters button')",returnByValue:true},sessionId);if(v.result.value){loaded=true;break}await delay(100)}
+  if(!loaded)throw Error('page did not load');
+  const r=await send('Runtime.evaluate',{expression:`(async()=>{const buttons=[...document.querySelectorAll('#batch-filters button')];const filter=buttons.find(x=>x.textContent.includes('发布门禁'));if(!filter)throw Error('filter absent');filter.click();document.documentElement.style.scrollBehavior='auto'; window.scrollTo({top:document.querySelector('#batch-area').getBoundingClientRect().top+scrollY,behavior:'instant'});await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));const cards=[...document.querySelectorAll('#batches .batch')].map(e=>({id:e.id,summary:e.querySelector('summary').innerText,rect:(()=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom}})(),scrollWidth:e.scrollWidth,clientWidth:e.clientWidth}));return {viewport:{innerWidth,innerHeight,devicePixelRatio,scrollX,scrollY},document:{scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth},filter:filter.textContent,filterPressed:[...document.querySelectorAll('#batch-filters button')].find(x=>x.textContent.includes('发布门禁')).getAttribute('aria-pressed'),result:document.querySelector('#batch-result').innerText,cards}})()`,awaitPromise:true,returnByValue:true},sessionId);
+  if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));let state=r.result.value;
+  const shot=await send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId);await writeFile(`${output}/release-stable-${width}.png`,Buffer.from(shot.data,'base64'));state.screenshot=`release-stable-${width}.png`;snapshots.push(state);
+ }
+ await writeFile(`${output}/headless-render-stable-result.json`,JSON.stringify({browser:v.Browser,headless:true,isolatedProfile:true,source:'http://127.0.0.1:63383/progress_timeline.html',snapshots},null,2)+'\n');
+} finally {if(ws)ws.close();chrome.kill('SIGTERM');await Promise.race([new Promise(r=>chrome.once('exit',r)),delay(5000)]);if(chrome.exitCode===null&&chrome.signalCode===null)throw Error('Chrome did not exit after SIGTERM');}

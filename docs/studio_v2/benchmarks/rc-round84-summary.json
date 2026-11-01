@@ -77,6 +77,32 @@
     "local_session_temp_remaining_bytes": 0,
     "retained_baseline_bytes": 50905007,
     "shared_cache_and_unowned_previews": "retained",
-    "system_disk_free_after_bytes": 38423179264
+    "system_disk_free_after_bytes": 38423179264,
+    "headless_profile_removed_logical_bytes": 9341455,
+    "total_dedicated_files_removed_logical_bytes": 166470367,
+    "external_Chrome_socket_logical_bytes_retained": 20,
+    "current_system_disk_free_bytes": 38393323520
+  },
+  "timeline_update": {
+    "QA": 84,
+    "updated_at": "2026-11-01T08:51:49+08:00",
+    "card_text": "Task total plus accepted/pending derived from each batch",
+    "pending_by_batch": {
+      "R01": 4,
+      "R02": 4,
+      "R03": 3,
+      "R04": 3
+    },
+    "rendered_widths": [
+      1100,
+      1440
+    ],
+    "all4_counts_and_overflow_checked": true,
+    "evidence": "timeline-qa84/parent-review.json",
+    "IAB_unavailable_record_retained": true,
+    "headless_private_profile_cleanup": "timeline-qa84/profile-cleanup.json",
+    "external_socket_directory_retained": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/com.google.Chrome.16SEjC",
+    "external_socket_logical_bytes_retained": 20,
+    "preview_server_waited_exit0": true
   }
 }
