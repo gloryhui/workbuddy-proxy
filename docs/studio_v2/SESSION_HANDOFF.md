@@ -1,8 +1,16 @@
 # Studio V2 会话交接与恢复状态（2026-11-01）
 
-此前用户要求暂停并换会话；2026-11-01按明确请求恢复Goal并从R01推进。QA91软件RC批次完成后，同一外部环境阻塞连续三个Goal回合未变，当前Goal已标为blocked，详见下节。禁止自动开启旁白；各旧轮证据保留原来源。
+此前用户要求暂停并换会话；2026-11-01按明确请求恢复Goal并从R01推进。QA91软件RC批次完成后，同一外部环境阻塞连续三个Goal回合未变，其后用户提供当前Mac人工操作条件并恢复Goal；新QA92窗口已准备，但人工操作结果问题连续后续回合尚无答复，当前等待该回复，详见下节。禁止自动开启旁白；各旧轮证据保留原来源。
 
-## 当前阻塞（QA91后，2026-11-01）
+## 当前等待人工结果（QA92准备中，未签收）
+
+- 用户已回答“当前Mac可安排人工操作（悬停、拖列、IME、系统窗口）”，并手动将独立Goal恢复active；原blocked审计重置。新窗口准备后已发出一次具体拖列问题，但连续后续回合尚无答复；当前以同一人工结果依赖重新blocked，停止自动轮询，等待用户回复。此前中断发生在实际工具调用前，本次核实后新建隔离fixture，不重开QA86/90/91旧目录。
+- 新自有根`/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y`，创建记录见[QA92预注册](benchmarks/manual-mac-rc060/preregistered.json)。新bundle为其下`fixture/WorkBuddy Proxy QA92 Manual.app`，id`com.workbuddy.codexreview.qa92.manual.74f1106974`；Core59297，driver工具句柄61381，必须按实时状态核对。
+- 复用dd9/0.6冻结程序，Coreb920/UIinputf5fa；无产品构建/CI。新fixture2供应商5模型，合成长供应商/模型名称用于hover，12真实loopback请求及12priced成本。首次附加pricecreate因已有mockcatalog规则返回400revisionconflict（两次包含诊断），未强改规则；使用既有合成规则正常计费。基准config/models/全业务字段已冻结，Corekernelguard已验；GUI隔离环境+deny-only真实WorkBuddyguard，read-onlyCorebridge，无UI响应注入、不称GUIkernel。[前置](benchmarks/manual-mac-rc060/preflight.json)。
+- CUA唯一操作者仍studio_cua，已background getApp准备请求表与initial原JPEG/AX。新UI59772、Core59297、driver59295均已核对仍live。已请用户拖供应商右界向右约100px后保持，并提供看不到新窗口选项；尚无回复。仅被动补取一次awaiting-manual原JPEG/AX，列边界和截断看似未变，不能证明是否尝试过或记失败。禁止activate/raise/自动hover或drag重试。不开旁白/AT/切输入源/改缩放，不保存/Apply/同步/重启/端口等业务写；只取消编辑。此时验收未完成，14门禁pending、40帧剩0不变。
+- fixture为等待人工持续运行；不能将等待期间文件当闲置垃圾删除。结束后先原生close、触发自有完成标记、driver/Core等待退出，独立数据/命令核验后再完整+即时预检精确清理；保留报告与原图，不动RC包/共享Cargo/baseline。当前尚未清理；约51.6MiB专用文件在用，不当缓存删除。窗口保持给用户操作，收到答复后先检查原PID/句柄及UI是否仍live，不能仅凭此文重启或新建。详见[实时等待快照](benchmarks/manual-mac-rc060/live-state.json)。
+
+## 历史阻塞（QA91后，已由用户恢复）
 
 - 独立Goal工具已实际返回`blocked`；不是complete，也不是用户请求pause。连续三个无进展回合核实同一条件：剩余真实输入/设备/有效前台环境不可由当前工具建立，新的可用环境询问尚无答复。原QA86前置窗口回复属于已结束试验，不作为新窗口就绪授权。
 - 第一次只读CUA能力复核无变化：没有native hover/mouseMove、分步down/up或带路径/时长drag；清单不提供真实frontmost/显示器拓扑/缩放，未启动隔离App。后两次Git/清单核对仍为远端相同472a824、干净工作区、14待验；已完成CI没有待继续等待的原run。不重复失败尝试、构建、CI或后台样本。

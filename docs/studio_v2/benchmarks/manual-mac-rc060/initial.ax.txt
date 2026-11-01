@@ -1,0 +1,249 @@
+Window: "", App: WorkBuddy Proxy QA92 Manual.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 toggle button (settable, boolean) 数据统计, Value: on
+		3 toggle button (settable, boolean) 供应商管理, Value: off
+		4 toggle button (settable, boolean) 统计设置, Value: off
+		5 button 折叠或展开供应商列表
+		6 text field (settable) 搜索供应商
+		7 toggle button (settable, boolean) 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef , Value: on
+		8 toggle button (settable, boolean) OpenCode Go, Value: off
+		9 button 新增供应商
+		10 button 复制供应商
+		11 button 删除供应商
+		12 button 复制代理地址
+		13 toggle button (settable, boolean) 概览, Value: off
+		14 toggle button (settable, boolean) 用量明细, Value: on
+		15 toggle button (settable, boolean) 汇总分析, Value: off
+		16 button 更多筛选
+		17 button 清除筛选
+		18 pop up button (settable) 模型筛选, Value: 全部模型
+		19 pop up button (settable) 供应商筛选, Value: 全部供应商
+		20 button 选择日期范围
+		21 button 统计页面自动刷新间隔
+		22 button 刷新统计
+		23 模型来源
+			24 radio button (selectable, settable, boolean) 全部模型
+			25 radio button (selectable, settable, boolean) 内置模型
+			26 radio button (selectable, settable, boolean) 自定义模型
+		27 button 查看当前范围汇总
+		28 table 当前页请求记录
+			29 row
+				30 cell 时间
+				31 cell 供应商
+				32 cell 模型
+				33 cell Token 使用量
+				34 cell 缓存命中
+				35 cell 费用 / 积分
+				36 cell 耗时
+				37 cell 状态
+			38 row ID: usage-row-0, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				39 cell 11-01 15:33:26; 9ea82103510b1fae21b466562b240d155e54727ad1faa802
+				40 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				41 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				42 cell 总 Token: 550
+输入: 500
+输出: 50
+				43 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				44 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				45 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				46 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			47 row ID: usage-row-1, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				48 cell 11-01 15:33:26; 9015980c1164128cfe856ad001667b682e9be6816447583e
+				49 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				50 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				51 cell 总 Token: 550
+输入: 500
+输出: 50
+				52 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				53 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				54 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				55 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			56 row ID: usage-row-2, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				57 cell 11-01 15:33:26; 017b3ce90926022fdf70730e14969d16306c330c53ddcb93
+				58 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				59 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				60 cell 总 Token: 550
+输入: 500
+输出: 50
+				61 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				62 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				63 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				64 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			65 row ID: usage-row-3, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				66 cell 11-01 15:33:26; 7855fd626136ff91a5ed23923aaab9539fa66d30b50592c8
+				67 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				68 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				69 cell 总 Token: 550
+输入: 500
+输出: 50
+				70 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				71 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				72 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				73 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			74 row ID: usage-row-4, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				75 cell 11-01 15:33:26; 06d97169ea929b55a3af055af632470c26a4ecc69e7d4561
+				76 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				77 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				78 cell 总 Token: 550
+输入: 500
+输出: 50
+				79 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				80 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				81 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				82 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			83 row ID: usage-row-5, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				84 cell 11-01 15:33:26; 0499ebef8c45bb6402c0ac3e4d7391e88be953afcf424df8
+				85 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				86 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				87 cell 总 Token: 550
+输入: 500
+输出: 50
+				88 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				89 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				90 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				91 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+			92 row ID: usage-row-6, 11-01 15:33:26 · 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef  · deepseek-v4.1-flash
+				93 cell 11-01 15:33:26; e2707b566f539eef8bdc03d49852e10bfee27701a20f0604
+				94 cell 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+ID: review-provider
+自定义
+请求发生时的名称快照，改名或删除供应商不会改变历史记录
+				95 cell deepseek-v4.1-flash; 人工验收供应商｜长名称悬停完整显示｜Synthetic Provider abcdef abcdef abcdef abcdef abcdef abcdef abcdef abcdef 
+人工悬停长模型名称 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 
+请求模型 sub2api/deepseek-v4.1-flash
+				96 cell 总 Token: 550
+输入: 500
+输出: 50
+				97 cell 80.0%; 缓存读取: 400
+缓存创建: —
+输入: 500
+命中率 = 缓存读 ÷ 输入；缺失或输入为 0 显示 —
+				98 cell $<0.0001 · —; 估算值，不是实际账单
+点数 —
+点数来自日志记录值，不代表账号余额
+				99 cell 0 ms; 总耗时 0 ms
+首内容 —
+TTFB 0 ms
+tok/s —
+非流式 tok/s = 输出 Token ÷ 总耗时秒，包含等待时间的端到端平均速率。数据缺失或耗时无效时显示 —。
+				100 cell 200 · 完成; HTTP 200
+完成
+用量 完整
+		101 button 上一页
+		102 button 下一页
+		103 pop up button (settable) 10 条/页
+		104 text field (settable) 1
+		105 button 跳转
+		106 button 首列
+		107 button 右侧列
+		108 button 皮肤设置
+		109 toggle button (settable, boolean) 开机启动, Value: off
+		110 button 检查更新
+		111 button 界面语言
+		112 button 恢复默认窗口尺寸
+		113 button GitHub 项目主页
+		114 button 提交反馈
+	115 close button
+	116 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	117 minimize button
+118 menu bar
+	119 WorkBuddy Proxy QA92 Manual
+
+The focused UI element is 0 standard window Secondary Actions: Raise

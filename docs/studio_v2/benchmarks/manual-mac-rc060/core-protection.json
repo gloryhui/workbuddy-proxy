@@ -1,0 +1,92 @@
+{
+  "enforced": true,
+  "pid": 59297,
+  "sandboxed": true,
+  "protected_permissions": {
+    "workbuddy": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    },
+    "proxy_macos": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    },
+    "proxy_unix": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    },
+    "installed_app": {
+      "file-read-data": [
+        1,
+        1
+      ],
+      "file-write-data": [
+        1,
+        1
+      ],
+      "file-write-create": [
+        1,
+        1
+      ],
+      "file-write-unlink": [
+        1,
+        1
+      ]
+    }
+  },
+  "synthetic_permissions": {
+    "file-read-data": 0,
+    "file-write-data": 0,
+    "file-write-create": 0,
+    "file-write-unlink": 0
+  },
+  "protected_root_exists": {
+    "workbuddy": true,
+    "proxy_macos": true,
+    "proxy_unix": false,
+    "installed_app": true
+  },
+  "method": "sandbox_check permission queries, no protected file I/O"
+}

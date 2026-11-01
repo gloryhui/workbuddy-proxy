@@ -1,0 +1,96 @@
+{
+  "folder": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y/fixture",
+  "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y/fixture/WorkBuddy Proxy QA92 Manual.app",
+  "core_pid": 59297,
+  "ui_pid": 59772,
+  "fixture_pid": 59295,
+  "port": 56290,
+  "bundle_id": "com.workbuddy.codexreview.qa92.manual.74f1106974",
+  "runtime_ui_binary": "WorkBuddy Proxy QA92 Manual.app/Contents/MacOS/workbuddy-proxy-gpui",
+  "sandbox_policy_sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb",
+  "source_guard_library_sha256": null,
+  "sandbox_ui_pid": 59772,
+  "gui_kernel_guard": false,
+  "native_binding_rule": "Unique app identity and isolated LSEnvironment apply to initial and duplicate native launches. Core has kernel profile protection; GUI bootstrap mode is a separate CUA binding diagnostic.",
+  "binary_sha256": {
+    "core": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff",
+    "ui": "40f22bc10ba3135172ebb85f01813b0347a729d44256b195cd50f756eb4f7b9e"
+  },
+  "synthetic_initial": {
+    "providers": 2,
+    "models": 5,
+    "requests": 0,
+    "requests_at_UI_launch": 12
+  },
+  "restart_guard": {
+    "nonce": "74f1106974",
+    "audit": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-manual92-hil6m42y/restart-audit.jsonl",
+    "deny_real_WorkBuddy": true
+  },
+  "copy_inheritance_fixture": false,
+  "complete_bundle_signed": true,
+  "signature_identity": {
+    "source": {
+      "sha256": "6b894d752770c9096c6e988c371d40c4665cd4e42b2f2d5e67b4e257e8466933",
+      "load_commands_end": 4616,
+      "signature_offset": 43471040,
+      "signature_bytes": 339808,
+      "signature_command": 4600,
+      "normalized_bytes": 43471038,
+      "masked_fields": [
+        [
+          2432,
+          8
+        ],
+        [
+          2448,
+          8
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          4600,
+          16
+        ]
+      ],
+      "code_probe_offset": 4696
+    },
+    "runtime": {
+      "sha256": "6b894d752770c9096c6e988c371d40c4665cd4e42b2f2d5e67b4e257e8466933",
+      "load_commands_end": 4616,
+      "signature_offset": 43471040,
+      "signature_bytes": 357952,
+      "signature_command": 4600,
+      "normalized_bytes": 43471038,
+      "masked_fields": [
+        [
+          2432,
+          8
+        ],
+        [
+          2448,
+          8
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          4600,
+          16
+        ]
+      ],
+      "code_probe_offset": 4696
+    },
+    "normalized_code_equal": true,
+    "code_mutation_detected": true,
+    "signature_only_mutation_ignored": true,
+    "input_ui_sha256": "f5fa721fa5f4d314badbdcc70621e9e91ae24feb1532681449f8eb5138139db5",
+    "runtime_ui_sha256": "40f22bc10ba3135172ebb85f01813b0347a729d44256b195cd50f756eb4f7b9e",
+    "comparison_copies_created": false,
+    "comparison_copies_removed": true,
+    "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "path": "awaiting-manual.ax.txt",
+      "bytes": 12367,
+      "sha256": "94241687ee0527de14a0abbb62d1e4b146d0551b5ee8810461bc90c6100e8b5e"
+    },
+    {
+      "path": "awaiting-manual.jpg",
+      "bytes": 171305,
+      "sha256": "e985b1b3680ad9c94c1fc83cfc42ffd4b90125081c378d8d15a402ff048038ad"
+    },
+    {
+      "path": "core-protection.json",
+      "bytes": 1468,
+      "sha256": "7603537767254b2cd902eef5928c6cb194713766664e23cdb28434ff9e05dafb"
+    },
+    {
+      "path": "fixture-manifest.json",
+      "bytes": 3078,
+      "sha256": "6ad92ad7e1c0c3244655bb704b94d08cd323bdaa055a4c608cb4229d240abf1e"
+    },
+    {
+      "path": "harness-audit/fixture.py.txt",
+      "bytes": 22099,
+      "sha256": "2b90b703b1ab6b1a68346195629a40ebfe91520dcf56f7be60236959d51a005d"
+    },
+    {
+      "path": "harness-audit/process-start.c.txt",
+      "bytes": 339,
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a"
+    },
+    {
+      "path": "harness-audit/restart-identity-guard.m.txt",
+      "bytes": 6090,
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+    },
+    {
+      "path": "initial-image.json",
+      "bytes": 344,
+      "sha256": "2ce83d9f118e48157e803287a92f6754740f6fe26925740d7bddd296c36edcab"
+    },
+    {
+      "path": "initial.ax.txt",
+      "bytes": 12367,
+      "sha256": "94241687ee0527de14a0abbb62d1e4b146d0551b5ee8810461bc90c6100e8b5e"
+    },
+    {
+      "path": "initial.jpg",
+      "bytes": 171382,
+      "sha256": "4cc68ff0f0f76b521a1c5b4a1576a8b2cfc1eb963a806df6d9292e16ae16f366"
+    },
+    {
+      "path": "live-state.json",
+      "bytes": 1420,
+      "sha256": "899916986b7a109d4089adbef28273e1c5a4cdeaf3f926385207f4ca8255d056"
+    },
+    {
+      "path": "preflight.json",
+      "bytes": 828,
+      "sha256": "9a23c3d06e74051337e1ec74d6d05755a6b54d97fc2635630320b6a34ce81cfb"
+    },
+    {
+      "path": "preregistered.json",
+      "bytes": 1410,
+      "sha256": "faf501630b06ede59a9508ffcd5b555028bd0a32cf09431da8a0f6463e1e69fb"
+    },
+    {
+      "path": "signed-runtime-identity.json",
+      "bytes": 1450,
+      "sha256": "a940a3db26c65279cc7fc1ac14098f0b9f228c0bf3e4bf208a386e910e86f91c"
+    }
+  ],
+  "scope": "Ongoingmanualattempt,noacceptance. OriginalCUAJPEG/AX,fixturecode,identity/preflightonly; no privateDB/config/instance/env/key archive.",
+  "pending": true
+}
