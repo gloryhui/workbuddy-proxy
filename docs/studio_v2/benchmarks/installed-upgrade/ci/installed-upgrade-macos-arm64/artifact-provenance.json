@@ -1,0 +1,49 @@
+{
+  "id": 13062313399,
+  "name": "installed-upgrade-macos-arm64",
+  "bytes": 7901,
+  "sha256": "9725f365c0c3120f6e977bd00d9ca42499e64cedd00f633b0cb75348b3c44fa0",
+  "source": "0a355e8624417c76bf8540fe91c226b219a22b17",
+  "members": [
+    {
+      "path": "cleanup.json",
+      "bytes": 520,
+      "sha256": "bd983e3c94dc1b8a1251420159321ee6390c73a101fd77e54679e87cafdff508"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "12b8729ab1564526e40e35cf9d8c8c4338cc7b73926f936859524e4e1813face"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cd70ea351c42ac140455a13fc8de1c3a310ceb80710b80b005e2792685b73652"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b4dbe806b93e91353b0794fe57b3ab37db3e51afabcaa1fb54bc384a2b28c8e4"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b4dbe806b93e91353b0794fe57b3ab37db3e51afabcaa1fb54bc384a2b28c8e4"
+    },
+    {
+      "path": "report.json",
+      "bytes": 18021,
+      "sha256": "64662b8ac66d9af360f5dd169433d72339d93891e0571ec00fd391e3dbb08090"
+    },
+    {
+      "path": "v0.5.6.json",
+      "bytes": 7500,
+      "sha256": "057d43c625a3c927509a0ec7b306f018aac9e6c18adfa70545d2f79ffab81237"
+    },
+    {
+      "path": "v0.5.7.json",
+      "bytes": 7249,
+      "sha256": "6315f8c4bad590da2ada00492e7d400dde33ac6d6e3c3cbf633ce862e887150d"
+    }
+  ]
+}

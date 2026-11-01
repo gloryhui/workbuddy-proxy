@@ -1,0 +1,2822 @@
+[
+  {
+    "bytes": 1854,
+    "path": "result-downloads-private.json"
+  },
+  {
+    "bytes": 412,
+    "path": "task-ownership.json"
+  },
+  {
+    "bytes": 7901,
+    "path": "13062313399.zip"
+  },
+  {
+    "bytes": 19749,
+    "path": "13061634013.zip"
+  },
+  {
+    "bytes": 7895,
+    "path": "13062756660.zip"
+  },
+  {
+    "bytes": 3077,
+    "path": "cleanup-preflight.py"
+  },
+  {
+    "bytes": 38304358,
+    "path": "candidate-arm64.zip"
+  },
+  {
+    "bytes": 376,
+    "path": "local-fixture/ownership.json"
+  },
+  {
+    "bytes": 38381412,
+    "path": "local-fixture/candidate-packages/workbuddy-proxy-0.5.7-macos-arm64.dmg"
+  },
+  {
+    "bytes": 15074200,
+    "path": "local-fixture/v0.5.7/workbuddy-proxy-0.5.7-macos-arm64.dmg"
+  },
+  {
+    "bytes": 962,
+    "path": "local-fixture/v0.5.7/private-data/config.json"
+  },
+  {
+    "bytes": 41,
+    "path": "local-fixture/v0.5.7/private-data/released.stdout.log"
+  },
+  {
+    "bytes": 98,
+    "path": "local-fixture/v0.5.7/private-data/startup.log"
+  },
+  {
+    "bytes": 32768,
+    "path": "local-fixture/v0.5.7/private-data/usage.sqlite3-shm"
+  },
+  {
+    "bytes": 1474992,
+    "path": "local-fixture/v0.5.7/private-data/usage.sqlite3-wal"
+  },
+  {
+    "bytes": 0,
+    "path": "local-fixture/v0.5.7/private-data/instance.lock"
+  },
+  {
+    "bytes": 108,
+    "path": "local-fixture/v0.5.7/private-data/candidate.stdout.log"
+  },
+  {
+    "bytes": 237568,
+    "path": "local-fixture/v0.5.7/private-data/released-backup.sqlite3"
+  },
+  {
+    "bytes": 327,
+    "path": "local-fixture/v0.5.7/private-data/protection.sb"
+  },
+  {
+    "bytes": 237568,
+    "path": "local-fixture/v0.5.7/private-data/usage.sqlite3"
+  },
+  {
+    "bytes": 916,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8381440,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 51647,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42267280,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 916,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8365008,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 50416,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 14647744,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 916,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8381440,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 51647,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42267280,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.7/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 17067713,
+    "path": "local-fixture/v0.5.6/workbuddy-proxy-0.5.6-macos-arm64.dmg"
+  },
+  {
+    "bytes": 962,
+    "path": "local-fixture/v0.5.6/private-data/config.json"
+  },
+  {
+    "bytes": 41,
+    "path": "local-fixture/v0.5.6/private-data/released.stdout.log"
+  },
+  {
+    "bytes": 98,
+    "path": "local-fixture/v0.5.6/private-data/startup.log"
+  },
+  {
+    "bytes": 32768,
+    "path": "local-fixture/v0.5.6/private-data/usage.sqlite3-shm"
+  },
+  {
+    "bytes": 1001192,
+    "path": "local-fixture/v0.5.6/private-data/usage.sqlite3-wal"
+  },
+  {
+    "bytes": 0,
+    "path": "local-fixture/v0.5.6/private-data/instance.lock"
+  },
+  {
+    "bytes": 108,
+    "path": "local-fixture/v0.5.6/private-data/candidate.stdout.log"
+  },
+  {
+    "bytes": 131072,
+    "path": "local-fixture/v0.5.6/private-data/usage-backup.sqlite3"
+  },
+  {
+    "bytes": 131072,
+    "path": "local-fixture/v0.5.6/private-data/released-backup.sqlite3"
+  },
+  {
+    "bytes": 327,
+    "path": "local-fixture/v0.5.6/private-data/protection.sb"
+  },
+  {
+    "bytes": 249856,
+    "path": "local-fixture/v0.5.6/private-data/usage.sqlite3"
+  },
+  {
+    "bytes": 916,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8381440,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 51647,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42267280,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 916,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 84412,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 7755936,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 8617,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 7565,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/DESKTOP.md"
+  },
+  {
+    "bytes": 42396,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 7355,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/ARCHITECTURE.md"
+  },
+  {
+    "bytes": 3724,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/STATISTICS-EXIT-FIX.md"
+  },
+  {
+    "bytes": 7565,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 8670,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/SESSION-HANDOFF.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 5926,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/PERFORMANCE.md"
+  },
+  {
+    "bytes": 5311,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/WORKBUDDY-MODEL-REFRESH.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 15447,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/IMPLEMENTATION-PROMPT.md"
+  },
+  {
+    "bytes": 24194,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REQUIREMENTS.md"
+  },
+  {
+    "bytes": 17153,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/API.md"
+  },
+  {
+    "bytes": 15365,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/UI-WIREFRAME.svg"
+  },
+  {
+    "bytes": 11383,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND8-2026-10-15.md"
+  },
+  {
+    "bytes": 28726,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/IMPLEMENTATION-STATUS.md"
+  },
+  {
+    "bytes": 11995,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND2-2026-10-15.md"
+  },
+  {
+    "bytes": 13210,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/schema.sql"
+  },
+  {
+    "bytes": 14294,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-2026-10-15.md"
+  },
+  {
+    "bytes": 10989,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND6-2026-10-15.md"
+  },
+  {
+    "bytes": 10462,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/NEXT-ITERATION-PROMPT.md"
+  },
+  {
+    "bytes": 10273,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND5-2026-10-15.md"
+  },
+  {
+    "bytes": 5988,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/README.md"
+  },
+  {
+    "bytes": 11883,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validate_design.py"
+  },
+  {
+    "bytes": 12354,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/NEXT-ITERATION-COMBINED-PROMPT.md"
+  },
+  {
+    "bytes": 12372,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND4-2026-10-15.md"
+  },
+  {
+    "bytes": 9579,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND7-2026-10-15.md"
+  },
+  {
+    "bytes": 14859,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND3-2026-10-15.md"
+  },
+  {
+    "bytes": 9040,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/PRICING-DECISION.md"
+  },
+  {
+    "bytes": 5650,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/PRICING-CHANGE-PROMPT.md"
+  },
+  {
+    "bytes": 48362,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/DEVELOPMENT.md"
+  },
+  {
+    "bytes": 1867,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/orphan-results.json"
+  },
+  {
+    "bytes": 1339,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/paging-results.json"
+  },
+  {
+    "bytes": 432,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 1459,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/orphan-output.txt"
+  },
+  {
+    "bytes": 956,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1137,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/paging-output.txt"
+  },
+  {
+    "bytes": 2307,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/README.md"
+  },
+  {
+    "bytes": 1061,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/paging_probe.py"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 5673,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 5171,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 321,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-output.txt"
+  },
+  {
+    "bytes": 4173,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/api-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 4069,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 307,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 1048,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 2279,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/README.md"
+  },
+  {
+    "bytes": 3431,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 425,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/regression-results.json"
+  },
+  {
+    "bytes": 7642,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 6386,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 5732,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/api-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 3197,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 1899,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/orphan-results.json"
+  },
+  {
+    "bytes": 267,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/missing-start-results.json"
+  },
+  {
+    "bytes": 842,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/missing_start_probe.py"
+  },
+  {
+    "bytes": 430,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 12109,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/recovery-results.json"
+  },
+  {
+    "bytes": 1491,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/orphan-output.txt"
+  },
+  {
+    "bytes": 2633,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/recovery_probe.py"
+  },
+  {
+    "bytes": 1208,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/price_edges.py"
+  },
+  {
+    "bytes": 1059,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 11964,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/recovery-output.txt"
+  },
+  {
+    "bytes": 1314,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/gpui-rechecks.json"
+  },
+  {
+    "bytes": 2244,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/README.md"
+  },
+  {
+    "bytes": 1061,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/paging_probe.py"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 217,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/missing-start-output.txt"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 314,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/price-edge-results.json"
+  },
+  {
+    "bytes": 276,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/price-edge-output.txt"
+  },
+  {
+    "bytes": 319,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 4069,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 1867,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/orphan-results.json"
+  },
+  {
+    "bytes": 1339,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/paging-results.json"
+  },
+  {
+    "bytes": 432,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 1459,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/orphan-output.txt"
+  },
+  {
+    "bytes": 1208,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/price_edges.py"
+  },
+  {
+    "bytes": 956,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1137,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/paging-output.txt"
+  },
+  {
+    "bytes": 2196,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/README.md"
+  },
+  {
+    "bytes": 1061,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/paging_probe.py"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 1361,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/price-edge-results.json"
+  },
+  {
+    "bytes": 4782,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 5171,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 1115,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/price-edge-output.txt"
+  },
+  {
+    "bytes": 321,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-output.txt"
+  },
+  {
+    "bytes": 3590,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/api-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 4069,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 173,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/scan-failure-output.txt"
+  },
+  {
+    "bytes": 120,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/startup-failure-output.txt"
+  },
+  {
+    "bytes": 264,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/missing-start-results.json"
+  },
+  {
+    "bytes": 842,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/missing_start_probe.py"
+  },
+  {
+    "bytes": 2518,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/integration-output.txt"
+  },
+  {
+    "bytes": 1404,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/startup_failure_probe.py"
+  },
+  {
+    "bytes": 962,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/runtime-scan-results.json"
+  },
+  {
+    "bytes": 377,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/verification-summary.json"
+  },
+  {
+    "bytes": 669,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1821,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/README.md"
+  },
+  {
+    "bytes": 214,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/missing-start-output.txt"
+  },
+  {
+    "bytes": 132,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/startup-failure-results.json"
+  },
+  {
+    "bytes": 1735,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/runtime_scan_probe.py"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 575,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/runtime-scan-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 2371,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 2848,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-2026-10-15/repro-results.json"
+  },
+  {
+    "bytes": 10710,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-2026-10-15/repro.py"
+  },
+  {
+    "bytes": 1382,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-2026-10-15/collector-probe-output.txt"
+  },
+  {
+    "bytes": 267,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/missing-start-results.json"
+  },
+  {
+    "bytes": 842,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/missing_start_probe.py"
+  },
+  {
+    "bytes": 2825,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery_probe.py"
+  },
+  {
+    "bytes": 1059,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1577,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/README.md"
+  },
+  {
+    "bytes": 354,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-20000-output.txt"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 217,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/missing-start-output.txt"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 317,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-1200-output.txt"
+  },
+  {
+    "bytes": 499,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-20000-results.json"
+  },
+  {
+    "bytes": 446,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-1200-results.json"
+  },
+  {
+    "bytes": 7894,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-mixed.txt"
+  },
+  {
+    "bytes": 10263,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-mixed.json"
+  },
+  {
+    "bytes": 7882,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-zero.txt"
+  },
+  {
+    "bytes": 10263,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-priced.json"
+  },
+  {
+    "bytes": 687,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/pagination.txt"
+  },
+  {
+    "bytes": 249,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/core-tests.txt"
+  },
+  {
+    "bytes": 4147,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/README.md"
+  },
+  {
+    "bytes": 167,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/gpui-tests.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/compatibility.txt"
+  },
+  {
+    "bytes": 7895,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-priced.txt"
+  },
+  {
+    "bytes": 10252,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-zero.json"
+  },
+  {
+    "bytes": 928,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/fixed-pagination.txt"
+  },
+  {
+    "bytes": 348,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/smoke.txt"
+  },
+  {
+    "bytes": 299,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/gpui-clippy.txt"
+  },
+  {
+    "bytes": 2398,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/integration.txt"
+  },
+  {
+    "bytes": 3477,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/group-results.json"
+  },
+  {
+    "bytes": 1095,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/group_probe.py"
+  },
+  {
+    "bytes": 961,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/probe-observations.txt"
+  },
+  {
+    "bytes": 472,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 3856,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/README.md"
+  },
+  {
+    "bytes": 3423,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 2118,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 3852,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 1624,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 191,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/scheduler-probe/Cargo.toml"
+  },
+  {
+    "bytes": 14447,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/scheduler-probe/Cargo.lock"
+  },
+  {
+    "bytes": 2354,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/scheduler-probe/src/main.rs"
+  },
+  {
+    "bytes": 178,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/collector-probe/Cargo.toml"
+  },
+  {
+    "bytes": 4905,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/collector-probe/Cargo.lock"
+  },
+  {
+    "bytes": 1649,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/collector-probe/src/main.rs"
+  },
+  {
+    "bytes": 511542,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/macos-en-v0.5.5.jpg"
+  },
+  {
+    "bytes": 512844,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/model-discovery-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 415543,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/statistics-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 1302,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/README.md"
+  },
+  {
+    "bytes": 770777,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/request-log-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 469766,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/macos-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 7955,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/REQUIREMENTS.md"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 15046,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/ARCHITECTURE.md"
+  },
+  {
+    "bytes": 4283,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/PARALLEL-WORK.md"
+  },
+  {
+    "bytes": 3847,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/SOURCES.md"
+  },
+  {
+    "bytes": 3526,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/IMPLEMENTATION-STATUS.md"
+  },
+  {
+    "bytes": 3011,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/acceptance.json"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 3070,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/README.md"
+  },
+  {
+    "bytes": 6071,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/FINAL-VALIDATION.md"
+  },
+  {
+    "bytes": 920,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-lifecycle.json"
+  },
+  {
+    "bytes": 1212,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/recovery-counter-repeat.txt"
+  },
+  {
+    "bytes": 227,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-model_discovery.txt"
+  },
+  {
+    "bytes": 293,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-port_change.txt"
+  },
+  {
+    "bytes": 416,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-clippy.txt"
+  },
+  {
+    "bytes": 302,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-multi_routing.txt"
+  },
+  {
+    "bytes": 197,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-native_discovery_test.txt"
+  },
+  {
+    "bytes": 4241,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-before-fix-isolated.txt"
+  },
+  {
+    "bytes": 4276,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-fixed.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core_compatibility.txt"
+  },
+  {
+    "bytes": 215,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-connection_test.txt"
+  },
+  {
+    "bytes": 396,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-static-checks.json"
+  },
+  {
+    "bytes": 240,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui_package_test.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-tests.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/stream-clippy.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core-clippy.txt"
+  },
+  {
+    "bytes": 245,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-multimodal_test.txt"
+  },
+  {
+    "bytes": 265,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-model_capabilities_test.txt"
+  },
+  {
+    "bytes": 4268,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-offline-diagnostic.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/standard-history-test.txt"
+  },
+  {
+    "bytes": 5601,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-fixed.json"
+  },
+  {
+    "bytes": 1418,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-native_protocol_test.txt"
+  },
+  {
+    "bytes": 348,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-smoke.txt"
+  },
+  {
+    "bytes": 5574,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-before-fix-isolated.json"
+  },
+  {
+    "bytes": 195,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-autostart_test.txt"
+  },
+  {
+    "bytes": 121935,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/ui-protocols.png"
+  },
+  {
+    "bytes": 309,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core-tests.txt"
+  },
+  {
+    "bytes": 166,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core-release.txt"
+  },
+  {
+    "bytes": 928,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-statistics_pagination_test.txt"
+  },
+  {
+    "bytes": 5591,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-offline-diagnostic.json"
+  },
+  {
+    "bytes": 2108,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-regression.json"
+  },
+  {
+    "bytes": 419,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-release.txt"
+  },
+  {
+    "bytes": 14328,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/output-all-tests.txt"
+  },
+  {
+    "bytes": 321,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-native_resource_test.txt"
+  },
+  {
+    "bytes": 110472,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/ui-1100x700.png"
+  },
+  {
+    "bytes": 2400,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-statistics_test.txt"
+  },
+  {
+    "bytes": 921,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/ci-58cb754-windows-x64-native.json"
+  },
+  {
+    "bytes": 917,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/ci-58cb754-windows-x64.json"
+  },
+  {
+    "bytes": 889,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/local-macos-arm64-native.json"
+  },
+  {
+    "bytes": 884,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/local-macos-arm64-headless.json"
+  },
+  {
+    "bytes": 1017,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/core-macos-arm64.json"
+  },
+  {
+    "bytes": 923,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/gpui-windows-x64.json"
+  },
+  {
+    "bytes": 1493,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/windows-installer.json"
+  },
+  {
+    "bytes": 1017,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/core-macos-x64.json"
+  },
+  {
+    "bytes": 919,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/gpui-macos-arm64.json"
+  },
+  {
+    "bytes": 1025,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/core-windows-x64.json"
+  },
+  {
+    "bytes": 920,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/gpui-macos-x64.json"
+  },
+  {
+    "bytes": 1018,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/core-macos-arm64.json"
+  },
+  {
+    "bytes": 923,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/gpui-windows-x64.json"
+  },
+  {
+    "bytes": 1019,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/core-macos-x64.json"
+  },
+  {
+    "bytes": 918,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/gpui-macos-arm64.json"
+  },
+  {
+    "bytes": 1026,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/core-windows-x64.json"
+  },
+  {
+    "bytes": 921,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/gpui-macos-x64.json"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 14461744,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 916,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8381440,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 51647,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42267280,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-fixture/v0.5.6/\u81ea\u9009\u8def\u5f84 with spaces/WorkBuddy Proxy.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 382,
+    "path": "local-final-fixture/ownership.json"
+  },
+  {
+    "bytes": 38381412,
+    "path": "local-final-fixture/candidate-packages/workbuddy-proxy-0.5.7-macos-arm64.dmg"
+  },
+  {
+    "bytes": 15074200,
+    "path": "local-final-fixture/v0.5.7/workbuddy-proxy-0.5.7-macos-arm64.dmg"
+  },
+  {
+    "bytes": 962,
+    "path": "local-final-fixture/v0.5.7/private-data/config.json"
+  },
+  {
+    "bytes": 41,
+    "path": "local-final-fixture/v0.5.7/private-data/released.stdout.log"
+  },
+  {
+    "bytes": 98,
+    "path": "local-final-fixture/v0.5.7/private-data/startup.log"
+  },
+  {
+    "bytes": 32768,
+    "path": "local-final-fixture/v0.5.7/private-data/usage.sqlite3-shm"
+  },
+  {
+    "bytes": 1470872,
+    "path": "local-final-fixture/v0.5.7/private-data/usage.sqlite3-wal"
+  },
+  {
+    "bytes": 0,
+    "path": "local-final-fixture/v0.5.7/private-data/instance.lock"
+  },
+  {
+    "bytes": 108,
+    "path": "local-final-fixture/v0.5.7/private-data/candidate.stdout.log"
+  },
+  {
+    "bytes": 237568,
+    "path": "local-final-fixture/v0.5.7/private-data/released-backup.sqlite3"
+  },
+  {
+    "bytes": 327,
+    "path": "local-final-fixture/v0.5.7/private-data/protection.sb"
+  },
+  {
+    "bytes": 237568,
+    "path": "local-final-fixture/v0.5.7/private-data/usage.sqlite3"
+  },
+  {
+    "bytes": 916,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8381440,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 51647,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42267280,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.7/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 916,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8365008,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 50416,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 14647744,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.7/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 17067713,
+    "path": "local-final-fixture/v0.5.6/workbuddy-proxy-0.5.6-macos-arm64.dmg"
+  },
+  {
+    "bytes": 962,
+    "path": "local-final-fixture/v0.5.6/private-data/config.json"
+  },
+  {
+    "bytes": 41,
+    "path": "local-final-fixture/v0.5.6/private-data/released.stdout.log"
+  },
+  {
+    "bytes": 98,
+    "path": "local-final-fixture/v0.5.6/private-data/startup.log"
+  },
+  {
+    "bytes": 32768,
+    "path": "local-final-fixture/v0.5.6/private-data/usage.sqlite3-shm"
+  },
+  {
+    "bytes": 1009432,
+    "path": "local-final-fixture/v0.5.6/private-data/usage.sqlite3-wal"
+  },
+  {
+    "bytes": 0,
+    "path": "local-final-fixture/v0.5.6/private-data/instance.lock"
+  },
+  {
+    "bytes": 108,
+    "path": "local-final-fixture/v0.5.6/private-data/candidate.stdout.log"
+  },
+  {
+    "bytes": 131072,
+    "path": "local-final-fixture/v0.5.6/private-data/usage-backup.sqlite3"
+  },
+  {
+    "bytes": 131072,
+    "path": "local-final-fixture/v0.5.6/private-data/released-backup.sqlite3"
+  },
+  {
+    "bytes": 327,
+    "path": "local-final-fixture/v0.5.6/private-data/protection.sb"
+  },
+  {
+    "bytes": 249856,
+    "path": "local-final-fixture/v0.5.6/private-data/usage.sqlite3"
+  },
+  {
+    "bytes": 916,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 5738,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 8381440,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 9905,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 51647,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 11375,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42267280,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.6/candidate-staged.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 916,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 84412,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 7755936,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/MacOS/workbuddy-proxy"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/app-icon.icns"
+  },
+  {
+    "bytes": 1065,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/LICENSE"
+  },
+  {
+    "bytes": 8617,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/CHANGELOG.md"
+  },
+  {
+    "bytes": 7565,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/DESKTOP.md"
+  },
+  {
+    "bytes": 42396,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/README.md"
+  },
+  {
+    "bytes": 506,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/GPUI-NOTICES.md"
+  },
+  {
+    "bytes": 4044,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/PROVIDER-PRESETS.md"
+  },
+  {
+    "bytes": 7355,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/ARCHITECTURE.md"
+  },
+  {
+    "bytes": 3724,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/STATISTICS-EXIT-FIX.md"
+  },
+  {
+    "bytes": 7565,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/DESKTOP.md"
+  },
+  {
+    "bytes": 8670,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/SESSION-HANDOFF.md"
+  },
+  {
+    "bytes": 6124,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/MODEL-CAPABILITIES.md"
+  },
+  {
+    "bytes": 5926,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/PERFORMANCE.md"
+  },
+  {
+    "bytes": 5311,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/WORKBUDDY-MODEL-REFRESH.md"
+  },
+  {
+    "bytes": 10768,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/LICENSE-APACHE-GPUI.txt"
+  },
+  {
+    "bytes": 15447,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/IMPLEMENTATION-PROMPT.md"
+  },
+  {
+    "bytes": 24194,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REQUIREMENTS.md"
+  },
+  {
+    "bytes": 17153,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/API.md"
+  },
+  {
+    "bytes": 15365,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/UI-WIREFRAME.svg"
+  },
+  {
+    "bytes": 11383,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND8-2026-10-15.md"
+  },
+  {
+    "bytes": 28726,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/IMPLEMENTATION-STATUS.md"
+  },
+  {
+    "bytes": 11995,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND2-2026-10-15.md"
+  },
+  {
+    "bytes": 13210,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/schema.sql"
+  },
+  {
+    "bytes": 14294,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-2026-10-15.md"
+  },
+  {
+    "bytes": 10989,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND6-2026-10-15.md"
+  },
+  {
+    "bytes": 10462,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/NEXT-ITERATION-PROMPT.md"
+  },
+  {
+    "bytes": 10273,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND5-2026-10-15.md"
+  },
+  {
+    "bytes": 5988,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/README.md"
+  },
+  {
+    "bytes": 11883,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validate_design.py"
+  },
+  {
+    "bytes": 12354,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/NEXT-ITERATION-COMBINED-PROMPT.md"
+  },
+  {
+    "bytes": 12372,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND4-2026-10-15.md"
+  },
+  {
+    "bytes": 9579,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND7-2026-10-15.md"
+  },
+  {
+    "bytes": 14859,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/REVIEW-ROUND3-2026-10-15.md"
+  },
+  {
+    "bytes": 9040,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/PRICING-DECISION.md"
+  },
+  {
+    "bytes": 5650,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/PRICING-CHANGE-PROMPT.md"
+  },
+  {
+    "bytes": 48362,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/DEVELOPMENT.md"
+  },
+  {
+    "bytes": 1867,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/orphan-results.json"
+  },
+  {
+    "bytes": 1339,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/paging-results.json"
+  },
+  {
+    "bytes": 432,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 1459,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/orphan-output.txt"
+  },
+  {
+    "bytes": 956,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1137,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/paging-output.txt"
+  },
+  {
+    "bytes": 2307,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/README.md"
+  },
+  {
+    "bytes": 1061,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/paging_probe.py"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 5673,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 5171,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 321,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-output.txt"
+  },
+  {
+    "bytes": 4173,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/api-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 4069,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round4-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 307,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 1048,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 2279,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/README.md"
+  },
+  {
+    "bytes": 3431,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 425,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/regression-results.json"
+  },
+  {
+    "bytes": 7642,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 6386,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 5732,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/api-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 3197,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round3-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 1899,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/orphan-results.json"
+  },
+  {
+    "bytes": 267,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/missing-start-results.json"
+  },
+  {
+    "bytes": 842,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/missing_start_probe.py"
+  },
+  {
+    "bytes": 430,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 12109,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/recovery-results.json"
+  },
+  {
+    "bytes": 1491,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/orphan-output.txt"
+  },
+  {
+    "bytes": 2633,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/recovery_probe.py"
+  },
+  {
+    "bytes": 1208,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/price_edges.py"
+  },
+  {
+    "bytes": 1059,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 11964,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/recovery-output.txt"
+  },
+  {
+    "bytes": 1314,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/gpui-rechecks.json"
+  },
+  {
+    "bytes": 2244,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/README.md"
+  },
+  {
+    "bytes": 1061,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/paging_probe.py"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 217,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/missing-start-output.txt"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 314,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/price-edge-results.json"
+  },
+  {
+    "bytes": 276,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/price-edge-output.txt"
+  },
+  {
+    "bytes": 319,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 4069,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round6-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 1867,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/orphan-results.json"
+  },
+  {
+    "bytes": 1339,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/paging-results.json"
+  },
+  {
+    "bytes": 432,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-results.json"
+  },
+  {
+    "bytes": 1459,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/orphan-output.txt"
+  },
+  {
+    "bytes": 1208,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/price_edges.py"
+  },
+  {
+    "bytes": 956,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1137,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/paging-output.txt"
+  },
+  {
+    "bytes": 2196,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/README.md"
+  },
+  {
+    "bytes": 1061,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/paging_probe.py"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 1361,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/price-edge-results.json"
+  },
+  {
+    "bytes": 4782,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 5171,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 1115,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/price-edge-output.txt"
+  },
+  {
+    "bytes": 321,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-output.txt"
+  },
+  {
+    "bytes": 3590,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/api-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 4069,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round5-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 173,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/scan-failure-output.txt"
+  },
+  {
+    "bytes": 120,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/startup-failure-output.txt"
+  },
+  {
+    "bytes": 264,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/missing-start-results.json"
+  },
+  {
+    "bytes": 842,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/missing_start_probe.py"
+  },
+  {
+    "bytes": 2518,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/integration-output.txt"
+  },
+  {
+    "bytes": 1404,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/startup_failure_probe.py"
+  },
+  {
+    "bytes": 962,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/runtime-scan-results.json"
+  },
+  {
+    "bytes": 377,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/verification-summary.json"
+  },
+  {
+    "bytes": 669,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1821,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/README.md"
+  },
+  {
+    "bytes": 214,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/missing-start-output.txt"
+  },
+  {
+    "bytes": 132,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/startup-failure-results.json"
+  },
+  {
+    "bytes": 1735,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/runtime_scan_probe.py"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 575,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/runtime-scan-output.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 2371,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round8-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 2848,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-2026-10-15/repro-results.json"
+  },
+  {
+    "bytes": 10710,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-2026-10-15/repro.py"
+  },
+  {
+    "bytes": 1382,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-2026-10-15/collector-probe-output.txt"
+  },
+  {
+    "bytes": 267,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/missing-start-results.json"
+  },
+  {
+    "bytes": 842,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/missing_start_probe.py"
+  },
+  {
+    "bytes": 2825,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery_probe.py"
+  },
+  {
+    "bytes": 1059,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 1577,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/README.md"
+  },
+  {
+    "bytes": 354,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-20000-output.txt"
+  },
+  {
+    "bytes": 1399,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/orphan_probe.py"
+  },
+  {
+    "bytes": 217,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/missing-start-output.txt"
+  },
+  {
+    "bytes": 3476,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 317,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-1200-output.txt"
+  },
+  {
+    "bytes": 499,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-20000-results.json"
+  },
+  {
+    "bytes": 446,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round7-2026-10-15/recovery-1200-results.json"
+  },
+  {
+    "bytes": 7894,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-mixed.txt"
+  },
+  {
+    "bytes": 10263,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-mixed.json"
+  },
+  {
+    "bytes": 7882,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-zero.txt"
+  },
+  {
+    "bytes": 10263,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-priced.json"
+  },
+  {
+    "bytes": 687,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/pagination.txt"
+  },
+  {
+    "bytes": 249,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/core-tests.txt"
+  },
+  {
+    "bytes": 4147,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/README.md"
+  },
+  {
+    "bytes": 167,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/gpui-tests.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/compatibility.txt"
+  },
+  {
+    "bytes": 7895,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-priced.txt"
+  },
+  {
+    "bytes": 10252,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/bench-zero.json"
+  },
+  {
+    "bytes": 928,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/fixed-pagination.txt"
+  },
+  {
+    "bytes": 348,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/smoke.txt"
+  },
+  {
+    "bytes": 299,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/gpui-clippy.txt"
+  },
+  {
+    "bytes": 2398,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/validation-2026-10-16/integration.txt"
+  },
+  {
+    "bytes": 3477,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/group-results.json"
+  },
+  {
+    "bytes": 1095,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/group_probe.py"
+  },
+  {
+    "bytes": 961,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/probe-observations.txt"
+  },
+  {
+    "bytes": 472,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/source-sha256.json"
+  },
+  {
+    "bytes": 3856,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/README.md"
+  },
+  {
+    "bytes": 3423,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/helper.py"
+  },
+  {
+    "bytes": 2118,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/api-results.json"
+  },
+  {
+    "bytes": 3852,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/api_probe.py"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/store-probe/Cargo.toml"
+  },
+  {
+    "bytes": 18779,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/store-probe/Cargo.lock"
+  },
+  {
+    "bytes": 1624,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/store-probe/src/main.rs"
+  },
+  {
+    "bytes": 191,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/scheduler-probe/Cargo.toml"
+  },
+  {
+    "bytes": 14447,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/scheduler-probe/Cargo.lock"
+  },
+  {
+    "bytes": 2354,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/scheduler-probe/src/main.rs"
+  },
+  {
+    "bytes": 178,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/collector-probe/Cargo.toml"
+  },
+  {
+    "bytes": 4905,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/collector-probe/Cargo.lock"
+  },
+  {
+    "bytes": 1649,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/statistics/review-round2-2026-10-15/collector-probe/src/main.rs"
+  },
+  {
+    "bytes": 511542,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/macos-en-v0.5.5.jpg"
+  },
+  {
+    "bytes": 512844,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/model-discovery-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 415543,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/statistics-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 1302,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/README.md"
+  },
+  {
+    "bytes": 770777,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/request-log-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 469766,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/screenshots/macos-zh-v0.5.5.jpg"
+  },
+  {
+    "bytes": 7955,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/REQUIREMENTS.md"
+  },
+  {
+    "bytes": 22759,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/CONTRACTS.md"
+  },
+  {
+    "bytes": 15046,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/ARCHITECTURE.md"
+  },
+  {
+    "bytes": 4283,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/PARALLEL-WORK.md"
+  },
+  {
+    "bytes": 3847,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/SOURCES.md"
+  },
+  {
+    "bytes": 3526,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/IMPLEMENTATION-STATUS.md"
+  },
+  {
+    "bytes": 3011,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/acceptance.json"
+  },
+  {
+    "bytes": 5386,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/USAGE.md"
+  },
+  {
+    "bytes": 3070,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/README.md"
+  },
+  {
+    "bytes": 6071,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/FINAL-VALIDATION.md"
+  },
+  {
+    "bytes": 920,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-lifecycle.json"
+  },
+  {
+    "bytes": 1212,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/recovery-counter-repeat.txt"
+  },
+  {
+    "bytes": 227,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-model_discovery.txt"
+  },
+  {
+    "bytes": 293,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-port_change.txt"
+  },
+  {
+    "bytes": 416,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-clippy.txt"
+  },
+  {
+    "bytes": 302,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-multi_routing.txt"
+  },
+  {
+    "bytes": 197,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-native_discovery_test.txt"
+  },
+  {
+    "bytes": 4241,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-before-fix-isolated.txt"
+  },
+  {
+    "bytes": 4276,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-fixed.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core_compatibility.txt"
+  },
+  {
+    "bytes": 215,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-connection_test.txt"
+  },
+  {
+    "bytes": 396,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-static-checks.json"
+  },
+  {
+    "bytes": 240,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui_package_test.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-tests.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/stream-clippy.txt"
+  },
+  {
+    "bytes": 175,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core-clippy.txt"
+  },
+  {
+    "bytes": 245,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-multimodal_test.txt"
+  },
+  {
+    "bytes": 265,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-model_capabilities_test.txt"
+  },
+  {
+    "bytes": 4268,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-offline-diagnostic.txt"
+  },
+  {
+    "bytes": 486,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/standard-history-test.txt"
+  },
+  {
+    "bytes": 5601,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-fixed.json"
+  },
+  {
+    "bytes": 1418,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-native_protocol_test.txt"
+  },
+  {
+    "bytes": 348,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-smoke.txt"
+  },
+  {
+    "bytes": 5574,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-before-fix-isolated.json"
+  },
+  {
+    "bytes": 195,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-autostart_test.txt"
+  },
+  {
+    "bytes": 121935,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/ui-protocols.png"
+  },
+  {
+    "bytes": 309,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core-tests.txt"
+  },
+  {
+    "bytes": 166,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-core-release.txt"
+  },
+  {
+    "bytes": 928,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-statistics_pagination_test.txt"
+  },
+  {
+    "bytes": 5591,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/benchmark-offline-diagnostic.json"
+  },
+  {
+    "bytes": 2108,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-regression.json"
+  },
+  {
+    "bytes": 419,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-gpui-release.txt"
+  },
+  {
+    "bytes": 14328,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/output-all-tests.txt"
+  },
+  {
+    "bytes": 321,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-native_resource_test.txt"
+  },
+  {
+    "bytes": 110472,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/ui-1100x700.png"
+  },
+  {
+    "bytes": 2400,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/protocol-compat/validation-2026-10-16/final-statistics_test.txt"
+  },
+  {
+    "bytes": 921,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/ci-58cb754-windows-x64-native.json"
+  },
+  {
+    "bytes": 917,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/ci-58cb754-windows-x64.json"
+  },
+  {
+    "bytes": 889,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/local-macos-arm64-native.json"
+  },
+  {
+    "bytes": 884,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/local-macos-arm64-headless.json"
+  },
+  {
+    "bytes": 1017,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/core-macos-arm64.json"
+  },
+  {
+    "bytes": 923,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/gpui-windows-x64.json"
+  },
+  {
+    "bytes": 1493,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/windows-installer.json"
+  },
+  {
+    "bytes": 1017,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/core-macos-x64.json"
+  },
+  {
+    "bytes": 919,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/gpui-macos-arm64.json"
+  },
+  {
+    "bytes": 1025,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/core-windows-x64.json"
+  },
+  {
+    "bytes": 920,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.2/gpui-macos-x64.json"
+  },
+  {
+    "bytes": 1018,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/core-macos-arm64.json"
+  },
+  {
+    "bytes": 923,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/gpui-windows-x64.json"
+  },
+  {
+    "bytes": 1019,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/core-macos-x64.json"
+  },
+  {
+    "bytes": 918,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/gpui-macos-arm64.json"
+  },
+  {
+    "bytes": 1026,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/core-windows-x64.json"
+  },
+  {
+    "bytes": 921,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/benchmarks/v0.5.0/gpui-macos-x64.json"
+  },
+  {
+    "bytes": 1063,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Resources/Documentation/docs/third-party/magpie-LICENSE.txt"
+  },
+  {
+    "bytes": 844,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2448,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 14461744,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 1689268,
+    "path": "local-final-fixture/v0.5.6/previous-app-retained.app/Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns"
+  }
+]

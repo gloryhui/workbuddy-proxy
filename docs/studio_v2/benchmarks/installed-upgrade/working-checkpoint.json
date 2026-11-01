@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-01T08:01:01.561969+08:00",
+  "state": "recorded_QA82_CIallthreepassed_localrootdeleted",
+  "test_head": "0a355e8624417c76bf8540fe91c226b219a22b17",
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "workflow_run": 41254168866,
+  "rerun": false,
+  "owned_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-installed-upgrade.2pamppmx",
+  "local_core_children_live": false,
+  "local_pilot_and_final": "Bothv056/v057 Macactualsamepathappreplacement pass; localfinal includesactualappuninstall+profilepreservation, no localGUI; nativefailureCorestopcleanupaddition isCIonly laterthanlocalsourcehash, do notsaylocaltestedthatbranch.",
+  "ci_scope": "Threeactualrunners,actualoldsetup/appreplacementafter12pricedrowsexist,installedhostUIopen/close/reopen/normalquit/uninstall; reports+cleanup required. Standardfullbuildjob intentionallyskipped.",
+  "next": "R01 remainingrealstates/slot/columndrag/IME/manualAT, R02 platformhardware/input, R03 marker/focusCPU/longresidency, R04.3/.4/.5 signingtrust/finalversion/rollback/release; no automaticAT/inputsource change/publicrelease.",
+  "remaining_frames": 0,
+  "pending_release_tasks_before_batch": 15,
+  "Goal": "active",
+  "VoiceOver_AT_inputsource_changes": false,
+  "ci_jobs": {
+    "macos_x64": 124693699432,
+    "macos_arm64": 124693699544,
+    "windows_x64": 124693699610,
+    "standard_desktop": "skipped intentionally"
+  },
+  "ci_artifacts": [
+    13062756660,
+    13062313399,
+    13061634013
+  ],
+  "six_version_cases_passed": true,
+  "ci_fixture_remaining_bytes": 0,
+  "owned_root_deleted": true,
+  "session_temporary_bytes_remaining": 0,
+  "release_pending_after_batch": 14
+}

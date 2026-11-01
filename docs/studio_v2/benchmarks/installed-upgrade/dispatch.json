@@ -1,0 +1,21 @@
+{
+  "source_head": "0a355e8624417c76bf8540fe91c226b219a22b17",
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "at": "2026-10-31T23:50:13Z",
+  "command_exit": 0,
+  "stdout": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41254168866\n",
+  "stderr": "",
+  "workflow": "desktop.yml",
+  "input": {
+    "upgrade_only": true
+  },
+  "rerun": false,
+  "actual_run": {
+    "conclusion": "",
+    "createdAt": "2026-10-31T23:50:15Z",
+    "databaseId": 41254168866,
+    "headSha": "0a355e8624417c76bf8540fe91c226b219a22b17",
+    "status": "queued",
+    "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41254168866"
+  }
+}

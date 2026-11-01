@@ -1,0 +1,289 @@
+{
+  "state": "recorded",
+  "task": 82,
+  "date": "2026-11-01",
+  "test_source": "0a355e8624417c76bf8540fe91c226b219a22b17",
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "runtime_changed": false,
+  "test_commits": [
+    "98f2212",
+    "0a355e8"
+  ],
+  "workflow_run": 41254168866,
+  "workflow_url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41254168866",
+  "test_jobs": {
+    "macos_intel": 124693699432,
+    "macos_arm64": 124693699544,
+    "windows_x64": 124693699610
+  },
+  "all_actual_test_jobs_first_attempt_success": true,
+  "standard_full_desktop_build": "intentionallyskipped viaupgrade_only; notnewfullCorematrix",
+  "runtime_packages": "Frozen957 verifiedCI41246381635; all3artifactZIPs source/size/SHA bound bycheckedinmanifest",
+  "new_code": [
+    "scripts/installed_upgrade_test.py",
+    "scripts/release_upgrade_sources.json",
+    "scripts/release_upgrade_test.py install/inspectcallbacks/newrequestprice assertions/childtokenremoval",
+    ".github/workflows/release-upgrade.yml reusable3platformjob",
+    ".github/workflows/desktop.yml optionalmanualupgrade_only"
+  ],
+  "six_case_validation": {
+    "test_source": "0a355e8624417c76bf8540fe91c226b219a22b17",
+    "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+    "all_three_pass": true,
+    "six_cases": [
+      {
+        "platform": "macos-x64",
+        "artifact": 13062756660,
+        "old_versions": [
+          "0.5.6",
+          "0.5.7"
+        ],
+        "schemas": [
+          [
+            6,
+            11
+          ],
+          [
+            11,
+            11
+          ]
+        ],
+        "all13equal_after_installed_UI": true,
+        "uninstall_preserved_data": true,
+        "UI_close_reopen_quit": true,
+        "direct_CLI_Core_children_0_waited": true,
+        "installed_host_exit_0": true,
+        "host_owned_Core_and_UI_exit_codes": "unavailable; OS PIDgone and3normalstatsruns verified",
+        "cleanup_bytes_removed": 289588026,
+        "remaining_fixture_bytes": 0
+      },
+      {
+        "platform": "macos-arm64",
+        "artifact": 13062313399,
+        "old_versions": [
+          "0.5.6",
+          "0.5.7"
+        ],
+        "schemas": [
+          [
+            6,
+            11
+          ],
+          [
+            11,
+            11
+          ]
+        ],
+        "all13equal_after_installed_UI": true,
+        "uninstall_preserved_data": true,
+        "UI_close_reopen_quit": true,
+        "direct_CLI_Core_children_0_waited": true,
+        "installed_host_exit_0": true,
+        "host_owned_Core_and_UI_exit_codes": "unavailable; OS PIDgone and3normalstatsruns verified",
+        "cleanup_bytes_removed": 275780745,
+        "remaining_fixture_bytes": 0
+      },
+      {
+        "platform": "windows-x64",
+        "artifact": 13061634013,
+        "old_versions": [
+          "0.5.6",
+          "0.5.7"
+        ],
+        "schemas": [
+          [
+            6,
+            11
+          ],
+          [
+            11,
+            11
+          ]
+        ],
+        "all13equal_after_installed_UI": true,
+        "uninstall_preserved_data": true,
+        "UI_close_reopen_quit": true,
+        "direct_CLI_Core_children_0_waited": true,
+        "installed_host_exit_0": true,
+        "host_owned_Core_and_UI_exit_codes": "unavailable; OS PIDgone and3normalstatsruns verified",
+        "cleanup_bytes_removed": 145742450,
+        "remaining_fixture_bytes": 0
+      }
+    ],
+    "scope": "Actualsamepathpackageinstallation/replacement withlegacydataexistingbeforeinstall, theninstalledhost/Core/UI lifecycle anduninstall preservingexternalprofile. No keyboard/mouse/windowpixel/IME/physicalhardware/signingtrust validation."
+  },
+  "acceptance_audit": "installed-upgrade/acceptance-audit.json",
+  "passed_this_batch": [
+    "R04.2"
+  ],
+  "source_lineend_note": "Macsource LFsameGit; Windows checkout exactlyLFtoCRLF onbothscripts, derivedexpectedSHAverified withoutalteringrawreports. Initialarchivevalidatorassumption corrected, no product/CIrerun.",
+  "local_verification": "Macactualsamepathreplacementv056/v057; supplementarylocalfinalapp-onlyuninstallpreservesdata, no localGUI. Sourcehashscope explicitlyseparatefromfinalCI-onlynativecleanupaddition. AST/RubyYAML/paritychecks/pathportability5passed; actualreusableworkflow all3ran.",
+  "limits": [
+    "Cold upgrade with oldCore stopped beforeinstallation; no liveupdate/Finderdrag/Trash/defaultprofile migration orscreenpixel/keyboard/IME/physicalhardware assertions",
+    "Externalcustomsyntheticprofile only, oldconfig/localkey/providerkey bytes/alllegacybusinesscolumns preserved; not universalallprofiles/DBfileequality claim",
+    "DirectCLI Corechildren0waited; nativeinstalledhost0; itsCore/UI childexitcodesunavailable, OS PIDgone/3normalstatsruns+data comparisons prove cleanup",
+    "Formalversion/signingtrust/notarization/SmartScreen/Gatekeeper/rollback/publicationremainothergates"
+  ],
+  "cleanup": {
+    "local": {
+      "at": "2026-11-01T08:05:08.295510+08:00",
+      "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-installed-upgrade.2pamppmx",
+      "type": "owned dedicated temporary directory",
+      "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+      "uid": 501,
+      "parents": [
+        {
+          "path": "/",
+          "uid": 0,
+          "device": 16777233,
+          "mount": true
+        },
+        {
+          "path": "/private",
+          "uid": 0,
+          "device": 16777233,
+          "mount": false
+        },
+        {
+          "path": "/private/var",
+          "uid": 0,
+          "device": 16777233,
+          "mount": false
+        },
+        {
+          "path": "/private/var/folders",
+          "uid": 0,
+          "device": 16777233,
+          "mount": false
+        },
+        {
+          "path": "/private/var/folders/zg",
+          "uid": 0,
+          "device": 16777233,
+          "mount": false
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+          "uid": 501,
+          "device": 16777233,
+          "mount": false
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+          "uid": 501,
+          "device": 16777233,
+          "mount": false
+        },
+        {
+          "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-installed-upgrade.2pamppmx",
+          "uid": 501,
+          "device": 16777233,
+          "mount": false
+        }
+      ],
+      "files": 705,
+      "subdirectories": 280,
+      "logical_bytes": 623689644,
+      "inventory_sha256": "22b1d57056c45c6dafac805be983d791524565f8a2a326f164ccd9a234baed6b",
+      "no_symlinks_or_nested_mounts": true,
+      "all_owned_local_children_and_mounts_finished": true,
+      "open_handles": 0,
+      "process_references_excluding_preflight_ancestors": 0,
+      "regenerable": "Session-created verified downloads/package copies/synthetic profiles. OriginalCI/localreports/diagnostics/manifests retained inrepo, sharedCargo/baselinekit outside root.",
+      "delete_executed": true,
+      "system_disk_free_before_bytes": 35827138560,
+      "deleted_at": "2026-11-01T08:07:21.782155+08:00",
+      "method": "rm -r -- exactliteralverifiedabsoluteroot/no-force",
+      "session_temporary_bytes_remaining": 0,
+      "retained_baseline_kit_bytes": 50905007,
+      "shared_cargo_and_unowned_previews": "retained",
+      "system_disk_free_after_bytes": 36451700736
+    },
+    "remote": [
+      {
+        "platform": "macos-x64",
+        "artifact": 13062756660,
+        "old_versions": [
+          "0.5.6",
+          "0.5.7"
+        ],
+        "schemas": [
+          [
+            6,
+            11
+          ],
+          [
+            11,
+            11
+          ]
+        ],
+        "all13equal_after_installed_UI": true,
+        "uninstall_preserved_data": true,
+        "UI_close_reopen_quit": true,
+        "direct_CLI_Core_children_0_waited": true,
+        "installed_host_exit_0": true,
+        "host_owned_Core_and_UI_exit_codes": "unavailable; OS PIDgone and3normalstatsruns verified",
+        "cleanup_bytes_removed": 289588026,
+        "remaining_fixture_bytes": 0
+      },
+      {
+        "platform": "macos-arm64",
+        "artifact": 13062313399,
+        "old_versions": [
+          "0.5.6",
+          "0.5.7"
+        ],
+        "schemas": [
+          [
+            6,
+            11
+          ],
+          [
+            11,
+            11
+          ]
+        ],
+        "all13equal_after_installed_UI": true,
+        "uninstall_preserved_data": true,
+        "UI_close_reopen_quit": true,
+        "direct_CLI_Core_children_0_waited": true,
+        "installed_host_exit_0": true,
+        "host_owned_Core_and_UI_exit_codes": "unavailable; OS PIDgone and3normalstatsruns verified",
+        "cleanup_bytes_removed": 275780745,
+        "remaining_fixture_bytes": 0
+      },
+      {
+        "platform": "windows-x64",
+        "artifact": 13061634013,
+        "old_versions": [
+          "0.5.6",
+          "0.5.7"
+        ],
+        "schemas": [
+          [
+            6,
+            11
+          ],
+          [
+            11,
+            11
+          ]
+        ],
+        "all13equal_after_installed_UI": true,
+        "uninstall_preserved_data": true,
+        "UI_close_reopen_quit": true,
+        "direct_CLI_Core_children_0_waited": true,
+        "installed_host_exit_0": true,
+        "host_owned_Core_and_UI_exit_codes": "unavailable; OS PIDgone and3normalstatsruns verified",
+        "cleanup_bytes_removed": 145742450,
+        "remaining_fixture_bytes": 0
+      }
+    ]
+  },
+  "remaining_frames": 0,
+  "total_frames": 40,
+  "pending_release_tasks": 14,
+  "Goal": "active",
+  "VoiceOver_AT_inputsource_changes": false,
+  "public_release": false
+}

@@ -1,0 +1,47 @@
+{
+  "sources": [
+    {
+      "platform": "macos-x64",
+      "file": "scripts/installed_upgrade_test.py",
+      "git_LF_sha256": "958d0772056205331f594c4ac53ae5e278c19f7c85908171e5e439564bde1034",
+      "runner_file_sha256": "958d0772056205331f594c4ac53ae5e278c19f7c85908171e5e439564bde1034",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "macos-x64",
+      "file": "scripts/release_upgrade_test.py",
+      "git_LF_sha256": "fa3455431f18fc613683039f5952f251cf4b36fedd18e967d860a786d7bd8d9e",
+      "runner_file_sha256": "fa3455431f18fc613683039f5952f251cf4b36fedd18e967d860a786d7bd8d9e",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "macos-arm64",
+      "file": "scripts/installed_upgrade_test.py",
+      "git_LF_sha256": "958d0772056205331f594c4ac53ae5e278c19f7c85908171e5e439564bde1034",
+      "runner_file_sha256": "958d0772056205331f594c4ac53ae5e278c19f7c85908171e5e439564bde1034",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "macos-arm64",
+      "file": "scripts/release_upgrade_test.py",
+      "git_LF_sha256": "fa3455431f18fc613683039f5952f251cf4b36fedd18e967d860a786d7bd8d9e",
+      "runner_file_sha256": "fa3455431f18fc613683039f5952f251cf4b36fedd18e967d860a786d7bd8d9e",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "windows-x64",
+      "file": "scripts/installed_upgrade_test.py",
+      "git_LF_sha256": "958d0772056205331f594c4ac53ae5e278c19f7c85908171e5e439564bde1034",
+      "runner_file_sha256": "6a1b926a27adc5de41ae3da44f6ea0330ed725dbc25d283b7249d88b5a02b77b",
+      "exact_checkout_transformation": "LFtoCRLF"
+    },
+    {
+      "platform": "windows-x64",
+      "file": "scripts/release_upgrade_test.py",
+      "git_LF_sha256": "fa3455431f18fc613683039f5952f251cf4b36fedd18e967d860a786d7bd8d9e",
+      "runner_file_sha256": "f4b97cdaa404ff1cb47762e1a291fadb1cef0556ca0948f8c5a1e76aacfd53de",
+      "exact_checkout_transformation": "LFtoCRLF"
+    }
+  ],
+  "note": "Initiallocalarchivevalidator assumedLF sourcebytes for allrunners; Windowscheckout exactlyCRLF onbothscripts. Originalreports/ZIPs unmodified; nocode/testrerun. DerivedexpectedGitblob CRLF digests match runnerbytes."
+}

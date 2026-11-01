@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-01T08:05:08.295510+08:00",
+  "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-installed-upgrade.2pamppmx",
+  "type": "owned dedicated temporary directory",
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "uid": 501,
+  "parents": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-installed-upgrade.2pamppmx",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    }
+  ],
+  "files": 705,
+  "subdirectories": 280,
+  "logical_bytes": 623689644,
+  "inventory_sha256": "22b1d57056c45c6dafac805be983d791524565f8a2a326f164ccd9a234baed6b",
+  "no_symlinks_or_nested_mounts": true,
+  "all_owned_local_children_and_mounts_finished": true,
+  "open_handles": 0,
+  "process_references_excluding_preflight_ancestors": 0,
+  "regenerable": "Session-created verified downloads/package copies/synthetic profiles. OriginalCI/localreports/diagnostics/manifests retained inrepo, sharedCargo/baselinekit outside root.",
+  "delete_executed": false,
+  "system_disk_free_before_bytes": 35827138560
+}

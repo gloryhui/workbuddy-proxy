@@ -1,0 +1,357 @@
+{
+  "test_source": "0a355e8624417c76bf8540fe91c226b219a22b17",
+  "artifact_original_members_verified": 28,
+  "source_checkout_hashes_verified": 6,
+  "files": [
+    {
+      "path": "acceptance-audit.json",
+      "bytes": 9003,
+      "sha256": "cd424ed0c9ad04d79f77fe186e54273468fa45e02f7cd146f172950b78fe2852"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/artifact-provenance.json",
+      "bytes": 1554,
+      "sha256": "4b56a3ad0c2a75fd77d29431323be9055c883179c195b82565e9389a10113ec8"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/cleanup.json",
+      "bytes": 520,
+      "sha256": "bd983e3c94dc1b8a1251420159321ee6390c73a101fd77e54679e87cafdff508"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "12b8729ab1564526e40e35cf9d8c8c4338cc7b73926f936859524e4e1813face"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "cd70ea351c42ac140455a13fc8de1c3a310ceb80710b80b005e2792685b73652"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b4dbe806b93e91353b0794fe57b3ab37db3e51afabcaa1fb54bc384a2b28c8e4"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b4dbe806b93e91353b0794fe57b3ab37db3e51afabcaa1fb54bc384a2b28c8e4"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/report.json",
+      "bytes": 18021,
+      "sha256": "64662b8ac66d9af360f5dd169433d72339d93891e0571ec00fd391e3dbb08090"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/v0.5.6.json",
+      "bytes": 7500,
+      "sha256": "057d43c625a3c927509a0ec7b306f018aac9e6c18adfa70545d2f79ffab81237"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-arm64/v0.5.7.json",
+      "bytes": 7249,
+      "sha256": "6315f8c4bad590da2ada00492e7d400dde33ac6d6e3c3cbf633ce862e887150d"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/artifact-provenance.json",
+      "bytes": 1552,
+      "sha256": "89beafeb3e9024993f957e5f45b22cf83135dab1d86a6bc2ec4e99efe8ab336d"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/cleanup.json",
+      "bytes": 520,
+      "sha256": "5648335fb3c9cc672b1611c9490f93c86dd9afa9bf9482a81430b1f68b995418"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "8adfe6fe79b571570d7c4debab08f4e955a1cd9313dc776b227e77432b63694c"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "efe32d171afcbd897ec744b270aecc086c615c453b3253ac5fb14ec9f987f2c4"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "fa5b5e97bd8ce688601c343b0c826a161241614384117dc63667d7c1344b4a46"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "fa5b5e97bd8ce688601c343b0c826a161241614384117dc63667d7c1344b4a46"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/report.json",
+      "bytes": 18007,
+      "sha256": "98be2630cb9d8202e693348b586a2a1b43f9d8b066b210fc3436b35861b8e2c6"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/v0.5.6.json",
+      "bytes": 7496,
+      "sha256": "b7abb90ee75da71fbe8f56fe60a9de61853faba6d456d7564db7f88a15eeec70"
+    },
+    {
+      "path": "ci/installed-upgrade-macos-x64/v0.5.7.json",
+      "bytes": 7245,
+      "sha256": "f21e5e1153308b4a103f5dc771e5aa1393062aa209b5c7aba0637500ae126df6"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/artifact-provenance.json",
+      "bytes": 2241,
+      "sha256": "2c13d380d84f8ed7caf1a12c9ca8f39fd1edf9767f97544b51739f6fa62bd77d"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/cleanup.json",
+      "bytes": 510,
+      "sha256": "118c00064303ac76ebaa7110fe35198af3a51e965bbba1a261d6e21ae5000577"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.6/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "11e4b39d1651b9079453ebaa96f5b1d3c334a217c14f8f991c7bb7c40cf36aeb"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "d86de947d46865a6fab66a7eb58d5984a6aa02daf37d69e669e081100c04f76e"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "6b2d6277bef3a524435af525ae7af428e86de07bdb7b91305ddf4c0471772041"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.6/released-install.log.txt",
+      "bytes": 110972,
+      "sha256": "0675b378bc9e83cbb36b674dc1d0a39d369fdd7e1fc6d30cf022b2a21c7416da"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.7/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "e887ddba7b54cda49bdd5b1700bc35e7670eca63790a6f6906249346f5c0fe19"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "86cc45010b8a3e27ffd7d05b050b081e4ca27395ad03909b07e1e60c6f6846bc"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "86cc45010b8a3e27ffd7d05b050b081e4ca27395ad03909b07e1e60c6f6846bc"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.7/released-install.log.txt",
+      "bytes": 11495,
+      "sha256": "4b1b80131bc28e83f1a52f62a698fc12b5f1d2bef4862309def21ec143762c49"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/report.json",
+      "bytes": 7888,
+      "sha256": "9bab1b1cb772fb2ff3a89b55a994864b9facf583ccd68ad76f823b0679e66661"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/v0.5.6.json",
+      "bytes": 3149,
+      "sha256": "b18d92141b70831d82224e9cf4b959f1904740988773d63d151fd0ae82990942"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/v0.5.7.json",
+      "bytes": 2889,
+      "sha256": "32d2b45d5d553f20b16188bc3e8c41acfe75874c719a25f85936408275a50ae3"
+    },
+    {
+      "path": "ci/source-checkout-validation.json",
+      "bytes": 2229,
+      "sha256": "0be629660ae0ca0f6d29b7bbe0818ab4f41788ca12eed6b1886961885ad50e80"
+    },
+    {
+      "path": "ci/validation.json",
+      "bytes": 2366,
+      "sha256": "15ab43761b541adcfec198d89502b9c65e9e13be7747f78bee6143e5638caef2"
+    },
+    {
+      "path": "ci/workflow-metadata.json",
+      "bytes": 8395,
+      "sha256": "1124b86bbab010f1b6348d222959a7bdce50748db3c43a02412814679e630c85"
+    },
+    {
+      "path": "cleanup-inventory.json",
+      "bytes": 116760,
+      "sha256": "22b1d57056c45c6dafac805be983d791524565f8a2a326f164ccd9a234baed6b"
+    },
+    {
+      "path": "cleanup-preflight.json",
+      "bytes": 1940,
+      "sha256": "e563a35fa741e124730383d103e47778b6081949855dd217d803abc206a87588"
+    },
+    {
+      "path": "cleanup.json",
+      "bytes": 2240,
+      "sha256": "9d1f09c34f5b71a7796cb8a7204fad7e8e05b54b9ae3636e768bd7381d7d77cc"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 655,
+      "sha256": "e87b58ea06849eb3ed57aa8b0edcda698bb202481fd42c0974d50a3c770a19bb"
+    },
+    {
+      "path": "harness-audit/cleanup-preflight.py.txt",
+      "bytes": 3077,
+      "sha256": "6197f36ff18f80a8c96ca985275314e273fb7e3ff3149647caf7ef2933109231"
+    },
+    {
+      "path": "harness-audit/manifest.json",
+      "bytes": 311,
+      "sha256": "da1f36d0c5d97346e3f70944cd49110840ede7f66b63d242be16afac93395c0a"
+    },
+    {
+      "path": "local-final/logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "0ba680ebe9847f0e7dd952290f39f4120b1cce944db18ec31c4f9a3c8d5e543a"
+    },
+    {
+      "path": "local-final/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "fbddbcf8267d0da6d101e538af57731fe2b5f5a9e7d781f06489e589aef874ef"
+    },
+    {
+      "path": "local-final/logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "22f9690ab0ccfeb7204f0324fe9d30cd2d8c3e8787483f126932692a8f8ec791"
+    },
+    {
+      "path": "local-final/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "7dc33deaac4f914b53abc503a4e59c0336d0f7f57a31896436d83818ef3299ce"
+    },
+    {
+      "path": "local-final/report.json",
+      "bytes": 17364,
+      "sha256": "0dcb22643592866b1b407521ba0449b6dcd1fd20940a0584d2b34f259b6d0113"
+    },
+    {
+      "path": "local-final/v0.5.6.json",
+      "bytes": 7197,
+      "sha256": "713a505e3cccfdac30f806304bc3a410d876d04dc6a7e5aaf8fbaed42bde00d2"
+    },
+    {
+      "path": "local-final/v0.5.7.json",
+      "bytes": 6946,
+      "sha256": "4de5e31fee9149cf7407ee1c2b673648098ea20830d74494e921294ab493ccd3"
+    },
+    {
+      "path": "local-pilot/logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "a2930028d0280c50082ff6b66542d338c04e54e35254da0610bcd42a5f5fee7e"
+    },
+    {
+      "path": "local-pilot/logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "ea66762764703c7aa24509617e19927fa3bbbdf456bbd08ee54ba02b421e5172"
+    },
+    {
+      "path": "local-pilot/logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "1627be4cabf0ccec1c87dbc42ffb993065e0cceb10effeda1f72f36517d714d4"
+    },
+    {
+      "path": "local-pilot/logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "8265fcd08ee8b808ad27c32a6d91625c9a04fe1bf078395dccc77dd7bb79285e"
+    },
+    {
+      "path": "local-pilot/report.json",
+      "bytes": 16828,
+      "sha256": "a8c3cdcc0cb51604699d2f31f78bccfe99c3eb5630f339e21d4aafa78256ba4d"
+    },
+    {
+      "path": "local-pilot/v0.5.6.json",
+      "bytes": 6956,
+      "sha256": "cffd31acc0acb875435470fb6e492793efb66df023d729033035508372e871b2"
+    },
+    {
+      "path": "local-pilot/v0.5.7.json",
+      "bytes": 6705,
+      "sha256": "d89462de4fa79cd90ee7183c0becd82a306aa2653ab34d6130fa0649791994fb"
+    },
+    {
+      "path": "local-source-scope.json",
+      "bytes": 1043,
+      "sha256": "8681e2ca681a97c4f1e5268ae786ddb1a11da607ddf21a33f438e93bd4635a19"
+    },
+    {
+      "path": "task-ownership.json",
+      "bytes": 412,
+      "sha256": "ecf102d8d0ae383b61a209aaa4784d9ccdf9f98eb10fc049ed53f14291823556"
+    },
+    {
+      "path": "working-checkpoint.json",
+      "bytes": 1690,
+      "sha256": "1cd20f6799ea90613a782cfe3a77df839447ab90add34120973d6681b3335c41"
+    }
+  ],
+  "raw_whitespace_exceptions": [
+    {
+      "path": "ci/installed-upgrade-windows-x64/cleanup.json",
+      "bytes": 510,
+      "sha256": "118c00064303ac76ebaa7110fe35198af3a51e965bbba1a261d6e21ae5000577",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.6/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "11e4b39d1651b9079453ebaa96f5b1d3c334a217c14f8f991c7bb7c40cf36aeb",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.6/released-install.log.txt",
+      "bytes": 110972,
+      "sha256": "0675b378bc9e83cbb36b674dc1d0a39d369fdd7e1fc6d30cf022b2a21c7416da",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.7/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "e887ddba7b54cda49bdd5b1700bc35e7670eca63790a6f6906249346f5c0fe19",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/logs/v0.5.7/released-install.log.txt",
+      "bytes": 11495,
+      "sha256": "4b1b80131bc28e83f1a52f62a698fc12b5f1d2bef4862309def21ec143762c49",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/report.json",
+      "bytes": 7888,
+      "sha256": "9bab1b1cb772fb2ff3a89b55a994864b9facf583ccd68ad76f823b0679e66661",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/v0.5.6.json",
+      "bytes": 3149,
+      "sha256": "b18d92141b70831d82224e9cf4b959f1904740988773d63d151fd0ae82990942",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    },
+    {
+      "path": "ci/installed-upgrade-windows-x64/v0.5.7.json",
+      "bytes": 2889,
+      "sha256": "32d2b45d5d553f20b16188bc3e8c41acfe75874c719a25f85936408275a50ae3",
+      "encoding": "utf-8",
+      "reason": "Original runner artifact bytes; preserve CRLF/UTF-16/trailing whitespace"
+    }
+  ],
+  "secret_pattern_scan": "No credential/private-key/signed-download-URL pattern matched; only synthetic test profiles used; raw bytes preserved.",
+  "scope": "Manifest excludes itself. Raw CI payload SHA validated against artifact provenance, local supplementary source scope unchanged."
+}

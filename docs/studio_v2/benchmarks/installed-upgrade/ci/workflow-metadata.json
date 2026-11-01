@@ -1,0 +1,268 @@
+{
+  "jobs": {
+    "jobs": [
+      {
+        "id": 124693699432,
+        "name": "released-upgrades / upgrade (macos-15-intel, macos-x64)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 41254168866,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Replace real released packages after old data exists",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Clean only the verified finished fixture",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 124693699544,
+        "name": "released-upgrades / upgrade (macos-latest, macos-arm64)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 41254168866,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Replace real released packages after old data exists",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Clean only the verified finished fixture",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 124693699610,
+        "name": "released-upgrades / upgrade (windows-latest, windows-x64)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 41254168866,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Replace real released packages after old data exists",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Clean only the verified finished fixture",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 124693700317,
+        "name": "desktop",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 41254168866,
+        "logs_url": null,
+        "steps": null
+      }
+    ]
+  },
+  "artifacts": {
+    "artifacts": [
+      {
+        "id": 13062756660,
+        "name": "installed-upgrade-macos-x64",
+        "size_in_bytes": 7895,
+        "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13062756660",
+        "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13062756660/zip",
+        "expired": false,
+        "created_at": "2026-10-31T23:52:02Z",
+        "expires_at": "2027-01-29T23:50:16Z",
+        "updated_at": "2026-10-31T23:52:02Z",
+        "digest": "sha256:c965549e67e0f079dfcc625235fc5a398feaaf524a46c3b41c229bb5ba70d367",
+        "workflow_run": {
+          "id": 41254168866,
+          "repository_id": 1416761973,
+          "head_repository_id": 1416761973,
+          "head_branch": "feat/studio_v2_gpui",
+          "head_sha": "0a355e8624417c76bf8540fe91c226b219a22b17"
+        }
+      },
+      {
+        "id": 13062313399,
+        "name": "installed-upgrade-macos-arm64",
+        "size_in_bytes": 7901,
+        "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13062313399",
+        "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13062313399/zip",
+        "expired": false,
+        "created_at": "2026-10-31T23:51:59Z",
+        "expires_at": "2027-01-29T23:50:16Z",
+        "updated_at": "2026-10-31T23:51:59Z",
+        "digest": "sha256:9725f365c0c3120f6e977bd00d9ca42499e64cedd00f633b0cb75348b3c44fa0",
+        "workflow_run": {
+          "id": 41254168866,
+          "repository_id": 1416761973,
+          "head_repository_id": 1416761973,
+          "head_branch": "feat/studio_v2_gpui",
+          "head_sha": "0a355e8624417c76bf8540fe91c226b219a22b17"
+        }
+      },
+      {
+        "id": 13061634013,
+        "name": "installed-upgrade-windows-x64",
+        "size_in_bytes": 19749,
+        "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13061634013",
+        "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13061634013/zip",
+        "expired": false,
+        "created_at": "2026-10-31T23:51:16Z",
+        "expires_at": "2027-01-29T23:50:16Z",
+        "updated_at": "2026-10-31T23:51:16Z",
+        "digest": "sha256:7c98697a444c7d19393dbc2ff09912016f744ac1ffd18c4fe4ad7f77d226dfa2",
+        "workflow_run": {
+          "id": 41254168866,
+          "repository_id": 1416761973,
+          "head_repository_id": 1416761973,
+          "head_branch": "feat/studio_v2_gpui",
+          "head_sha": "0a355e8624417c76bf8540fe91c226b219a22b17"
+        }
+      }
+    ]
+  }
+}

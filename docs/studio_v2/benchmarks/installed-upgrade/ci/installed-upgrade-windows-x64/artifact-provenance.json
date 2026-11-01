@@ -1,0 +1,69 @@
+{
+  "id": 13061634013,
+  "name": "installed-upgrade-windows-x64",
+  "bytes": 19749,
+  "sha256": "7c98697a444c7d19393dbc2ff09912016f744ac1ffd18c4fe4ad7f77d226dfa2",
+  "source": "0a355e8624417c76bf8540fe91c226b219a22b17",
+  "members": [
+    {
+      "path": "cleanup.json",
+      "bytes": 510,
+      "sha256": "118c00064303ac76ebaa7110fe35198af3a51e965bbba1a261d6e21ae5000577"
+    },
+    {
+      "path": "logs/v0.5.6/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "11e4b39d1651b9079453ebaa96f5b1d3c334a217c14f8f991c7bb7c40cf36aeb"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "d86de947d46865a6fab66a7eb58d5984a6aa02daf37d69e669e081100c04f76e"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "6b2d6277bef3a524435af525ae7af428e86de07bdb7b91305ddf4c0471772041"
+    },
+    {
+      "path": "logs/v0.5.6/released-install.log.txt",
+      "bytes": 110972,
+      "sha256": "0675b378bc9e83cbb36b674dc1d0a39d369fdd7e1fc6d30cf022b2a21c7416da"
+    },
+    {
+      "path": "logs/v0.5.7/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "e887ddba7b54cda49bdd5b1700bc35e7670eca63790a6f6906249346f5c0fe19"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "86cc45010b8a3e27ffd7d05b050b081e4ca27395ad03909b07e1e60c6f6846bc"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "86cc45010b8a3e27ffd7d05b050b081e4ca27395ad03909b07e1e60c6f6846bc"
+    },
+    {
+      "path": "logs/v0.5.7/released-install.log.txt",
+      "bytes": 11495,
+      "sha256": "4b1b80131bc28e83f1a52f62a698fc12b5f1d2bef4862309def21ec143762c49"
+    },
+    {
+      "path": "report.json",
+      "bytes": 7888,
+      "sha256": "9bab1b1cb772fb2ff3a89b55a994864b9facf583ccd68ad76f823b0679e66661"
+    },
+    {
+      "path": "v0.5.6.json",
+      "bytes": 3149,
+      "sha256": "b18d92141b70831d82224e9cf4b959f1904740988773d63d151fd0ae82990942"
+    },
+    {
+      "path": "v0.5.7.json",
+      "bytes": 2889,
+      "sha256": "32d2b45d5d553f20b16188bc3e8c41acfe75874c719a25f85936408275a50ae3"
+    }
+  ]
+}

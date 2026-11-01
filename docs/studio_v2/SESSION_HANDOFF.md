@@ -2,7 +2,16 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA81）
+## 最新进展（QA82）
+
+- **R04.2真实安装/覆盖升级/卸载已签收，发布pending15→14。** 实际Windows旧setup→候选setup同一Unicode自选目录覆盖、Mac真实DMG app同路径整体替换（旧app留自有备份）；旧版在安装前已写12有价行、价格、731天/OBSERVE与Unicode配置。v056/schema6与v057/schema11×Win/ARM/Intel 6例首轮通过，安装本身保持旧数据、当前schema11新增第13有价行、已装GUI生命周期后全13字段及配置Key字节仍同，卸载保持外部profile。[QA82总结](benchmarks/rc-round82-summary.json)、[逐项验收](benchmarks/installed-upgrade/acceptance-audit.json)。
+- 测试代码98f2212/0a355e8，运行时代码仍957。冻结三平台包来自原CI41246381635，未编译/修改Core/GPUI/packaging或正式版本。已有desktop手动upgrade_only→同提交reusable矩阵，run41254168866绑定0a355；Intel124693699432/ARM124693699544/Windows124693699610全部success，常规desktop全构建故意skipped，不能称新全Core矩阵。[原始报告与校验](benchmarks/installed-upgrade/ci/validation.json)。
+- 已装host0，关闭设置留同Core、重开新UI、Core/UI OS PIDgone、3统计run normal；直接CLI Core0/waited。host拥有的Core/UI不能取得exitcode，不虚报全进程0。Windowsportable所有文件SHA/版本x64/注册/主入口快捷方式、Mac树资源/链接/strict签名/CPU版本一致。CI流程无键鼠/新截图/IME/物理设备验证；冷升级和隔离自选外部profile，不当热更新、默认profile迁移或Gatekeeper/SmartScreen信任验收。
+- 三结果ZIP digest及原JSON/log字节保持；Windows脚本仅LF→CRLF，双源SHA派生精确核对。首次本地归档验证器按LF比Windows而停，修正为平台真实换行后重读原ZIP，未重跑测试。源码/运行时/报告来源已区分，原生值截图仍QA81，不重标为本轮图。
+- 三remotefixture均清理0，逻辑合计711,111,221B在各runner；本机`studio-v2-installed-upgrade.2pamppmx`经完整/即时预检已精确删除705文件/623,689,644B约594.80MiB，专用临时0、系统盘约33.95GiB。共享缓存与约48.55MiB必要基线/非本轮preview保留。**不要重开已删除bundle。**[本机清理](benchmarks/installed-upgrade/cleanup.json)。
+- **剩余界面0/40，14项发布pending，Goal active。禁止自动开启旁白、系统辅助功能或切输入源。** R01真实全状态slot/列drag/逐引擎IME/真实AT、R02物理系统输入/缩放/平台场景、R03marker慢样本/焦点CPU/长驻留结论、R04.3信任签名公证/4版本说明回滚包/5出厂发布仍缺。没有公开发布授权；下一步按实际可用环境继续，不重复能力未变的hover/pressed/headerdrag或重做40帧/21主题。
+
+## 上一轮进展（QA81）
 
 - 新增真实发布版数据验证脚本 `scripts/release_upgrade_test.py`，只新增测试/证据，运行时代码仍957。官方ARM v056/Coreee82/schema6与v057/Core085e/schema11→当前957CI/Core d150，两例实际PASS：旧12请求/成本/手工价/731天/OBSERVE/Unicode配置逐字段与字节保持，当前可新录第13条；所有Core0/等待。原版DMG与当前CI ZIP digest/size、只读挂载复制/签名/detach已核验。[QA81](benchmarks/rc-round81-summary.json)。
 - 原生UI来自957 CI原helper63d64ecd，以唯一wrapper隔离重签为2e6a70db（23个文件section保持）。宽1440×901/小1100×701九张原始JPEG/AX已逐图查看：价格USD2/8、当前731天（预设未误选）、OBSERVE、Unicode、13总数/末页3条/可见USD.0028可读，小窗需滚动。不是整页13行逐条视觉校验、精确slot或默认主题/正式签名证明。
