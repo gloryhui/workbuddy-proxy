@@ -2,7 +2,7 @@
   "version": 2,
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-11-01",
-  "state": "active",
+  "state": "blocked",
   "current_batch": "R01",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
