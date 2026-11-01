@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T12:28:19+08:00",
+  "updated_at": "2026-11-01T12:55:02+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
@@ -13,7 +13,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 87,
+  "recorded_tasks": 88,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -26,31 +26,31 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 87,
-    "title": "复用冻结产物的 Windows 原生验收",
+    "id": 88,
+    "title": "Fast候选后台长期驻留与数据收尾",
     "status": "recorded",
-    "description": "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。"
+    "description": "R01先核对当前CUA文档，hover/mouseMove、分步按下/松开、多点drag仍不可用；源码的可调列/ColumnWidthsChanged/tooltip回调已接线，未从静态源码确认产品故障，不重复旧hover/pressed/drag，也不为工具限制修改产品。一次异步询问人工验收可用环境，未收到答复、不推定系统变更许可。能力/源审查。"
   },
   "latest_task": {
-    "id": 87,
-    "title": "复用冻结产物的 Windows 原生验收",
+    "id": 88,
+    "title": "Fast候选后台长期驻留与数据收尾",
     "status": "recorded",
-    "summary": "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。",
+    "summary": "R01先核对当前CUA文档，hover/mouseMove、分步按下/松开、多点drag仍不可用；源码的可调列/ColumnWidthsChanged/tooltip回调已接线，未从静态源码确认产品故障，不重复旧hover/pressed/drag，也不为工具限制修改产品。一次异步询问人工验收可用环境，未收到答复、不推定系统变更许可。能力/源审查。",
     "highlights": [
-      "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。",
-      "唯一run41272932710绑定67eaff3/attempt1，Windows原生job124749239785首轮43秒success，Desktop、三平台UI构建、旧升级三job skipped。原始JSON、日志、artifact13070162370 ZIP154,989B及SHA独立核对归档；原始输入Core/UI ZIP也在runner逐字节核对。CI/来源/退出。",
-      "两GDI原PNG实际1442×901/1102×701（客户区1440×900/1100×700），DPI96。已逐张查看，caption与toolbar无可见重叠；小窗筛选换行、分页可见，Status列在当前横向视口外，未验横滚。默认英文1合成供应商/64模型/0请求，不签键盘、IME、caption或托盘点击、弹窗/HiDPI/AT。原图审查。"
+      "R01先核对当前CUA文档，hover/mouseMove、分步按下/松开、多点drag仍不可用；源码的可调列/ColumnWidthsChanged/tooltip回调已接线，未从静态源码确认产品故障，不重复旧hover/pressed/drag，也不为工具限制修改产品。一次异步询问人工验收可用环境，未收到答复、不推定系统变更许可。能力/源审查。",
+      "当前运行时代码仍568/UI3c19、Core1146，没有新构建/CI。专用新隔离App后台启动，Core经kernel权限验证，UI为隔离LSEnvironment和deny-only WorkBuddy guard，不声称GUI kernel沙盒。新signed UI190af5af与3c19全非签名字节一致；comparator的code_mutation_detected是内存自测，不是真实程序改写。签名。",
+      "预注册一次900秒后台驻留：64供应商/256模型，4workers经真实HTTP生成1014请求/成本，4096候选、long-discovery-、选0。前置真实z→0/Backspace→4096，无Raise/激活/切源；10秒warmup后900.010秒61点逐点PIDbirth一致、targetinactive、前台同96217，无计时内输入/截图/分析器/构建。UI单核CPU2.7244%、RSS首尾分钟中位112.867→109.406MiB，差−3.461MiB；Core.1544%、中位21.281→17.859MiB。原样本/协议、汇总。"
     ],
     "limits": [],
     "evidence": [
       {
-        "label": "总结/清理",
-        "href": "benchmarks/rc-round87-summary.json"
+        "label": "QA88",
+        "href": "benchmarks/rc-round88-summary.json"
       }
     ],
-    "commit": "d81acde924535fe7a89dd28e98e158cb4f2ee223",
-    "date": "2026-11-01T12:27:35+08:00",
-    "commit_subject": "docs(studio): record frozen Windows native validation",
+    "commit": "ae1289d3eeb2c7f03b8380c82d89c3a0da15db2f",
+    "date": "2026-11-01T12:55:01+08:00",
+    "commit_subject": "docs(studio): record Fast background long residence",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2270,7 +2270,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 87,
+    "historical_tasks": 88,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3277,7 +3277,7 @@
             "id": "R01.2",
             "title": "完整键盘与焦点恢复",
             "acceptance": "pending",
-            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged. QA86新候选F1模型ID空值Apply显示错误且modal保留，Cancel关闭；协议Esc及五类确认取消后后台控件可用。两后台样本前后无需重新点击，实际z/Backspace仍路由搜索；不等于完整物理键盘/IME或精确AX焦点身份。",
+            "completed": "实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged. QA86新候选F1模型ID空值Apply显示错误且modal保留，Cancel关闭；协议Esc及五类确认取消后后台控件可用。两后台样本前后无需重新点击，实际z/Backspace仍路由搜索；不等于完整物理键盘/IME或精确AX焦点身份。 QA88同Fast3c19/4096弹窗后台900秒后，无先行点击实际z→0、Backspace恢复4096/选0，Cancel一次无白壳/遮罩，正常close；不是完整键盘/IME、精确AX焦点或拖列验收。",
             "remaining": "真实可拖列拖宽及刷新/resize保持仍待。旧x444第一边界是刻意固定的时间列，不能作可拖列失败证据；QA77改试provider/model右边界仍无可见变化，当前CUA只支持两点drag，未辨明工具投递与产品原因。能力未变不重复同类尝试；其余完整焦点回归仍按缺口收口。",
             "acceptance_check": "无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。",
             "history_tasks": [
@@ -3292,7 +3292,8 @@
               76,
               77,
               84,
-              86
+              86,
+              88
             ]
           },
           {
@@ -3482,7 +3483,7 @@
             "id": "R03.2",
             "title": "峰值差异诊断与最终结论",
             "acceptance": "pending",
-            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。 QA80 最终同Core1146/UI4658对a6eUIba525主P2/C3/C4/P3各n2：UI空闲中位差+0.000MiB、合计-0.515MiB、峰值-1.865MiB、进程→记录+209.764ms、proxy p95-0.0035ms。新UI启动marker1562.402/779.425ms对旧1103.449/818.850ms，全部慢样本保留，未重跑到理想数值。4096最终900秒RSS+1.25MiB，footprint144.8→145.6M，allocated27.3→27.3M、objects78043→77995、fragmentation22.2→23.0M；仅解释该观察中驻留/碎片组成，不作普遍无泄漏结论。 QA84 closes the missing focus-routing evidence: preregistered sameprocess A1/B1/A2/B2 90s each at64/256/1014/4096, actualkey editing vs Space invert0to4096to0, CPU6.455/1.522/6.355/1.478% singlecore. Frozen4658 section-identical symboltwin resolves realA BlinkCursor/Proxy render/Taffy paths absent inB. No runtimefix, startupslowmarker and finalperformance verdict remain. QA85 WindowContent broadcache trial82f waswithdrawn after sourceinspection foundcachedreplay lacks accessibilitynodes/actions whilea11ybuilder clears perframe; transientAXempty/stale observations retained, uniquecausalitynotclaimed. FirstP1 lowCPU2.089% lackscontinuousactivity metadata; laterpointinactive, no validcandidatecomparison orCPUfixclaim. Runtime source stays957/UI4658. QA86 5681103/UI3c19对旧4658、同Core56285/1146、64/256/1015/4096/q前缀/选0，一次预定后台BGP1/BGC1各90.005秒、19点全inactive且前台同ChatGPT宿主，实际输入路由前后保持。UI单核6.6996→2.8221%，约降57.88%；Core均0.1555%。n1固定顺序/进程历史及遮挡未测，不作前台/峰值/整体R03签收；原P1前台条件t0失败及C1计时前取消原件保留。",
+            "completed": "UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。 QA80 最终同Core1146/UI4658对a6eUIba525主P2/C3/C4/P3各n2：UI空闲中位差+0.000MiB、合计-0.515MiB、峰值-1.865MiB、进程→记录+209.764ms、proxy p95-0.0035ms。新UI启动marker1562.402/779.425ms对旧1103.449/818.850ms，全部慢样本保留，未重跑到理想数值。4096最终900秒RSS+1.25MiB，footprint144.8→145.6M，allocated27.3→27.3M、objects78043→77995、fragmentation22.2→23.0M；仅解释该观察中驻留/碎片组成，不作普遍无泄漏结论。 QA84 closes the missing focus-routing evidence: preregistered sameprocess A1/B1/A2/B2 90s each at64/256/1014/4096, actualkey editing vs Space invert0to4096to0, CPU6.455/1.522/6.355/1.478% singlecore. Frozen4658 section-identical symboltwin resolves realA BlinkCursor/Proxy render/Taffy paths absent inB. No runtimefix, startupslowmarker and finalperformance verdict remain. QA85 WindowContent broadcache trial82f waswithdrawn after sourceinspection foundcachedreplay lacks accessibilitynodes/actions whilea11ybuilder clears perframe; transientAXempty/stale observations retained, uniquecausalitynotclaimed. FirstP1 lowCPU2.089% lackscontinuousactivity metadata; laterpointinactive, no validcandidatecomparison orCPUfixclaim. Runtime source stays957/UI4658. QA86 5681103/UI3c19对旧4658、同Core56285/1146、64/256/1015/4096/q前缀/选0，一次预定后台BGP1/BGC1各90.005秒、19点全inactive且前台同ChatGPT宿主，实际输入路由前后保持。UI单核6.6996→2.8221%，约降57.88%；Core均0.1555%。n1固定顺序/进程历史及遮挡未测，不作前台/峰值/整体R03签收；原P1前台条件t0失败及C1计时前取消原件保留。 QA88当前3c19结束900秒后台样本后vmmap原报告：UI footprint129.9M/系统生命周期peak130.0M，Core15.2M/16.1M；不是计时区间peak或匹配基线，RSS与footprint分开。",
             "remaining": "新候选后台CPU一对样本已改善，前台条件仍未建立；启动慢marker、峰值/footprint及最终性能结论待验。保持500ms光标/原负载，不将后台结果替代前台门禁。",
             "acceptance_check": "保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。",
             "history_tasks": [
@@ -3492,15 +3493,16 @@
               80,
               84,
               85,
-              86
+              86,
+              88
             ]
           },
           {
             "id": "R03.3",
             "title": "长列表、重开与静置观察",
             "acceptance": "pending",
-            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。 QA80同Core1146依次4905/6d93/4658三个900秒实际4096观察：CPU6.853/6.514/6.707%单核，RSS首末分钟中位差−4.984/+3.688/+1.250MiB，进程/操作历史和OS状态并非严格A/B。最终同进程一次Tab后300秒CPU1.693%、RSS−.063MiB，但AX/截图不能确立具体焦点，不断言光标根因。最终4658功能与冷重开两进程通过；全部五个长fixture UI与Core/driver均退出。 QA84 sameprocess keyboard-proven focus alternation replicates meanCPU6.405% search vs1.500% nontext. Ten original1440x900JPEGs, rawps samples/4rawprofiles and code-identical symbolmaps retained; config and1014 request/cost fields equal through shutdown. 90s is diagnostic, not900s longresidence/leakfree proof; highCPU remains unfixed. QA85 narrowsnextstep toA11ysafe rendering/cache boundary; no C1/C2/P2 or900s repeatsafteruserstreamlining. Trialfunctional input/selection/auto1014to1015refresh/size/theme/language/page passed, old1014fields+new1015exactafterexit, buttrialnotdelivered andnotfinalperformanceacceptance. QA86同一后台对照UI RSS旧123.125→123.109MiB、新116.391→116.641MiB；Core两段开始RSS22.594/25.188MiB。不是footprint/峰值/泄漏或长期驻留结论；本轮未重复900秒。",
-            "remaining": "搜索焦点CPU问题仍未修复；先解决缓存语义/辅助功能兼容，具备可比的活动窗口条件后再测。按用户要求省略无关重复，最终长期驻留与响应性结论仍须集中完成，不能由短测或功能抽查签收。",
+            "completed": "4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。 QA80同Core1146依次4905/6d93/4658三个900秒实际4096观察：CPU6.853/6.514/6.707%单核，RSS首末分钟中位差−4.984/+3.688/+1.250MiB，进程/操作历史和OS状态并非严格A/B。最终同进程一次Tab后300秒CPU1.693%、RSS−.063MiB，但AX/截图不能确立具体焦点，不断言光标根因。最终4658功能与冷重开两进程通过；全部五个长fixture UI与Core/driver均退出。 QA84 sameprocess keyboard-proven focus alternation replicates meanCPU6.405% search vs1.500% nontext. Ten original1440x900JPEGs, rawps samples/4rawprofiles and code-identical symbolmaps retained; config and1014 request/cost fields equal through shutdown. 90s is diagnostic, not900s longresidence/leakfree proof; highCPU remains unfixed. QA85 narrowsnextstep toA11ysafe rendering/cache boundary; no C1/C2/P2 or900s repeatsafteruserstreamlining. Trialfunctional input/selection/auto1014to1015refresh/size/theme/language/page passed, old1014fields+new1015exactafterexit, buttrialnotdelivered andnotfinalperformanceacceptance. QA86同一后台对照UI RSS旧123.125→123.109MiB、新116.391→116.641MiB；Core两段开始RSS22.594/25.188MiB。不是footprint/峰值/泄漏或长期驻留结论；本轮未重复900秒。 QA88实际当前3c19/Core1146，64供应商/256模型/1014真实请求成本/4096候选/搜索前缀/选0；10秒warmup后900.010秒61点全inactive、同前台96217且PIDbirth逐点一致。UI CPU单核2.7244%、首尾分钟RSS中位112.867→109.406MiB，差−3.461MiB；Core CPU.1544%。前后实际z/Backspace路由，Cancel/close通过，配置字节及1014请求/成本全字段在退出后保持；Core/driver0、UI仅PIDgone。n1后台无持续RSS增长，不作无泄漏/前台/交互延迟或总体性能签收。",
+            "remaining": "Fast缓存/无障碍回放已交付，当前90秒后台对照及900秒后台驻留已补证；仍需有效、可比的前台活动窗口条件及最终长期响应性结论。后台RSS下降不能证明无泄漏或替代前台CPU/footprint/峰值与整项验收；不重复相同后台样本。",
             "acceptance_check": "无可复现持续内存增长、无空闲异常高CPU、交互无明显阻塞；请求延迟不冒充FPS或输入时延。",
             "history_tasks": [
               20,
@@ -3514,7 +3516,8 @@
               80,
               84,
               85,
-              86
+              86,
+              88
             ]
           },
           {
@@ -7647,6 +7650,28 @@
       "date": "2026-11-01T12:27:35+08:00",
       "commit_subject": "docs(studio): record frozen Windows native validation",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 88,
+      "title": "Fast候选后台长期驻留与数据收尾",
+      "status": "recorded",
+      "summary": "R01先核对当前CUA文档，hover/mouseMove、分步按下/松开、多点drag仍不可用；源码的可调列/ColumnWidthsChanged/tooltip回调已接线，未从静态源码确认产品故障，不重复旧hover/pressed/drag，也不为工具限制修改产品。一次异步询问人工验收可用环境，未收到答复、不推定系统变更许可。能力/源审查。",
+      "highlights": [
+        "R01先核对当前CUA文档，hover/mouseMove、分步按下/松开、多点drag仍不可用；源码的可调列/ColumnWidthsChanged/tooltip回调已接线，未从静态源码确认产品故障，不重复旧hover/pressed/drag，也不为工具限制修改产品。一次异步询问人工验收可用环境，未收到答复、不推定系统变更许可。能力/源审查。",
+        "当前运行时代码仍568/UI3c19、Core1146，没有新构建/CI。专用新隔离App后台启动，Core经kernel权限验证，UI为隔离LSEnvironment和deny-only WorkBuddy guard，不声称GUI kernel沙盒。新signed UI190af5af与3c19全非签名字节一致；comparator的code_mutation_detected是内存自测，不是真实程序改写。签名。",
+        "预注册一次900秒后台驻留：64供应商/256模型，4workers经真实HTTP生成1014请求/成本，4096候选、long-discovery-、选0。前置真实z→0/Backspace→4096，无Raise/激活/切源；10秒warmup后900.010秒61点逐点PIDbirth一致、targetinactive、前台同96217，无计时内输入/截图/分析器/构建。UI单核CPU2.7244%、RSS首尾分钟中位112.867→109.406MiB，差−3.461MiB；Core.1544%、中位21.281→17.859MiB。原样本/协议、汇总。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "QA88",
+          "href": "benchmarks/rc-round88-summary.json"
+        }
+      ],
+      "commit": "ae1289d3eeb2c7f03b8380c82d89c3a0da15db2f",
+      "date": "2026-11-01T12:55:01+08:00",
+      "commit_subject": "docs(studio): record Fast background long residence",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -9078,6 +9103,21 @@
     {
       "date": "2026-11-01T12:28:19+08:00",
       "note": "QA87：复用冻结Windows产物，两尺寸GDI与生命周期首轮43秒通过；发布仍15项待验。更正首次生成遗漏的当前任务参数。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T12:55:02+08:00",
+      "note": "QA88：当前Fast候选900秒后台驻留61点有效，CPU单核2.7244%、RSS首尾分钟−3.461MiB；数据保持、进程已退出并清理，发布仍15项待验。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
