@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T14:55:50+08:00",
+  "updated_at": "2026-11-01T15:04:20+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
   "phase": "界面终验记录齐备 · 总体验收待核对",
-  "goal_status": "active",
+  "goal_status": "blocked",
   "counts": {
     "pending": 0,
     "partial": 0,
@@ -2266,7 +2266,7 @@
     "version": 2,
     "title": "Studio V2 正式版批次计划",
     "as_of": "2026-11-01",
-    "state": "active",
+    "state": "blocked",
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
@@ -3949,7 +3949,7 @@
       "tasks": 50,
       "passed_tasks": 36
     },
-    "goal_status": "active"
+    "goal_status": "blocked"
   },
   "timeline": [
     {
@@ -9238,6 +9238,21 @@
     {
       "date": "2026-11-01T14:55:50+08:00",
       "note": "QA91：0.6.0完整矩阵与六例实际包冷升级/回滚通过；首次WAL断言失败及红绿保留，产品未为测试修复重建。R04.1/.2签收，40帧剩0、发布14项待验，禁止自动开启旁白。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T15:04:20+08:00",
+      "note": "QA91后连续三个Goal回合同一人工/设备/有效前台环境缺口未变，独立Goal已标blocked。只同步状态，无新增QA或验收；40帧剩0、发布14项待验，禁止自动开启旁白。",
       "pending": 0,
       "partial": 0,
       "reused": 0,

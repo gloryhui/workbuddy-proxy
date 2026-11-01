@@ -2,7 +2,7 @@
 
 本文件由 release_plan.json 生成；修改计划数据后运行 scripts/update_studio_progress.py。
 
-当前批次：R01；Goal：active。主体已有实现和分项证据，界面与正式版验收以实际签收为准。
+当前批次：R01；Goal：blocked。主体已有实现和分项证据，界面与正式版验收以实际签收为准。
 
 ## 口径与顺序
 
