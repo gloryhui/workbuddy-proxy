@@ -6,6 +6,7 @@
 //! it never wraps, it never splits, and it can never end up with nothing
 //! selected.
 use crate::stats_dto::SourceScope;
+#[cfg(test)]
 use gpui_kit::{Role, SharedString};
 
 /// Chinese labelled group, including its 4px track inset and two inter-option gaps.
@@ -16,6 +17,7 @@ pub const ITEM_WIDTHS: [i32; 3] = [120, 122, 129];
 pub const ITEM_WIDTHS_EN: [i32; 3] = [120, 130, 121];
 pub const GROUP_INSET: i32 = 4;
 pub const GROUP_GAP: i32 = 6;
+#[cfg(test)]
 pub const ICON_SIZE: i32 = 16;
 
 /// One selectable source, in the order the spec lists them.
@@ -103,17 +105,20 @@ impl SourceFilter {
     }
 
     /// The option under the pointer, if any.
+    #[cfg(test)]
     pub fn hovered(&self) -> Option<SourceScope> {
         self.hovered
     }
 
     /// True when the group is disabled.
+    #[cfg(test)]
     pub fn is_disabled(&self) -> bool {
         self.disabled
     }
 
     /// Enables or disables the whole group. A disabled group never changes its
     /// selection.
+    #[cfg(test)]
     pub fn set_disabled(&mut self, disabled: bool) {
         self.disabled = disabled;
     }
@@ -127,6 +132,7 @@ impl SourceFilter {
     }
 
     /// Records which option the pointer is over.
+    #[cfg(test)]
     pub fn set_hovered(&mut self, scope: Option<SourceScope>) {
         self.hovered = scope;
     }
@@ -148,6 +154,7 @@ impl SourceFilter {
     ///
     /// Wrapping keeps the group usable from the keyboard alone: three presses in
     /// either direction always come back to where they started.
+    #[cfg(test)]
     pub fn move_selection(&mut self, step: i32) -> SelectionOutcome {
         if self.disabled {
             return SelectionOutcome::Unchanged;
@@ -162,11 +169,13 @@ impl SourceFilter {
     }
 
     /// The accessibility label of the whole group.
+    #[cfg(test)]
     pub fn group_label(&self) -> SharedString {
         SharedString::from("来源 / Source")
     }
 
     /// The accessibility role of the group: a set of radio buttons.
+    #[cfg(test)]
     pub fn group_role(&self) -> Role {
         Role::RadioGroup
     }
@@ -175,6 +184,7 @@ impl SourceFilter {
     ///
     /// The **full** label is used even when the visible text is abbreviated, so
     /// a screen reader never receives the short form.
+    #[cfg(test)]
     pub fn option_label(scope: SourceScope) -> SharedString {
         SharedString::from(
             OPTIONS
@@ -186,12 +196,14 @@ impl SourceFilter {
     }
 
     /// The accessibility role of one option.
+    #[cfg(test)]
     pub fn option_role() -> Role {
         Role::RadioButton
     }
 
     /// True when the option reads as selected to assistive technology. This is
     /// state, not only colour.
+    #[cfg(test)]
     pub fn is_selected(&self, scope: SourceScope) -> bool {
         self.selected == scope
     }

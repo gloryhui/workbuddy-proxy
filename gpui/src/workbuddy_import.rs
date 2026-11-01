@@ -7,15 +7,20 @@
 use crate::stats_dto::SourceScope;
 
 /// The dialog's geometry, from the spec.
+#[cfg(test)]
 pub const DIALOG_MIN_WIDTH: i32 = 520;
+#[cfg(test)]
 pub const DIALOG_MAX_WIDTH: i32 = 720;
 /// The dialog never grows past this share of the window height.
+#[cfg(test)]
 pub const DIALOG_MAX_HEIGHT_RATIO: f32 = 0.8;
 /// The page sizes the candidate list offers.
+#[cfg(test)]
 pub const PAGE_SIZES: &[i64] = &[20, 50, 100];
 
 /// The two mutually exclusive source decisions.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[cfg(test)]
 pub enum Classification {
     /// The user says they used the model directly.
     Direct,
@@ -23,6 +28,7 @@ pub enum Classification {
     Proxy,
 }
 
+#[cfg(test)]
 impl Classification {
     /// The wire value the command expects.
     pub fn as_str(self) -> &'static str {
@@ -54,6 +60,7 @@ impl Classification {
 
 /// A preview the user is about to confirm.
 #[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg(test)]
 pub struct Preview {
     /// The one-shot token that binds the confirmation to this preview.
     pub token: String,
@@ -69,6 +76,7 @@ pub struct Preview {
 
 /// Everything that can go wrong, as something the user can act on.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[cfg(test)]
 pub enum DialogError {
     /// The preview went stale: preview again.
     PreviewExpired,
@@ -83,6 +91,7 @@ pub enum DialogError {
     Unavailable,
 }
 
+#[cfg(test)]
 impl DialogError {
     /// The code the core sent, turned into one of the cases above.
     pub fn from_code(code: &str) -> Self {
@@ -133,6 +142,7 @@ impl DialogError {
 /// taken after the last change: that is what makes "confirm" mean "confirm *this*
 /// preview" rather than "confirm whatever the rule looks like now".
 #[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg(test)]
 pub struct MappingDialog {
     model_id: String,
     from_ms: Option<i64>,
@@ -144,6 +154,7 @@ pub struct MappingDialog {
     page_size: i64,
 }
 
+#[cfg(test)]
 impl MappingDialog {
     /// A dialog for one model, with nothing chosen.
     pub fn new(model_id: &str) -> Self {
@@ -303,9 +314,11 @@ impl MappingDialog {
 ///
 /// It is a constant on purpose: there is no setting for it, and the page's
 /// refresh choice never changes it.
+#[cfg(test)]
 pub const BACKGROUND_SYNC_SECONDS: u32 = 5;
 
 /// The line the panel shows about that cadence.
+#[cfg(test)]
 pub const BACKGROUND_SYNC_NOTE: &str = "后台每 5 秒同步一次，与页面刷新无关 / Background sync runs every 5s, independent of page refresh";
 
 /// The six counters the panel publishes.
@@ -405,6 +418,7 @@ impl ImportPanel {
     }
 
     /// What the switch is doing.
+    #[cfg(test)]
     pub fn state(&self) -> SwitchState {
         self.state
     }
@@ -415,16 +429,19 @@ impl ImportPanel {
     }
 
     /// The last failure's code, if any.
+    #[cfg(test)]
     pub fn last_error(&self) -> Option<&str> {
         self.last_error.as_deref()
     }
 
     /// The scope the counters belong to.
+    #[cfg(test)]
     pub fn scope(&self) -> SourceScope {
         self.scope
     }
 
     /// The note the panel shows about the background cadence.
+    #[cfg(test)]
     pub fn background_note(&self) -> &'static str {
         BACKGROUND_SYNC_NOTE
     }
@@ -499,6 +516,7 @@ impl ImportPanel {
     ///
     /// A disabled importer has not looked at anything, so it never claims
     /// completion; neither does one with unresolved rows.
+    #[cfg(test)]
     pub fn is_complete(&self) -> bool {
         self.enabled && self.state != SwitchState::Failed && !self.counters.needs_attention()
     }
@@ -507,11 +525,13 @@ impl ImportPanel {
     ///
     /// Reading the status is a database read: it never touches the JSONL files,
     /// which is why a plain refresh cannot change what the importer has done.
+    #[cfg(test)]
     pub fn refresh_reads_jsonl(&self) -> bool {
         false
     }
 
     /// The health line's text.
+    #[cfg(test)]
     pub fn health_text(&self, zh: bool) -> &'static str {
         match (self.state, zh) {
             (SwitchState::Failed, true) => "需处理",

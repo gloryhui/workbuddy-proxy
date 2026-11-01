@@ -208,10 +208,12 @@ impl CaptureFilter {
 /// invalidates it: a preview describes an interval and a rule revision, and both
 /// stop being meaningful the moment the page moves on.
 #[derive(Clone, Debug, Default)]
+#[cfg(test)]
 pub struct MappingFlow {
     dialog: Option<crate::workbuddy_import::MappingDialog>,
 }
 
+#[cfg(test)]
 impl MappingFlow {
     /// True while a dialog is open.
     pub fn is_open(&self) -> bool {
@@ -257,6 +259,7 @@ pub struct FilterCoordinator {
     generation: u64,
     request_pending: bool,
     /// The source-confirmation flow, closed whenever the page moves on.
+    #[cfg(test)]
     mapping: MappingFlow,
 }
 
@@ -276,11 +279,13 @@ impl FilterCoordinator {
         self.generation += 1;
         self.request_pending = true;
         // A preview belongs to the page it was taken on, so moving on closes it.
+        #[cfg(test)]
         self.mapping.close();
         FilterChange::Invalidated
     }
 
-    /// Compatibility model used by startup checks.
+    /// Compatibility model used only by contract tests.
+    #[cfg(test)]
     pub fn mapping(&mut self) -> &mut MappingFlow {
         &mut self.mapping
     }
