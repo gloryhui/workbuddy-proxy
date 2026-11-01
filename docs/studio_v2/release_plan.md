@@ -345,10 +345,10 @@
 
 ### R02.1 Windows原生窗口与输入
 
-- 已完成/已有证据：已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。 QA78补充：2da Windows job已终态success，实际GDI两尺寸原PNG已逐图审查，caption顶行与业务工具栏下排无可见重叠；DPI96，实际client1440×900/1100×700，原生边框PNG1442×901/1102×701。仅默认英文空请求页，未点击caption窗控或验证Ctrl/IME。 QA80当前957 Windows原run成功；两GDI原PNG实际外框1442×901/1102×701（目标client1440×900/1100×700），父代理逐图复核工具栏与caption无可见重叠，默认英文fixture64模型/0请求，不代表真实caption点击/IME/缩放/托盘验收。
+- 已完成/已有证据：已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。 QA78补充：2da Windows job已终态success，实际GDI两尺寸原PNG已逐图审查，caption顶行与业务工具栏下排无可见重叠；DPI96，实际client1440×900/1100×700，原生边框PNG1442×901/1102×701。仅默认英文空请求页，未点击caption窗控或验证Ctrl/IME。 QA80当前957 Windows原run成功；两GDI原PNG实际外框1442×901/1102×701（目标client1440×900/1100×700），父代理逐图复核工具栏与caption无可见重叠，默认英文fixture64模型/0请求，不代表真实caption点击/IME/缩放/托盘验收。 QA82真实Windows旧/新EXE在Unicode自选路径覆盖、host/Core/GPUI打开关闭重开与退出、注册/快捷方式卸载通过；没有发送键盘/鼠标或进行新像素/IME/缩放/托盘输入验证，R02.1仍pending。
 - 剩余工作：已取得Windows100%两尺寸GDI原图和视觉分离证明；继续原生caption最小化/最大化/关闭实际点击、标题拖动、Ctrl快捷键、中文IME、托盘及代表弹窗。
 - 验收标准：原生Windows可操作；工具栏不挡最小化/最大化/关闭；优先GDI/ImageGrab按PID截图，不能用Mac图替代。
-- 历史记录：UI-43、UI-78、UI-80。
+- 历史记录：UI-43、UI-78、UI-80、UI-82。
 
 ### R02.2 macOS arm64系统行为
 
@@ -359,10 +359,10 @@
 
 ### R02.3 Intel原生发行包与硬件
 
-- 已完成/已有证据：x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。 QA79核对2da Intel原run124627179928最终success及artifact13054867223 digest，仍只是包/现有harness证据。771 Intel Corecredit测试失败保留，7bec原run继续核验。
+- 已完成/已有证据：x86_64编译/链接、thin测试及Rosetta真实运行已完成。 QA78 b167在macos-15-intel原生x86_64 runner实际构建并完成DMG包启动/关闭/重开/正常退出，包报告和artifact digest均保留；尚缺原生截图/完整主流程、托盘及匹配性能，不以Rosetta或PID记录签收整项。 QA79核对2da Intel原run124627179928最终success及artifact13054867223 digest，仍只是包/现有harness证据。771 Intel Corecredit测试失败保留，7bec原run继续核验。 QA82macos-15-intel原runner实际旧DMG应用替换/架构版本签名/新Core数据迁移/原生host与GPUI生命周期/卸载保持数据通过，未作用户物理设备/系统输入场景签收。
 - 剩余工作：使用Intel硬件或可验证原生执行环境跑安装/启动/主流程/窗口/托盘/性能；缺环境则阻塞本门禁。 原生Intel完整GUI/托盘/匹配性能仍缺；不能凭CI构建或生命周期报告签收。
 - 验收标准：产物架构正确，原生GPU/窗口运行通过；Rosetta证据单列，不冒称Intel实机。
-- 历史记录：UI-52、UI-78、UI-79。
+- 历史记录：UI-52、UI-78、UI-79、UI-82。
 
 ### R02.4 缩放、双尺寸与平台回归
 
@@ -402,10 +402,10 @@
 
 ### R03.4 Core全套契约与数据不变
 
-- 已完成/已有证据：QA80 13c修复启动前SQLite Busy/Locked使stats永久disabled：迁移态250ms可中断重试，永久/schema-too-new仍拒绝；recover/start_run/interval同事务原子提交。三项确定性红绿回归及真实启动前EXCLUSIVE7秒→释放后同PID ready/import1/12tokens/.1credit/两run各1interval通过。Core580本机测试/27命令/91源码hash、158导入/15故障/19发现/10创建及两既有GPUIignore实际Core补验通过；957最终Core+三平台CI均首次通过。真实longfixture1014请求与成本逐字段一致；原配置所有字段保留，四次允许language写序列化仅补64protocol+64settings+256capsnull共384既有默认字段，配置字节/原始结构并不相等。74b/771/7bec原始失败、无诊断限制、invalid首个probefixture均保留；不声称唯一归因历史CI。 QA81补真实已发布v056/schema6与v057/schema11包的Core→当前957CI Core冷交接：实际旧Core生成12条有价历史、手工价、731天与OBSERVE，schema6→11及11→11逐旧字段/配置字节保持，当前Core各新录第13条。小窗前后全13逐字段一致，原12对照旧版备份跨两native仍一致。此为macOSarm64新增证据，运行时代码未改。
+- 已完成/已有证据：QA80 13c修复启动前SQLite Busy/Locked使stats永久disabled：迁移态250ms可中断重试，永久/schema-too-new仍拒绝；recover/start_run/interval同事务原子提交。三项确定性红绿回归及真实启动前EXCLUSIVE7秒→释放后同PID ready/import1/12tokens/.1credit/两run各1interval通过。Core580本机测试/27命令/91源码hash、158导入/15故障/19发现/10创建及两既有GPUIignore实际Core补验通过；957最终Core+三平台CI均首次通过。真实longfixture1014请求与成本逐字段一致；原配置所有字段保留，四次允许language写序列化仅补64protocol+64settings+256capsnull共384既有默认字段，配置字节/原始结构并不相等。74b/771/7bec原始失败、无诊断限制、invalid首个probefixture均保留；不声称唯一归因历史CI。 QA81补真实已发布v056/schema6与v057/schema11包的Core→当前957CI Core冷交接：实际旧Core生成12条有价历史、手工价、731天与OBSERVE，schema6→11及11→11逐旧字段/配置字节保持，当前Core各新录第13条。小窗前后全13逐字段一致，原12对照旧版备份跨两native仍一致。此为macOSarm64新增证据，运行时代码未改。 QA82两真实旧版×三原生runner实际安装替换后12旧行/价格/非默认设置/Key配置保持，新13行计价且已装UI生命周期后不变。属于新增包级数据证据，未改运行时代码。
 - 剩余工作：
 - 验收标准：原配置和Key兼容，取消/失败/保存边界不回退，历史快照/导入去重不破坏；全部结果绑定最终提交。
-- 历史记录：UI-22、UI-24、UI-33、UI-42、UI-46、UI-62、UI-63、UI-65、UI-67、UI-78、UI-79、UI-80、UI-81。
+- 历史记录：UI-22、UI-24、UI-33、UI-42、UI-46、UI-62、UI-63、UI-65、UI-67、UI-78、UI-79、UI-80、UI-81、UI-82。
 
 ### R03.5 最终构建和性能报告
 
@@ -418,23 +418,23 @@
 
 覆盖画板：全局发布门禁，不新增画板计数。
 
-已有成果：QA80最终957四CIjob及4artifact digest/原始报告全部核验，R04.1签收；旧版升级、签名公证、分发、最终版本及公开发布未完成。
+已有成果：QA80最终957四CIjob/4artifact已核验；QA82真实3平台×2旧版本安装覆盖升级、已装UI生命周期与卸载保持数据6例首轮通过，R04.1/.2签收。签名信任/公证、最终版本说明回滚与公开发布R04.3/.4/.5仍pending。
 
 本批交付：产出可审查RC与完整发布记录；所有门禁通过后才具备正式发布条件。
 
 ### R04.1 最终提交CI全矩阵
 
-- 已完成/已有证据：QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。
+- 已完成/已有证据：QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。
 - 剩余工作：
 - 验收标准：Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。
-- 历史记录：UI-78、UI-79、UI-80、UI-81。
+- 历史记录：UI-78、UI-79、UI-80、UI-81、UI-82。
 
 ### R04.2 DMG/ZIP/EXE安装升级卸载
 
-- 已完成/已有证据：macOS包/Windows安装器、定制目录、快捷方式/重装/卸载测试脚本存在。 QA78 b167原生Windows ZIP生命周期/定制Unicode空格路径、同目录重装、快捷方式/卸载保留外部配置通过；两种Mac DMG生命周期通过，三个artifact digest及原始报告已归档。现有版本0.5.7是RC测试标签，非新正式版本；实际旧版升级/最终候选覆盖仍待。 2da Windows新候选截图/生命周期/EXE定制目录重装卸载也通过，artifact13054441131哈希与报告归档；真实旧版升级仍未做。 QA79两Mac2da已终态success并核对artifact报告，旧candidate分开归档。 QA80当前957三平台包的Windows安装/生命周期及两Mac DMG runner报告均passed且digest绑定；真实旧版本升级/最终分发仍未验，不把新目录安装/同版本重装当旧版升级。 QA81官方v056/v057 ARM DMG的SHA/size与当前957artifact13060775696 ZIP digest核验，3个DMG只读挂载复制/strict验证/卸载完成。实际旧包Core生成schema6/11与数据，再由当前原包Core接管，同profile数据保持并继续记录；UI经隔离包装ad-hoc重签、23filebackedsections一致，9原始图/AX与源码hash归档。明确只是Core冷交接，未做OS安装器覆盖或同目录app替换，不冒称真实安装升级签收。
-- 剩余工作：macOS arm64真实已发布Core数据冷交接已验。仍需在旧版数据已存在时实际执行Windows旧setup→候选setup同目录覆盖，以及Mac同目录app bundle替换；验证注册/快捷方式/退出/卸载与数据保留，补Windows与Intel。当前脚本无installer切换步骤，下一步分离seed/verify或加明确安装交接钩子；此处要求实际安装/替换后的旧数据保留；回滚与最终分发仍按R04.4/.5另记，热升级不在本轮证据范围。
+- 已完成/已有证据：QA82真实三平台旧包安装/覆盖升级/卸载签收：测试源码0a355、运行时仍957；官方v056(schema6)/v057(schema11)先通过真实旧Core写12有价行/手工价/731天/OBSERVE/Unicode与配置Key，再关闭旧Core、实际Windows旧setup→候选setup同一Unicode自选目录覆盖或Mac只读DMG app同路径整体替换（不是Finder拖动）。安装本身保持旧DBschema/业务字段/配置字节，候选schema11新录第13有价行；已安装host/Core/GPUI真实打开、关闭留同Core、重开新UI、正常退出，之后全13业务字段与配置字节仍同。Windows包全部portable文件SHA/版本/x64/注册/快捷方式正确；卸载移除文件/注册/快捷方式且不启用登录启动，外部数据保持。Mac所有资源/链接一致、两bundle strict签名和架构/版本正确，移除已装app而外部数据保持。原run41254168866 Intel124693699432/ARM124693699544/Windows124693699610均首轮success；6例原报告与3ZIP digest核验，三remotefixture清理0。直接CLI Core0/waited，nativehost0，host拥有的Core/UI退出码未知但OSPIDgone与3normal run已证。限冷升级/隔离自选外部profile，不当热更新、FinderTrash/Gatekeeper/SmartScreen/像素键盘/物理设备验收；回滚与最终分发仍R04.4/.5。旧sameversion stub/lifecycle及QA81冷交接按原scope保留，不替代本轮真实安装步骤。
+- 剩余工作：
 - 验收标准：包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。
-- 历史记录：UI-78、UI-79、UI-80、UI-81。
+- 历史记录：UI-78、UI-79、UI-80、UI-81、UI-82。
 
 ### R04.3 签名、公证与可运行性
 
