@@ -1,0 +1,253 @@
+    Checking workbuddy-proxy-gpui v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy/gpui)
+error: constant `ICON_SIZE` is never used
+  --> src/source_filter.rs:19:11
+   |
+19 | pub const ICON_SIZE: i32 = 16;
+   |           ^^^^^^^^^
+   |
+   = note: `-D dead-code` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`
+
+error: multiple associated items are never used
+   --> src/source_filter.rs:106:12
+    |
+ 84 | impl SourceFilter {
+    | ----------------- associated items in this implementation
+...
+106 |     pub fn hovered(&self) -> Option<SourceScope> {
+    |            ^^^^^^^
+...
+111 |     pub fn is_disabled(&self) -> bool {
+    |            ^^^^^^^^^^^
+...
+117 |     pub fn set_disabled(&mut self, disabled: bool) {
+    |            ^^^^^^^^^^^^
+...
+130 |     pub fn set_hovered(&mut self, scope: Option<SourceScope>) {
+    |            ^^^^^^^^^^^
+...
+151 |     pub fn move_selection(&mut self, step: i32) -> SelectionOutcome {
+    |            ^^^^^^^^^^^^^^
+...
+165 |     pub fn group_label(&self) -> SharedString {
+    |            ^^^^^^^^^^^
+...
+170 |     pub fn group_role(&self) -> Role {
+    |            ^^^^^^^^^^
+...
+178 |     pub fn option_label(scope: SourceScope) -> SharedString {
+    |            ^^^^^^^^^^^^
+...
+189 |     pub fn option_role() -> Role {
+    |            ^^^^^^^^^^^
+...
+195 |     pub fn is_selected(&self, scope: SourceScope) -> bool {
+    |            ^^^^^^^^^^^
+
+error: methods `dialog` and `open` are never used
+   --> src/stats_controller.rs:222:12
+    |
+215 | impl MappingFlow {
+    | ---------------- methods in this implementation
+...
+222 |     pub fn dialog(&self) -> Option<&crate::workbuddy_import::MappingDialog> {
+    |            ^^^^^^
+...
+227 |     pub fn open(&mut self, model_id: &str) -> &mut crate::workbuddy_import::MappingDialog {
+    |            ^^^^
+
+error: method `mapping` is never used
+   --> src/stats_controller.rs:284:12
+    |
+263 | impl FilterCoordinator {
+    | ---------------------- method in this implementation
+...
+284 |     pub fn mapping(&mut self) -> &mut MappingFlow {
+    |            ^^^^^^^
+
+error: constant `DIALOG_MIN_WIDTH` is never used
+  --> src/workbuddy_import.rs:10:11
+   |
+10 | pub const DIALOG_MIN_WIDTH: i32 = 520;
+   |           ^^^^^^^^^^^^^^^^
+
+error: constant `DIALOG_MAX_WIDTH` is never used
+  --> src/workbuddy_import.rs:11:11
+   |
+11 | pub const DIALOG_MAX_WIDTH: i32 = 720;
+   |           ^^^^^^^^^^^^^^^^
+
+error: constant `DIALOG_MAX_HEIGHT_RATIO` is never used
+  --> src/workbuddy_import.rs:13:11
+   |
+13 | pub const DIALOG_MAX_HEIGHT_RATIO: f32 = 0.8;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: constant `PAGE_SIZES` is never used
+  --> src/workbuddy_import.rs:15:11
+   |
+15 | pub const PAGE_SIZES: &[i64] = &[20, 50, 100];
+   |           ^^^^^^^^^^
+
+error: variants `Direct` and `Proxy` are never constructed
+  --> src/workbuddy_import.rs:21:5
+   |
+19 | pub enum Classification {
+   |          -------------- variants in this enum
+20 |     /// The user says they used the model directly.
+21 |     Direct,
+   |     ^^^^^^
+22 |     /// The user says the call went through this proxy.
+23 |     Proxy,
+   |     ^^^^^
+   |
+   = note: `Classification` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+error: methods `as_str`, `label`, and `confirmation_label` are never used
+  --> src/workbuddy_import.rs:28:12
+   |
+26 | impl Classification {
+   | ------------------- methods in this implementation
+27 |     /// The wire value the command expects.
+28 |     pub fn as_str(self) -> &'static str {
+   |            ^^^^^^
+...
+36 |     pub fn label(self, zh: bool) -> &'static str {
+   |            ^^^^^
+...
+45 |     pub fn confirmation_label(self, zh: bool) -> &'static str {
+   |            ^^^^^^^^^^^^^^^^^^
+
+error: variants `PreviewExpired`, `RevisionConflict`, `ProxyEvidenceConflict`, `InvalidRange`, and `Unavailable` are never constructed
+  --> src/workbuddy_import.rs:74:5
+   |
+72 | pub enum DialogError {
+   |          ----------- variants in this enum
+73 |     /// The preview went stale: preview again.
+74 |     PreviewExpired,
+   |     ^^^^^^^^^^^^^^
+75 |     /// The rule moved under the preview: preview again.
+76 |     RevisionConflict,
+   |     ^^^^^^^^^^^^^^^^
+...
+79 |     ProxyEvidenceConflict,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+80 |     /// The interval is not usable.
+81 |     InvalidRange,
+   |     ^^^^^^^^^^^^
+82 |     /// Anything else, with no internal detail attached.
+83 |     Unavailable,
+   |     ^^^^^^^^^^^
+   |
+   = note: `DialogError` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+error: associated items `from_code`, `text`, and `needs_fresh_preview` are never used
+   --> src/workbuddy_import.rs:88:12
+    |
+ 86 | impl DialogError {
+    | ---------------- associated items in this implementation
+ 87 |     /// The code the core sent, turned into one of the cases above.
+ 88 |     pub fn from_code(code: &str) -> Self {
+    |            ^^^^^^^^^
+...
+104 |     pub fn text(self, zh: bool) -> &'static str {
+    |            ^^^^
+...
+122 |     pub fn needs_fresh_preview(self) -> bool {
+    |            ^^^^^^^^^^^^^^^^^^^
+
+error: multiple associated items are never used
+   --> src/workbuddy_import.rs:149:12
+    |
+147 | impl MappingDialog {
+    | ------------------ associated items in this implementation
+148 |     /// A dialog for one model, with nothing chosen.
+149 |     pub fn new(model_id: &str) -> Self {
+    |            ^^^
+...
+163 |     pub fn model_id(&self) -> &str {
+    |            ^^^^^^^^
+...
+168 |     pub fn classification(&self) -> Option<Classification> {
+    |            ^^^^^^^^^^^^^^
+...
+173 |     pub fn page(&self) -> i64 {
+    |            ^^^^
+...
+178 |     pub fn page_size(&self) -> i64 {
+    |            ^^^^^^^^^
+...
+183 |     pub fn error(&self) -> Option<DialogError> {
+    |            ^^^^^
+...
+188 |     pub fn preview(&self) -> Option<&Preview> {
+    |            ^^^^^^^
+...
+193 |     pub fn set_range(&mut self, from_ms: i64, to_ms: i64) {
+    |            ^^^^^^^^^
+...
+202 |     pub fn choose(&mut self, classification: Classification) {
+    |            ^^^^^^
+...
+212 |     pub fn set_page(&mut self, page: i64, page_size: i64) -> bool {
+    |            ^^^^^^^^
+...
+225 |     pub fn preview_request(
+    |            ^^^^^^^^^^^^^^^
+...
+239 |     pub fn apply_preview(&mut self, result: Result<Preview, String>) {
+    |            ^^^^^^^^^^^^^
+...
+262 |     pub fn can_confirm(&self, now_ms: i64) -> bool {
+    |            ^^^^^^^^^^^
+...
+270 |     pub fn take_token(&self, now_ms: i64) -> Option<String> {
+    |            ^^^^^^^^^^
+...
+277 |     pub fn apply_confirmation(&mut self, result: Result<(), String>) {
+    |            ^^^^^^^^^^^^^^^^^^
+...
+294 |     pub fn confirm_label(&self, zh: bool) -> &'static str {
+    |            ^^^^^^^^^^^^^
+
+error: constant `BACKGROUND_SYNC_SECONDS` is never used
+   --> src/workbuddy_import.rs:306:11
+    |
+306 | pub const BACKGROUND_SYNC_SECONDS: u32 = 5;
+    |           ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: constant `BACKGROUND_SYNC_NOTE` is never used
+   --> src/workbuddy_import.rs:309:11
+    |
+309 | pub const BACKGROUND_SYNC_NOTE: &str = "后台每 5 秒同步一次，与页面刷新无关 / Background sync runs every 5s, independent of page re...
+    |           ^^^^^^^^^^^^^^^^^^^^
+
+error: multiple methods are never used
+   --> src/workbuddy_import.rs:408:12
+    |
+390 | impl ImportPanel {
+    | ---------------- methods in this implementation
+...
+408 |     pub fn state(&self) -> SwitchState {
+    |            ^^^^^
+...
+418 |     pub fn last_error(&self) -> Option<&str> {
+    |            ^^^^^^^^^^
+...
+423 |     pub fn scope(&self) -> SourceScope {
+    |            ^^^^^
+...
+428 |     pub fn background_note(&self) -> &'static str {
+    |            ^^^^^^^^^^^^^^^
+...
+502 |     pub fn is_complete(&self) -> bool {
+    |            ^^^^^^^^^^^
+...
+510 |     pub fn refresh_reads_jsonl(&self) -> bool {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+515 |     pub fn health_text(&self, zh: bool) -> &'static str {
+    |            ^^^^^^^^^^^
+
+error: could not compile `workbuddy-proxy-gpui` (bin "workbuddy-proxy-gpui") due to 16 previous errors
+warning: build failed, waiting for other jobs to finish...

@@ -1,0 +1,39 @@
+{
+  "batch": "QA89",
+  "temp_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-contracts-yau7jgxt",
+  "source_head": "daac16ee5b363fa97bfbdc44a4ef12a6709c173a",
+  "runtime_change": "Remove four pure contract helper calls before CLI parsing; execute exact helper bodies under cfg(test) instead. No render/model/backend/Core changes.",
+  "body_identity": {
+    "source_group_geometry_fills_the_track": {
+      "body_unchanged": true,
+      "sha256": "43b7aea3b73e1383b496cb83eb980c41a97e3e58bb160b0d2efae12424a0e861"
+    },
+    "source_filter_preserves_single_choice_and_disabled_state": {
+      "body_unchanged": true,
+      "sha256": "a27110ede942b3ab96baea99f665689f352e4824ec010b64293a38bf693c2e3f"
+    },
+    "import_switch_rolls_back_and_pause_preserves_counters": {
+      "body_unchanged": true,
+      "sha256": "6cd44535a9c9fa69b64068c4b10b041f6e4a6e865428cec8c9a8c099a8a75a5a"
+    },
+    "mapping_preview_expires_and_filter_changes_close_the_dialog": {
+      "body_unchanged": true,
+      "sha256": "647a2587d046501dff6443b2706d69f9916c8b3e3a18f79bd91d9ea731f395de"
+    }
+  },
+  "scope": [
+    "fmt",
+    "GPUI strict Clippy all-targets",
+    "GPUI unit tests including all four contracts",
+    "ARM release/CLI",
+    "Intel compile check",
+    "One UI-only Windows/ARM/Intel CI after runtime commit"
+  ],
+  "excluded": [
+    "No new full Core/installer suite",
+    "No 40 frames/themes/GDI/backend performance repeat for unchanged rendering",
+    "Do not attribute historical1562ms to these helpers without causal evidence"
+  ],
+  "historical_marker": "gpui.json after Proxy constructor, not firstpaint/interactivity; current3 slow1562.402ms and all7 original samples retained",
+  "cleanup": "Stop/wait own compiler children; exact owned temp preflight and cleanup; shared Cargo caches retained"
+}

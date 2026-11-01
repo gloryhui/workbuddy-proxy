@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "runtime_source": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "source_hashes_match": 5,
+  "four_exact_contract_bodies_preserved": "preregistered.json / final-scope.json",
+  "local_commands_passed": 6,
+  "local_tests": 216,
+  "ignored": 2,
+  "ci_validation": "ci/validation.json",
+  "native_smoke": "native-smoke.json",
+  "data_proof": "data-proof.json",
+  "no_generated_management_key_archived": "Exact pre-cleanup value scanned before root deletion; zero matches",
+  "token_pattern_scan_matches": 0,
+  "UI_builds_after_freeze": 0,
+  "new_GDI_or_performance_runs": 0,
+  "temporary_root_absent": true,
+  "pending_release": 15,
+  "scope": "Checks do not sign firstpaint/foreground/IME/AT or final RC."
+}

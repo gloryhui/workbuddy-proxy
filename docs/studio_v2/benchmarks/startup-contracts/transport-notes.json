@@ -1,0 +1,10 @@
+{
+  "push_initial": {
+    "exit_code": 128,
+    "error": "LibreSSL SSL_connect SSL_ERROR_SYSCALL github.com:443",
+    "remote_after_failure": "daac16ee5b363fa97bfbdc44a4ef12a6709c173a",
+    "retry": "Ordinary authorized push succeeded, no force or TLS bypass"
+  },
+  "preflight_correction": "One exploratory query incorrectly used head_sha=refactor and returned zero. It is not used as dispatch preflight; exact full b617049 hash queried separately before dispatch.",
+  "native_absence_correction": "Parent tool printed not launched yet when gpui.json absent; absence alone is inconclusive. Agent actual successful launch/close/ps facts show it may already have been normally removed. No re-launch or failure attribution based on that print."
+}

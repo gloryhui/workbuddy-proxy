@@ -1,0 +1,91 @@
+[
+  {
+    "name": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--manifest-path",
+      "gpui/Cargo.toml",
+      "--check"
+    ],
+    "exit_code": 0,
+    "waited": true,
+    "pid": 7899,
+    "seconds": 0.593
+  },
+  {
+    "name": "clippy",
+    "argv": [
+      "cargo",
+      "clippy",
+      "--manifest-path",
+      "gpui/Cargo.toml",
+      "--locked",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "waited": true,
+    "pid": 7902,
+    "seconds": 2.261
+  },
+  {
+    "name": "tests",
+    "argv": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "gpui/Cargo.toml",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "waited": true,
+    "pid": 7922,
+    "seconds": 5.767
+  },
+  {
+    "name": "intel-check",
+    "argv": [
+      "cargo",
+      "check",
+      "--manifest-path",
+      "gpui/Cargo.toml",
+      "--locked",
+      "--all-targets",
+      "--target",
+      "x86_64-apple-darwin"
+    ],
+    "exit_code": 0,
+    "waited": true,
+    "pid": 7967,
+    "seconds": 3.07
+  },
+  {
+    "name": "release",
+    "argv": [
+      "cargo",
+      "build",
+      "--manifest-path",
+      "gpui/Cargo.toml",
+      "--locked",
+      "--release"
+    ],
+    "exit_code": 0,
+    "waited": true,
+    "pid": 7984,
+    "seconds": 44.364
+  },
+  {
+    "name": "version",
+    "argv": [
+      "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+      "--version"
+    ],
+    "exit_code": 0,
+    "waited": true,
+    "pid": 8206,
+    "seconds": 0.469
+  }
+]

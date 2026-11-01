@@ -1,0 +1,73 @@
+{
+  "batch": "QA89",
+  "runtime_commit": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "ui_sha256": "3c0eb8c75fb905fa3e4c08295e7400e9ad9e2e251b01ede1415a0c1223aab00d",
+  "signed_ui_sha256": "e5c20fca58948560d8ad09a53555e3c08342e4ff7fad8daa540a816689ca6dc1",
+  "core_sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+  "change": "Four pure contract invocations removed before CLI parsing; exact bodies now four named unit tests. Source-only compatibility APIs and dummy MappingFlow field inaccessible from production are cfg(test). No blanket dead_code exemption.",
+  "first_failure": "clippy.log.txt retained; removing runtime-only callers exposed test-only APIs. Source changed before final validation; no same-source rerun to green.",
+  "local_checks": "startup-contracts/local-checks-final.json",
+  "CI": {
+    "run_id": 41275489271,
+    "attempt": 1,
+    "jobs": [
+      {
+        "id": 124756717668,
+        "name": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)"
+      },
+      {
+        "id": 124756717805,
+        "name": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)"
+      },
+      {
+        "id": 124756717921,
+        "name": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)"
+      }
+    ],
+    "tests": [
+      {
+        "job": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)",
+        "passed": 216,
+        "failed": 0,
+        "ignored": 2
+      },
+      {
+        "job": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)",
+        "passed": 216,
+        "failed": 0,
+        "ignored": 2
+      },
+      {
+        "job": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)",
+        "passed": 215,
+        "failed": 0,
+        "ignored": 2
+      }
+    ],
+    "scope": "Server metadata/digest syntax/source only; ZIPs not downloaded or independently hashed in QA89. Not distribution packages."
+  },
+  "native": "One background cold startup/close: stats1row/providers2/models5/settings open-return; original initial unknown relay badge preserved, later running. Not firstpaint/foreground/IME/AT.",
+  "data": "Private isolated one request/cost all fields and config bytes preserved after normal Core stop; Core/driver0, UI exit unknown PIDgone. No real user profile writes.",
+  "signed_identity_note": "Nonsignature bytes equal; code_mutation_detected is comparator synthetic self-test, not real mutation.",
+  "historical_startup_slow_sample": "Original1562.402ms/current3 retained, no causal attribution to four helpers. Marker after Proxy constructor is not firstpaint/interactivity.",
+  "historical_performance_scope": "QA86/88 input3c19 and QA87 Windowscd1 remain their exact source; not retagged to new3c0e. No 90/900s, 40frame, themes, full Core/installer repeats.",
+  "windows_future_native_pin": "Updated pin data only to new successful Windows UI artifact13071258074/run41275489271; frozen Core pin unchanged. No GDI re-dispatch.",
+  "cleanup": {
+    "target": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-startup-contracts-yau7jgxt",
+    "logical_bytes_removed": 52807476,
+    "session_temporary_remaining": 0,
+    "necessary_baseline_bytes_retained": 101859410,
+    "system_disk_free_after_bytes": 38298030080
+  },
+  "release_pending": 15,
+  "pending_by_batch": {
+    "R01": 4,
+    "R02": 4,
+    "R03": 3,
+    "R04": 4
+  },
+  "frames_remaining": 0,
+  "goal": "active",
+  "automatic_voiceover_AT_or_input_source_changes": false,
+  "public_release": false
+}

@@ -1,0 +1,131 @@
+{
+  "result": "passed",
+  "run_id": 41275489271,
+  "source": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "attempt": 1,
+  "successful_jobs": [
+    {
+      "id": 124756717668,
+      "name": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)"
+    },
+    {
+      "id": 124756717805,
+      "name": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)"
+    },
+    {
+      "id": 124756717921,
+      "name": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)"
+    }
+  ],
+  "skipped_jobs": [
+    "released-upgrades",
+    "desktop",
+    "windows-native"
+  ],
+  "unit_test_results": [
+    {
+      "job": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)",
+      "passed": 216,
+      "failed": 0,
+      "ignored": 2
+    },
+    {
+      "job": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)",
+      "passed": 216,
+      "failed": 0,
+      "ignored": 2
+    },
+    {
+      "job": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)",
+      "passed": 215,
+      "failed": 0,
+      "ignored": 2
+    }
+  ],
+  "hosts_in_original_log": [
+    "x86_64-pc-windows-msvc",
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin"
+  ],
+  "required_UI_steps_passed": [
+    "Run cargo fmt --manifest-path gpui/Cargo.toml --check",
+    "Run cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings",
+    "Run cargo test --manifest-path gpui/Cargo.toml --locked",
+    "Run cargo build --manifest-path gpui/Cargo.toml --release --locked",
+    "Verify the built UI CLI without starting a user profile",
+    "Run actions/upload-artifact@v4"
+  ],
+  "artifacts": [
+    {
+      "id": 13071338269,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA3MTMzODI2OQ==",
+      "name": "studio-ui-check-macos-x64",
+      "size_in_bytes": 29952236,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13071338269",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13071338269/zip",
+      "expired": false,
+      "digest": "sha256:7f36ce17e07c2c866363759884597212d34ed92d7cf0cc6f997a4e96123ae0e8",
+      "created_at": "2026-11-01T05:14:03Z",
+      "updated_at": "2026-11-01T05:14:03Z",
+      "expires_at": "2026-11-08T05:14:00Z",
+      "workflow_run": {
+        "id": 41275489271,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "feat/studio_v2_gpui",
+        "head_sha": "b61704990587338213271e56ae2cfdacccb59ec5"
+      }
+    },
+    {
+      "id": 13071258074,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA3MTI1ODA3NA==",
+      "name": "studio-ui-check-windows-x64",
+      "size_in_bytes": 29804453,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13071258074",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13071258074/zip",
+      "expired": false,
+      "digest": "sha256:d4c2cfa052b22a907647013a76802d63ee18dbe27f6f9a5fefe73c803fbb5ffb",
+      "created_at": "2026-11-01T05:09:44Z",
+      "updated_at": "2026-11-01T05:09:44Z",
+      "expires_at": "2026-11-08T05:09:41Z",
+      "workflow_run": {
+        "id": 41275489271,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "feat/studio_v2_gpui",
+        "head_sha": "b61704990587338213271e56ae2cfdacccb59ec5"
+      }
+    },
+    {
+      "id": 13070717292,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA3MDcxNzI5Mg==",
+      "name": "studio-ui-check-macos-arm64",
+      "size_in_bytes": 29795862,
+      "url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13070717292",
+      "archive_download_url": "https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/artifacts/13070717292/zip",
+      "expired": false,
+      "digest": "sha256:3d4eed9c821b8e8f223978300aaf53dfb17eaa1225a4c873bce50f7392243c10",
+      "created_at": "2026-11-01T05:06:29Z",
+      "updated_at": "2026-11-01T05:06:29Z",
+      "expires_at": "2026-11-08T05:06:26Z",
+      "workflow_run": {
+        "id": 41275489271,
+        "repository_id": 1416761973,
+        "head_repository_id": 1416761973,
+        "head_branch": "feat/studio_v2_gpui",
+        "head_sha": "b61704990587338213271e56ae2cfdacccb59ec5"
+      }
+    }
+  ],
+  "artifact_scope": "Server metadata/digest syntax/source only; ZIPs not downloaded or independently hashed in QA89. Not distribution packages.",
+  "windows_future_native_pin_matches_final_successful_source": true,
+  "raw_log": {
+    "bytes": 440431,
+    "sha256": "ea71e67474068fba998beac6281c5010f547cf034095dfe5d3bba6e92e360262"
+  },
+  "not_proven": [
+    "Full Core/installer/migration/final RC",
+    "Windows/Intel physical hardware UI/input/IME/HiDPI",
+    "Foreground/firstpaint/overall performance"
+  ]
+}

@@ -23,17 +23,17 @@ from windows_ci_screenshot import (ROOT, current_owner_matches, no_links,
 
 REPOSITORY = 'gloryhui/workbuddy-proxy'
 CORE_SOURCE = '9570451e5006e25118cb2cafa6b3da69353836da'
-UI_SOURCE = '5681103e5b05fb88c73f8ea4a32bafd11cbc3380'
+UI_SOURCE = 'b61704990587338213271e56ae2cfdacccb59ec5'
 CORE_EXE_SHA256 = '880016c6b5c3cf8c0b269e4ed5a74ab6bfaa6026a888b52850b19048a31590e6'
 PINS = {
     'core': {'id': 13060545088, 'run_id': 41246381635,
              'source': CORE_SOURCE, 'name': 'workbuddy-proxy-windows-x64',
              'bytes': 60734196,
              'sha256': '8aba173b7b087c4add1832aa96220129b47f7c855d97afb7b506ac59f56c226f'},
-    'ui': {'id': 13069217005, 'run_id': 41270728784,
+    'ui': {'id': 13071258074, 'run_id': 41275489271,
            'source': UI_SOURCE, 'name': 'studio-ui-check-windows-x64',
-           'bytes': 29808660,
-           'sha256': 'e5f5ad012349d2d5081716c86fb82da8f0526d851df340d5b618696db20f7a33'},
+           'bytes': 29804453,
+           'sha256': 'd4c2cfa052b22a907647013a76802d63ee18dbe27f6f9a5fefe73c803fbb5ffb'},
 }
 
 

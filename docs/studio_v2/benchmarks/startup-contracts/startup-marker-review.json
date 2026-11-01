@@ -1,0 +1,31 @@
+{
+  "historical_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+  "slow_sample": {
+    "label": "current3",
+    "native_ui_process_to_record_ms": 1562.402,
+    "core_ready_ms": 51.369
+  },
+  "all_original_markers_ms": {
+    "previous1": 889.199,
+    "current1": 1014.455,
+    "current2": 816.918,
+    "previous2": 1103.449,
+    "current3": 1562.402,
+    "current4": 779.425,
+    "previous3": 818.85
+  },
+  "measurement_end": "gpui/src/ui.rs Proxy::new writes gpui.json near constructor end, before root closure returns. Not first paint or input readiness.",
+  "measurement_start": "Historical OS process birth; separate ui_record_ready_ms includes CUA/orchestration and is not the startup comparison.",
+  "current_source_before_marker": [
+    "four pure contract helpers before argument parsing (now moved unchanged to cfg(test))",
+    "config directory, lock and config load",
+    "platform application startup and gpui-kit init",
+    "skin application and key registration",
+    "open_window platform work and Proxy::new control/entity construction",
+    "gpui.json marker write"
+  ],
+  "causal_limit": "No historical phase trace, OS-cache, pressure or foreground controls. 1562.402ms cannot be uniquely attributed to a helper/platform/font/constructor stage; retain it and keep final startup/performance pending.",
+  "no_repeat_of_historical_benchmark": true,
+  "next_requirement": "At actual final candidate, collect valid comparable native startup/foreground evidence with phase attribution if slowness recurs; do not substitute CLI --version timing or Core readiness."
+}

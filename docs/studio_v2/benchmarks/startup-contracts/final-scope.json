@@ -1,0 +1,129 @@
+{
+  "result": "passed local checks",
+  "change": "Four pure contract invocations removed before CLI parsing; exact bodies now four named unit tests. Source-only compatibility APIs and dummy MappingFlow field inaccessible from production are cfg(test). No blanket dead_code exemption.",
+  "first_failure": "clippy.log.txt retained; removing runtime-only callers exposed test-only APIs. Source changed before final validation; no same-source rerun to green.",
+  "body_identity": "All four exact function bodies unchanged",
+  "source_files": {
+    "gpui/src/main.rs": "7419a6b72b8a3dcaef0226bef10ab7d84d86f350829238cbae87aaf150232d88",
+    "gpui/src/ui_contract_tests.rs": "e61e9f53c8d056c52673b7d6a9a9784709bc620521ec7d2a00e67cd654809884",
+    "gpui/src/source_filter.rs": "b4ae6275f6f0c761b1a989ac0ce824314f2f2a16196db8f74cf8a24821921224",
+    "gpui/src/stats_controller.rs": "ec9ac7379338e21335a537d9f3877ef6432d1dc6d13e5abd84f2a4b4981728eb",
+    "gpui/src/workbuddy_import.rs": "e420258c08f850c1fc68bc0c1f2f6036a2a7c307a6868875b216c9d329e2dd22"
+  },
+  "binaries": {
+    "ui": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+      "sha256": "3c0eb8c75fb905fa3e4c08295e7400e9ad9e2e251b01ede1415a0c1223aab00d",
+      "bytes": 43810848
+    },
+    "core": {
+      "path": "/Volumes/1TB/Downloads/git/workbuddy-proxy/target/release/workbuddy-proxy",
+      "sha256": "1146f58acdb163126ed03e4298e1d48dee43e620256ca52657d139ff4b742a4e",
+      "bytes": 8428112
+    }
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "waited": true,
+      "pid": 7899,
+      "seconds": 0.593
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "waited": true,
+      "pid": 7902,
+      "seconds": 2.261
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "waited": true,
+      "pid": 7922,
+      "seconds": 5.767
+    },
+    {
+      "name": "intel-check",
+      "argv": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--all-targets",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit_code": 0,
+      "waited": true,
+      "pid": 7967,
+      "seconds": 3.07
+    },
+    {
+      "name": "release",
+      "argv": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--release"
+      ],
+      "exit_code": 0,
+      "waited": true,
+      "pid": 7984,
+      "seconds": 44.364
+    },
+    {
+      "name": "version",
+      "argv": [
+        "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/release/workbuddy-proxy-gpui",
+        "--version"
+      ],
+      "exit_code": 0,
+      "waited": true,
+      "pid": 8206,
+      "seconds": 0.469
+    }
+  ],
+  "tests": {
+    "passed": 216,
+    "ignored": 2,
+    "ignored_contract_source": "No discovery/create/provider business changes; unchanged real Core integration evidence QA85/86 retained, not rerun"
+  },
+  "pending": "Historical slow1562ms not explained; no startup/foreground/overall performance pass. Original3c19 QA86-88 evidence not retagged to new binary.",
+  "runtime_source_commit": "b61704990587338213271e56ae2cfdacccb59ec5",
+  "native_smoke": "native-smoke.json",
+  "data_proof": "data-proof.json",
+  "cleanup": "cleanup.json",
+  "historical_marker_review": "startup-marker-review.json",
+  "scope_expansion_after_first_clippy": "Only cross-reference-checked compatibility test APIs and dummy mapping storage gated under cfg(test); actual rendered mapping controls/handlers and persisted schemas unchanged. Initial plan wording preserved as preregistration, final scope recorded here.",
+  "artifact_pin_refresh": "scripts/windows_frozen_native.py pin data updated for this source; commit only after original three-platform UI-only run succeeds, no second native dispatch."
+}

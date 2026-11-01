@@ -2,7 +2,16 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA88）
+## 最新进展（QA89）
+
+- 当前运行时`b617049`，Mac input UI **3c0eb8c75fb905fa3e4c08295e7400e9ad9e2e251b01ede1415a0c1223aab00d**（43,810,848B），Core仍1146。将main参数解析/--version前4组纯契约断言完整移到cfg(test)的4个单元测试，原body字节不变；仅兼容契约API/dummy MappingFlow存储cfg(test)，未加dead_code豁免。实际页面/handler/持久化schema、Kit/Fast/lock未改。初Clippy16组死代码错误保留，修正test-only边界后最终fmt/strictClippy/216pass+2ignore/Intelcheck/ARMrelease/CLI通过。[交付范围](benchmarks/startup-contracts/final-scope.json)。
+- 唯一[run41275489271](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41275489271)绑定b617/attempt1，ARM124756717668/Intel124756717805/Win124756717921首轮全部success，Desktop/旧升级/Windowsnative三job skipped；Win215pass/2ignore、两Mac216/2ignore，真实host/各检查原log核对。三UI artifact仅服务器元数据，未下载ZIP/不当分发包。Windowsnative未来入口pin同步newWin artifact13071258074/sourceb617，Core冻结957不变；本轮未重新派发GDI。[CI](benchmarks/startup-contracts/ci/validation.json)。
+- 本机新候选后台原生启动一次：2供应商/5模型/1真实HTTP请求及成本，统计行、供应商4+1模型、设置打开返回和正常关闭通过，两原JPEG1440×901。首图代理未知、第二供应商图运行中均保留；gpui.json缺失不证明从未启动（可正常关闭移除）。配置字节与1请求/成本全字段退出后相同，normal/1admitted/0drop/0writefailure，Core/driver0，UI只证PIDgone；签名仅signature变化，mutation flag为比较器自测。Corekernel保护，GUI环境隔离+deny-only guard，不虚称GUIkernel。[原生](benchmarks/startup-contracts/native-smoke.json)、[数据](benchmarks/startup-contracts/data-proof.json)。
+- 历史1562.402ms/current3及全部7marker不删除：gpui.json是Proxy构造尾marker，不是首帧/可交互。无阶段trace/OS对照，不能归因于4断言或声称启动已优化。QA86/88 input3c19的CPU/900秒与QA87 Win cd1仍按原来源，**不重标3c0e、不重复后台90/900秒**。最终前台/启动/峰值/性能仍缺。[marker审查](benchmarks/startup-contracts/startup-marker-review.json)。
+- 初push TLS失败后读远端仍daac再正常push成功；错误短语head_sha查询不算前置，随后精确b617查0并核对远端后唯一dispatch。所有本机进程结束，专用yau7jgxt经完整/即时预检精确清理48文件/19子目录、52,807,476B约50.36MiB，专用临时0；必要两基线合计97.14MiB及共享缓存保留，系统盘约35.67GiB。**不要重开已删bundle。**[清理](benchmarks/startup-contracts/cleanup.json)。
+- **40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active。禁止自动开启旁白/系统辅助功能/切输入源，未公开发布。** QA89证据提交后显式--task89统一生成一次时间线。人工验收环境问题仍无回复：下一步先核对外部条件与可安全推进项，不重复未变CUA能力的hover/pressed/拖列或已完成后台样本；不得用新增低价值测试代替真实输入/设备/前台/签名缺口。最终完整RC待实际候选冻结后集中执行。[QA89](benchmarks/rc-round89-summary.json)。
+
+## 上一轮进展（QA88）
 
 - 当前运行时代码仍568/UI3c19/Core1146，本轮只补现有Fast最终候选后台长期驻留，没有新构建或CI。R01 CUA文档能力未变，hover/mouseMove、分步按下/松开、多点drag仍缺；静态接线未证明产品故障，不重复原失败尝试。已异步询问一次人工验收环境，未收到回答；不得推定允许改系统设置。[R01审查](benchmarks/fast-long-residence/r01-capability-review.json)。
 - 新隔离App，64供应商/256模型/1014真实HTTP请求与成本/4096候选/搜索前缀/选0，10秒warmup后900.010秒61点全inactive、前台同96217、PIDbirth逐点一致，计时内无输入/截图/分析器/构建。UI CPU单核2.7244%，RSS首尾分钟中位112.867→109.406MiB（−3.461）；Core.1544%、21.281→17.859MiB。n1后台未见持续RSS增长，不签无泄漏/前台/最终性能，RSS下降可含paging/compression。[协议/原样本](benchmarks/fast-long-residence/preregistered.json)、[汇总](benchmarks/fast-long-residence/long-summary.json)。
