@@ -196,7 +196,7 @@
 <script id="progress-data" type="application/json">
 {
   "version": 2,
-  "updated_at": "2026-11-01T16:59:12+08:00",
+  "updated_at": "2026-11-01T17:06:55+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "85540e1256842a5e6553bffd9749088af545084e",
@@ -3500,9 +3500,9 @@
             "id": "R01.3",
             "title": "中文IME、Unicode与编辑撤销",
             "acceptance": "pending",
-            "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。 QA81官方v056/057真实Core产生中文/emoji/组合重音配置、价格和12历史，当前CI包冷交接保留原字段与配置字节，原生UI可读。没有新composition/输入源切换，不当逐引擎IME补验。 QA92在dd9/0.6当前Mac模型显示名称用青简输入法，用户报告输入你好、全选替换、Esc取消、候选状态Enter只落字且弹窗保留，底部取消正常；取消后原JPEG/AX显示无壳/遮罩、原模型长名，Core配置和12条请求成本退出后保持。无候选/Enter原帧，人工报告单列，不自动切源。",
-            "remaining": "当前Mac青简模型显示名称主路径已有QA92人工报告；不同输入引擎/后端及其余字段的真实composition Enter/Esc和切换取消仍按实际条件补齐，不把paste/undo或人工单字段覆盖全引擎。安全Key不从AX猜值；禁止自动切输入源。",
-            "acceptance_check": "合成未提交时不误保存/关闭；字符串往返不损坏；原输入源恢复；CUA typeText不冒充IME。",
+            "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。 QA81官方v056/057真实Core产生中文/emoji/组合重音配置、价格和12历史，当前CI包冷交接保留原字段与配置字节，原生UI可读。没有新composition/输入源切换，不当逐引擎IME补验。 QA92在dd9/0.6当前Mac模型显示名称用青简输入法，用户报告输入你好、全选替换、Esc取消、候选状态Enter只落字且弹窗保留，底部取消正常；取消后原JPEG/AX显示无壳/遮罩、原模型长名，Core配置和12条请求成本退出后保持。无候选/Enter原帧，人工报告单列，不自动切源。 2026-11-01用户明确“不用测试另外一种输入法了，跳过”：取消当前Mac第二种中文输入法交叉验证要求，保留已有青简结果；这是用户范围决定，不是另一输入法测试通过。",
+            "remaining": "按用户2026-11-01决定，跳过当前Mac另一种中文输入法交叉验证，不再等待或要求切换。已有青简模型显示名称主路径保留；尚未覆盖字段的真实composition Enter/Esc及取消仍按实际条件处理，不把paste/undo或单字段报告扩展为全部字段通过。跨平台原生输入仍由R02按其范围核对，安全Key不从AX猜值；禁止自动切输入源。",
+            "acceptance_check": "在所用输入法下，合成未提交时不误保存/关闭；字符串往返不损坏；不自动切换输入源，CUA typeText不冒充IME。当前Mac另一种中文输入法交叉验证按用户要求跳过，不计为测试通过。",
             "history_tasks": [
               46,
               50,
@@ -3511,6 +3511,16 @@
               76,
               81,
               92
+            ],
+            "waived_requirements": [
+              {
+                "id": "mac_second_chinese_ime",
+                "status": "waived_by_user",
+                "date": "2026-11-01",
+                "user_instruction": "不用测试另外一种输入法了，跳过",
+                "scope": "当前Mac另一种中文输入法交叉验证",
+                "not_a_test_pass": true
+              }
             ]
           },
           {
@@ -9508,6 +9518,21 @@
     {
       "date": "2026-11-01T16:59:12+08:00",
       "note": "QA92完成后下一批人工输入条件尚无答复，连续三个后续回合同一外部依赖未变，独立Goal已blocked。只同步状态，保留40帧签收和15项发布待验，无新增测试或QA编号。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T17:06:55+08:00",
+      "note": "用户明确跳过当前Mac另一种中文输入法交叉验证；该要求已取消，不计测试通过、不再等待切换。青简结果保留，其他字段及平台门禁不变，40帧剩0、发布15项待验。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
