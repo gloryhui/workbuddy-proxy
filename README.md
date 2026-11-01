@@ -94,6 +94,8 @@ Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / �
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
+升级前请保留完整私有配置目录与原版安装包。Studio V2 候选的[备份与冷回滚步骤](docs/studio_v2/UPGRADE_ROLLBACK.md)说明了恢复旧目录及保留升级后新增历史的方法；候选尚未正式发布。
+
 ## 三步接入 WorkBuddy
 
 ### 1. 添加供应商

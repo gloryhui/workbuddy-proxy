@@ -22,10 +22,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Replace real released packages after old data exists
+      - name: Upgrade real packages and restore the original cold backup
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/installed_upgrade_test.py --platform "${{ matrix.platform }}" --directory "${{ runner.temp }}/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade"
+        run: python scripts/installed_upgrade_test.py --platform "${{ matrix.platform }}" --directory "${{ runner.temp }}/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --verify-rollback
       - name: Clean only the verified finished fixture
         if: always()
         run: python scripts/installed_upgrade_test.py --platform "${{ matrix.platform }}" --directory "${{ runner.temp }}/studio-v2-installed-upgrade" --output-dir "bench-results/installed-upgrade" --cleanup-only

@@ -8,7 +8,7 @@ select --local-headless-only; it still copies/replaces real app bundles.
 and exact cleanup after every child exits. Reports exclude credentials/configs.
 """
 import argparse
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 import hashlib
 import json
 import os
@@ -226,7 +226,7 @@ def installed_lifecycle(exe, directory, environment, policy, report):
             if primary_error is None:
                 assert host.returncode == 0, host.returncode
                 assert not (directory / 'instance.json').exists()
-                with sqlite3.connect(directory / 'usage.sqlite3') as db:
+                with closing(sqlite3.connect(directory / 'usage.sqlite3')) as db:
                     runs = db.execute('SELECT stopped_at_ms,stop_reason FROM stats_runs').fetchall()
                 assert len(runs) == 3 and all(x is not None and reason == 'normal'
                                              for x, reason in runs), runs
@@ -297,7 +297,8 @@ $result | ConvertTo-Json -Compress
     return {'main_only_shortcuts': 2, 'unicode_target_and_working_directory_verified': True}
 
 
-def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schema, report):
+def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schema, report,
+                 rollback=False):
     assert os.environ.get('GITHUB_ACTIONS') == 'true', 'Installer test only on disposable CI'
     assert registration() is None, 'Existing installation: refuse to overwrite'
     assert_no_startup()
@@ -332,7 +333,7 @@ def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schem
         return entry
 
     def replace(directory, result):
-        assert len(upgrade.snapshot(directory)['tables']['usage_requests']['rows']) == 12
+        assert len(upgrade.snapshot(directory, cold=True)['tables']['usage_requests']['rows']) == 12
         entry = install_setup(candidate_setup, 'candidate')
         assert entry['DisplayVersion'] == '0.5.7'
         for name, checksum in expected.items():
@@ -347,6 +348,42 @@ def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schem
                                   'candidate_all_portable_files_match': len(expected),
                                   'same_registration_and_shortcuts': True}
 
+    def uninstall():
+        entry = registration()
+        assert entry and Path(entry['InstallLocation']).resolve() == install.resolve()
+        config_before = (directory / 'config.json').read_bytes() if (directory / 'config.json').exists() else None
+        data_before = upgrade.snapshot(directory, cold=True) if (directory / 'usage.sqlite3').exists() else None
+        uninstaller = install / 'unins000.exe'
+        subprocess.run([str(uninstaller), '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART'],
+                       env=clean_environment(), check=True, timeout=90)
+        upgrade.wait_for(lambda: not uninstaller.exists(), 'Detached uninstaller not finished', 15)
+        assert registration() is None
+        assert_no_startup()
+        assert not exe.exists() and not (install / 'internal/workbuddy-settings.exe').exists()
+        assert not (Path(locations['desktop']) / 'WorkBuddy Proxy.lnk').exists()
+        assert not (Path(locations['programs']) / 'WorkBuddy Proxy/WorkBuddy Proxy.lnk').exists()
+        if config_before is not None:
+            assert (directory / 'config.json').read_bytes() == config_before
+        if data_before is not None:
+            assert data_before == upgrade.snapshot(directory, cold=True)
+
+    def restore(directory, result):
+        # Remove candidate package files with its own uninstaller before the
+        # older setup runs. The data callback separately restores the backup.
+        uninstall()
+        assert all(not (install / name).exists() for name in expected)
+        entry = install_setup(old_setup, 'rollback-released')
+        assert entry['DisplayVersion'] == version
+        for name, checksum in old_files.items():
+            assert sha(install / name) == checksum, ('Restored old package differs', name)
+        assert sha(exe) == result['old_exe_sha256']
+        assert subprocess.check_output([str(exe), '--version'], env=clean_environment(),
+                                       text=True).strip() == version
+        result['package_rollback'] = {
+            'method': 'Candidate uninstaller then verified original setup at identical path',
+            'old_package_files_equal': len(old_files), 'version': version,
+            'registration_and_shortcuts_restored': True, 'startup_remained_disabled': True}
+
     attempted = False
     try:
         attempted = True
@@ -354,33 +391,21 @@ def windows_case(root, old_setup, candidate_setup, candidate_zip, version, schem
         assert entry['DisplayVersion'] == version
         architecture(exe, 'windows-x64')
         report['old_exe_sha256'] = sha(exe)
+        old_files = {str(p.relative_to(install)): sha(p) for p in install.rglob('*')
+                     if p.is_file() and not p.name.startswith('unins000.')}
         args = SimpleNamespace(directory=directory, old_exe=exe, candidate_exe=exe,
                                old_version=version, old_schema=schema, candidate_version='0.5.7')
-        upgrade.run(args, report, replace, installed_lifecycle)
+        upgrade.run(args, report, replace, installed_lifecycle, restore if rollback else None)
     finally:
         uninstaller = install / 'unins000.exe'
         if attempted and uninstaller.is_file():
-            entry = registration()
-            assert entry and Path(entry['InstallLocation']).resolve() == install.resolve()
-            config_before = (directory / 'config.json').read_bytes() if (directory / 'config.json').exists() else None
-            data_before = upgrade.snapshot(directory) if (directory / 'usage.sqlite3').exists() else None
-            subprocess.run([str(uninstaller), '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART'],
-                           env=clean_environment(), check=True, timeout=90)
-            upgrade.wait_for(lambda: not uninstaller.exists(), 'Detached uninstaller not finished', 15)
-            assert registration() is None
-            assert_no_startup()
-            assert not exe.exists() and not (install / 'internal/workbuddy-settings.exe').exists()
-            assert not (Path(locations['desktop']) / 'WorkBuddy Proxy.lnk').exists()
-            assert not (Path(locations['programs']) / 'WorkBuddy Proxy/WorkBuddy Proxy.lnk').exists()
-            if config_before is not None:
-                assert (directory / 'config.json').read_bytes() == config_before
-            if data_before is not None:
-                assert data_before == upgrade.snapshot(directory)
+            uninstall()
             report['uninstall'] = {'removed_files_registration_and_desktop_shortcut': True,
                                     'external_config_bytes_and_all_business_fields_preserved': True}
 
 
-def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, local):
+def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, local,
+             rollback=False):
     install = root / '自选路径 with spaces' / 'WorkBuddy Proxy.app'
     install.parent.mkdir()
     directory = root / 'private-data'
@@ -389,6 +414,7 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
         subprocess.run(['ditto', str(source), str(install)], check=True)
     report['old_package'] = mac_metadata(install, version, target)
     report['old_exe_sha256'] = sha(install / 'Contents/MacOS/workbuddy-proxy')
+    old_tree = tree_identity(install)
     candidate_app = root / 'candidate-staged.app'
     with mounted_app(candidate_dmg, root / 'candidate-volume') as source:
         subprocess.run(['ditto', str(source), str(candidate_app)], check=True)
@@ -396,7 +422,7 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
     candidate_tree = tree_identity(candidate_app)
 
     def replace(directory, result):
-        assert len(upgrade.snapshot(directory)['tables']['usage_requests']['rows']) == 12
+        assert len(upgrade.snapshot(directory, cold=True)['tables']['usage_requests']['rows']) == 12
         previous = root / 'previous-app-retained.app'
         assert not previous.exists() and install.resolve().is_relative_to(root.resolve())
         install.rename(previous)
@@ -409,18 +435,34 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
                                   'all_candidate_resources_and_links_equal': True,
                                   'Finder_drag_not_performed': True}
 
+    def restore(directory, result):
+        retained = root / 'candidate-app-retained.app'
+        previous = root / 'previous-app-retained.app'
+        assert not retained.exists() and tree_identity(install) == candidate_tree
+        assert tree_identity(previous) == old_tree
+        install.rename(retained)
+        previous.rename(install)
+        assert tree_identity(install) == old_tree
+        mac_metadata(install, version, target)
+        result['package_rollback'] = {
+            'method': 'Retain candidate app, restore verified original app at identical path',
+            'all_old_resources_and_links_equal': True, 'version': version,
+            'candidate_app_retained': True, 'Finder_interaction_not_performed': True}
+
     exe = install / 'Contents/MacOS/workbuddy-proxy'
     args = SimpleNamespace(directory=directory, old_exe=exe, candidate_exe=exe,
                            old_version=version, old_schema=schema, candidate_version='0.5.7')
-    upgrade.run(args, report, replace, None if local else installed_lifecycle)
+    upgrade.run(args, report, replace, None if local else installed_lifecycle,
+                restore if rollback else None)
     if local:
         report['installed_lifecycle'] = 'Not run locally: delegated computer use is separate'
     # Removing a copied .app is the Mac uninstall operation. Verify that only
     # this known package bundle is removed while its external profile survives.
     config_before = (directory / 'config.json').read_bytes()
-    data_before = upgrade.snapshot(directory)
+    data_before = upgrade.snapshot(directory, cold=True)
     assert install.resolve().is_relative_to(root.resolve()) and not install.is_symlink()
-    assert not os.path.ismount(install) and tree_identity(install) == candidate_tree
+    assert not os.path.ismount(install)
+    assert tree_identity(install) == (old_tree if rollback else candidate_tree)
     for path in [install, *install.parents]:
         if path == root:
             break
@@ -433,10 +475,10 @@ def mac_case(root, old_dmg, candidate_dmg, version, schema, target, report, loca
     assert handles.returncode == 1 and not handles.stdout.strip(), 'Installed bundle is in use'
     print('UNINSTALL_PLAN:', json.dumps({'target': str(install), 'type': 'owned copied app bundle',
                                         'project': str(Path.cwd()),
-                                        'regenerable': 'Verified candidate DMG; profile is outside app'}), flush=True)
+                                        'regenerable': 'Verified source DMG; profile is outside app'}), flush=True)
     shutil.rmtree(install)
     assert not install.exists() and (directory / 'config.json').read_bytes() == config_before
-    assert upgrade.snapshot(directory) == data_before
+    assert upgrade.snapshot(directory, cold=True) == data_before
     report['uninstall'] = {'method': 'Removed only the verified installed app bundle',
                             'installed_path_absent': True,
                             'external_config_bytes_and_all_business_fields_preserved': True,
@@ -520,6 +562,8 @@ def main():
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--candidate-archive', type=Path)
     parser.add_argument('--local-headless-only', action='store_true')
+    parser.add_argument('--verify-rollback', action='store_true',
+                        help='Restore full cold backup and original package; retain candidate data')
     parser.add_argument('--cleanup-only', action='store_true')
     args = parser.parse_args()
     if args.cleanup_only:
@@ -545,6 +589,7 @@ def main():
               'candidate_run_id': manifest['candidate_run_id'], 'artifact_id': artifact['id'],
               'script_sha256': sha(Path(__file__)),
               'data_script_sha256': sha(Path(__file__).with_name('release_upgrade_test.py')),
+              'verify_rollback': args.verify_rollback,
               'fixture': str(root), 'cases': []}
     (root / 'ownership.json').write_text(json.dumps({'purpose': 'Actual package upgrades/syntheticdata',
                                                     'root': str(root), 'created_by_this_script': True,
@@ -594,11 +639,11 @@ def main():
                 if target.startswith('macos'):
                     mac_case(case_root, old_package, next(packages.glob('*.dmg')), version,
                              6 if version == '0.5.6' else 11, target, case,
-                             args.local_headless_only)
+                             args.local_headless_only, args.verify_rollback)
                 else:
                     windows_case(case_root, old_package, next(packages.glob('*-setup.exe')),
                                  next(packages.glob('*.zip')), version,
-                                 6 if version == '0.5.6' else 11, case)
+                                 6 if version == '0.5.6' else 11, case, args.verify_rollback)
                 case['result'] = 'PASS'
             finally:
                 (output / (release['tag'] + '.json')).write_text(json.dumps(case, indent=2) + '\n')

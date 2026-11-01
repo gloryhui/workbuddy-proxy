@@ -3,11 +3,12 @@
 
 Both executables must come from independently verified packages. This exercises
 the real old schema/writer and candidate migration, not a fabricated legacy DB.
-It does not install an OS package, send GUI input, or prove a live app upgrade.
+The standalone CLI does not install an OS package or send GUI input. An
+installation caller may supply real package/lifecycle/cold-restore callbacks.
 The caller owns --directory and retains/cleans it after all children exit.
 """
 import argparse
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
@@ -15,6 +16,7 @@ import os
 from pathlib import Path
 import platform
 import signal
+import shutil
 import socket
 import sqlite3
 import subprocess
@@ -46,8 +48,17 @@ def wait_for(predicate, label, seconds=20):
         time.sleep(.025)
 
 
-def snapshot(directory):
-    with sqlite3.connect(f'file:{directory / "usage.sqlite3"}?mode=ro', uri=True) as db:
+def snapshot(directory, *, cold=False):
+    uri = (directory / 'usage.sqlite3').as_uri() + '?mode=ro'
+    if cold:
+        assert not any((directory / name).exists()
+                       for name in ('instance.json', 'gpui.json', 'frontend.json'))
+        wal = directory / 'usage.sqlite3-wal'
+        assert not wal.exists() or wal.stat().st_size == 0, 'Cold DB has uncheckpointed WAL'
+        # Darwin's bundled SQLite can refuse a read-only WAL DB without
+        # sidecars. Only a proven stopped, checkpointed DB is immutable here.
+        uri += '&immutable=1'
+    with closing(sqlite3.connect(uri, uri=True)) as db:
         db.row_factory = sqlite3.Row
         tables = {}
         for table in BUSINESS_TABLES:
@@ -192,7 +203,85 @@ def lifecycle(exe, directory, environment, policy, label, report):
             report.setdefault('children', []).append(core.terminal)
 
 
-def run(args, report, replace_installation=None, inspect_installed=None):
+def profile_identity(directory):
+    """Identify the whole cold synthetic profile, including empty directories."""
+    assert directory.is_dir() and not directory.is_symlink()
+    result = {}
+    for path in sorted(directory.rglob('*')):
+        assert not path.is_symlink() and not os.path.ismount(path)
+        assert path.resolve().is_relative_to(directory.resolve())
+        assert path.is_file() or path.is_dir(), 'Unexpected profile node'
+        result[str(path.relative_to(directory))] = (
+            {'sha256': digest(path.read_bytes()), 'bytes': path.stat().st_size}
+            if path.is_file() else {'directory': True})
+    return result
+
+
+def verify_rollback(args, directory, environment, policy, report, before,
+                    original_config, backup, backup_identity, restore_installation):
+    """Restore a cold backup, retaining upgraded data separately without merging."""
+    upgraded = snapshot(directory, cold=True)
+    assert len(upgraded['tables']['usage_requests']['rows']) == 13
+    upgraded_identity = profile_identity(directory)
+    restore_installation(directory, report)
+    assert profile_identity(directory) == upgraded_identity, 'Old installer changed the profile'
+    assert not any((directory / name).exists()
+                   for name in ('instance.json', 'gpui.json', 'frontend.json'))
+    retained = directory.with_name('candidate-profile-retained')
+    assert not retained.exists() and directory.parent == backup.parent
+    assert profile_identity(backup) == backup_identity
+    directory.rename(retained)
+    shutil.copytree(backup, directory)
+    assert profile_identity(directory) == backup_identity, 'Full cold copy did not restore exactly'
+    restored = snapshot(directory, cold=True)
+    assert restored == before and restored['schema'] == args.old_schema
+    assert (directory / 'config.json').read_bytes() == original_config
+    proof = {'result': 'FAIL', 'method': 'Restore exact pre-upgrade cold profile and actual old package',
+             'backup_files': sum('sha256' in x for x in backup_identity.values()),
+             'backup_bytes': sum(x.get('bytes', 0) for x in backup_identity.values()),
+             'backup_tree_sha256': digest(json.dumps(backup_identity, sort_keys=True).encode()),
+             'entire_profile_restored_byte_equal_before_launch': True,
+             'restored_schema': restored['schema'], 'restored_requests': 12,
+             'config_and_keys_byte_equal': True}
+    report['rollback'] = proof
+    with lifecycle(args.old_exe, directory, environment, policy, 'rollback-released', report) as core:
+        assert report['health']['rollback-released']['version'] == args.old_version
+        assert snapshot(directory) == before
+        assert (directory / 'config.json').read_bytes() == original_config
+        relay(core)
+        wait_for(lambda: len(snapshot(directory)['tables']['usage_costs']['rows']) == 13,
+                 'Restored old package could not record a priced request')
+    final = snapshot(directory, cold=True)
+    assert final['schema'] == args.old_schema
+    for name in ('usage_requests', 'usage_costs'):
+        assert len(final['tables'][name]['rows']) == 13
+        old_ids = {row['request_id'] for row in before['tables'][name]['rows']}
+        candidate_ids = {row['request_id'] for row in upgraded['tables'][name]['rows']} - old_ids
+        restored_ids = {row['request_id'] for row in final['tables'][name]['rows']}
+        assert len(candidate_ids) == 1 and not (candidate_ids & restored_ids)
+    assert all(row['total_cost_nanos'] == 2800000 and row['status'] == 'priced'
+               for row in final['tables']['usage_costs']['rows'])
+    for name in ('usage_requests', 'usage_costs'):
+        ids = {row['request_id'] for row in before['tables'][name]['rows']}
+        final['tables'][name]['rows'] = [r for r in final['tables'][name]['rows']
+                                        if r['request_id'] in ids]
+    assert_preserved(before, final)
+    assert (directory / 'config.json').read_bytes() == original_config
+    assert snapshot(retained, cold=True) == upgraded
+    assert profile_identity(retained) == upgraded_identity
+    assert profile_identity(backup) == backup_identity
+    proof.update(result='PASS', old_package_recorded_new_priced_request=True,
+                 original_12_business_rows_preserved=True,
+                 upgraded_13_row_profile_retained_byte_equal=True,
+                 candidate_new_request_not_merged_into_old_profile=True,
+                 pre_upgrade_backup_still_byte_equal=True,
+                 old_package_GUI_not_exercised=True,
+                 scope='Cold backup restoration, not database downgrade or history merge. '
+                       'Post-backup records remain only in the retained candidate profile.')
+
+
+def run(args, report, replace_installation=None, inspect_installed=None,
+        rollback_installation=None):
     directory = args.directory.resolve()
     assert directory.is_dir() and not any(directory.iterdir()), 'Use an existing empty owned fixture'
     paths = {name: directory / name.lower() for name in (
@@ -251,7 +340,7 @@ def run(args, report, replace_installation=None, inspect_installed=None):
                 relay(core)
             wait_for(lambda: len(snapshot(directory)['tables']['usage_costs']['rows']) == 12,
                      'Released requests/costs did not persist')
-        before = snapshot(directory)
+        before = snapshot(directory, cold=True)
         assert before['schema'] == args.old_schema, before['schema']
         assert len(before['tables']['usage_requests']['rows']) == 12
         assert before['tables']['stats_settings']['rows'][0]['retention_days'] == 731
@@ -261,14 +350,22 @@ def run(args, report, replace_installation=None, inspect_installed=None):
         original_config = (directory / 'config.json').read_bytes()
         before_blob = json.dumps(before, sort_keys=True).encode()
         # SQLite backup is produced from the real released DB, not a hand-built schema.
-        with sqlite3.connect(directory / 'usage.sqlite3') as source:
-            with sqlite3.connect(directory / 'released-backup.sqlite3') as backup:
+        with closing(sqlite3.connect(directory / 'usage.sqlite3')) as source:
+            with closing(sqlite3.connect(directory / 'released-backup.sqlite3')) as backup:
                 source.backup(backup)
+        if rollback_installation is not None:
+            assert not any((directory / name).exists()
+                           for name in ('instance.json', 'gpui.json', 'frontend.json'))
+            backup_directory = directory.with_name('pre-upgrade-profile-backup')
+            assert not backup_directory.exists()
+            backup_identity = profile_identity(directory)
+            shutil.copytree(directory, backup_directory)
+            assert profile_identity(backup_directory) == backup_identity
         if replace_installation is not None:
             # The real old writer is stopped and its data already exists before
             # the caller runs an installer or replaces the installed app bundle.
             replace_installation(directory, report)
-            unchanged = snapshot(directory)
+            unchanged = snapshot(directory, cold=True)
             assert unchanged['schema'] == before['schema'], 'Installer ran a writer unexpectedly'
             assert_preserved(before, unchanged)
             assert (directory / 'config.json').read_bytes() == original_config
@@ -291,7 +388,7 @@ def run(args, report, replace_installation=None, inspect_installed=None):
             relay(core)
             wait_for(lambda: len(snapshot(directory)['tables']['usage_costs']['rows']) == 13,
                      'Candidate could not continue recording')
-        final = snapshot(directory)
+        final = snapshot(directory, cold=True)
         assert len(final['tables']['usage_requests']['rows']) == 13
         assert len(final['tables']['usage_costs']['rows']) == 13
         assert all(row['total_cost_nanos'] == 2800000 and row['status'] == 'priced'
@@ -299,7 +396,7 @@ def run(args, report, replace_installation=None, inspect_installed=None):
         report['candidate_new_request_priced'] = True
         if inspect_installed is not None:
             inspect_installed(args.candidate_exe, directory, environment, policy, report)
-            assert_preserved(final, snapshot(directory))
+            assert_preserved(final, snapshot(directory, cold=True))
             assert (directory / 'config.json').read_bytes() == original_config
             report['all_13_rows_equal_after_installed_lifecycle'] = True
         for name in ('usage_requests', 'usage_costs'):
@@ -308,11 +405,16 @@ def run(args, report, replace_installation=None, inspect_installed=None):
                                             if row['request_id'] in keep]
         assert_preserved(before, final)
         assert (directory / 'config.json').read_bytes() == original_config
+        if rollback_installation is not None:
+            verify_rollback(args, directory, environment, policy, report, before,
+                            original_config, backup_directory, backup_identity,
+                            rollback_installation)
         report.update(candidate_recorded_new_request=True,
                       legacy_rows_equal_after_candidate_shutdown=True,
                       scope='Real released Core schema/data → candidate Core, cold handover in same '
-                            'isolated profile. No OS installer replacement, GUI, live-upgrade, '
-                            'downgrade/rollback, or universal data compatibility claim.')
+                            'isolated profile. Optional package/lifecycle/backup-restoration '
+                            'callbacks are separately reported. No live-upgrade, database '
+                            'downgrade/history merge, or universal compatibility claim.')
     finally:
         upstream.shutdown()
         upstream.server_close()
