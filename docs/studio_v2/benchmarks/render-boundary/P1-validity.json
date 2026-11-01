@@ -1,0 +1,9 @@
+{
+  "phase": "P1",
+  "timed_result_retained": "P1-resources.json",
+  "usable_for_active_search_CPU_comparison": false,
+  "reason": "No continuous active/frontmost metadata captured. Point probes after measurement show targetinactive, and userinteraction intervened between originalack andtimedstart; cannot infer exacthistory or attribute lowCPU uniquely. No candidate comparison/signoff from thislow baseline.",
+  "current_probe": "harness-audit/P1-activity-point.json",
+  "next": "Independentbackgroundfunctionalvalidation; activecomparison needs a useravailable interval underhandoff noautomaticactivation constraint.",
+  "recorded_at": "2026-11-01T09:21:25.338213+08:00"
+}

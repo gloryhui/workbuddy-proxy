@@ -1,0 +1,39 @@
+{
+  "ui_pid": 37783,
+  "core_pid": 32068,
+  "candidate_ui_sha_prefix": "82f348f5",
+  "observations": [
+    "External synthetic request caused runtime 1014 to 1015 automatically with discovery dialog open; query long-discovery-, matches 4096, checked 0 unchanged; no manual refresh.",
+    "Cancelled discovery dialog without add or save. One corner drag to small screenshot 1100x701; scrolled to model table and bottom actions. Restored via toolbar with 1440x900 logical size prompt.",
+    "Theme blue-white then Studio Indigo restored, screenshots and AX show selected state.",
+    "Statistics page showed 1015 rows and new request; returned to supplier page displaying 1015.",
+    "Simplified Chinese to English changed heading to Connections & models and control labels; changed back to Simplified Chinese with Chinese heading and controls. Language setting saved by app, as authorized."
+  ],
+  "deviations": [
+    "One accidental click used stale index after theme menu close and opened check-update prompt; controlled fixture displayed latest 0.5.7. Did not install or download; fixture bridge audit is parent responsibility. Screenshot and AX retained.",
+    "An AX attempt to close prompt and an AX attempt to select English returned -10005 invalid element ID. After parent authorization, screenshot-visible CUA coordinates used once per control successfully; no external event injection."
+  ],
+  "evidence": [
+    "native/functional-refresh-after.jpg",
+    "native/functional-refresh-after.ax.txt",
+    "native/functional-small.jpg",
+    "native/functional-small-scroll.jpg",
+    "native/functional-theme-blue.jpg",
+    "native/functional-theme-studio.jpg",
+    "native/functional-accidental-update.jpg",
+    "native/functional-accidental-update.ax.txt",
+    "native/functional-statistics.jpg",
+    "native/functional-provider-return.jpg",
+    "native/functional-language-en.jpg",
+    "native/functional-language-zh.jpg"
+  ],
+  "limits": [
+    "Small image height 701 pixels; no claim that all 255 model rows simultaneously visible or full table regression.",
+    "No claim this is an active-window performance result.",
+    "AX may return only standard window during re-render; visual coordinates were used on new screenshots."
+  ],
+  "no_add_or_provider_save": true,
+  "no_explicit_activate_or_raise": true,
+  "window_left_open": true,
+  "recorded_at": "2026-11-01T09:35:27.117996+08:00"
+}

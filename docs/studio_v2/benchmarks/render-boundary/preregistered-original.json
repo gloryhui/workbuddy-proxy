@@ -1,0 +1,28 @@
+{
+  "order": [
+    "P1",
+    "C1",
+    "C2",
+    "P2"
+  ],
+  "settle_seconds": 10,
+  "timed_seconds": 90,
+  "sample_interval_seconds": 5,
+  "same_Core_process": true,
+  "fresh_UI_process_each_phase": true,
+  "data_dimensions": [
+    64,
+    256,
+    1014,
+    4096
+  ],
+  "viewport": [
+    1440,
+    900
+  ],
+  "query": "long-discovery-",
+  "checked": 0,
+  "focus_proof": "Actualzchangesquery/matches0, Backspacerestores4096/0; no clicksafterproof",
+  "no_inputs_screenshots_profilers_or_builds_during_timed_window": true,
+  "phase_scope": "Compare focused picker CPU at unchanged load; not final startup/longresidence/FPS verdict. Candidate functional checks after timed phases on a separate UI."
+}

@@ -1,0 +1,26 @@
+{
+  "ui_pid": 37783,
+  "core_pid": 32068,
+  "candidate_ui_sha_prefix": "82f348f5",
+  "observations": [
+    "Provider edit: press End then x changed sub2api to sub2apix in field and sidebar, Cmd+Z restored sub2api; cancelled edit, no save.",
+    "Sidebar search OpenCode showed one match and clearing restored sub2api and list.",
+    "Fetched 4096 candidates; common prefix matched 4096; selected candidate-0 and candidate-1 both AX on and visible, selection count 2; only-selected showed exactly two; toggled filter off then cleared selection to 0.",
+    "Before external request background runtime card displays 1014 requests; discovery dialog remains open with query long-discovery-, 4096 matches, 0 checked."
+  ],
+  "evidence": [
+    "native/functional-name-x.jpg",
+    "native/functional-name-x.ax.txt",
+    "native/functional-selected2.jpg",
+    "native/functional-selected2.ax.txt",
+    "native/functional-selected-only.jpg",
+    "native/functional-selected-only.ax.txt",
+    "native/functional-refresh-before.jpg",
+    "native/functional-refresh-before.ax.txt"
+  ],
+  "screenshot_sha256": "d36302c5c34574476477382b08c488252069b249f074c90244422293ec459eee",
+  "external_refresh": "pending",
+  "no_add_or_provider_save": true,
+  "no_explicit_activate_or_raise": true,
+  "ready_at": "2026-11-01T09:26:36.534982+08:00"
+}

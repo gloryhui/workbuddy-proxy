@@ -1,0 +1,45 @@
+{
+  "sources": {
+    "P1-activity-point.json": {
+      "sha256": "c69bebaf72e0e3a45147eace7afacc9c654bff3633893a93197384b9be92f059",
+      "bytes": 179
+    },
+    "activity-probe-generic.m.txt": {
+      "sha256": "9c980505af166e340a9256435638614151c0a2d99a03ac05b2b3d4c6cb9ec57f",
+      "bytes": 1207
+    },
+    "activity-probe.m.txt": {
+      "sha256": "3a80a3313a58157f8885acda85b553cde142fcd8481d2abd4bed849bd2eb70f5",
+      "bytes": 1004
+    },
+    "cleanup-preflight.py.txt": {
+      "sha256": "1f7c52e77ad1a2be52dca29c041fdf0b623afa29e3e48edd44df6506025bc091",
+      "bytes": 2936
+    },
+    "fixture.py.txt": {
+      "sha256": "8330e3eae12275ffd8cea47e4212ff39635953876361f9919977e4dd85e268bb",
+      "bytes": 24101
+    },
+    "observe-initial.py.txt": {
+      "sha256": "027f5fbb87bccd7e17992cfe83a37ddf117ee4a810661918c4e52b6c0333eb7c",
+      "bytes": 2866
+    },
+    "observe.py.txt": {
+      "sha256": "cd0f5e83db591d27a282705c9cfcb2eed669770a227efaea5cbe995c17976995",
+      "bytes": 3265
+    },
+    "process-start.c.txt": {
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a",
+      "bytes": 339
+    },
+    "restart-identity-guard.m.txt": {
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1",
+      "bytes": 6090
+    },
+    "withdrawn-candidate.patch.txt": {
+      "sha256": "2b42abad68d15777ac725438d4c192aa4ae04f11d0780f0d8643cdb4e162f51d",
+      "bytes": 1450
+    }
+  },
+  "scope": "QA85 historical experiment, metadata, sampler and cleanup sources. Temporary paths are deleted; these are audit records, not current rerun commands."
+}

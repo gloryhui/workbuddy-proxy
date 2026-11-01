@@ -1,0 +1,35 @@
+{
+  "label": "P1",
+  "ui_pid": 32975,
+  "core_pid": 32068,
+  "count": 4096,
+  "checked": 0,
+  "query": "long-discovery-",
+  "focus_proof": "actual_keypress_edit_and_backspace",
+  "focus_limit": "AX reports standard window focus; actual z and BackSpace changed search value and restored it.",
+  "operations": [
+    "getApp isolated P1 in background",
+    "restore default 1440x900 and close prompt",
+    "select Providers; sub2api selected; Fetch models 4096",
+    "click search and type long-discovery-",
+    "pressKey z; observe long-discovery-z and 0 matches",
+    "pressKey BackSpace; observe long-discovery-, 4096 matches, 0 checked; no further click"
+  ],
+  "intermediate": {
+    "screenshot": "native/P1-key-z.jpg",
+    "ax": "native/P1-key-z.ax.txt"
+  },
+  "screenshot": "native/P1-key-restored.jpg",
+  "ax": "native/P1-key-restored.ax.txt",
+  "screenshot_sha256": "7d2cb62635819cef7df186bd56e25df324342045a7062626f4196a51841b58f7",
+  "logical_size": [
+    1440,
+    900
+  ],
+  "pixels": [
+    1440,
+    900
+  ],
+  "ready_at": "2026-11-01T09:10:43.340534+08:00",
+  "no_explicit_activate_or_raise": true
+}

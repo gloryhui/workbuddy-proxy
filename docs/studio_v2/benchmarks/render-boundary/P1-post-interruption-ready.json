@@ -1,0 +1,21 @@
+{
+  "ui_pid": 32975,
+  "core_pid": 32068,
+  "count": 4096,
+  "checked": 0,
+  "query": "long-discovery-",
+  "focus_proof": "actual_keypress_edit_and_backspace",
+  "active_frontmost": "unavailable in documented CUA app inventory and AX state; no inference",
+  "ax_focus": "standard window, not text field",
+  "observation": "Before keys, screenshot showed caret at end of query; pressKey z changed query to long-discovery-z and matched 0, then BackSpace restored query and matched 4096, checked remained 0. No explicit activate/raise or subsequent click.",
+  "intermediate_screenshot": "native/P1-post-interruption-z.jpg",
+  "intermediate_ax": "native/P1-post-interruption-z.ax.txt",
+  "screenshot": "native/P1-post-interruption-restored.jpg",
+  "ax": "native/P1-post-interruption-restored.ax.txt",
+  "screenshot_sha256": "feddd9f00520de36ceb2ae436e7be48d11b8913e30c3a9c8edfb349c1465a7f1",
+  "pixels": [
+    1440,
+    900
+  ],
+  "recorded_at": "2026-11-01T09:18:46.004221+08:00"
+}

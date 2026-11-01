@@ -1,0 +1,447 @@
+{
+  "providers": 64,
+  "models": 256,
+  "discovery_candidates": 4096,
+  "counts": {
+    "usage_requests": 1014,
+    "usage_costs": 1014
+  },
+  "core_pid": 32068,
+  "config_sha256": "f2662a5132bc9043ea830a318c23181981d436e66c5069a7830c532d177016c0",
+  "business_sha256": "430bda0d584d6ede6e05a7a184eb91da86d7c5ecbce35cbb2ab58e227c6c62bf",
+  "kernel_protection": {
+    "enforced": true,
+    "pid": 32068,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "apps": {
+    "P1": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-render-boundary.9r95x1iq/fixture/WorkBuddy Proxy QA85 P1.app",
+      "ui_source_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "signed_identity": {
+        "source": {
+          "sha256": "ca2b18c35144fe2705235a6637556a089900713956c669e92f5487e7171736c1",
+          "load_commands_end": 4616,
+          "signature_offset": 42195584,
+          "signature_bytes": 329824,
+          "signature_command": 4600,
+          "normalized_bytes": 42195574,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "runtime": {
+          "sha256": "ca2b18c35144fe2705235a6637556a089900713956c669e92f5487e7171736c1",
+          "load_commands_end": 4616,
+          "signature_offset": 42195584,
+          "signature_bytes": 347952,
+          "signature_command": 4600,
+          "normalized_bytes": 42195574,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "normalized_code_equal": true,
+        "code_mutation_detected": true,
+        "signature_only_mutation_ignored": true,
+        "input_ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+        "runtime_ui_sha256": "cdda941becf8d20abb7dbc15900242c70714803476319104940342f3efb1b6ea",
+        "comparison_copies_created": false,
+        "comparison_copies_removed": true,
+        "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+      }
+    },
+    "C1": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-render-boundary.9r95x1iq/fixture/WorkBuddy Proxy QA85 C1.app",
+      "ui_source_sha256": "82f348f5005197645cf0f1f514e93cf54aab54c5a89082e388f0cf8bd9a2a3e8",
+      "signed_identity": {
+        "source": {
+          "sha256": "b5ea39b1ef30f9f4aceae45f936dcbeeb9512e3b083ccfc8ca6173649f801418",
+          "load_commands_end": 4616,
+          "signature_offset": 42195616,
+          "signature_bytes": 329824,
+          "signature_command": 4600,
+          "normalized_bytes": 42195606,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "runtime": {
+          "sha256": "b5ea39b1ef30f9f4aceae45f936dcbeeb9512e3b083ccfc8ca6173649f801418",
+          "load_commands_end": 4616,
+          "signature_offset": 42195616,
+          "signature_bytes": 347952,
+          "signature_command": 4600,
+          "normalized_bytes": 42195606,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "normalized_code_equal": true,
+        "code_mutation_detected": true,
+        "signature_only_mutation_ignored": true,
+        "input_ui_sha256": "82f348f5005197645cf0f1f514e93cf54aab54c5a89082e388f0cf8bd9a2a3e8",
+        "runtime_ui_sha256": "b6ea6bd3c796b09dc26daaaeec9c55e6e16fffd8e4b5472c44894069b5059b24",
+        "comparison_copies_created": false,
+        "comparison_copies_removed": true,
+        "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+      }
+    },
+    "C2": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-render-boundary.9r95x1iq/fixture/WorkBuddy Proxy QA85 C2.app",
+      "ui_source_sha256": "82f348f5005197645cf0f1f514e93cf54aab54c5a89082e388f0cf8bd9a2a3e8",
+      "signed_identity": {
+        "source": {
+          "sha256": "b5ea39b1ef30f9f4aceae45f936dcbeeb9512e3b083ccfc8ca6173649f801418",
+          "load_commands_end": 4616,
+          "signature_offset": 42195616,
+          "signature_bytes": 329824,
+          "signature_command": 4600,
+          "normalized_bytes": 42195606,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "runtime": {
+          "sha256": "b5ea39b1ef30f9f4aceae45f936dcbeeb9512e3b083ccfc8ca6173649f801418",
+          "load_commands_end": 4616,
+          "signature_offset": 42195616,
+          "signature_bytes": 347952,
+          "signature_command": 4600,
+          "normalized_bytes": 42195606,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "normalized_code_equal": true,
+        "code_mutation_detected": true,
+        "signature_only_mutation_ignored": true,
+        "input_ui_sha256": "82f348f5005197645cf0f1f514e93cf54aab54c5a89082e388f0cf8bd9a2a3e8",
+        "runtime_ui_sha256": "52ad52e4fc6f9f10387038ab1736e669a26265ad33e4de60f2857d633019709f",
+        "comparison_copies_created": false,
+        "comparison_copies_removed": true,
+        "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+      }
+    },
+    "P2": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-render-boundary.9r95x1iq/fixture/WorkBuddy Proxy QA85 P2.app",
+      "ui_source_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+      "signed_identity": {
+        "source": {
+          "sha256": "ca2b18c35144fe2705235a6637556a089900713956c669e92f5487e7171736c1",
+          "load_commands_end": 4616,
+          "signature_offset": 42195584,
+          "signature_bytes": 329824,
+          "signature_command": 4600,
+          "normalized_bytes": 42195574,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "runtime": {
+          "sha256": "ca2b18c35144fe2705235a6637556a089900713956c669e92f5487e7171736c1",
+          "load_commands_end": 4616,
+          "signature_offset": 42195584,
+          "signature_bytes": 347952,
+          "signature_command": 4600,
+          "normalized_bytes": 42195574,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "normalized_code_equal": true,
+        "code_mutation_detected": true,
+        "signature_only_mutation_ignored": true,
+        "input_ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+        "runtime_ui_sha256": "4559f62ea10e76e68d6da84f206b795a3f459039e8bb5e231bb5c879a1138c66",
+        "comparison_copies_created": false,
+        "comparison_copies_removed": true,
+        "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+      }
+    },
+    "Functional": {
+      "bundle": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-render-boundary.9r95x1iq/fixture/WorkBuddy Proxy QA85 Functional.app",
+      "ui_source_sha256": "82f348f5005197645cf0f1f514e93cf54aab54c5a89082e388f0cf8bd9a2a3e8",
+      "signed_identity": {
+        "source": {
+          "sha256": "b5ea39b1ef30f9f4aceae45f936dcbeeb9512e3b083ccfc8ca6173649f801418",
+          "load_commands_end": 4616,
+          "signature_offset": 42195616,
+          "signature_bytes": 329824,
+          "signature_command": 4600,
+          "normalized_bytes": 42195606,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "runtime": {
+          "sha256": "b5ea39b1ef30f9f4aceae45f936dcbeeb9512e3b083ccfc8ca6173649f801418",
+          "load_commands_end": 4616,
+          "signature_offset": 42195616,
+          "signature_bytes": 347968,
+          "signature_command": 4600,
+          "normalized_bytes": 42195606,
+          "masked_fields": [
+            [
+              2432,
+              8
+            ],
+            [
+              2448,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              4600,
+              16
+            ]
+          ],
+          "code_probe_offset": 4696
+        },
+        "normalized_code_equal": true,
+        "code_mutation_detected": true,
+        "signature_only_mutation_ignored": true,
+        "input_ui_sha256": "82f348f5005197645cf0f1f514e93cf54aab54c5a89082e388f0cf8bd9a2a3e8",
+        "runtime_ui_sha256": "3eca784eeda704e06ec988170ed1120622fae1bd7ab60c44b61dc3905a383e8f",
+        "comparison_copies_created": false,
+        "comparison_copies_removed": true,
+        "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+      }
+    }
+  },
+  "scope": "SameCore/fixeddata/preregisteredfreshUI P1,C1,C2,P2, bothnonsignaturecodeidentities verified. No GUIkernel sandbox claim."
+}

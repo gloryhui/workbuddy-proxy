@@ -1,0 +1,39 @@
+diff --git a/gpui/src/main.rs b/gpui/src/main.rs
+index eb0552c..8e76f61 100644
+--- a/gpui/src/main.rs
++++ b/gpui/src/main.rs
+@@ -52,6 +52,22 @@ mod workbuddy_status;
+ use fs2::FileExt;
+ use gpui_kit::component::TitleBar;
+ use gpui_kit::*;
++
++/// Keep the application content separate from Kit's window-layer dialogs.
++/// A dialog input's caret invalidates its own ancestors, not this sibling;
++/// reuse the unchanged content until Proxy notifies or its bounds change.
++/// Inputs inside Proxy still invalidate the cached ancestor normally.
++struct WindowContent {
++    proxy: Entity<ui::Proxy>,
++}
++
++impl Render for WindowContent {
++    fn render(&mut self, _: &mut Window, _: &mut Context<Self>) -> impl IntoElement {
++        self.proxy
++            .clone()
++            .cached(StyleRefinement::default().size_full())
++    }
++}
+ pub(crate) fn default_window_size() -> Size<Pixels> {
+     size(px(1440.), px(900.))
+ }
+@@ -389,7 +405,10 @@ fn main() {
+                     ..TitleBar::window_options()
+                 },
+                 cx,
+-                move |window, cx| cx.new(|cx| ui::Proxy::new(dir, cfg, window, cx)),
++                move |window, cx| {
++                    let proxy = cx.new(|cx| ui::Proxy::new(dir, cfg, window, cx));
++                    cx.new(|_| WindowContent { proxy })
++                },
+             )
+             .expect("Cannot open WorkBuddy Proxy window");
+             cx.on_window_closed(|cx, _| {

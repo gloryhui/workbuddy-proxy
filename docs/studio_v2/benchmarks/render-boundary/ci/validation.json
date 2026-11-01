@@ -1,0 +1,70 @@
+{
+  "run_id": 41262088104,
+  "attempt": 1,
+  "source": "3e257fdf9dfcae26f5d0b2e9c5e9720e877c6435",
+  "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41262088104",
+  "status": "completed",
+  "conclusion": "success",
+  "scope": "UI-only GPUI checks on three hosted runners; no Core, installer, migration, complete RC or native hardware/IME/AT acceptance.",
+  "jobs": [
+    {
+      "id": 124717240975,
+      "name": "ui-checks / ui (macos-latest, macos-arm64, gpui/target/release/workbuddy-proxy-gpui)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124717241080,
+      "name": "ui-checks / ui (windows-latest, windows-x64, gpui/target/release/workbuddy-proxy-gpui.exe)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124717241089,
+      "name": "ui-checks / ui (macos-15-intel, macos-x64, gpui/target/release/workbuddy-proxy-gpui)",
+      "conclusion": "success"
+    },
+    {
+      "id": 124717241848,
+      "name": "desktop",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 124717241851,
+      "name": "released-upgrades",
+      "conclusion": "skipped"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13066280354,
+      "name": "studio-ui-check-macos-x64",
+      "bytes": 29503951,
+      "digest": "sha256:d7d20b7353c4c6c79aa9fee6c6212715c32b7dc0831c90b6e7ab77cdc30ea572",
+      "expires_at": "2026-11-08T01:56:41Z"
+    },
+    {
+      "id": 13066220142,
+      "name": "studio-ui-check-macos-arm64",
+      "bytes": 29343027,
+      "digest": "sha256:6065becc03b0b7d4bc6f3da918f455c366c0c7b1ace3e48842d0479919f4624a",
+      "expires_at": "2026-11-08T01:52:51Z"
+    },
+    {
+      "id": 13065832658,
+      "name": "studio-ui-check-windows-x64",
+      "bytes": 29408091,
+      "digest": "sha256:cfc3fb27c51407adc37cc891acda1a70ac51fc938bfaf3480e80c123528a1941",
+      "expires_at": "2026-11-08T01:50:06Z"
+    }
+  ],
+  "artifacts_downloaded": false,
+  "artifact_validation": "Metadata, names, positive sizes, expiry and server-reported SHA256 syntax only; binary ZIP bytes were not downloaded or independently hashed. Not release packages.",
+  "raw_log": {
+    "file": "run.log.txt",
+    "bytes": 1307712,
+    "sha256": "ec87c80d17c615a06743d65e74b8a2c492b8cd76e1e0097de3b4838fc7ed8afc",
+    "method": "gh run view --log stdout retained byte-for-byte"
+  },
+  "all_required_steps_success": true,
+  "full_desktop_and_upgrade_jobs_skipped": true,
+  "reruns": 0
+}

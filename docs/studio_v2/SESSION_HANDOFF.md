@@ -2,7 +2,16 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA84）
+## 最新进展（QA85）
+
+- 用户要求精简测试，已落实`desktop.yml`手动`ui_only=true`入口与独立三平台GPUI reusable workflow，提交`3e257fd`：格式/Clippy/单元/Release/版本CLI，跳过Core、安装器、旧版迁移；默认完整流程保留，README说明范围。只派发一次run`41262088104`绑定3e257fd，实际Windows/ARM/Intel三UI job首轮全部success、完整Desktop/旧升级skipped；[原run/steps/产物元数据及原日志](benchmarks/render-boundary/ci/validation.json)已归档，UI artifact仅核对服务端元数据，未下载/独立哈希，不是分发包。**这不是新的全Core/RC矩阵，运行时仍957/UI4658/Core1146，14项发布待验不变。**
+- 宽范围`WindowContent`缓存试验82f已撤回，当前产品源与957一致、共享平面release恢复并核验4658。依赖`gpui-pre0.3.9`锁定原档检查：a11y每帧清空nodes，cached reuse_prepaint/reuse_paint不回放a11y节点/动作；试验中有短暂AX空树/失效ID，不能唯一归因但不交付这个风险。候选补丁/构建/原图全部保留，不能把82f原图当当前957新验收。
+- 首P1在用户插入精简问题后开始，CPU2.089%单核；未持续记录active/frontmost，后续Cocoa点测inactive只代表该时点，不反推历史，不据低值算优化。用户反馈前后协议原件均保留；C1/C2/P2未采，未来observer每5秒记录活动状态并在丢失条件时停，不自动重试。因试验已撤回，本轮不再需要前台时段，不主动activate/raise。
+- 本机试验fmt/213pass+2既有ignore/strict Clippy/Intelcheck/ARMrelease通过，两个ignore另用真实Core补19发现/10创建通过。候选一轮原生输入撤销/筛选/选择、弹窗开着自动1014→1015、resize/主题/语言/切页通过；误点一次**受控**更新提示、两次失效AX索引均原样记录，无安装/下载。新图原18张尺寸1440×900/901及1100×701，未裁剪/转换。
+- 原1014请求/成本与新增第1015行在退出后全字段保持；语言en→zh有意写入使配置补64protocol/64完整typedsettings/256capsnull共384字段，所有原字段值保持，**配置字节不是不变**。初验证器把settings误期望null已按既有`ProtocolSettings::default`精确修正，不重跑产品。Core/fixture0，两个CUA UI只证PIDgone、退出码未知。
+- 本轮专用`studio-v2-render-boundary.9r95x1iq`经完整/即时预检精确清理66文件/36目录、320,431,122B约305.59MiB，专用临时0；必要基线50,905,007B/共享缓存保留，系统盘约35.67GiB。上一轮边界外Chrome socket约20B仍未动。**不要重开已删除bundle；禁止自动开启旁白/辅助功能/切源。** R01/R02/R03实际缺口仍在，下一步需A11y安全的渲染方案，别再次直接缓存整个Proxy。
+
+## 上一轮进展（QA84）
 
 - R03焦点缺口已有实际证据：同UI18545/Core18142、64供应商/256模型/1014请求与成本/4096候选，预定A1/B1/A2/B2各90秒。A实际z→匹配0→Backspace恢复共同前缀/4096/0；B实际Tab×2、Space反选0→4096→0，查询与匹配不变。CPU依序6.455/1.522/6.355/1.478%单核，均值搜索6.405、非文本1.500。具体AX焦点仍只window，按钮身份据顺序/视觉/行为推断，但非文本键盘路由已证，不再只是Tab关联。[QA84](benchmarks/rc-round84-summary.json)、[原样本/对照](benchmarks/focus-profile/comparison.json)。
 - **运行时代码仍957/UI4658/Core1146，没有性能修复。** 仅cargo rustc覆盖strip生成符号副本，23个文件内容节字节和VM地址全部相同；实际wrapper仅签名变化已证明。4份真实sample经atos/锁定rustc-demangle解析：A含BlinkCursor、Proxy render、Taffy布局，B均未采到。原始sample保留，不把递归采样次数相加当CPU归因；定位焦点相关重绘路径，尚非唯一逐周期根因。共享平面release已恢复并核验原4658，依赖源与锁定crate原档一致。[符号证据](benchmarks/focus-profile/symbol-identity.json)。

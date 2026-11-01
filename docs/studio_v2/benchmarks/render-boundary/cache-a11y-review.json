@@ -1,0 +1,39 @@
+{
+  "package": "gpui-pre0.3.9",
+  "locked_crate_SHA256": "34f61c1cfd36fc9c436af09308c963822ae27a45a84feb21a77ba5c9e051f1c0",
+  "source_files_checked_against_archive": "trial-decision.json inspected_dependency_files",
+  "source_observations": [
+    {
+      "file": "src/window/a11y.rs",
+      "method": "NodeBuilder::begin_frame",
+      "lines": [
+        474,
+        489
+      ],
+      "behavior": "Clears allnodes and perframe stacks before building newtree."
+    },
+    {
+      "file": "src/window.rs",
+      "method": "Window::reuse_prepaint",
+      "lines": [
+        3996,
+        4049
+      ],
+      "behavior": "Replayshitboxes/tooltips/elementstates/textlayouts/dispatchsubtree/deferreddraws; no a11ytree/action replay."
+    },
+    {
+      "file": "src/window.rs",
+      "method": "Window::reuse_paint",
+      "lines": [
+        4061,
+        4107
+      ],
+      "behavior": "Replaysinputhandlers/mouselisteners/tabstops/textlayouts/scene; no a11ytree/action replay."
+    }
+  ],
+  "native_observation": "TransientAXnodeIDsinvalid and one snapshot onlywindow during82ftrial; sourcegap andnativecondition warrantwithdrawal. Exacttransientcause notuniquelyproved, no unsupported attribution totool/user/current957runtime.",
+  "decision": "Do notshipbroadProxycache basedonthistrial; A11ysafeapproach required beforeperformanceacceptance.",
+  "package_metadata_repository": "https://github.com/zed-industries/zed",
+  "kit_metadata_repository": "https://github.com/longbridge/gpui-kit",
+  "scope_of_repository_links": "Metadata from pinned local crate manifests; no claim about latest upstream fixes/version."
+}

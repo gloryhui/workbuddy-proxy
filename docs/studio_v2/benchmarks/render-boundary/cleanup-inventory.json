@@ -1,0 +1,266 @@
+[
+  {
+    "bytes": 33664,
+    "path": "process-start"
+  },
+  {
+    "bytes": 24101,
+    "path": "fixture.py"
+  },
+  {
+    "bytes": 29,
+    "path": "restart-mode.json"
+  },
+  {
+    "bytes": 52248,
+    "path": "activity-probe-generic"
+  },
+  {
+    "bytes": 822,
+    "path": "ownership.json"
+  },
+  {
+    "bytes": 8428112,
+    "path": "core"
+  },
+  {
+    "bytes": 1207,
+    "path": "activity-probe-generic.m"
+  },
+  {
+    "bytes": 1796496,
+    "path": "business-after-pulse-private.json"
+  },
+  {
+    "bytes": 52208,
+    "path": "activity-probe"
+  },
+  {
+    "bytes": 42525408,
+    "path": "baseline-ui"
+  },
+  {
+    "bytes": 6090,
+    "path": "restart-identity-guard.m"
+  },
+  {
+    "bytes": 3265,
+    "path": "observe.py"
+  },
+  {
+    "bytes": 42525440,
+    "path": "candidate-ui"
+  },
+  {
+    "bytes": 780,
+    "path": "restart-env-private.json"
+  },
+  {
+    "bytes": 1004,
+    "path": "activity-probe.m"
+  },
+  {
+    "bytes": 339,
+    "path": "process-start.c"
+  },
+  {
+    "bytes": 2936,
+    "path": "cleanup-preflight.py"
+  },
+  {
+    "bytes": 2002,
+    "path": "restart-audit.jsonl"
+  },
+  {
+    "bytes": 41653,
+    "path": "config-before-private.json"
+  },
+  {
+    "bytes": 931,
+    "path": "phase-apps.json"
+  },
+  {
+    "bytes": 1794725,
+    "path": "business-before-private.json"
+  },
+  {
+    "bytes": 55760,
+    "path": "restart-identity-guard.dylib"
+  },
+  {
+    "bytes": 3058,
+    "path": "fixture/fixture.json"
+  },
+  {
+    "bytes": 253,
+    "path": "fixture/synthetic-import-inputs.json"
+  },
+  {
+    "bytes": 55,
+    "path": "fixture/management-mode.json"
+  },
+  {
+    "bytes": 51,
+    "path": "fixture/native-acceptance-finished"
+  },
+  {
+    "bytes": 316,
+    "path": "fixture/terminal-status.json"
+  },
+  {
+    "bytes": 41,
+    "path": "fixture/core.log"
+  },
+  {
+    "bytes": 353,
+    "path": "fixture/management-bridge.json"
+  },
+  {
+    "bytes": 327,
+    "path": "fixture/source-protection.sb"
+  },
+  {
+    "bytes": 94908,
+    "path": "fixture/management-arrivals.jsonl"
+  },
+  {
+    "bytes": 235,
+    "path": "fixture/cua-launch-ready.json"
+  },
+  {
+    "bytes": 100,
+    "path": "fixture/instance-before-bridge-private.json"
+  },
+  {
+    "bytes": 8428112,
+    "path": "fixture/review-core"
+  },
+  {
+    "bytes": 85260,
+    "path": "fixture/mock-posts.jsonl"
+  },
+  {
+    "bytes": 186,
+    "path": "fixture/mock-gets.jsonl"
+  },
+  {
+    "bytes": 1450,
+    "path": "fixture/signature-identity.json"
+  },
+  {
+    "bytes": 0,
+    "path": "fixture/gpui.log"
+  },
+  {
+    "bytes": 141200,
+    "path": "fixture/management-audit.jsonl"
+  },
+  {
+    "bytes": 2,
+    "path": "fixture/home/.workbuddy/models.json"
+  },
+  {
+    "bytes": 277,
+    "path": "fixture/home/.workbuddy/projects/demo/pending.jsonl"
+  },
+  {
+    "bytes": 1325,
+    "path": "fixture/home/.workbuddy/projects/demo/builtin.jsonl"
+  },
+  {
+    "bytes": 3558,
+    "path": "fixture/WorkBuddy Proxy QA85 C2.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2200,
+    "path": "fixture/WorkBuddy Proxy QA85 C2.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42543568,
+    "path": "fixture/WorkBuddy Proxy QA85 C2.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 3558,
+    "path": "fixture/WorkBuddy Proxy QA85 C1.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2200,
+    "path": "fixture/WorkBuddy Proxy QA85 C1.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42543568,
+    "path": "fixture/WorkBuddy Proxy QA85 C1.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 0,
+    "path": "fixture/config/gpui.lock"
+  },
+  {
+    "bytes": 91382,
+    "path": "fixture/config/config.json"
+  },
+  {
+    "bytes": 49,
+    "path": "fixture/config/startup.log"
+  },
+  {
+    "bytes": 143886,
+    "path": "fixture/config/model-catalog.json"
+  },
+  {
+    "bytes": 0,
+    "path": "fixture/config/instance.lock"
+  },
+  {
+    "bytes": 81894,
+    "path": "fixture/config/gpui-drafts.json"
+  },
+  {
+    "bytes": 46,
+    "path": "fixture/config/appearance.json"
+  },
+  {
+    "bytes": 1257472,
+    "path": "fixture/config/usage.sqlite3"
+  },
+  {
+    "bytes": 3558,
+    "path": "fixture/WorkBuddy Proxy QA85 P1.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2200,
+    "path": "fixture/WorkBuddy Proxy QA85 P1.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42543536,
+    "path": "fixture/WorkBuddy Proxy QA85 P1.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 3558,
+    "path": "fixture/WorkBuddy Proxy QA85 P2.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2200,
+    "path": "fixture/WorkBuddy Proxy QA85 P2.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42543536,
+    "path": "fixture/WorkBuddy Proxy QA85 P2.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 3582,
+    "path": "fixture/WorkBuddy Proxy QA85 Functional.app/Contents/Info.plist"
+  },
+  {
+    "bytes": 2200,
+    "path": "fixture/WorkBuddy Proxy QA85 Functional.app/Contents/_CodeSignature/CodeResources"
+  },
+  {
+    "bytes": 42543584,
+    "path": "fixture/WorkBuddy Proxy QA85 Functional.app/Contents/MacOS/workbuddy-proxy-gpui"
+  },
+  {
+    "bytes": 3058,
+    "path": "review/ui-live-current.json"
+  }
+]
