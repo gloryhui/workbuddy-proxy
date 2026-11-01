@@ -22,18 +22,18 @@ from windows_ci_screenshot import (ROOT, current_owner_matches, no_links,
                                    package_processes, tree_files)
 
 REPOSITORY = 'gloryhui/workbuddy-proxy'
-CORE_SOURCE = '9570451e5006e25118cb2cafa6b3da69353836da'
-UI_SOURCE = 'b61704990587338213271e56ae2cfdacccb59ec5'
-CORE_EXE_SHA256 = '880016c6b5c3cf8c0b269e4ed5a74ab6bfaa6026a888b52850b19048a31590e6'
+CORE_SOURCE = 'dd9debade83e91b0d11c6b28f18f97edb227abbd'
+UI_SOURCE = CORE_SOURCE
+CORE_EXE_SHA256 = 'ed1d6440180db79d5fe940488161aa2d84cb97c30682beceb9a545f37ab4640e'
 PINS = {
-    'core': {'id': 13060545088, 'run_id': 41246381635,
+    'core': {'id': 13072713023, 'run_id': 41278929532,
              'source': CORE_SOURCE, 'name': 'workbuddy-proxy-windows-x64',
-             'bytes': 60734196,
-             'sha256': '8aba173b7b087c4add1832aa96220129b47f7c855d97afb7b506ac59f56c226f'},
-    'ui': {'id': 13071258074, 'run_id': 41275489271,
-           'source': UI_SOURCE, 'name': 'studio-ui-check-windows-x64',
-           'bytes': 29804453,
-           'sha256': 'd4c2cfa052b22a907647013a76802d63ee18dbe27f6f9a5fefe73c803fbb5ffb'},
+             'package_version': '0.6.0', 'bytes': 61366295,
+             'sha256': '88631e907155d2e4329221fabd61006fec73e4fee6cbabd77c5a0f2863fb29c4'},
+    'ui': {'id': 13072713023, 'run_id': 41278929532,
+           'source': UI_SOURCE, 'name': 'workbuddy-proxy-windows-x64',
+           'layout': 'package', 'package_version': '0.6.0', 'bytes': 61366295,
+           'sha256': '88631e907155d2e4329221fabd61006fec73e4fee6cbabd77c5a0f2863fb29c4'},
 }
 
 
@@ -57,6 +57,14 @@ def unique_member(archive, name):
     assert len(matches) == 1 and not matches[0].is_dir(), name
     # No archive paths are extracted. Only these explicitly named bytes are used.
     return archive.read(matches[0])
+
+
+def package_binary(path, version, relative_path):
+    prefix = f'workbuddy-proxy-{version}-windows-x64'
+    with zipfile.ZipFile(path) as outer:
+        blob = unique_member(outer, f'dist/{prefix}.zip')
+    with zipfile.ZipFile(io.BytesIO(blob)) as inner:
+        return unique_member(inner, f'{prefix}/{relative_path}')
 
 
 def cleanup(root, marker, parent, report):
@@ -106,23 +114,30 @@ def main():
         marker = uuid.uuid4().hex
         (root / '.owner').write_text(marker)
         archives = {}
+        downloads = {}
         for kind, pin in PINS.items():
             metadata, run = checked_metadata(pin)
             report['artifacts'][kind] = {'metadata': metadata, 'run': run}
-            path = root / f'{kind}.zip'
-            download(metadata['archive_download_url'], path, pin, authenticated=True)
+            if pin['id'] not in downloads:
+                path = root / f'{pin["id"]}.zip'
+                download(metadata['archive_download_url'], path, pin, authenticated=True)
+                downloads[pin['id']] = path
+            path = downloads[pin['id']]
+            assert path.stat().st_size == pin['bytes'] and sha(path) == pin['sha256']
             archives[kind] = path
             report['artifacts'][kind]['download_sha256'] = sha(path)
         package = root / 'package'
         (package / 'internal').mkdir(parents=True)
         core = package / 'workbuddy-proxy.exe'
         ui = package / 'internal' / 'workbuddy-settings.exe'
-        with zipfile.ZipFile(archives['core']) as outer:
-            blob = unique_member(outer, 'dist/workbuddy-proxy-0.5.7-windows-x64.zip')
-        with zipfile.ZipFile(io.BytesIO(blob)) as inner:
-            core.write_bytes(unique_member(inner, 'workbuddy-proxy-0.5.7-windows-x64/workbuddy-proxy.exe'))
-        with zipfile.ZipFile(archives['ui']) as archive:
-            ui.write_bytes(unique_member(archive, 'workbuddy-proxy-gpui.exe'))
+        core.write_bytes(package_binary(archives['core'], PINS['core']['package_version'],
+                                        'workbuddy-proxy.exe'))
+        if PINS['ui'].get('layout') == 'package':
+            ui.write_bytes(package_binary(archives['ui'], PINS['ui']['package_version'],
+                                          'internal/workbuddy-settings.exe'))
+        else:
+            with zipfile.ZipFile(archives['ui']) as archive:
+                ui.write_bytes(unique_member(archive, 'workbuddy-proxy-gpui.exe'))
         for exe in (core, ui):
             architecture(exe, 'windows-x64')
         report['core_sha256'] = sha(core)

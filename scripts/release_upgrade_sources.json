@@ -1,26 +1,26 @@
 {
   "repository": "gloryhui/workbuddy-proxy",
-  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
-  "candidate_run_id": 41246381635,
-  "candidate_version": "0.5.7",
+  "runtime_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
+  "candidate_run_id": 41278929532,
+  "candidate_version": "0.6.0",
   "candidate_artifacts": [
     {
-      "platform": "windows-x64",
-      "id": 13060545088,
-      "bytes": 60734196,
-      "sha256": "8aba173b7b087c4add1832aa96220129b47f7c855d97afb7b506ac59f56c226f"
+      "platform": "macos-arm64",
+      "id": 13072569516,
+      "bytes": 38786395,
+      "sha256": "4a32af9569c4f8db089d16bcfe46703e92d5b9fb3e4bb6cd90bad5102a47efa3"
     },
     {
       "platform": "macos-x64",
-      "id": 13060022608,
-      "bytes": 39647648,
-      "sha256": "117a641ff579509349c5897339cfb59fbf1ad8c943eed32b7ec773ccdde8a3b2"
+      "id": 13073127625,
+      "bytes": 40179846,
+      "sha256": "1b2b176a06ead231f8aa405dba8999c7ce26ba12b0a3ae2ffcca20ece5120fb2"
     },
     {
-      "platform": "macos-arm64",
-      "id": 13060775696,
-      "bytes": 38304358,
-      "sha256": "e912e02066c4f751e9367923faf0333b0631966c0c13caf01b9308a45d02ca79"
+      "platform": "windows-x64",
+      "id": 13072713023,
+      "bytes": 61366295,
+      "sha256": "88631e907155d2e4329221fabd61006fec73e4fee6cbabd77c5a0f2863fb29c4"
     }
   ],
   "official_releases": [
