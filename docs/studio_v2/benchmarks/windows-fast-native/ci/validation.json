@@ -91,5 +91,12 @@
   },
   "local_checks": "../preregistered.json",
   "images": "../visual-review.json",
-  "limit": "15 pending release tasks remain. No physical input/IME/AT/HiDPI, install or final RC acceptance."
+  "limit": "15 pending release tasks remain. No physical input/IME/AT/HiDPI, install or final RC acceptance.",
+  "raw_whitespace_exceptions": [
+    "docs/studio_v2/benchmarks/windows-fast-native/ci/artifact/frozen-native.json",
+    "docs/studio_v2/benchmarks/windows-fast-native/ci/artifact/native/windows-ci-lifecycle.json",
+    "docs/studio_v2/benchmarks/windows-fast-native/ci/artifact/native/windows-ci-screenshot.json"
+  ],
+  "authored_whitespace": "passed excluding byte-preserved originals",
+  "local_validator_note": "Initial whitespace exception filter omitted outer frozen-native.json; CRLF original flagged, not rewritten. Evidence commit already created because shell did not gate commit on preceding validator. Corrected scope independently passed; no amend/history rewrite."
 }

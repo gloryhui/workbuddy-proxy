@@ -45,8 +45,8 @@
       "sha256": "3404ce1ff2e4f12c7132d2b131a9dee144fbc6ee613f53d7f61c2a5dfb8486ee"
     },
     "ci/validation.json": {
-      "bytes": 3372,
-      "sha256": "ba63a4a4438c20450887b3848bb37bf11d7a409c611d157fa7de3a60b7497057"
+      "bytes": 4051,
+      "sha256": "d6966c1d0d8cb33923bcb606592d2ccedf2e23c6b62d709206aa2b060c8378c3"
     },
     "dispatch.json": {
       "bytes": 525,

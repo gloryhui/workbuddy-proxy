@@ -8,7 +8,7 @@
 - 唯一[run41272932710](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41272932710)绑定67eaff3/attempt1，job124749239785首次43秒成功，Desktop/UI构建/旧升级三job skipped；artifact13070162370、154,989B ZIP大小SHA与所有原报告/PNG均独立核对。[CI来源/清理](benchmarks/windows-fast-native/ci/validation.json)。
 - 原PNG1442×901/1102×701已逐图查看，实际client1440×900/1100×700、DPI96，caption和toolbar无可见重叠，小窗筛选正常换行。仅英文1供应商/64模型/0请求，未验caption/托盘点击、键盘/IME/HiDPI/弹窗；Status列在小窗横向视口外，未验横滚。harness单实例、关设置留同Core、重开/草稿隔离、正常退出和统计run通过，harness/capture0，UI退出码未知。[原图](benchmarks/windows-fast-native/visual-review.json)。
 - 临时显示1920×1080恢复1024×768校验通过，DPI未改。两精确自有runner临时根已清理205,385,996B约195.87MiB，runner专用临时0；本机未新建临时根，保留两必要基线共97.14MiB及共享缓存，系统盘约35.76GiB。无本机应用窗口/新后台进程；不要重开QA86已删bundle。首归档GET EOF只补读；初validator将GitLF对WindowsCRLF误判，精确展开hash一致，未改原报告/重跑CI。[QA87](benchmarks/rc-round87-summary.json)。
-- **40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active。禁止自动开启旁白/系统辅助功能/切输入源，未公开发布。** QA87证据提交后时间线统一生成一次；不要重复相同验证。下一步优先R01可支持的真实缺口与R03有效前台/启动慢样本/最终长时证据；前台API条件此前未建立，不重复要求用户点击同一旧窗口，不把后台CPU结果当最终前台门禁。最终完整RC留实际候选冻结后统一执行。
+- **40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active。禁止自动开启旁白/系统辅助功能/切输入源，未公开发布。** QA87证据提交后生成时间线，首次遗漏`--task`保留旧86，随后显式87修正；不要重复相同验证。下一步优先R01可支持的真实缺口与R03有效前台/启动慢样本/最终长时证据；前台API条件此前未建立，不重复要求用户点击同一旧窗口，不把后台CPU结果当最终前台门禁。最终完整RC留实际候选冻结后统一执行。
 
 ## 上一轮进展（QA86）
 
