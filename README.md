@@ -518,6 +518,8 @@ Cargo 默认复用当前仓库的 `target/`、`gpui/target/`；如需共享 work
 
 `docs/` 和 `evidence/` 中带日期的日志、报告及 GUI 自动化脚本是历史快照，其中的旧机器路径只用于追溯，不是当前配置或执行要求。复跑时以当前 `AGENTS.md`、本节和脚本参数为准；归档的原生 GUI 脚本需先按目标平台迁移，不能直接作为跨平台测试入口，也不能用旧结果代替新验收。
 
+仅修改 GPUI 时，可使用 Desktop workflow 的 `ui_only=true` 手动入口，在 Windows、macOS ARM 和 Intel 上检查 GPUI 格式、Clippy、单元测试、Release 构建及 `--version`。例如将 `BRANCH` 替换为待验证分支后执行 `gh workflow run desktop.yml --ref BRANCH -f ui_only=true`。此模式不运行 Core、安装器或迁移测试，也不生成正式安装包；默认完整流程保留，最终 RC 仍需完整发布门禁。已通过且未受改动影响的检查无需在每次小调整后重复运行。
+
 ```sh
 python3 scripts/path_portability_test.py
 cargo test --locked

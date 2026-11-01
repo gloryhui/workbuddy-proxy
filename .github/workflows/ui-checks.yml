@@ -1,0 +1,41 @@
+name: Studio UI checks
+on:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  ui:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows-x64
+            exe: gpui/target/release/workbuddy-proxy-gpui.exe
+          - os: macos-latest
+            platform: macos-arm64
+            exe: gpui/target/release/workbuddy-proxy-gpui
+          - os: macos-15-intel
+            platform: macos-x64
+            exe: gpui/target/release/workbuddy-proxy-gpui
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: gpui -> target
+      - run: cargo fmt --manifest-path gpui/Cargo.toml --check
+      - run: cargo clippy --manifest-path gpui/Cargo.toml --locked --all-targets -- -D warnings
+      - run: cargo test --manifest-path gpui/Cargo.toml --locked
+      - run: cargo build --manifest-path gpui/Cargo.toml --release --locked
+      - name: Verify the built UI CLI without starting a user profile
+        shell: bash
+        run: '"${{ matrix.exe }}" --version'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: studio-ui-check-${{ matrix.platform }}
+          path: ${{ matrix.exe }}
+          retention-days: 7

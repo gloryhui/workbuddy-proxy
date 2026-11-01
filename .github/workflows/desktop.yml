@@ -8,11 +8,15 @@ on:
         description: Validate real released package replacement against frozen CI packages
         type: boolean
         default: false
+      ui_only:
+        description: Check only GPUI on all three platforms; no Core, installer or migration tests
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   desktop:
-    if: ${{ github.event_name != 'workflow_dispatch' || !inputs.upgrade_only }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (!inputs.upgrade_only && !inputs.ui_only) }}
     strategy:
       fail-fast: false
       matrix:
@@ -163,3 +167,6 @@ jobs:
       contents: read
       actions: read
     uses: ./.github/workflows/release-upgrade.yml
+  ui-checks:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.ui_only }}
+    uses: ./.github/workflows/ui-checks.yml
