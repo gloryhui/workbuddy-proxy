@@ -25,6 +25,7 @@
 - 后台优先读取，不主动强制置顶；需真实输入/系统场景时集中安排；Mac锁定则先写代码、待可操作再验。
 - 严格保留原代理核心、配置/数据与全部现有功能。专用临时进程结束后精确清理，复用共享构建缓存。
 - 按本轮用户要求精简验证：根据改动影响选择检查，已通过且未受影响的本机检查不重复；UI-only CI跳过Core/安装/迁移。正式RC最后集中核对完整门禁，精简入口不替代全矩阵、真实平台或最终性能验收。
+- 按影响范围精简验证：QA86渲染后端变更集中补相关原生modal/输入/尺寸/偏好及三平台UI阶段检查；最终完整RC一次集中执行。全局门禁按实际新候选重开，历史证据不重标。
 
 ## P00：最新 Figma 基线核对
 
@@ -303,17 +304,17 @@
 
 ### R01.1 共享状态与层级矩阵
 
-- 已完成/已有证据：e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。 QA84 actualsearch0match/restoration, invert4096overlimitwarning/restoration0 in64/256/1014 fixture captured; a state subset, notwholeapplicablematrix/slot acceptance.
-- 剩余工作：本轮真实Tooltip仍未观察成功；共享全适用状态/实际slot仍待，不能把筛选缓存、AX和编译当全矩阵签收。
+- 已完成/已有证据：e1f候选真实held Test：重复点击未增加提交，精确save/test各1；controlled update各1，完成不重开已隐藏通知，16条历史完整。 最终631599真实外部save64在model modal期间保持原4条/原字段，Cancel后poll刷新64/总65；dirty名称与64模型跨外部rename、切换和原生冷重开保持。外部配置变化后重写私有draft base，14请求/成本逐字段不变。 QA77将36wrapper/118限定调用点归为10个适用状态族，记录代表性原生idle/focus/disabled/empty/checkbox/overflow；pressed/Tooltip等不满足的证据明记。 QA80最终4658投影缓存与条件列表通知通过213本机测试/实际选择、仅选2→1→0、反选/清空、搜索4095/无匹配、关闭重开及应用主题语言往返；长显示名在真实单元格确实截断，但正常单击等待未显示完整Tooltip，AX全名不作提示出现证明。 QA81实际旧版数据读回补自定义731天（5个预设未误高亮）、OBSERVE、手工USD2/8、持久13条/第2页3条两尺寸与滚动状态。原图外框1440×901/1100×701，不裁剪重标为900/700；没有全slot/pressed/hover证明。 QA84 actualsearch0match/restoration, invert4096overlimitwarning/restoration0 in64/256/1014 fixture captured; a state subset, notwholeapplicablematrix/slot acceptance. QA86新候选5681103/UI3c19：Fast0.1.7回放缓存a11y树/动作，32beb首次Cancel仅清body留下白壳，改为owner状态observe_in处理modal生命周期后，F1发现/编辑校验/协议Esc/删除/同步/取消同步/端口取消均回主页面，无残壳；StartupSync/pendingPort未触发，不签全状态/slot。
+- 剩余工作：此前真实Tooltip仍未取得；QA86未重试能力未变的hover/pressed/拖列。新候选已补七类modal取消/校验与代表尺寸/偏好，完整适用状态、StartupSync/pendingPort及实际slot仍待，不把缓存/AX/编译当全矩阵签收。
 - 验收标准：共享按钮/输入/选择/列表/表格/弹层/Tooltip状态表完整；所有出现位置有正确slot和实际尺寸，无P0/P1。
-- 历史记录：UI-41、UI-53、UI-59、UI-60、UI-61、UI-64、UI-75、UI-76、UI-77、UI-80、UI-81、UI-84。
+- 历史记录：UI-41、UI-53、UI-59、UI-60、UI-61、UI-64、UI-75、UI-76、UI-77、UI-80、UI-81、UI-84、UI-86。
 
 ### R01.2 完整键盘与焦点恢复
 
-- 已完成/已有证据：实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged.
+- 已完成/已有证据：实际Tab/ShiftTab、编辑/选择/取消、四协议字段和分页往返已补证；中性Delete确认Enter不执行删除；不同候选来源明确。 最终631599复现修复Next禁用后的ShiftTab/Return回首页和Prev禁用后Tab退出；AX仅报window焦点，结论依原图和真实键盘行为，鼠标路径未强制重定向。 QA84 realTabx2/Space inpicker toggles0to4096to0 twice, query/4096preserved; exactnativeAXfocusedwidget still unavailable butnontextkeyboardrouting proved. FinalCancel/windowclose actual, no apply/save. Columnwidthdrag gap unchanged. QA86新候选F1模型ID空值Apply显示错误且modal保留，Cancel关闭；协议Esc及五类确认取消后后台控件可用。两后台样本前后无需重新点击，实际z/Backspace仍路由搜索；不等于完整物理键盘/IME或精确AX焦点身份。
 - 剩余工作：真实可拖列拖宽及刷新/resize保持仍待。旧x444第一边界是刻意固定的时间列，不能作可拖列失败证据；QA77改试provider/model右边界仍无可见变化，当前CUA只支持两点drag，未辨明工具投递与产品原因。能力未变不重复同类尝试；其余完整焦点回归仍按缺口收口。
 - 验收标准：无键盘死路/陷阱/误提交；焦点可见、返回合理；关闭×Enter不触发业务确认，危险确认不默认执行。
-- 历史记录：UI-40、UI-41、UI-50、UI-51、UI-62、UI-64、UI-67、UI-75、UI-76、UI-77、UI-84。
+- 历史记录：UI-40、UI-41、UI-50、UI-51、UI-62、UI-64、UI-67、UI-75、UI-76、UI-77、UI-84、UI-86。
 
 ### R01.3 中文IME、Unicode与编辑撤销
 
@@ -324,10 +325,10 @@
 
 ### R01.4 辅助功能与七主题/三语言
 
-- 已完成/已有证据：修复请求/汇总表Table/Row/ColumnHeader/Cell名称、完整值和索引；真实CUA树及两尺寸原图已查。七主题×三语言21组合均经真实交互和业务不变断言；7张中文主题代表原图已审阅。 QA77四类SelectItem和供应商自有协议/预设/思考菜单具名，原生AX选择、键盘确认/取消通过；模型行补完整名称/ID/选择文字，保持Table/Row/Cell及原selected；模型/协议/删除弹层具名Dialog，源码modal标记。
+- 已完成/已有证据：修复请求/汇总表Table/Row/ColumnHeader/Cell名称、完整值和索引；真实CUA树及两尺寸原图已查。七主题×三语言21组合均经真实交互和业务不变断言；7张中文主题代表原图已审阅。 QA77四类SelectItem和供应商自有协议/预设/思考菜单具名，原生AX选择、键盘确认/取消通过；模型行补完整名称/ID/选择文字，保持Table/Row/Cell及原selected；模型/协议/删除弹层具名Dialog，源码modal标记。 QA86采用Kit0.7.3可选Fast0.1.7，实际锁定crate校验后确认节点/焦点关系/动作监听回放；cached Window参数以retained-gpui::Window作编译期后端约束。当前原生AX和语言/主题代表路径已查；未开启真实AT，不签整个无障碍门禁。
 - 剩余工作：真实辅助技术主路径仍未通过，严格禁止自动开启VoiceOver/系统辅助功能或切输入源。macOS adapter不将Row视为item-like，原生selected仍受限，行文字仅可读补充；菜单AX selected随cursor移动，不能等同committed checked。CUA不显示modal标记，关闭控件为应用Dialog body兄弟，完整AT作用域/焦点路径未验；不重复21主题组合。
 - 验收标准：无无名关键控件，真实辅助技术能完成主路径；所有皮肤/语言可读且无截断，不要求重做280张相同截图。
-- 历史记录：UI-34、UI-38、UI-40、UI-41、UI-57、UI-75、UI-77。
+- 历史记录：UI-34、UI-38、UI-40、UI-41、UI-57、UI-75、UI-77、UI-86。
 
 ### R01.5 40帧界面集中签收
 
@@ -389,17 +390,17 @@
 
 ### R03.2 峰值差异诊断与最终结论
 
-- 已完成/已有证据：UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。 QA80 最终同Core1146/UI4658对a6eUIba525主P2/C3/C4/P3各n2：UI空闲中位差+0.000MiB、合计-0.515MiB、峰值-1.865MiB、进程→记录+209.764ms、proxy p95-0.0035ms。新UI启动marker1562.402/779.425ms对旧1103.449/818.850ms，全部慢样本保留，未重跑到理想数值。4096最终900秒RSS+1.25MiB，footprint144.8→145.6M，allocated27.3→27.3M、objects78043→77995、fragmentation22.2→23.0M；仅解释该观察中驻留/碎片组成，不作普遍无泄漏结论。 QA84 closes the missing focus-routing evidence: preregistered sameprocess A1/B1/A2/B2 90s each at64/256/1014/4096, actualkey editing vs Space invert0to4096to0, CPU6.455/1.522/6.355/1.478% singlecore. Frozen4658 section-identical symboltwin resolves realA BlinkCursor/Proxy render/Taffy paths absent inB. No runtimefix, startupslowmarker and finalperformance verdict remain. QA85 WindowContent broadcache trial82f waswithdrawn after sourceinspection foundcachedreplay lacks accessibilitynodes/actions whilea11ybuilder clears perframe; transientAXempty/stale observations retained, uniquecausalitynotclaimed. FirstP1 lowCPU2.089% lackscontinuousactivity metadata; laterpointinactive, no validcandidatecomparison orCPUfixclaim. Runtime source stays957/UI4658.
-- 剩余工作：继续验证兼容辅助功能树的渲染/缓存边界。QA85宽范围Proxy缓存试验已撤回，2.089%旧基线无持续活动状态记录，不作修复对照；后续需明确窗口活动条件。启动慢marker、峰值及最终性能结论仍待，不降低负载或门槛。
+- 已完成/已有证据：UI67匹配后空闲合计+0.58MiB，峰值+12.63MiB，尚不能宣称完全无回退。 QA78发现模型4096弹窗600秒真实采样，UI首末分钟中位RSS124.328→126.594MiB，+2.266MiB，单核平均CPU6.656%；保留增量与全样本，待普通菜单对照及最终累计基线，不宣称无增长或性能通过。 另语言菜单600秒首末分钟中位-0.109MiB、单核CPU1.605%；不同进程/操作历史，不能按匹配A/B归因。 QA79中间完整基线四轮合计空闲-0.07MiB/UI+0.14MiB/峰值+1.815MiB；f807并非最终Core，历史成本不撤销。livevmmap发现current1图形驻留；另C3立即125.6M/graphics62.6M降至15/30秒70.8M/10.1M，保留全部样本，不解释QA78长时增长。最终Coreheadless就绪468/52ms对基线52/52ms，慢样本原因未定。 QA80 最终同Core1146/UI4658对a6eUIba525主P2/C3/C4/P3各n2：UI空闲中位差+0.000MiB、合计-0.515MiB、峰值-1.865MiB、进程→记录+209.764ms、proxy p95-0.0035ms。新UI启动marker1562.402/779.425ms对旧1103.449/818.850ms，全部慢样本保留，未重跑到理想数值。4096最终900秒RSS+1.25MiB，footprint144.8→145.6M，allocated27.3→27.3M、objects78043→77995、fragmentation22.2→23.0M；仅解释该观察中驻留/碎片组成，不作普遍无泄漏结论。 QA84 closes the missing focus-routing evidence: preregistered sameprocess A1/B1/A2/B2 90s each at64/256/1014/4096, actualkey editing vs Space invert0to4096to0, CPU6.455/1.522/6.355/1.478% singlecore. Frozen4658 section-identical symboltwin resolves realA BlinkCursor/Proxy render/Taffy paths absent inB. No runtimefix, startupslowmarker and finalperformance verdict remain. QA85 WindowContent broadcache trial82f waswithdrawn after sourceinspection foundcachedreplay lacks accessibilitynodes/actions whilea11ybuilder clears perframe; transientAXempty/stale observations retained, uniquecausalitynotclaimed. FirstP1 lowCPU2.089% lackscontinuousactivity metadata; laterpointinactive, no validcandidatecomparison orCPUfixclaim. Runtime source stays957/UI4658. QA86 5681103/UI3c19对旧4658、同Core56285/1146、64/256/1015/4096/q前缀/选0，一次预定后台BGP1/BGC1各90.005秒、19点全inactive且前台同ChatGPT宿主，实际输入路由前后保持。UI单核6.6996→2.8221%，约降57.88%；Core均0.1555%。n1固定顺序/进程历史及遮挡未测，不作前台/峰值/整体R03签收；原P1前台条件t0失败及C1计时前取消原件保留。
+- 剩余工作：新候选后台CPU一对样本已改善，前台条件仍未建立；启动慢marker、峰值/footprint及最终性能结论待验。保持500ms光标/原负载，不将后台结果替代前台门禁。
 - 验收标准：保留首次异常和直连对照；RSS与footprint不互相替代；不靠放宽负载/门槛通过，最终结论解释峰值成本。
-- 历史记录：UI-67、UI-78、UI-79、UI-80、UI-84、UI-85。
+- 历史记录：UI-67、UI-78、UI-79、UI-80、UI-84、UI-85、UI-86。
 
 ### R03.3 长列表、重开与静置观察
 
-- 已完成/已有证据：4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。 QA80同Core1146依次4905/6d93/4658三个900秒实际4096观察：CPU6.853/6.514/6.707%单核，RSS首末分钟中位差−4.984/+3.688/+1.250MiB，进程/操作历史和OS状态并非严格A/B。最终同进程一次Tab后300秒CPU1.693%、RSS−.063MiB，但AX/截图不能确立具体焦点，不断言光标根因。最终4658功能与冷重开两进程通过；全部五个长fixture UI与Core/driver均退出。 QA84 sameprocess keyboard-proven focus alternation replicates meanCPU6.405% search vs1.500% nontext. Ten original1440x900JPEGs, rawps samples/4rawprofiles and code-identical symbolmaps retained; config and1014 request/cost fields equal through shutdown. 90s is diagnostic, not900s longresidence/leakfree proof; highCPU remains unfixed. QA85 narrowsnextstep toA11ysafe rendering/cache boundary; no C1/C2/P2 or900s repeatsafteruserstreamlining. Trialfunctional input/selection/auto1014to1015refresh/size/theme/language/page passed, old1014fields+new1015exactafterexit, buttrialnotdelivered andnotfinalperformanceacceptance.
+- 已完成/已有证据：4096候选/256模型和64供应商路径已有；部分菜单30秒CPU短测有证据。 QA78同4905真实64供应商尾项/255模型末项/1014请求102页/4096发现候选滚动搜索均可达；未添加或保存。发现弹窗600秒与三次原生重开已归档，语言菜单另600秒已完成，原图/样本/终态均归档。仍需按最终匹配数据解释增长并汇总剩余长时证据。 QA79短负载图形驻留追加15/30秒观察已归档；仍不能代替QA78发现弹窗600秒+2.266MiB的持续增长判断。 QA80同Core1146依次4905/6d93/4658三个900秒实际4096观察：CPU6.853/6.514/6.707%单核，RSS首末分钟中位差−4.984/+3.688/+1.250MiB，进程/操作历史和OS状态并非严格A/B。最终同进程一次Tab后300秒CPU1.693%、RSS−.063MiB，但AX/截图不能确立具体焦点，不断言光标根因。最终4658功能与冷重开两进程通过；全部五个长fixture UI与Core/driver均退出。 QA84 sameprocess keyboard-proven focus alternation replicates meanCPU6.405% search vs1.500% nontext. Ten original1440x900JPEGs, rawps samples/4rawprofiles and code-identical symbolmaps retained; config and1014 request/cost fields equal through shutdown. 90s is diagnostic, not900s longresidence/leakfree proof; highCPU remains unfixed. QA85 narrowsnextstep toA11ysafe rendering/cache boundary; no C1/C2/P2 or900s repeatsafteruserstreamlining. Trialfunctional input/selection/auto1014to1015refresh/size/theme/language/page passed, old1014fields+new1015exactafterexit, buttrialnotdelivered andnotfinalperformanceacceptance. QA86同一后台对照UI RSS旧123.125→123.109MiB、新116.391→116.641MiB；Core两段开始RSS22.594/25.188MiB。不是footprint/峰值/泄漏或长期驻留结论；本轮未重复900秒。
 - 剩余工作：搜索焦点CPU问题仍未修复；先解决缓存语义/辅助功能兼容，具备可比的活动窗口条件后再测。按用户要求省略无关重复，最终长期驻留与响应性结论仍须集中完成，不能由短测或功能抽查签收。
 - 验收标准：无可复现持续内存增长、无空闲异常高CPU、交互无明显阻塞；请求延迟不冒充FPS或输入时延。
-- 历史记录：UI-20、UI-29、UI-37、UI-41、UI-51、UI-58、UI-78、UI-79、UI-80、UI-84、UI-85。
+- 历史记录：UI-20、UI-29、UI-37、UI-41、UI-51、UI-58、UI-78、UI-79、UI-80、UI-84、UI-85、UI-86。
 
 ### R03.4 Core全套契约与数据不变
 
@@ -410,10 +411,10 @@
 
 ### R03.5 最终构建和性能报告
 
-- 已完成/已有证据：GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。 QA79最终Core7fa463/当前UI4905已冻结；24项本地检查通过、Core577pass，两个GPUI既有ignored在真实Core条件补验通过。新CoreCI集成锁恢复未过，最终native性能无样本，不能签收最终报告。 QA80运行时代码957/UI4658+Core13c/1146已冻结，Core580/GPUI213pass+2既有ignore、27+6本地命令/strictClippy/Intelcheck/release及最终四CIjob全部成功；QA80完整原始报告/当前7轮对照/长时CPU与heap/首次失败/清理归档。 QA84 diagnostic-only unstrippedbuild0, all23filebacked section bytes/addresses equal, shared frozen flatoutput restored. No productsource/registry edits or newCI. New focus/symbol evidence does not sign overall performance. QA85 trialfmt/213unit/strictclippy/Intelcheck/ARMrelease passed,2existingignoredrealCorecontracts separately passed19discovery/10creation. OnlyCI/README changes delivered3e257fd; trialsource revertedbyteequal andshared4658outputrestored. NewUI-onlyCI isscoped, notnewCore/fullRCmatrix. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。
+- 已完成/已有证据：GPUI最新206通过/2既有忽略，fmt/strict all-targets Clippy/Intel all-targets check/arm64release已有；最终发行提交统一门禁仍待执行。 QA78 GPUI208pass/2既有ignore、fmt/strictClippy/Intelcheck/arm64release通过，Mac UI仍4905/Core25f；Win项目平台差异207pass/2ignore。原始fixture两ignored通过单列；同源码最终CI/平台/性能均按实际候选分别绑定，未虚假全绿。 QA79最终Core7fa463/当前UI4905已冻结；24项本地检查通过、Core577pass，两个GPUI既有ignored在真实Core条件补验通过。新CoreCI集成锁恢复未过，最终native性能无样本，不能签收最终报告。 QA80运行时代码957/UI4658+Core13c/1146已冻结，Core580/GPUI213pass+2既有ignore、27+6本地命令/strictClippy/Intelcheck/release及最终四CIjob全部成功；QA80完整原始报告/当前7轮对照/长时CPU与heap/首次失败/清理归档。 QA84 diagnostic-only unstrippedbuild0, all23filebacked section bytes/addresses equal, shared frozen flatoutput restored. No productsource/registry edits or newCI. New focus/symbol evidence does not sign overall performance. QA85 trialfmt/213unit/strictclippy/Intelcheck/ARMrelease passed,2existingignoredrealCorecontracts separately passed19discovery/10creation. OnlyCI/README changes delivered3e257fd; trialsource revertedbyteequal andshared4658outputrestored. NewUI-onlyCI isscoped, notnewCore/fullRCmatrix. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。 QA86 5681103/UI3c19/Core1146：本机fmt、213pass/2既有ignore、strictClippy、Intelcheck、ARMrelease及CLI通过；真实Core契约沿用未变业务源码的QA85补验，不冒称本轮重跑。首次Fast32beb空壳失败和静态后端约束crate别名编译错误均保留；修复3c19已原生红绿验证。新的三平台UI-only阶段CI按dispatch.json核对，最终全RC矩阵仍需集中执行。 QA86阶段UI-only run41270728784绑定5681103，Win/ARM/Intel三job首轮success，Win212/2ignore、两Mac213/2ignore；完整Desktop/旧升级skipped，原log/产物元数据归档，未下载ZIP，不替代最终全RC矩阵。
 - 剩余工作：构建与报告已齐，整体性能结论仍受R03.2/R03.3待验限制；后续若改运行时代码须重新绑定相应最终验证。
 - 验收标准：既有忽略说明/所需真实Core fixture补跑单列；测试/链接/硬件/GUI证据范围分明，无虚假全绿。
-- 历史记录：UI-52、UI-67、UI-78、UI-79、UI-80、UI-84、UI-85。
+- 历史记录：UI-52、UI-67、UI-78、UI-79、UI-80、UI-84、UI-85、UI-86。
 
 ## R04：RC安装包到正式发布准备
 
@@ -425,10 +426,10 @@
 
 ### R04.1 最终提交CI全矩阵
 
-- 已完成/已有证据：QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained. QA85 adds ui_only dispatch forGPUIchecks onWin/ARM/Intel withoutCore/installer/migration. Defaultfullworkflow preserved; runtime owns957unchanged, priorfullmatrixsameowningsource evidence retained. ScopedUIrun41262088104 isnotnewfinalCore/fullRCacceptance. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。
-- 剩余工作：
+- 已完成/已有证据：QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained. QA85 adds ui_only dispatch forGPUIchecks onWin/ARM/Intel withoutCore/installer/migration. Defaultfullworkflow preserved; runtime owns957unchanged, priorfullmatrixsameowningsource evidence retained. ScopedUIrun41262088104 isnotnewfinalCore/fullRCacceptance. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。 QA86运行时UI实质变更为5681103/3c19，Core1146未变；因此本项按新候选重新pending，旧957完整矩阵原证据不撤销也不重标。新UI-only阶段检查不替代最终Core/三平台/打包全矩阵。 QA86阶段UI-only run41270728784绑定5681103，Win/ARM/Intel三job首轮success，Win212/2ignore、两Mac213/2ignore；完整Desktop/旧升级skipped，原log/产物元数据归档，未下载ZIP，不替代最终全RC矩阵。
+- 剩余工作：5681103新渲染候选需最终全矩阵绑定；阶段UI-only通过也不能签本项。旧957四job通过证据保留原来源，待最终候选集中一次完整RC验证。
 - 验收标准：Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。
-- 历史记录：UI-78、UI-79、UI-80、UI-81、UI-82、UI-83、UI-85。
+- 历史记录：UI-78、UI-79、UI-80、UI-81、UI-82、UI-83、UI-85、UI-86。
 
 ### R04.2 DMG/ZIP/EXE安装升级卸载
 
