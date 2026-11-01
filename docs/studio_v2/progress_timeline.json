@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "updated_at": "2026-11-01T16:52:33+08:00",
+  "updated_at": "2026-11-01T16:59:12+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "85540e1256842a5e6553bffd9749088af545084e",
   "phase": "界面终验记录齐备 · 总体验收待核对",
-  "goal_status": "active",
+  "goal_status": "blocked",
   "counts": {
     "pending": 0,
     "partial": 0,
@@ -2266,7 +2266,7 @@
     "version": 2,
     "title": "Studio V2 正式版批次计划",
     "as_of": "2026-11-01",
-    "state": "active",
+    "state": "blocked",
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
@@ -3956,7 +3956,7 @@
       "tasks": 50,
       "passed_tasks": 35
     },
-    "goal_status": "active"
+    "goal_status": "blocked"
   },
   "timeline": [
     {
@@ -9297,6 +9297,21 @@
     {
       "date": "2026-11-01T16:52:33+08:00",
       "note": "QA92：全屏顶部浅条已修复并经用户确认；三平台UI阶段及Windows GDI通过，人工报告和原图差异单列。40帧保持签收，最终全矩阵按新UI重新待验，15项发布门禁保留。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T16:59:12+08:00",
+      "note": "QA92完成后下一批人工输入条件尚无答复，连续三个后续回合同一外部依赖未变，独立Goal已blocked。只同步状态，保留40帧签收和15项发布待验，无新增测试或QA编号。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
