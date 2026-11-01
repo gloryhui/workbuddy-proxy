@@ -196,7 +196,7 @@
 <script id="progress-data" type="application/json">
 {
   "version": 2,
-  "updated_at": "2026-11-01T12:14:34+08:00",
+  "updated_at": "2026-11-01T12:28:19+08:00",
   "project": "WorkBuddy Studio V2",
   "branch": "feat/studio_v2_gpui",
   "code_head": "5681103e5b05fb88c73f8ea4a32bafd11cbc3380",
@@ -209,7 +209,7 @@
     "verified": 40
   },
   "total_frames": 40,
-  "recorded_tasks": 86,
+  "recorded_tasks": 87,
   "remaining_final": 0,
   "visual_review": {
     "counts": {
@@ -222,28 +222,31 @@
     "meaning": "Full-frame design-review coverage is distinct from final frame acceptance and from recorded technical tasks. A reviewed frame can retain differences. No final acceptance is granted by this ledger alone."
   },
   "current_task": {
-    "id": 86,
-    "title": "保留渲染、弹窗生命周期与后台对照",
+    "id": 87,
+    "title": "复用冻结产物的 Windows 原生验收",
     "status": "recorded",
-    "description": "交付运行时候选5681103/UI3c19，Core1146源码/字节未改。Kit保持0.7.3，使用其可选Fast0.1.7（macro实际0.1.12），锁定registry档与重要源文件校验后启用节点、焦点关系和动作回放；缓存页内容与modal输入分离，并以retained_gpui::Window约束后端类型。交付范围、锁档。"
+    "description": "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。"
   },
   "latest_task": {
-    "id": 86,
-    "title": "保留渲染、弹窗生命周期与后台对照",
+    "id": 87,
+    "title": "复用冻结产物的 Windows 原生验收",
     "status": "recorded",
-    "summary": "交付运行时候选5681103/UI3c19，Core1146源码/字节未改。Kit保持0.7.3，使用其可选Fast0.1.7（macro实际0.1.12），锁定registry档与重要源文件校验后启用节点、焦点关系和动作回放；缓存页内容与modal输入分离，并以retained_gpui::Window约束后端类型。交付范围、锁档。",
+    "summary": "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。",
     "highlights": [
-      "交付运行时候选5681103/UI3c19，Core1146源码/字节未改。Kit保持0.7.3，使用其可选Fast0.1.7（macro实际0.1.12），锁定registry档与重要源文件校验后启用节点、焦点关系和动作回放；缓存页内容与modal输入分离，并以retained_gpui::Window约束后端类型。交付范围、锁档。",
-      "32beb试验首次出现Cancel后白壳，原图/AX/源码保留；manage_dialog移到owner状态observer后，3c19同4096路径一次取消无壳、统计1015可达。编辑空ID拒绝保留modal、协议Esc、删除/同步/取消同步/端口取消均通过，StartupSync/pendingPort未触发。两尺寸原JPEG实际1100×701及恢复1440×900，蓝白/Studio、en/zh各一次，不重复40帧/21组合。红绿、完整本轮功能。",
-      "fmt、213pass/2既有ignore、strictClippy、Intelcheck、ARMrelease和CLI通过。真实Core契约沿用QA85未变源码补验，未新跑全Core。离线约束解析和静态crate名称编译错误原样保留；后续只有明确改动后才重验，不同来源/候选不混标。最终本机检查。"
+      "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。",
+      "唯一run41272932710绑定67eaff3/attempt1，Windows原生job124749239785首轮43秒success，Desktop、三平台UI构建、旧升级三job skipped。原始JSON、日志、artifact13070162370 ZIP154,989B及SHA独立核对归档；原始输入Core/UI ZIP也在runner逐字节核对。CI/来源/退出。",
+      "两GDI原PNG实际1442×901/1102×701（客户区1440×900/1100×700），DPI96。已逐张查看，caption与toolbar无可见重叠；小窗筛选换行、分页可见，Status列在当前横向视口外，未验横滚。默认英文1合成供应商/64模型/0请求，不签键盘、IME、caption或托盘点击、弹窗/HiDPI/AT。原图审查。"
     ],
-    "limits": [
-      "原前台条件未建立：P1 t0inactive即停1点，C1-active前置等待未计时；明确AX Raise也没有让App变active，用户回复手动就绪后独立Cocoa仍ChatGPT前台，不推断用户/工具唯一原因，不自动重拉。另预注册独立后台一对，90.005秒各19点均inactive/同前台96217，前后无先行点击z/Backspace路由搜索，UI单核6.6996→2.8221%，约降57.88%，Core均0.1555%。n1固定顺序，内部windowactive/遮挡未测，RSS不替代峰值/footprint/泄漏；前台、启动与长时仍待。后台对照。"
+    "limits": [],
+    "evidence": [
+      {
+        "label": "总结/清理",
+        "href": "benchmarks/rc-round87-summary.json"
+      }
     ],
-    "evidence": [],
-    "commit": "ffe659a3054255e2b466c67a6a995d12f3ec13ba",
-    "date": "2026-11-01T12:14:33+08:00",
-    "commit_subject": "docs(studio): record retained rendering and background comparison",
+    "commit": "d81acde924535fe7a89dd28e98e158cb4f2ee223",
+    "date": "2026-11-01T12:27:35+08:00",
+    "commit_subject": "docs(studio): record frozen Windows native validation",
     "source": "baseline_and_qa.md"
   },
   "frames": [
@@ -2463,7 +2466,7 @@
     "current_batch": "R01",
     "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
     "current_known_frames": 40,
-    "historical_tasks": 86,
+    "historical_tasks": 87,
     "prerequisite": {
       "id": "P00",
       "title": "最新 Figma 基线核对",
@@ -3578,14 +3581,15 @@
             "id": "R02.1",
             "title": "Windows原生窗口与输入",
             "acceptance": "pending",
-            "completed": "已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。 QA78补充：2da Windows job已终态success，实际GDI两尺寸原PNG已逐图审查，caption顶行与业务工具栏下排无可见重叠；DPI96，实际client1440×900/1100×700，原生边框PNG1442×901/1102×701。仅默认英文空请求页，未点击caption窗控或验证Ctrl/IME。 QA80当前957 Windows原run成功；两GDI原PNG实际外框1442×901/1102×701（目标client1440×900/1100×700），父代理逐图复核工具栏与caption无可见重叠，默认英文fixture64模型/0请求，不代表真实caption点击/IME/缩放/托盘验收。 QA82真实Windows旧/新EXE在Unicode自选路径覆盖、host/Core/GPUI打开关闭重开与退出、注册/快捷方式卸载通过；没有发送键盘/鼠标或进行新像素/IME/缩放/托盘输入验证，R02.1仍pending。",
+            "completed": "已识别工具栏与系统窗控可能重叠；GNU cross-check受windres资源工具限制，不能标通过。 QA78确认Windows标题栏24px与工具栏top8的真实源码重叠，已改top32且增加几何回归。74b的Windows原生build/207test/集成与包生命周期通过，GDI因DPI96工作区放不下1440×900而失败、0截图，随后harness退出0并清理；2da改进临时CI显示准备，原生截图仍待新run，不冒称平台通过。 QA78补充：2da Windows job已终态success，实际GDI两尺寸原PNG已逐图审查，caption顶行与业务工具栏下排无可见重叠；DPI96，实际client1440×900/1100×700，原生边框PNG1442×901/1102×701。仅默认英文空请求页，未点击caption窗控或验证Ctrl/IME。 QA80当前957 Windows原run成功；两GDI原PNG实际外框1442×901/1102×701（目标client1440×900/1100×700），父代理逐图复核工具栏与caption无可见重叠，默认英文fixture64模型/0请求，不代表真实caption点击/IME/缩放/托盘验收。 QA82真实Windows旧/新EXE在Unicode自选路径覆盖、host/Core/GPUI打开关闭重开与退出、注册/快捷方式卸载通过；没有发送键盘/鼠标或进行新像素/IME/缩放/托盘输入验证，R02.1仍pending。 QA87新Fast UI568/Windows cd1a266c与冻结957 Core880016c6复用原CI产物，独立无编译run41272932710首轮43秒通过；两原GDI PNG1442×901/1102×701逐图/hash审查，客户区1440×900/1100×700、DPI96，caption和toolbar无可见重叠，小窗筛选换行。默认英文1供应商/64模型/0请求，未实际点击caption/托盘或发送键盘；正常生命周期、草稿保留、退出和显示恢复通过，不签物理输入/IME/HiDPI。",
             "remaining": "已取得Windows100%两尺寸GDI原图和视觉分离证明；继续原生caption最小化/最大化/关闭实际点击、标题拖动、Ctrl快捷键、中文IME、托盘及代表弹窗。",
             "acceptance_check": "原生Windows可操作；工具栏不挡最小化/最大化/关闭；优先GDI/ImageGrab按PID截图，不能用Mac图替代。",
             "history_tasks": [
               43,
               78,
               80,
-              82
+              82,
+              87
             ]
           },
           {
@@ -3777,7 +3781,7 @@
             "id": "R04.1",
             "title": "最终提交CI全矩阵",
             "acceptance": "pending",
-            "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained. QA85 adds ui_only dispatch forGPUIchecks onWin/ARM/Intel withoutCore/installer/migration. Defaultfullworkflow preserved; runtime owns957unchanged, priorfullmatrixsameowningsource evidence retained. ScopedUIrun41262088104 isnotnewfinalCore/fullRCacceptance. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。 QA86运行时UI实质变更为5681103/3c19，Core1146未变；因此本项按新候选重新pending，旧957完整矩阵原证据不撤销也不重标。新UI-only阶段检查不替代最终Core/三平台/打包全矩阵。 QA86阶段UI-only run41270728784绑定5681103，Win/ARM/Intel三job首轮success，Win212/2ignore、两Mac213/2ignore；完整Desktop/旧升级skipped，原log/产物元数据归档，未下载ZIP，不替代最终全RC矩阵。",
+            "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained. QA85 adds ui_only dispatch forGPUIchecks onWin/ARM/Intel withoutCore/installer/migration. Defaultfullworkflow preserved; runtime owns957unchanged, priorfullmatrixsameowningsource evidence retained. ScopedUIrun41262088104 isnotnewfinalCore/fullRCacceptance. QA85精简入口首次运行41262088104绑定3e257fd，Windows/ARM/Intel三UI job全部success，完整Desktop/旧升级skipped；原日志与产物元数据归档，UI artifact未下载，不代替最终全矩阵或硬件/安装验收。 QA86运行时UI实质变更为5681103/3c19，Core1146未变；因此本项按新候选重新pending，旧957完整矩阵原证据不撤销也不重标。新UI-only阶段检查不替代最终Core/三平台/打包全矩阵。 QA86阶段UI-only run41270728784绑定5681103，Win/ARM/Intel三job首轮success，Win212/2ignore、两Mac213/2ignore；完整Desktop/旧升级skipped，原log/产物元数据归档，未下载ZIP，不替代最终全RC矩阵。 QA87新增windows_native_only入口复用已通过的UI568与Core957固定产物，校验source/run/归档大小SHA后只跑两尺寸GDI及既有生命周期；唯一run41272932710 attempt1成功，完整Desktop/UI构建/旧升级三job skipped。非最终全矩阵/正式包，R04.1继续pending。",
             "remaining": "5681103新渲染候选需最终全矩阵绑定；阶段UI-only通过也不能签本项。旧957四job通过证据保留原来源，待最终候选集中一次完整RC验证。",
             "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
             "history_tasks": [
@@ -3788,7 +3792,8 @@
               82,
               83,
               85,
-              86
+              86,
+              87
             ]
           },
           {
@@ -7816,6 +7821,28 @@
       "date": "2026-11-01T12:14:33+08:00",
       "commit_subject": "docs(studio): record retained rendering and background comparison",
       "source": "baseline_and_qa.md"
+    },
+    {
+      "id": 87,
+      "title": "复用冻结产物的 Windows 原生验收",
+      "status": "recorded",
+      "summary": "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。",
+      "highlights": [
+        "交付67eaff3的windows_native_only=true入口，另外两开关保持false。固定已通过CI的Windows UI568/cd1a266c与Core957/880016c6，检查源码未漂移、run成功、artifact未过期、大小和下载SHA一致后，仅写两程序临时测试布局；不构建Core/UI/安装器，不生成分发包。README说明范围，未来源漂移/产物过期必须更新来源，不能静默回退重构建。预定范围/本机检查。",
+        "唯一run41272932710绑定67eaff3/attempt1，Windows原生job124749239785首轮43秒success，Desktop、三平台UI构建、旧升级三job skipped。原始JSON、日志、artifact13070162370 ZIP154,989B及SHA独立核对归档；原始输入Core/UI ZIP也在runner逐字节核对。CI/来源/退出。",
+        "两GDI原PNG实际1442×901/1102×701（客户区1440×900/1100×700），DPI96。已逐张查看，caption与toolbar无可见重叠；小窗筛选换行、分页可见，Status列在当前横向视口外，未验横滚。默认英文1合成供应商/64模型/0请求，不签键盘、IME、caption或托盘点击、弹窗/HiDPI/AT。原图审查。"
+      ],
+      "limits": [],
+      "evidence": [
+        {
+          "label": "总结/清理",
+          "href": "benchmarks/rc-round87-summary.json"
+        }
+      ],
+      "commit": "d81acde924535fe7a89dd28e98e158cb4f2ee223",
+      "date": "2026-11-01T12:27:35+08:00",
+      "commit_subject": "docs(studio): record frozen Windows native validation",
+      "source": "baseline_and_qa.md"
     }
   ],
   "history": [
@@ -9232,6 +9259,21 @@
     {
       "date": "2026-11-01T12:14:34+08:00",
       "note": "QA86：保留渲染与弹窗生命周期修复，三平台 UI 阶段 CI 通过；后台单对样本 CPU 6.70%→2.82%，前台/最终性能未签收。新候选重开最终全矩阵，15 项发布待验，40 帧保持签收，禁止自动开启旁白。",
+      "pending": 0,
+      "partial": 0,
+      "reused": 0,
+      "verified": 40,
+      "remaining_final": 0,
+      "visual_review": {
+        "not_reviewed": 0,
+        "reviewing": 0,
+        "reviewed_with_differences": 2,
+        "reviewed": 38
+      }
+    },
+    {
+      "date": "2026-11-01T12:28:19+08:00",
+      "note": "QA87：复用冻结Windows产物，两尺寸GDI与生命周期首轮43秒通过；发布仍15项待验。更正首次生成遗漏的当前任务参数。",
       "pending": 0,
       "partial": 0,
       "reused": 0,
