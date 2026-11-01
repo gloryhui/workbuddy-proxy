@@ -1,0 +1,5 @@
+{
+  "phase": "A1",
+  "sampling_started": false,
+  "error": "Sampler expected weaker old enum search_edit_observed; actual CUA acknowledgement uses actual_keypress_edit_and_backspace. Corrected expected name before any timed samples; all measurement conditions unchanged."
+}

@@ -1,0 +1,33 @@
+{
+  "ui_pid": 18545,
+  "count": 4096,
+  "checked": 0,
+  "query": "long-discovery-",
+  "focus_proof": "nontext_space_toggle_and_restore_observed",
+  "control": "反选当前筛选 (inferred from two Tabs, visible focus highlight, and two Space reversals)",
+  "operations": [
+    "Tab once from search, observed no text/count change",
+    "Tab second time, focus highlight on 反选当前筛选",
+    "Space: selected 0 to 4096, query and matched count unchanged, visible checkboxes on",
+    "Space: selected 4096 to 0, query and matched count unchanged, visible checkboxes off"
+  ],
+  "intermediate": {
+    "checked": 4096,
+    "screenshot": "native/b1-space-on.jpg",
+    "ax": "native/b1-space-on.ax.txt"
+  },
+  "screenshot": "native/b1-space-restored.jpg",
+  "ax": "native/b1-space-restored.ax.txt",
+  "screenshot_sha256": "e9f2fabc2ff45781052c53f4b2ff233d5cc7eb5335f9be5b442c1f4c512aaf36",
+  "logical_size": [
+    1440,
+    900
+  ],
+  "pixels": [
+    1440,
+    900
+  ],
+  "focus_limit": "AX only reports standard window focus; behavior verifies nontext activation, control identity inferred as stated.",
+  "ready_at": "2026-11-01T08:38:12.580161+08:00",
+  "no_explicit_activate_or_raise": true
+}

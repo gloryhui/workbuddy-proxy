@@ -1,0 +1,330 @@
+{
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "current_head": "a568e78fc114eb652b124ab88773dcfd87e753b0",
+  "runtime_diff_empty": true,
+  "source_files": [
+    {
+      "file": "gpui/Cargo.lock",
+      "sha256": "88cb4109289282c4ea63eef2a8644cfba6768eb4a6a193186cdad3fd71283d62"
+    },
+    {
+      "file": "gpui/Cargo.toml",
+      "sha256": "95c8728027af68c6946f709e831ba60300c3b5b7f89dc7be756cc789f40c8f6b"
+    },
+    {
+      "file": "gpui/build.rs",
+      "sha256": "637afad8d2d35887689bd90f03390f5b285efaebe982bd2e34e50daadb2b493b"
+    },
+    {
+      "file": "gpui/src/assets.rs",
+      "sha256": "89a4af5cbac2f50679d4230f554f387d81029a9e7f988ed9cef43bd4e1c5bb0e"
+    },
+    {
+      "file": "gpui/src/backend.rs",
+      "sha256": "96fdcabe72764cbe16e66b0b24f7e7e21f77ec80d40b4fc5eb3cfdb153059136"
+    },
+    {
+      "file": "gpui/src/config_refresh.rs",
+      "sha256": "1e83c6fbb6b44c14799cbe24c86c3dc04a4bbc2ebe597a1d90d894525d7a0499"
+    },
+    {
+      "file": "gpui/src/draft_discovery.rs",
+      "sha256": "563c8a292d136348dd08cda76e7304cfc5acda3d56524ac7bb43e959a8d1db22"
+    },
+    {
+      "file": "gpui/src/main.rs",
+      "sha256": "b3bb4812ea5df88d21795c75c73a3e3cfbb21399452635e1fc555f67140185d0"
+    },
+    {
+      "file": "gpui/src/model_options.rs",
+      "sha256": "5f34c6e3d70fcc293c10f0a625cb959bdd10828aef7d46b44f47df225716193c"
+    },
+    {
+      "file": "gpui/src/model_table.rs",
+      "sha256": "895c152a39f5602818272493f328244016c4d19735c9aa0e831d198c8f7c9266"
+    },
+    {
+      "file": "gpui/src/picker_projection.rs",
+      "sha256": "328c89efe552e82896c80bedd86589fa52586db09ab1f9d5bbe94021a30a475f"
+    },
+    {
+      "file": "gpui/src/presets.rs",
+      "sha256": "fb9ce27e055bad7550ddbb1ac284c3313d736746b03903917052fb6afc52e5a4"
+    },
+    {
+      "file": "gpui/src/protocol_options.rs",
+      "sha256": "743ec04f732b43421b18f13af477abdc1ae2480590a273f7869ac0ef008e5eb8"
+    },
+    {
+      "file": "gpui/src/provider_connection.rs",
+      "sha256": "0ec46e1c017dfbd266593c28301cb865249af7579d3e7de1308691de1c1ce8fe"
+    },
+    {
+      "file": "gpui/src/provider_create.rs",
+      "sha256": "12973e61db4e9337f4caf1eb273a64d4d22ccc7a6af2de1269a71a58ba84d606"
+    },
+    {
+      "file": "gpui/src/provider_filter.rs",
+      "sha256": "d5675b0deb94ab31a47950024b9960898e239bdb62ff8e182c235a0a3eb87780"
+    },
+    {
+      "file": "gpui/src/source_filter.rs",
+      "sha256": "671ce03f367103961776d7ffb3f5b1be08ae7e6be7bfb0d2c821850a72054750"
+    },
+    {
+      "file": "gpui/src/state.rs",
+      "sha256": "e892d9db509ff5dfb152600cd13b1231375b8106d5c3edb87691d0869ac0ebff"
+    },
+    {
+      "file": "gpui/src/statistics.rs",
+      "sha256": "fd892e9086d9453a951f58726d5e378270c1064ac9f87466c6c1e6b8278e213a"
+    },
+    {
+      "file": "gpui/src/statistics/analysis.rs",
+      "sha256": "70416b5402ed9aa87e677fb19eea826e4673c38dd36ed522091bad1b62b443e8"
+    },
+    {
+      "file": "gpui/src/statistics/detail_layout.rs",
+      "sha256": "a5228e904e90e6d7d55e873ac1edc500b7a6e4008241ce8bacf95ff9cc22ae28"
+    },
+    {
+      "file": "gpui/src/statistics/detail_metadata.rs",
+      "sha256": "10bd8e008d876bf65e9561de4cb291e21866f7227f0334fb41f9dcd5510c8653"
+    },
+    {
+      "file": "gpui/src/statistics/event_metrics.rs",
+      "sha256": "785da55547c0805f203373826aea9eb5691c240d7194f76a54fedadd399004cd"
+    },
+    {
+      "file": "gpui/src/statistics/import_controls.rs",
+      "sha256": "879685a5d79c84db00c53410b9c02bee15ede0fb655c0eccd7ea76508221191f"
+    },
+    {
+      "file": "gpui/src/statistics/import_controls/notices.rs",
+      "sha256": "45098d3a5fc412b0f58e52107d760d9b0a90463722698a99106b5367e03adfe8"
+    },
+    {
+      "file": "gpui/src/statistics/import_controls/progress.rs",
+      "sha256": "ac799c7a059a4a34db9c02b13f0208d9eae1e4ef20d75d44f02a6c751480ad68"
+    },
+    {
+      "file": "gpui/src/statistics/layout.rs",
+      "sha256": "c3624912527f7008cc915424280680690964e021f732ef1cc69d18445927654a"
+    },
+    {
+      "file": "gpui/src/statistics/mapping_controls.rs",
+      "sha256": "ff165ffee0dbcc1b48f9d1f35db2de31442ba163c35f2a10b95ff892be90fb0d"
+    },
+    {
+      "file": "gpui/src/statistics/mapping_controls/tests.rs",
+      "sha256": "840ae8d1722e541b4d2ce71de1ef9424b96dfe966794648dbac7541abc6b0361"
+    },
+    {
+      "file": "gpui/src/statistics/overview.rs",
+      "sha256": "9d22628a803bbd5a44a14d7a7423010af7f8858ee4c91b40d432f3dd1df6b674"
+    },
+    {
+      "file": "gpui/src/statistics/pagination.rs",
+      "sha256": "b1d4bfe6970b763f6727409ce8c0e9513af3af622c379d353c28207d71993d81"
+    },
+    {
+      "file": "gpui/src/statistics/preferences.rs",
+      "sha256": "7b252c7e11a2351c13d67e314836491b3ed7cba0e9988a0df457d567e221ce18"
+    },
+    {
+      "file": "gpui/src/statistics/price_layout.rs",
+      "sha256": "ab2bb5c48b135e4b51e8301c2e052fb6ab4b4f636dc971f8187d4544b0f375dc"
+    },
+    {
+      "file": "gpui/src/statistics/recent.rs",
+      "sha256": "e7f9f0028218656b859fd7033fdd22194e385732fc11107e54278437f1a3160c"
+    },
+    {
+      "file": "gpui/src/statistics/settings_capture.rs",
+      "sha256": "9226c4efa7d5c01d59a1fae03e05e308f0660832b2c954c4a5ee2b9757ef7bab"
+    },
+    {
+      "file": "gpui/src/statistics/settings_layout.rs",
+      "sha256": "a0a9cf3f0a436e3ca75df77759a8b29a55d64e771b0755b8ad67e5b66ebce7f2"
+    },
+    {
+      "file": "gpui/src/statistics/source_controls.rs",
+      "sha256": "13ffa8fa34f389ef819ae979160fe2df5f689ec3a5ae2ea328de4ecb0747ab14"
+    },
+    {
+      "file": "gpui/src/statistics/trends.rs",
+      "sha256": "1896ecf780a78b1b3f674583536fec8aa07001485db6c02dece5ca57dd5c721b"
+    },
+    {
+      "file": "gpui/src/stats_backend.rs",
+      "sha256": "7ce6f80e33452ab892414a2c0eb91480089e6b8eaff98754c5c2a0ce33d8927b"
+    },
+    {
+      "file": "gpui/src/stats_controller.rs",
+      "sha256": "36542538a603bd22606574ddcf8975ea29e968ca7a5b2a2bbc33978959d7c957"
+    },
+    {
+      "file": "gpui/src/studio_fonts.rs",
+      "sha256": "e2baf168aa0cebb32dc09f9ae42d28866f56416bd80fb998c7552597758ec38c"
+    },
+    {
+      "file": "gpui/src/theme.rs",
+      "sha256": "a9fbd99664d798dda6226e32a785f1bc5fb9d2040153ed2a577062f46569e3e0"
+    },
+    {
+      "file": "gpui/src/theme/skin.rs",
+      "sha256": "8ade4e32f46898aa764163f0995ac347e11191e0037ef60a8e641d1d9090043a"
+    },
+    {
+      "file": "gpui/src/ui.rs",
+      "sha256": "f5113f5dd9ee913458ab0eac96b054bd2cdc248f9636a9570641d6712934badb"
+    },
+    {
+      "file": "gpui/src/ui/autostart_notice.rs",
+      "sha256": "2dee0a1d6b622415a5b36a9a3461434923bb5dfa5cbfe2b37cd5c5a600628327"
+    },
+    {
+      "file": "gpui/src/ui/language_menu.rs",
+      "sha256": "2d4f0a7bfe461942a440c86b9218d3f4197cf25a76e8f9427c4874cca8487177"
+    },
+    {
+      "file": "gpui/src/ui/log_scroll.rs",
+      "sha256": "1f20fccfa0af76bf341cab6c327d77685ee20eaa8b51287502236e628b71b2c2"
+    },
+    {
+      "file": "gpui/src/ui/model_editor.rs",
+      "sha256": "479efbf72a0d3888ace561bc0732452f4df957c71e7b612e671e5906b840506e"
+    },
+    {
+      "file": "gpui/src/ui/model_navigation.rs",
+      "sha256": "3e6554c2d0f94b0fd0d894974b9c5522d3b78b3f7c6c3ad0681a17e62c454d1f"
+    },
+    {
+      "file": "gpui/src/ui/model_picker.rs",
+      "sha256": "1ae3af995a0dd2ebcc2c005a77564d398c8caadad73502279bf41ab51fa429be"
+    },
+    {
+      "file": "gpui/src/ui/protocol_dialog.rs",
+      "sha256": "3fef13f1964030706428fce08ebee820e47fa393bd51228f4efbe4bbd4969865"
+    },
+    {
+      "file": "gpui/src/ui/provider_choices.rs",
+      "sha256": "d633cc0c22139e1c3ac2905a7e591a4e598cc9181a81bed3e6b44c69df3063f6"
+    },
+    {
+      "file": "gpui/src/ui/provider_delete.rs",
+      "sha256": "e945ecb0937bb4e82fccb62027b46abd27b4570e3369b2003b614c508f038959"
+    },
+    {
+      "file": "gpui/src/ui/provider_edit.rs",
+      "sha256": "17abf686bdd2c7027fc6557a4af263d802011ffaa7fd1feeb149aabfe66de328"
+    },
+    {
+      "file": "gpui/src/ui/provider_feedback.rs",
+      "sha256": "4f1d4d7c1abf24632c2c19c7f67f7530b3197838c607012090703d4b9f4ab687"
+    },
+    {
+      "file": "gpui/src/ui/provider_new.rs",
+      "sha256": "670e8ae5a949ca50ac1b3ccb8fcb4dc377608daf5145dd03470cc97f0f129aa8"
+    },
+    {
+      "file": "gpui/src/ui/providers.rs",
+      "sha256": "3a3773b9846842947c8ef1a473907c87824adda105d9f7cbc71b9971097b7450"
+    },
+    {
+      "file": "gpui/src/ui/relay.rs",
+      "sha256": "2831e5e1b3e0114bb95188e2697f96d8bc438cf26b444d41b017e9ff3ff79575"
+    },
+    {
+      "file": "gpui/src/ui/sidebar.rs",
+      "sha256": "d4d119333324f60908968aa6c88a733c3c0d85e50f12dc057ecb333a8197c1a2"
+    },
+    {
+      "file": "gpui/src/ui/skin_controls.rs",
+      "sha256": "2de657359214e8774ed51df84408e366644b46d7c7d88cc8e38dfee0026a10c7"
+    },
+    {
+      "file": "gpui/src/ui/sync_dialog.rs",
+      "sha256": "bb37ca047ce98fd692049f73ec04cd2c75aaf293580740133ce7bc900865b883"
+    },
+    {
+      "file": "gpui/src/ui/update_notice.rs",
+      "sha256": "80cbf1d3becc1012dfa6cd96f228a3b3c949a90411d9638b9dc4d1cce1903206"
+    },
+    {
+      "file": "gpui/src/ui/window_restore.rs",
+      "sha256": "04972b46ccffa2143a4a546a246de1df7cc2177be68542f308aacc8fc96e6f35"
+    },
+    {
+      "file": "gpui/src/ui_components.rs",
+      "sha256": "8489e8a2a62f464ef2b9ff0699b3cca7ad2d0b456202da181f573bb9825c8665"
+    },
+    {
+      "file": "gpui/src/usage_chart.rs",
+      "sha256": "46e5e2f849b6ef38dd217296ad8e047e0ea10356d028d626174e73e50261db85"
+    },
+    {
+      "file": "gpui/src/usage_chart/continuity.rs",
+      "sha256": "c5119beca247682724b0739046331307266c935ab23d25a4b33da6162103e19b"
+    },
+    {
+      "file": "gpui/src/usage_table.rs",
+      "sha256": "dfb2900eb4301261e2a6197bdb6a9ad7d5e82ec0a847ed15d158a20c24fd233c"
+    },
+    {
+      "file": "gpui/src/usage_table/charge_labels.rs",
+      "sha256": "63cd7ce3d38546e573ebd49128c193a4ac04bc1cbaad31c5dba24c2ea340e898"
+    },
+    {
+      "file": "gpui/src/workbuddy_import.rs",
+      "sha256": "aa8cf6bccc3432540e28d6d85b08d944688a732d7fb30e868c13d940f9f5b789"
+    },
+    {
+      "file": "gpui/src/workbuddy_restart.rs",
+      "sha256": "7debbf002c549e1f7d8c3185a2e8e17f5f6ccc928e6716674f7c7914d7faa395"
+    }
+  ],
+  "dependency_inspection": [
+    {
+      "package": "gpui-base",
+      "version": "0.7.3",
+      "archive_sha256": "2e9955b6f4b048fd50ca15fc8e225d80bb00ba9ebc8fecdddde5ad26dbef9270",
+      "file": "src/input/base/blink_cursor.rs",
+      "file_sha256": "7abc8f62bc3d4823986a25155a13bc57ef57b12f96ae163938ef353a4c6f487a",
+      "source_matches_locked_archive": true
+    },
+    {
+      "package": "gpui-pre",
+      "version": "0.3.9",
+      "archive_sha256": "34f61c1cfd36fc9c436af09308c963822ae27a45a84feb21a77ba5c9e051f1c0",
+      "file": "src/view.rs",
+      "file_sha256": "0d70c1445e8f4db723eaa52fb3321850dc7daaf1c08b5385e57cfca3e525cd47",
+      "source_matches_locked_archive": true
+    },
+    {
+      "package": "gpui-pre",
+      "version": "0.3.9",
+      "archive_sha256": "34f61c1cfd36fc9c436af09308c963822ae27a45a84feb21a77ba5c9e051f1c0",
+      "file": "src/window.rs",
+      "file_sha256": "44f32319b9385fa6dbc15c36b3edea00a26208309b37283ae4f9bd4bead674f8",
+      "source_matches_locked_archive": true
+    }
+  ],
+  "diagnostic_build": {
+    "command": "cargo rustc --manifest-path gpui/Cargo.toml --release --locked -- -C strip=none",
+    "existing_target_cache_reused": true,
+    "exit_code": 0,
+    "file_backed_sections_equal": 23,
+    "shared_flat_output_restored_to_original4658": true
+  },
+  "demangle_helper": {
+    "crate": "rustc-demangle0.1.28 existing release rlib",
+    "final_flags": "-C panic=abort -C lto=thin",
+    "final_exit": 0,
+    "initial_build_failures": [
+      "defaultunwind incompatiblewithcachedabort",
+      "abort alone passedLLVM22bitcodetoAppleLLVM17; thinLTO consumingtheIR matchescachedreleaseprofile"
+    ],
+    "scope": "Diagnostic helper only, no product changes or test rerun."
+  }
+}

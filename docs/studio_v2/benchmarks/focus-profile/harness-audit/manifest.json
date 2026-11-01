@@ -1,0 +1,34 @@
+{
+  "sources": {
+    "observe.py.txt": {
+      "sha256": "63aec9e7a8d9d247f67772ba497998a1e84414b2aeaa8137736fb2d10365a718",
+      "bytes": 2943
+    },
+    "process-start.c.txt": {
+      "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a",
+      "bytes": 339
+    },
+    "cleanup-preflight.py.txt": {
+      "sha256": "c4d08dadc258802035931dd233f8b84d82ccdeb03ec5f416ff2f3d31b26acf47",
+      "bytes": 2934
+    },
+    "fixture.py.txt": {
+      "sha256": "7ee1c66e292cdfceefc56febb4522717bb472dc020264ee8f015e1789314d517",
+      "bytes": 23493
+    },
+    "demangle.rs.txt": {
+      "sha256": "2de80337aedc849af5725ffa1c68e4355447b2f82136910d7dd6cf4b6edb45f1",
+      "bytes": 232
+    },
+    "symbolize.py.txt": {
+      "sha256": "f83d2be07fcf025bd34e0ced59cc87b1508ea8c25a8179e28f291af1abdfda3e",
+      "bytes": 1683
+    },
+    "restart-identity-guard.m.txt": {
+      "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1",
+      "bytes": 6090
+    }
+  },
+  "purpose": "QA84 isolated fixture/observer/symbol resolution/cleanup audit; historical paths not current machine configuration requirements",
+  "no_product_or_registry_edits": true
+}

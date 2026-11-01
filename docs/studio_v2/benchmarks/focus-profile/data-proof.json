@@ -1,0 +1,24 @@
+{
+  "all1014_requests_and_costs_all_fields_equal": true,
+  "counts": {
+    "usage_requests": 1014,
+    "usage_costs": 1014
+  },
+  "business_sha256": "a0e209e810efbcb9b83afcf314545d4f5fe867c31e3da49c3c4ec89b4c1971bd",
+  "config_byte_equal": true,
+  "config_sha256": "f3483aead7c6ab52b0069b3e0641c51ad925d0cf24a6c86f437a5b4eeb2dfd87",
+  "provider_model_writes": 0,
+  "new_HTTP_receipts_during_native_study": 0,
+  "scope": "BeforeGUI vs after4phase measurement, every request/cost field; no realuser data/Key artifacts.",
+  "also_equal_after_native_cancel_close_and_Core_shutdown": true,
+  "stats_runs": [
+    {
+      "stop_reason": "normal",
+      "stopped_at_ms": 1793494082920
+    }
+  ],
+  "fixture_driver_exit_code": 0,
+  "CUA_UI_exit_code": null,
+  "CUA_UI_pid_gone": true,
+  "Core_exit_code": 0
+}

@@ -1,0 +1,25 @@
+{
+  "order": [
+    "A1",
+    "B1",
+    "A2",
+    "B2"
+  ],
+  "seconds_per_phase": 90,
+  "settle_seconds": 10,
+  "sample_interval_seconds": 5,
+  "same_UI_Core_processes": true,
+  "same_dimensions": [
+    64,
+    256,
+    1014,
+    4096
+  ],
+  "query": "long-discovery-",
+  "checked": 0,
+  "A_proof": "Actual editing query confirms focused search; query returns to common prefix before measurement",
+  "B_proof": "Actual Space changes selection outside input, then second activation restores0; record AX and unchanged query",
+  "no_input_screenshot_profiler_during_measurement": true,
+  "profiling": "Separate from timed windows; same file-backed section bytes/vmaddrs allow symbols of unstripped twin to resolve frozen runtime samples",
+  "goal_scope": "Diagnostic, not complete R03 performance verdict or FPS/inputlatency"
+}

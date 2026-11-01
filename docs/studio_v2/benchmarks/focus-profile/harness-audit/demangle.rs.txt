@@ -1,0 +1,2 @@
+use std::io::{self, BufRead};
+fn main() { for line in io::stdin().lock().lines() { let line=line.unwrap(); let (name, rest)=line.split_once(' ').unwrap_or((&line, "")); println!("{:#} {}", rustc_demangle::demangle(name), rest); } }

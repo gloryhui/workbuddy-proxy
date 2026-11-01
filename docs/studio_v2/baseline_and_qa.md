@@ -1783,3 +1783,15 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 完整备份/原包SHA与URL、实际配置路径确认、完整退出、无覆盖恢复、候选新增历史独立保留、默认路径/WorkBuddy模型目录边界已写入UPGRADE_ROLLBACK并链接README。正式版本/changelog、代表性公开截图和最终固定分发包仍待，R04.4整项保持pending；仍剩0/40界面、14发布待验，Goal active。
 - 本机完整父链/owner/realpath/无链接或嵌套mount/库存/lsof0/ps0及即时预检后，精确非强制删除`studio-v2-cold-rollback.5eng36js`694文件/301目录、607,038,996B约578.92MiB；本轮临时0，系统盘约33.86GiB。必要基线50,905,007B/共享Cargo/非本轮preview保留。三runner分别清理ARM327,948,372B/Intel342,320,120B/Windows144,744,489B，合计815,012,981B在远端，均剩余0。[清理](benchmarks/cold-rollback/cleanup.json)。
 - 没有开启旁白、系统辅助功能或切输入源，没有公开发布。R01真实状态/slot/列拖宽/逐引擎IME/真实AT及R03慢marker/焦点CPU/长驻留结论仍缺，按现有能力继续，不重做40帧/21主题或重复无效拖动。
+
+## 小功能 84：真实键盘焦点对照与冻结程序符号化诊断（2026-11-01）
+
+- 使用冻结UI4658/Core1146、64供应商/256模型/1014真实合成请求及成本/4096候选，新唯一wrapper仅ad-hoc签名变化，所有非签名字节一致；Core有真实用户目录kernel deny，GUI使用隔离LSEnvironment与deny-only真实WorkBuddy AppKit保护，不冒称GUI kernel sandbox。[预检](benchmarks/focus-profile/preflight.json)、[总结](benchmarks/rc-round84-summary.json)。
+- 测量前固定A1/B1/A2/B2顺序、各10秒稳定+90秒、每5秒ps累积CPU/RSS。A真实pressKey z使搜索匹配0，Backspace恢复`long-discovery-`/4096/0；B真实Tab×2后Space使0→4096→0，query/匹配不变。AX仅报window焦点，具体反选按钮身份按Tab顺序/视觉/行为推断；非文本按键路由则由实际选择变化证明。每轮计时期间无截图、AX、输入或profiler，同UI/Core PID与出生时间保持。
+- CPU单核百分比A1=6.455、B1=1.522、A2=6.355、B2=1.478；搜索均值6.405、非文本1.500，差4.905个百分点。各19个原始样本/四轮90秒全部保留，反向复测复现焦点依赖；不是性能改进或最终通过。RSS受操作历史/系统压力影响，A1约123.78→125、B1约122.48→119.42、A2约118.88→118.55、B2约109.73→105.80MiB，不能由下降签无泄漏。[原对照](benchmarks/focus-profile/comparison.json)。
+- 原缓存复用，唯一诊断`cargo rustc --release --locked -- -C strip=none`构建0；符号副本与原4658全部23个文件内容节字节和VM地址一致。实际运行原冻结程序，非替代诊断程序；每计时后独立6秒sample，原件不改，atos用等节符号副本解析原地址，再用锁定release rustc-demangle解名。A1/A2各解析1012/1030地址，包含BlinkCursor、Proxy render、Taffy布局；B1/B2各174/153地址，三类栈均未采到。递归/包含采样次数不相加作CPU时长，不唯一归因每周期。[符号等价](benchmarks/focus-profile/symbol-identity.json)、[栈差异](benchmarks/focus-profile/profile-contrast.json)。
+- 所读gpui-base0.7.3 BlinkCursor、gpui-pre0.3.9 view/window源文件与锁定crate原档SHA一致，未改registry。窗口dirty传播会标记祖先，简单缓存root不等于隔离重绘；下一步验证有明确失效通知的未变子树边界，保留光标/输入/IME/选择和4096负载，不关闭光标、缩负载或放宽门槛。R03.2峰值/慢marker、R03.3长时与CPU修复、R03.5最终结论仍pending。
+- A1首sampler因ack枚举名不匹配，在计时前退出；更正为实际按键的更强证明名，四轮预定条件不变。解名helper默认unwind与release abort不兼容、abort单独把LLVM22 bitcode交AppleLLVM17失败均记录，匹配panicabort/thinLTO后构建0。没有产品代码/测试变更、没有产品失败重跑到绿。[源码与构建口径](benchmarks/focus-profile/source-binding.json)。
+- 10张原JPEG/AX均1440×900，父代理查看代表搜索0结果/恢复和4096反选超额提示，委派操作者检查各轮/末态；不是40帧或全状态/slot重验。最终Cancel与原生close，没有apply/save；退出后配置字节及1014请求/成本全字段一致、单统计run normal。Core0/fixture0，CUA UI退出码不可得，只证PIDgone。[原图manifest](benchmarks/focus-profile/image-manifest.json)、[数据](benchmarks/focus-profile/data-proof.json)。
+- 完整父链/uid/realpath/无符号链接或嵌套mount/库存/lsof0/ps0及即时预检后，精确非强制删除专用根`studio-v2-focus-profile.fmt6q01u`50文件/20目录、157,128,912B约149.85MiB，专用临时0、系统盘约35.78GiB；必要基线50,905,007B/共享Cargo/非本轮preview保留。共享平面release恢复原4658并核验。[清理](benchmarks/focus-profile/cleanup.json)。
+- 用户时间线截图的5/4/5/5表示各批次总数；仍待验R01=4/R02=4/R03=3/R04=3，共14，40界面签收保持。Goal active，本轮不新增整项通过、不开旁白/辅助功能/切源，不派新CI或公开发布。证据提交后仅统一更新时间线一次，HTML/JSON/release_plan.md一起提交。

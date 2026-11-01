@@ -1,0 +1,30 @@
+{
+  "A1": {
+    "resolved_runtime_addresses": 1012,
+    "BlinkCursor_stack_present": true,
+    "Proxy_render_stack_present": true,
+    "Taffy_layout_stack_present": true,
+    "scope": "Function presence, not additive CPU attribution; recursive sample counts are not durations."
+  },
+  "B1": {
+    "resolved_runtime_addresses": 174,
+    "BlinkCursor_stack_present": false,
+    "Proxy_render_stack_present": false,
+    "Taffy_layout_stack_present": false,
+    "scope": "Function presence, not additive CPU attribution; recursive sample counts are not durations."
+  },
+  "A2": {
+    "resolved_runtime_addresses": 1030,
+    "BlinkCursor_stack_present": true,
+    "Proxy_render_stack_present": true,
+    "Taffy_layout_stack_present": true,
+    "scope": "Function presence, not additive CPU attribution; recursive sample counts are not durations."
+  },
+  "B2": {
+    "resolved_runtime_addresses": 153,
+    "BlinkCursor_stack_present": false,
+    "Proxy_render_stack_present": false,
+    "Taffy_layout_stack_present": false,
+    "scope": "Function presence, not additive CPU attribution; recursive sample counts are not durations."
+  }
+}

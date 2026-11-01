@@ -1,0 +1,14 @@
+from pathlib import Path
+import json,re,subprocess,sys,hashlib
+r=Path(__file__).resolve().parent;out=Path.cwd()/'docs/studio_v2/benchmarks/focus-profile';phase=sys.argv[1];profile=out/(phase+'-sample.txt');text=profile.read_text();load=re.search(r'^Load Address:\s+(0x[0-9a-f]+)',text,re.M)[1]
+identity=json.loads((out/'symbol-identity.json').read_text());assert identity['file_backed_sections_equal'];assert hashlib.sha256((r/'symbol-ui').read_bytes()).hexdigest()==identity['symbols_sha256']
+addresses=sorted(set(re.findall(r'\(in workbuddy-proxy-gpui\).*?\[(0x[0-9a-f]+)\]',text)))
+assert addresses
+mapped=subprocess.check_output(['atos','-o',str(r/'symbol-ui'),'-arch','arm64','-l',load,*addresses],text=True).splitlines();assert len(mapped)==len(addresses)
+mapped=subprocess.check_output([str(r/'demangle')],input='\n'.join(mapped)+'\n',text=True).splitlines();assert len(mapped)==len(addresses)
+lookup=dict(zip(addresses,mapped));lines=[]
+for line in text.splitlines():
+ found=re.search(r'\?\?\?  \(in workbuddy-proxy-gpui\).*?\[(0x[0-9a-f]+)\]',line)
+ if found:line=line[:found.start()]+lookup[found[1]]+' [runtime '+found[1]+']'
+ lines.append(line)
+(out/(phase+'-sample-symbolicated.txt')).write_text('\n'.join(lines)+'\n');(out/(phase+'-symbols.json')).write_text(json.dumps({'load_address':load,'source':'9570451','file_backed_sections_equal':True,'all_section_addresses_equal':True,'map':lookup,'scope':'Unstripped twin resolves actual frozen stripped runtime addresses; raw sample unchanged. OS wait stacks are samples, not exact CPU-duration attribution.'},indent=2)+'\n');print('Resolved',len(addresses),'frozen UI runtime addresses using code-identical section twin')

@@ -1,0 +1,23 @@
+{
+  "phase": "A2",
+  "complete": true,
+  "span": 90.005,
+  "processes": {
+    "ui": {
+      "cumulativeCPU_delta_seconds": 5.720000000000002,
+      "average_CPU_percent_onecore": 6.355202488750628,
+      "RSS_first_MiB": 118.875,
+      "RSS_last_MiB": 118.546875,
+      "RSS_min_MiB": 118.15625,
+      "RSS_max_MiB": 119.15625
+    },
+    "core": {
+      "cumulativeCPU_delta_seconds": 0.13000000000000012,
+      "average_CPU_percent_onecore": 0.14443642019887798,
+      "RSS_first_MiB": 14.078125,
+      "RSS_last_MiB": 14.109375,
+      "RSS_min_MiB": 14.078125,
+      "RSS_max_MiB": 14.125
+    }
+  }
+}

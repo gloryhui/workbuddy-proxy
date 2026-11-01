@@ -2,7 +2,16 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA83）
+## 最新进展（QA84）
+
+- R03焦点缺口已有实际证据：同UI18545/Core18142、64供应商/256模型/1014请求与成本/4096候选，预定A1/B1/A2/B2各90秒。A实际z→匹配0→Backspace恢复共同前缀/4096/0；B实际Tab×2、Space反选0→4096→0，查询与匹配不变。CPU依序6.455/1.522/6.355/1.478%单核，均值搜索6.405、非文本1.500。具体AX焦点仍只window，按钮身份据顺序/视觉/行为推断，但非文本键盘路由已证，不再只是Tab关联。[QA84](benchmarks/rc-round84-summary.json)、[原样本/对照](benchmarks/focus-profile/comparison.json)。
+- **运行时代码仍957/UI4658/Core1146，没有性能修复。** 仅cargo rustc覆盖strip生成符号副本，23个文件内容节字节和VM地址全部相同；实际wrapper仅签名变化已证明。4份真实sample经atos/锁定rustc-demangle解析：A含BlinkCursor、Proxy render、Taffy布局，B均未采到。原始sample保留，不把递归采样次数相加当CPU归因；定位焦点相关重绘路径，尚非唯一逐周期根因。共享平面release已恢复并核验原4658，依赖源与锁定crate原档一致。[符号证据](benchmarks/focus-profile/symbol-identity.json)。
+- 下一步针对未变子树验证有明确失效通知的缓存/渲染边界，保留500ms光标、正常输入/IME、选择和4096负载；不能关光标/减负载/降门槛过关。GPUI mark_view_dirty会标记祖先，简单缓存整个root仍被输入失效传播；先验证边界，再做最终性能回归。启动慢marker和长期驻留结论仍缺，**R03.2/.3/.5不签收**，R01状态/slot/拖列/逐引擎IME/真实AT仍保留。
+- 10张原始JPEG均1440×900及各AX已保留，最终Cancel/原生close，没有添加/保存；退出后配置字节与1014请求/成本全字段相同。Core0/driver0，CUA拥有UI只证PIDgone、退出码未知。A1初sampler预检枚举名不匹配在计时前停下、两个诊断helper编译配置错误均记录，实际4轮协议不变；无产品失败重跑。[数据/退出](benchmarks/focus-profile/data-proof.json)。
+- 专用根`studio-v2-focus-profile.fmt6q01u`经完整及即时预检，精确非强制删除50文件/20目录、157,128,912B约149.85MiB，临时0、系统盘约35.78GiB；必要基线50,905,007B/共享Cargo/非本轮preview保留。**不要重开已删除bundle；禁止自动开启旁白、辅助功能或切输入源。**[清理](benchmarks/focus-profile/cleanup.json)。
+- 用户询问时间线卡片：5/4/5/5是各批次总任务数，实际待验R01=4、R02=4、R03=3、R04=3，共14；40帧均已签收。Goal active，本轮无整项新增签收、无新CI或公开发布。时间线在本批证据提交后统一生成QA84，以Git和HTML updated_at核对最终状态。
+
+## 上一轮进展（QA83）
 
 - 新增真实包冷回滚：test `70712b8`，runtime 仍 `9570451`；Windows/ARM/Intel × v0.5.6/v0.5.7 共 6 例升级后恢复原程序与完整旧 profile，首次 CI `41256459894` 三 job 全部 success。旧 schema6/11、配置/Key 字节及原12有价记录保持，旧 Core 恢复后可新录有价行；候选第13条只在独立保留目录中，保留目录与升级前备份均逐文件字节未变。[QA83](benchmarks/rc-round83-summary.json)、[六例核对](benchmarks/cold-rollback/ci/validation.json)。
 - Windows 使用候选 uninstaller 后原 setup 同路径重装，原244/16文件SHA、版本、注册/快捷方式一致；两Mac保留候选app、恢复原app并核对全树/签名。候选已装GUI生命周期通过，回滚后只验旧Core，不冒称旧GUI/物理输入/热降级/历史自动合并/WorkBuddy会话回退。直接CLI每例3个Core全部0/waited，nativehost0、其子进程仅PIDgone证明。原Desktop全构建故意skipped，不称新的Core全矩阵。

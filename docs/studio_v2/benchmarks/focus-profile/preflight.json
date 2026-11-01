@@ -1,0 +1,170 @@
+{
+  "providers": 64,
+  "models": 256,
+  "discovery_candidates": 4096,
+  "real_loopback_requests": 1014,
+  "sql_counts": {
+    "usage_requests": 1014,
+    "usage_costs": 1014
+  },
+  "config_sha256": "f3483aead7c6ab52b0069b3e0641c51ad925d0cf24a6c86f437a5b4eeb2dfd87",
+  "business_sha256": "a0e209e810efbcb9b83afcf314545d4f5fe867c31e3da49c3c4ec89b4c1971bd",
+  "kernel_protection": {
+    "enforced": true,
+    "pid": 18142,
+    "sandboxed": true,
+    "protected_permissions": {
+      "workbuddy": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_macos": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "proxy_unix": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      },
+      "installed_app": {
+        "file-read-data": [
+          1,
+          1
+        ],
+        "file-write-data": [
+          1,
+          1
+        ],
+        "file-write-create": [
+          1,
+          1
+        ],
+        "file-write-unlink": [
+          1,
+          1
+        ]
+      }
+    },
+    "synthetic_permissions": {
+      "file-read-data": 0,
+      "file-write-data": 0,
+      "file-write-create": 0,
+      "file-write-unlink": 0
+    },
+    "protected_root_exists": {
+      "workbuddy": true,
+      "proxy_macos": true,
+      "proxy_unix": false,
+      "installed_app": true
+    },
+    "method": "sandbox_check permission queries, no protected file I/O"
+  },
+  "deny_only_restart_guard_CLI_preflight_exit": 0,
+  "signature_identity": {
+    "source": {
+      "sha256": "ca2b18c35144fe2705235a6637556a089900713956c669e92f5487e7171736c1",
+      "load_commands_end": 4616,
+      "signature_offset": 42195584,
+      "signature_bytes": 329824,
+      "signature_command": 4600,
+      "normalized_bytes": 42195574,
+      "masked_fields": [
+        [
+          2432,
+          8
+        ],
+        [
+          2448,
+          8
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          4600,
+          16
+        ]
+      ],
+      "code_probe_offset": 4696
+    },
+    "runtime": {
+      "sha256": "ca2b18c35144fe2705235a6637556a089900713956c669e92f5487e7171736c1",
+      "load_commands_end": 4616,
+      "signature_offset": 42195584,
+      "signature_bytes": 347952,
+      "signature_command": 4600,
+      "normalized_bytes": 42195574,
+      "masked_fields": [
+        [
+          2432,
+          8
+        ],
+        [
+          2448,
+          8
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          4600,
+          16
+        ]
+      ],
+      "code_probe_offset": 4696
+    },
+    "normalized_code_equal": true,
+    "code_mutation_detected": true,
+    "signature_only_mutation_ignored": true,
+    "input_ui_sha256": "46585f86f33a19c6c7a477112d5a0d1a5fbdf88266a6b64594e2de8ccfc08fd4",
+    "runtime_ui_sha256": "c00dea70e35cc0977b3c7674b38ad715f12be74a7668657f4c034f22b223a65e",
+    "comparison_copies_created": false,
+    "comparison_copies_removed": true,
+    "method": "all nonsignature bytes; signature metadata/zero alignment masked; no comparison executable copies"
+  },
+  "scope": "New isolated synthetic receipt/data at same64/256/1014/4096dimensions; no claim identical request IDs or matched previous process history. Actual frozen Core1146/UI4658; wrapper ad-hoc signing preserves all nonsignature bytes."
+}

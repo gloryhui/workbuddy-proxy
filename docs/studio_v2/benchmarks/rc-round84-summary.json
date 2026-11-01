@@ -1,0 +1,82 @@
+{
+  "state": "recorded",
+  "task": 84,
+  "date": "2026-11-01",
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "evidence_parent_head": "a568e78fc114eb652b124ab88773dcfd87e753b0",
+  "runtime_changed": false,
+  "real_native_dimensions": {
+    "providers": 64,
+    "models": 256,
+    "request_and_cost_rows": 1014,
+    "discovery_candidates": 4096,
+    "logical_and_JPEG_pixels": [
+      1440,
+      900
+    ]
+  },
+  "preregistered_order": [
+    "A1",
+    "B1",
+    "A2",
+    "B2"
+  ],
+  "seconds_per_phase": 90,
+  "same_UI_Core_processes": true,
+  "actual_focus_proof": {
+    "A": "pressKey z changes query/matches to0, Backspace restores commonprefix/4096/0",
+    "B": "Tab twice andSpace togglesselection0to4096to0 withoutchangingquery/4096; exactAXfocusedwidget unavailable, batchbutton identity inferred"
+  },
+  "CPU_percent_one_core": {
+    "A1": 6.455196933503695,
+    "B1": 1.5221376590189448,
+    "A2": 6.355202488750628,
+    "B2": 1.477695683573133
+  },
+  "mean_A_CPU": 6.405199711127161,
+  "mean_B_CPU": 1.499916671296039,
+  "diagnosis": "Replicated focusdependent repaint cost; A samples include BlinkCursor/Proxy render/Taffy layout, B samples do not. Symbol twin all23 filebacked sections bytes andVMaddresses equal to frozen4658; actualwrapper signature-only difference proved. Not unique per-cycle attribution or performance fix.",
+  "raw_profiles_and_symbols": "focus-profile/",
+  "build": "Only diagnostic cargo rustc -Cstrip=none; original shared flatoutput4658 restored/verified. Dependency sourcefiles verified against locked cratearchives. No runtime or registry source edits.",
+  "failures_retained": [
+    "A1 initialsampler enum mismatch stoppedbeforetimedwindow; corrected tostronger actualkeypress acknowledgement, samepreregisteredconditions",
+    "Two helpercompiler setting mismatches (panicstrategy, LLVMbitcode) recorded; finalpanicabort/thinLTO build0; no producttest reruns"
+  ],
+  "config_and_all1014_business_fields_equal_after_exit": true,
+  "exit": {
+    "Core": 0,
+    "fixture_driver": 0,
+    "CUA_owned_UI_exit_code": null,
+    "UI_PID_gone": true,
+    "all_samplers_and_profilers": "completed0"
+  },
+  "screenshots": 10,
+  "scope_limits": [
+    "90s phases are focusdiagnostics, not900s longresidence releaseacceptance.",
+    "RSS differs across phases and system pressure not held fixed; no universal leakfree or memoryregression conclusion.",
+    "Native AX exact focused widget unavailable; nontext keyboard route proved by0→4096→0 viaSpace, named invert control inferred fromorder/visualbehavior.",
+    "No startup marker/FPS/inputlatency verdict, no finalR03wholegate acceptance."
+  ],
+  "release_state": {
+    "remaining_frames": 0,
+    "total_frames": 40,
+    "pending_release_tasks": 14,
+    "pending_by_batch": {
+      "R01": 4,
+      "R02": 4,
+      "R03": 3,
+      "R04": 3
+    },
+    "new_whole_gate_acceptance": false,
+    "Goal": "active"
+  },
+  "VoiceOver_AT_inputsource_changes": false,
+  "public_release": false,
+  "cleanup": {
+    "local_removed_bytes": 157128912,
+    "local_session_temp_remaining_bytes": 0,
+    "retained_baseline_bytes": 50905007,
+    "shared_cache_and_unowned_previews": "retained",
+    "system_disk_free_after_bytes": 38423179264
+  }
+}
