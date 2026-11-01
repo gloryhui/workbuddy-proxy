@@ -1032,6 +1032,14 @@ impl Proxy {
         // the report's state or changing its refresh cadence.
         cx.observe(&this.statistics, |_, _, cx| cx.notify())
             .detach();
+        // Modal lifetime follows state changes, independently of whether the
+        // unchanged page is painted again. Updating Kit's dialog layer while
+        // rendering a cached page can otherwise leave an empty modal shell.
+        let modal_owner = cx.entity();
+        cx.observe_in(&modal_owner, window, |this, _, window, cx| {
+            this.manage_dialog(window, cx);
+        })
+        .detach();
         this.switch_page(Page::Statistics, window, cx);
         this.focus.focus(window, cx);
         cx.subscribe(&this.search, |_, _, event, cx| {
@@ -2740,7 +2748,6 @@ impl Render for Proxy {
         } else {
             center
         };
-        self.manage_dialog(window, cx);
         let status_bar = self.status_bar();
         let title = match self.page {
             Page::Providers => self.t("连接与模型", "Connections & models"),

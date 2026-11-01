@@ -52,6 +52,23 @@ mod workbuddy_status;
 use fs2::FileExt;
 use gpui_kit::component::TitleBar;
 use gpui_kit::*;
+
+/// Keep unchanged page content separate from Kit's window-layer dialogs.
+/// The pinned retained backend replays accessibility nodes and actions when
+/// this sibling is reused; Proxy notifications and bounds changes invalidate it.
+struct WindowContent {
+    proxy: Entity<ui::Proxy>,
+}
+
+impl Render for WindowContent {
+    // Fail to compile if the facade is switched back to a backend that does
+    // not provide the retained accessibility replay this cache relies on.
+    fn render(&mut self, _: &mut retained_gpui::Window, _: &mut Context<Self>) -> impl IntoElement {
+        self.proxy
+            .clone()
+            .cached(StyleRefinement::default().size_full())
+    }
+}
 pub(crate) fn default_window_size() -> Size<Pixels> {
     size(px(1440.), px(900.))
 }
@@ -389,7 +406,10 @@ fn main() {
                     ..TitleBar::window_options()
                 },
                 cx,
-                move |window, cx| cx.new(|cx| ui::Proxy::new(dir, cfg, window, cx)),
+                move |window, cx| {
+                    let proxy = cx.new(|cx| ui::Proxy::new(dir, cfg, window, cx));
+                    cx.new(|_| WindowContent { proxy })
+                },
             )
             .expect("Cannot open WorkBuddy Proxy window");
             cx.on_window_closed(|cx, _| {

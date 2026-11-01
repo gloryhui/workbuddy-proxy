@@ -8,7 +8,9 @@ license = "MIT"
 
 [dependencies]
 async-channel = "2"
-gpui-kit = { version = "=0.7.3", default-features = false, features = ["component"] }
+gpui-kit = { version = "=0.7.3", default-features = false, features = ["component", "gpui-fast"] }
+# Keep the experimental engine on the snapshot supported by Kit 0.7.3.
+retained-gpui = { package = "gpui-fast", version = "=0.1.7", default-features = false }
 url = "2"
 ureq = { version = "3", default-features = false, features = ["json"] }
 serde = { version = "1", features = ["derive"] }
