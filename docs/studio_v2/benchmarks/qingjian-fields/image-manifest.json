@@ -1,0 +1,182 @@
+{
+  "original_native_images": [
+    {
+      "file": "app-before-close.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 169145,
+      "sha256": "859096a94a64353ca89f45a83e4c0fa3abffeb0f6c59c32163d3e330d345431a",
+      "AX": "app-before-close.ax.txt"
+    },
+    {
+      "file": "model-id-after-cancel.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 169023,
+      "sha256": "d0ad091ab89e5447c7c14fb9f9fc813090f93b15c0c1e4303411e7535ffd2a1b",
+      "AX": "model-id-after-cancel.ax.txt"
+    },
+    {
+      "file": "model-id-current.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 157214,
+      "sha256": "07d36f92adf0428281838721f9c412cb8d125122c98d90df037bd9d4a1fec1e7",
+      "AX": "model-id-current.ax.txt"
+    },
+    {
+      "file": "model-id-ready.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 157732,
+      "sha256": "7d742c89c6d63da5f3cad0f3e0e440e633ba57e4ae6cb153085609d72cb4851d",
+      "AX": "model-id-ready.ax.txt"
+    },
+    {
+      "file": "numeric-after-cancel.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 169146,
+      "sha256": "8d906430231d6efe596fca34a6ed59fbbc01442e5569953496ea44156a3aa27e",
+      "AX": "numeric-after-cancel.ax.txt"
+    },
+    {
+      "file": "numeric-enter.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 157515,
+      "sha256": "00e47c0b668bd82c2f103cc11bbb4d78fd5713f7f88f408bb957c96e1e726525",
+      "AX": "numeric-enter.ax.txt"
+    },
+    {
+      "file": "numeric-escape.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 158376,
+      "sha256": "8f0c4ea77845e71cedc8e788821a853b8cb4154d6a9a917101b43a701fbb0bff",
+      "AX": "numeric-escape.ax.txt"
+    },
+    {
+      "file": "numeric-preedit.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 157624,
+      "sha256": "45ee421fc1c64f2f72c33157804825ddfa370b607683144eb266f7fb056b8997",
+      "AX": "numeric-preedit.ax.txt"
+    },
+    {
+      "file": "numeric-ready.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 158415,
+      "sha256": "ddba3a263fe63ab81931787b37519f248fd030d46144019fbf0f9236e7f8079c",
+      "AX": "numeric-ready.ax.txt"
+    },
+    {
+      "file": "provider-fields-after-cancel.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 175198,
+      "sha256": "045e53c91a4b53622a41ec663790c74e18bb11a0db361dc3ec5101cd6a4a27f6",
+      "AX": "provider-fields-after-cancel.ax.txt"
+    },
+    {
+      "file": "provider-fields-ready.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 171163,
+      "sha256": "aed190c2a077e5419a784d9b0c36540b5f1c0b9c64fff7632e06f44cf60e0eab",
+      "AX": "provider-fields-ready.ax.txt"
+    },
+    {
+      "file": "search-enter-commit.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 167286,
+      "sha256": "e40ed0dc15d92c891a7db7c5c002b6504aded4103f28a894a4ef9cf73a7cd8df",
+      "AX": "search-enter-commit.ax.txt"
+    },
+    {
+      "file": "search-enter-preedit.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 167254,
+      "sha256": "02d9a2a47e2275c97da7781b95ebf3240b7734d762c2a783001c8d66273512e0",
+      "AX": "search-enter-preedit.ax.txt"
+    },
+    {
+      "file": "search-final-restored.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 170209,
+      "sha256": "6ed766f080628a1e0165544f6be22fa0a9ea74239c79a411e083916bebd80959",
+      "AX": "search-final-restored.ax.txt"
+    },
+    {
+      "file": "search-first-escape.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 170219,
+      "sha256": "8732e60243f23772c0a4ce2ac909f78cd8b5d399fc6695f3bae401c782a55045",
+      "AX": "search-first-escape.ax.txt"
+    },
+    {
+      "file": "search-key-attempt.jpg",
+      "format": "jpeg",
+      "size": [
+        1440,
+        901
+      ],
+      "bytes": 167251,
+      "sha256": "0d5d8e97aca9a4193b5ddd6e520738f73b8dbd3e09f53e299eb589debba5519c",
+      "AX": "search-key-attempt.ax.txt"
+    }
+  ],
+  "not_redrawn_or_cropped": true,
+  "privacy": "Synthetic isolated names/loopback data; Key masked and never revealed; no raw config/database/key archived."
+}

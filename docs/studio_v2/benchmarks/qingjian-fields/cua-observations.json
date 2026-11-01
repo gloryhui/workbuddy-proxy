@@ -1,0 +1,24 @@
+{
+  "operator": "Delegated CUA studio_cua, supported native pressKey calls only; no typeText/paste/input-source changes.",
+  "search": {
+    "preedit": "ni'hao after separate n/i/h/a/o",
+    "escape": "One Escape removed whole preedit and restored 2 providers",
+    "enter": "New preedit then Enter committed ASCII nihao; page retained, filter 0/2",
+    "restoration": "Cmd+A/Backspace clears query and restores 2 providers"
+  },
+  "numeric": {
+    "representative": "Maximum output tokens in model editor; automatic detection temporarily disabled in unsaved editor",
+    "preedit": "Underlined ni'hao visible in original image numeric-preedit.jpg",
+    "escape": "Preedit removed and editor retained",
+    "enter": "New preedit then Enter committed ASCII nihao, editor retained; no confirmation or save",
+    "restoration": "Cancel closes editor and original model/ID plus saved state remain"
+  },
+  "limits": [
+    "Candidate popup not directly captured",
+    "Enter ASCII result is recorded verbatim, not called Chinese-candidate commit success",
+    "Scalar numeric representative does not prove all date/list/price fields or other platforms",
+    "AX reports window focus; precise child focus identity not asserted"
+  ],
+  "audit": "before-close-data-check.json confirms no new mutating attempts after original save403 and all five business tables unchanged",
+  "passed_scope": "Observed preedit cancellation, non-submitting Enter and cancel restoration for the actual representatives, not full R01 or full release."
+}

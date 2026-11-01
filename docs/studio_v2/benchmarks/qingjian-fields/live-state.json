@@ -1,0 +1,20 @@
+{
+  "state": "completed_archived_cleaned",
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-input93-0ysfef9j",
+  "driver_session": 18530,
+  "pids": {
+    "driver": 94926,
+    "Core": 94928,
+    "UI": 95207
+  },
+  "temporary_bytes_retained": 0,
+  "cleanup": "Owned QA93 root removed after full and immediate checks; original evidence retained. Never reopen this deleted bundle.",
+  "system_free_bytes": 36963790848,
+  "no_new_product_build_or_CI": true,
+  "human_provider3fields_report": "一切正常",
+  "unexpected_save403_count_first_audit": 1,
+  "persisted_config_models_business_tables_unchanged": true,
+  "next_model_ID": "User reported normal; original ID restored in passive image.",
+  "save403_interpretation": "Consistent with explicitly reported Test connection, not established as IME accidental submit",
+  "fixture_in_use": false
+}

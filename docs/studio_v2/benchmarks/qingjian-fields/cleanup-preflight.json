@@ -1,0 +1,69 @@
+{
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-input93-0ysfef9j",
+  "owner_uid": 501,
+  "created_by_this_session": true,
+  "project": "Studio V2 QA93",
+  "target_type": "Owned disposable input fixture, copied UI/Core/helper binaries, synthetic config/database/key and launch environment",
+  "reproducible_basis": "preregistered.json, harness-audit, frozen binaries and original evidence archived outside root; no real data, source, shared cache, baseline or deliverable in target",
+  "parent_chain": [
+    {
+      "path": "/",
+      "uid": 0,
+      "device": 16777233,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-input93-0ysfef9j",
+      "uid": 501,
+      "device": 16777233,
+      "mount": false
+    }
+  ],
+  "files": 41,
+  "directories": 19,
+  "file_bytes": 52946528,
+  "lsof_exit": 1,
+  "lsof_output": "",
+  "lsof_stderr": "",
+  "known_pids_gone": true,
+  "other_process_refs": [],
+  "free_before_bytes": 36910612480,
+  "timestamp_ns": 1793526243679257000,
+  "ready_for_exact_nonforced_cleanup": true
+}

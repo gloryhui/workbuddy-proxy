@@ -1,0 +1,11 @@
+{
+  "ui_pid": 95207,
+  "core_pid": 94928,
+  "ui_pid_gone": true,
+  "core_present_at_check": true,
+  "exit_code": "unavailable",
+  "before_close": "app-before-close.jpg / app-before-close.ax.txt",
+  "observed": "空搜索，供应商名称QA93 输入验收，原模型QA93 原模型与ID deepseek-v4.1-flash，页面显示已保存",
+  "method": "CUA native close；关闭后仅只读ps",
+  "created_at": "2026-11-01T09:41:00.413Z"
+}

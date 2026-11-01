@@ -1,0 +1,583 @@
+[
+  {
+    "path": "NeverLaunchSyntheticTarget.app",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524558058524593,
+    "inode": 165428208
+  },
+  {
+    "path": "baseline-private.json",
+    "type": "file",
+    "bytes": 5354,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793524596212728737,
+    "inode": 165428309,
+    "sha256": "2a47710d485b5ed93c3db6655d186321bc47ad4bee8050ce92212fa0b573ff24"
+  },
+  {
+    "path": "fixture",
+    "type": "directory",
+    "bytes": 864,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793526088608745580,
+    "inode": 165428243
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app",
+    "type": "directory",
+    "bytes": 96,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524569240167875,
+    "inode": 165428277
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app/Contents",
+    "type": "directory",
+    "bytes": 160,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524569264800814,
+    "inode": 165428278
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app/Contents/Info.plist",
+    "type": "file",
+    "bytes": 3430,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569258748465,
+    "inode": 165428281,
+    "sha256": "5fb4f8a0b97738970359e9aec2706f391a53424479fb1eea208bf5aad27c9df9"
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app/Contents/MacOS",
+    "type": "directory",
+    "bytes": 96,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524569338706548,
+    "inode": 165428279
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app/Contents/MacOS/workbuddy-proxy-gpui",
+    "type": "file",
+    "bytes": 43828992,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524569338629797,
+    "inode": 165428284,
+    "sha256": "6aaa45cebcf7b39aa8e227c959f7e27dd248cf24117eece6ffbdb6ca7bd77dba"
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app/Contents/_CodeSignature",
+    "type": "directory",
+    "bytes": 96,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524569264987273,
+    "inode": 165428282
+  },
+  {
+    "path": "fixture/WorkBuddy Proxy QA93 Inputs.app/Contents/_CodeSignature/CodeResources",
+    "type": "file",
+    "bytes": 2200,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569265036231,
+    "inode": 165428283,
+    "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+  },
+  {
+    "path": "fixture/appdata",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629396081,
+    "inode": 165428255
+  },
+  {
+    "path": "fixture/config",
+    "type": "directory",
+    "bytes": 320,
+    "uid": 501,
+    "mode": "0o700",
+    "mtime_ns": 1793526088118911834,
+    "inode": 165428244
+  },
+  {
+    "path": "fixture/config/appearance.json",
+    "type": "file",
+    "bytes": 39,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524568628943746,
+    "inode": 165428249,
+    "sha256": "3bf3ae0e4aac3965c9b78900256dc43ae9f6c630299684b1e50c98c2b9157457"
+  },
+  {
+    "path": "fixture/config/config.json",
+    "type": "file",
+    "bytes": 1078,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793524568629033621,
+    "inode": 165428250,
+    "sha256": "7beabd88b7c07ec27f0e49bada3ec9876f8a4aed91fcf3393b695094984a0e0b"
+  },
+  {
+    "path": "fixture/config/gpui-drafts.json",
+    "type": "file",
+    "bytes": 2179,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793526049943620637,
+    "inode": 165431078,
+    "sha256": "54d72845cd040a9c33d3be3c7c04de6faf7046fb8ec34f76c69fb658fac7696c"
+  },
+  {
+    "path": "fixture/config/gpui.lock",
+    "type": "file",
+    "bytes": 0,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524616631642616,
+    "inode": 165428356,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "fixture/config/instance.lock",
+    "type": "file",
+    "bytes": 0,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569171589655,
+    "inode": 165428265,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "fixture/config/model-catalog.json",
+    "type": "file",
+    "bytes": 143886,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793524569283931030,
+    "inode": 165428275,
+    "sha256": "4aac8c4fd1183f1af35c20cf9b8ce32e59bb04e233bd93d730ef0c82fffd991f"
+  },
+  {
+    "path": "fixture/config/startup.log",
+    "type": "file",
+    "bytes": 49,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569225705838,
+    "inode": 165428271,
+    "sha256": "2d3a660e02eba0db71626c97de1ea80b18e49bcbee24e983fd52bb5bd46db283"
+  },
+  {
+    "path": "fixture/config/usage.sqlite3",
+    "type": "file",
+    "bytes": 233472,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793526088108787211,
+    "inode": 165428267,
+    "sha256": "9e76f3bc513cc3af525a7e2239d59c9d1fd3b3b915eac252f91419d0bb66924f"
+  },
+  {
+    "path": "fixture/core.log",
+    "type": "file",
+    "bytes": 41,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569225735129,
+    "inode": 165428262,
+    "sha256": "a5da31caa8053b1dcc2e52fb89fcce57810ff39ccfa219d311994e6f9a823d59"
+  },
+  {
+    "path": "fixture/cua-launch-ready.json",
+    "type": "file",
+    "bytes": 236,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569530602879,
+    "inode": 165428289,
+    "sha256": "17ea96032a7cb283bddbc8e22e892a62af8ebbef1ce2e3104ea6376bd5939c95"
+  },
+  {
+    "path": "fixture/fixture.json",
+    "type": "file",
+    "bytes": 3041,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524617540900810,
+    "inode": 165428396,
+    "sha256": "741ee8e657411557b424051ed7cfde440956add5b7ad6468229f478b6a48c2cb"
+  },
+  {
+    "path": "fixture/gpui.log",
+    "type": "file",
+    "bytes": 0,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569530471087,
+    "inode": 165428288,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "fixture/home",
+    "type": "directory",
+    "bytes": 96,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568623508649,
+    "inode": 165428245
+  },
+  {
+    "path": "fixture/home/.workbuddy",
+    "type": "directory",
+    "bytes": 128,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629086663,
+    "inode": 165428246
+  },
+  {
+    "path": "fixture/home/.workbuddy/models.json",
+    "type": "file",
+    "bytes": 2,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524568629125038,
+    "inode": 165428251,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "fixture/home/.workbuddy/projects",
+    "type": "directory",
+    "bytes": 96,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568623578441,
+    "inode": 165428247
+  },
+  {
+    "path": "fixture/home/.workbuddy/projects/demo",
+    "type": "directory",
+    "bytes": 128,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629240747,
+    "inode": 165428248
+  },
+  {
+    "path": "fixture/home/.workbuddy/projects/demo/builtin.jsonl",
+    "type": "file",
+    "bytes": 1325,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524568629206372,
+    "inode": 165428252,
+    "sha256": "10a52367c7255694e1363c34be3ebede4ed5f001c6fb47d89d9b8ff2192a6c36"
+  },
+  {
+    "path": "fixture/home/.workbuddy/projects/demo/pending.jsonl",
+    "type": "file",
+    "bytes": 277,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524568629273122,
+    "inode": 165428253,
+    "sha256": "e1ec9592bf58c4ad4273dceeebce4cc6f6c8486a93d6ee95dd0080a029455de4"
+  },
+  {
+    "path": "fixture/instance-before-bridge-private.json",
+    "type": "file",
+    "bytes": 100,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793524569239388331,
+    "inode": 165428274,
+    "sha256": "14e6a1ca4e9febedaa2ad2d9ebe14350cfacfded3a244c110f1b662414e301f8"
+  },
+  {
+    "path": "fixture/localappdata",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629433956,
+    "inode": 165428256
+  },
+  {
+    "path": "fixture/management-audit.jsonl",
+    "type": "file",
+    "bytes": 149139,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793526048512137488,
+    "inode": 165428391,
+    "sha256": "6dcb7e9206007cbbd42a15b09fd71b1b4a413ae02fdd893c833c8abcd26c59ab"
+  },
+  {
+    "path": "fixture/management-bridge.json",
+    "type": "file",
+    "bytes": 353,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569239930124,
+    "inode": 165428276,
+    "sha256": "70a06c33c2f4aed396a21085d95c02c124b86c0e0ded2d5ca500a27eb2225e86"
+  },
+  {
+    "path": "fixture/mock-gets.jsonl",
+    "type": "file",
+    "bytes": 110,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569329346315,
+    "inode": 165428272,
+    "sha256": "d18d5ee6f32f99b7ceb5aee9831a6ff6bb4cae2fa3a40ca2765547df7273fb5d"
+  },
+  {
+    "path": "fixture/mock-posts.jsonl",
+    "type": "file",
+    "bytes": 168,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524596209686021,
+    "inode": 165428308,
+    "sha256": "a179db124d7a7a1d872d271f131a1c2da3063667503900cd1c27e50de41b86e3"
+  },
+  {
+    "path": "fixture/native-acceptance-finished",
+    "type": "file",
+    "bytes": 86,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793526088018098764,
+    "inode": 165431137,
+    "sha256": "46fe4eb6ce903bcc095caae73bf034aa0e5b3314eb8cc27f1e6fe5e04ec34dc6"
+  },
+  {
+    "path": "fixture/review-core",
+    "type": "file",
+    "bytes": 8428112,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793512119983384867,
+    "inode": 165428263,
+    "sha256": "b920f91e2c85b7cd40f5f779ab8a7b06e4151ce6779c25444126c270300de2ff"
+  },
+  {
+    "path": "fixture/signature-identity.json",
+    "type": "file",
+    "bytes": 1450,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524569530381795,
+    "inode": 165428287,
+    "sha256": "82b28f15361fa2c4ed51006e001326d6ca0fd02751ae8027e596aac5046af543"
+  },
+  {
+    "path": "fixture/source-protection.sb",
+    "type": "file",
+    "bytes": 327,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524568637041309,
+    "inode": 165428264,
+    "sha256": "6548b65c580df37a33d8e8544d70129e032271a468f1c8a9100ac18d6d443cdb"
+  },
+  {
+    "path": "fixture/synthetic-import-inputs.json",
+    "type": "file",
+    "bytes": 245,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524568629348664,
+    "inode": 165428254,
+    "sha256": "6c12c9a8655ffff3902412485e728c0eed37922d6da0e554054b8a41b5e89954"
+  },
+  {
+    "path": "fixture/terminal-status.json",
+    "type": "file",
+    "bytes": 316,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793526088608855330,
+    "inode": 165431140,
+    "sha256": "87ea92580602312b4a27d823f10ff2e34f2b3818ed94ec509fec0b60f52b9173"
+  },
+  {
+    "path": "fixture/tmp",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629596914,
+    "inode": 165428261
+  },
+  {
+    "path": "fixture/xdg-cache",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629531498,
+    "inode": 165428259
+  },
+  {
+    "path": "fixture/xdg-config",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629466581,
+    "inode": 165428257
+  },
+  {
+    "path": "fixture/xdg-data",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629500039,
+    "inode": 165428258
+  },
+  {
+    "path": "fixture/xdg-state",
+    "type": "directory",
+    "bytes": 64,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524568629565623,
+    "inode": 165428260
+  },
+  {
+    "path": "fixture.py",
+    "type": "file",
+    "bytes": 21995,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524558057862966,
+    "inode": 165428205,
+    "sha256": "a34df4a806e6c2c3f6535f1f0e7ce3a22b6f0618d03f395f34087a5d704ba6a4"
+  },
+  {
+    "path": "guard-mode.json",
+    "type": "file",
+    "bytes": 28,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524558058603885,
+    "inode": 165428209,
+    "sha256": "56192fa34a5aca9b419b4d6ccb76e27fc1346168f25bd027aa2d85970b98584c"
+  },
+  {
+    "path": "ownership.json",
+    "type": "file",
+    "bytes": 294,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524558054770375,
+    "inode": 165428204,
+    "sha256": "fb53200084b65d10226512fd9eaa4f82bb5674536ce8ba25b36e3a9f56aa5ef9"
+  },
+  {
+    "path": "phase-apps.json",
+    "type": "file",
+    "bytes": 180,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524558058778510,
+    "inode": 165428211,
+    "sha256": "fa74f9036c072f353c7a3f7ba6ccbd32abe8eb79ecf236447ad54ac247069fd1"
+  },
+  {
+    "path": "process-start",
+    "type": "file",
+    "bytes": 33664,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524558895094057,
+    "inode": 165428223,
+    "sha256": "27d74106ec8689ae16666fe476de77562a96c01c6beb26de4861388fb4a29a26"
+  },
+  {
+    "path": "process-start.c",
+    "type": "file",
+    "bytes": 339,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524558058494218,
+    "inode": 165428207,
+    "sha256": "1bde737741164950f495158d82ad0dbdc9d1afe03b61a2f500b1136507774e4a"
+  },
+  {
+    "path": "restart-audit.jsonl",
+    "type": "file",
+    "bytes": 284,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793524616630810031,
+    "inode": 165428355,
+    "sha256": "e392514f8fa43e00ef66c17be22f8f6ae4e3c59b216e5732f05029c878abdf5b"
+  },
+  {
+    "path": "restart-env-private.json",
+    "type": "file",
+    "bytes": 718,
+    "uid": 501,
+    "mode": "0o600",
+    "mtime_ns": 1793524558058685552,
+    "inode": 165428210,
+    "sha256": "a1821d9cf747f573091dbaea55183979c45f327f852bb8ead14e0c3b39010981"
+  },
+  {
+    "path": "restart-guard.dylib",
+    "type": "file",
+    "bytes": 73888,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524558904009038,
+    "inode": 165428224,
+    "sha256": "fd881046bdc311723299122a9f1cb9c017cbc49dbfffabe4659cd518bc90c336"
+  },
+  {
+    "path": "restart-identity-guard.m",
+    "type": "file",
+    "bytes": 6090,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524558058242009,
+    "inode": 165428206,
+    "sha256": "7245043b320c7c2d9ff3bf62b3f9844860a29fe796f967d485e0047966e7d9a1"
+  },
+  {
+    "path": "review",
+    "type": "directory",
+    "bytes": 96,
+    "uid": 501,
+    "mode": "0o755",
+    "mtime_ns": 1793524617541046977,
+    "inode": 165428242
+  },
+  {
+    "path": "review/ui-live-current.json",
+    "type": "file",
+    "bytes": 3041,
+    "uid": 501,
+    "mode": "0o644",
+    "mtime_ns": 1793524617541125186,
+    "inode": 165428397,
+    "sha256": "741ee8e657411557b424051ed7cfde440956add5b7ad6468229f478b6a48c2cb"
+  }
+]

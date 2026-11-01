@@ -1,0 +1,52 @@
+{
+  "stage": "all_UI_inputs_completed_before_native_close",
+  "config_equal": true,
+  "models_equal": true,
+  "business_tables": {
+    "usage_requests": {
+      "all_fields_equal": true,
+      "rows": 2
+    },
+    "usage_costs": {
+      "all_fields_equal": true,
+      "rows": 2
+    },
+    "stats_model_prices": {
+      "all_fields_equal": true,
+      "rows": 3
+    },
+    "stats_settings": {
+      "all_fields_equal": true,
+      "rows": 1
+    },
+    "stats_provider_settings": {
+      "all_fields_equal": true,
+      "rows": 0
+    }
+  },
+  "blocked_or_failed_commands": [
+    {
+      "at_ms": 1793525114176,
+      "command": "save",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    }
+  ],
+  "command_counts": {
+    "stats_health": 7,
+    "stats_filters": 2,
+    "stats_prices_list": 1,
+    "stats_workbuddy_status": 93,
+    "stats_provider_settings_get": 2,
+    "stats_settings_get": 1,
+    "workbuddy_check": 1,
+    "snapshot": 682,
+    "stats_requests": 6,
+    "stats_dashboard": 6,
+    "save": 1,
+    "model_metadata": 548
+  },
+  "save403_assessment": "Exactly the preserved first attempt, consistent with human-reported Test connection; no new mutation attempt during remaining CUA search/numeric steps.",
+  "no_additional_mutating_attempts": true
+}

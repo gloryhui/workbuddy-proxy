@@ -1,0 +1,12 @@
+{
+  "core_pid": 94928,
+  "port": 52856,
+  "requests": 2,
+  "costs": 2,
+  "priced": 2,
+  "config_sha256": "7beabd88b7c07ec27f0e49bada3ec9876f8a4aed91fcf3393b695094984a0e0b",
+  "models_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "business_sha256": "4f84c78adc6e730daaf72aae98dfef203bd0082af4f1b361173e6768be7b51cb",
+  "Corekernelguard_enforced": true,
+  "UI_bridge": "actualCore readonlyforwarder/noinject; seeded2realHTTPbeforeUI"
+}

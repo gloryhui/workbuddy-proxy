@@ -1876,3 +1876,11 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 所有本机UI原生close后PIDgone/退出码未知，Core/driver0。冷读config和整份合成models字节、12请求/成本及5业务表全字段相同；1normalrun/12admitted/0drop/0writefailure。3076UI命令均实际Core只读，业务save/install/set_port0、nativeopen/terminate0。Corekernel保护，GUI仅隔离环境+deny-onlyguard。最初附加pricecreate因mockcatalog已存规则400revisionconflict（含诊断两次），沿用既有规则种请求，不改真实数据。一次TLS推送失败后读远端再普通补推，无force/TLS绕过；API EOF只补读原run。原始错误和报告不改写。[数据](benchmarks/manual-mac-rc060/data-proof.json)、[观察运输](benchmarks/manual-mac-rc060/observation-transport-notes.json)。
 - 本机专用根经完整及即时owner/父链/无symlink/mount/库存hash/lsof0/ps0预检精确非强制清理45文件/23子目录97,003,904B约92.51MiB，本机临时0；远端临时0，必要baseline97.14MiB、QA91原包134.37MiB和共享Cargo保留，系统盘约35.68GiB。严禁重开已删QA92/86窗口。[清理](benchmarks/manual-mac-rc060/cleanup.json)。
 - 40帧剩0，发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active。新运行UI使最终R04.1重新pending，旧dd9完整CI/四包/6升级按原来源保留，不重标新修复。未自动开旁白/AT/切输入源/缩放、未公开发布；不重复已确认Mac路径、40帧/21主题、后台90/900秒或无新能力尝试。证据提交后显式--task92一次同步时间线。[QA92](benchmarks/rc-round92-summary.json)。
+
+## 小功能 93：青简剩余字段与搜索数字代表输入（2026-11-01）
+
+- 完全复用855/f756 UI与dd9/b920 Core，无产品修改/构建/CI。用户跳过第二Mac输入法后恢复Goal，先人工报告供应商名称/掩码Key/API地址整组及上游模型ID的候选Esc/Enter和取消正常；被动原图显示原值及已保存状态，无逐字段候选原帧、Key未读取。其后用户出门并授权代理操作剩余可用部分。[人工报告](benchmarks/qingjian-fields/human-observations.json)。
+- 首轮一次save403与原断言完整保留，用户补充点击过测试连接，源码test()先save可解释；无动作起源遥测，不判Enter误保存、不宣称连接测试成功。后续CUA真实逐键搜索和单个最大输出tokens代表，预编辑ni'hao一次Esc消失；数字原JPEG下划线可见，Enter仅落ASCII nihao且弹窗保留，取消恢复；搜索清空恢复2供应商。候选窗未捕获、ASCII不当中文候选落字通过，不用粘贴替代合成。[矩阵](benchmarks/qingjian-fields/streamlined-matrix.json)、[16原JPEG/AX](benchmarks/qingjian-fields/image-manifest.json)。
+- 原生close后UI PIDgone/退出码未知，Core与原driver句柄均0。config/models整份字节及5业务表全字段冷核相同，2真实请求/2成本保持；1362管理命令仅原save403，native仅guard_installed，无open/terminate。Core kernel保护，GUI隔离环境/deny-onlyguard。元数据缺PIL和首次cold-read收集错误均留痕，未安装依赖、重跑产品测试或改数据。[数据](benchmarks/qingjian-fields/final-data-proof.json)、[说明](benchmarks/qingjian-fields/collection-notes.json)。
+- 自有QA93根经完整及即时边界/owner/库存hash/lsof0/ps0核实后精确非强制清理41文件/19子目录52,946,528B约50.49MiB；本轮临时0，APFS观测可用增加53,178,368B，系统盘约34.43GiB。必要baseline/原RC包/共享cache与全部报告保留，不再开已删窗口。[清理](benchmarks/qingjian-fields/cleanup.json)。
+- 40帧剩0，发布待验仍15=R01 4/R02 4/R03 3/R04 4，Goal active。本轮代表安全行为通过，不扩称所有特殊提交/关闭字段、整R01/真实AT/跨平台或最终性能验收。先源码归并剩余不同handler，仅补缺口；不开旁白/AT、不切源/缩放、不公开发布；证据提交后--task93一次更新时间线。[QA93](benchmarks/rc-round93-summary.json)。

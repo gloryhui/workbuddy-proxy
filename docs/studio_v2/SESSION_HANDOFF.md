@@ -1,13 +1,16 @@
 # Studio V2 会话交接与恢复状态（2026-11-01）
 
-此前用户要求暂停并换会话；2026-11-01按明确请求恢复Goal并从R01推进。QA91软件RC批次完成后，同一外部环境阻塞连续三个Goal回合未变，其后用户提供当前Mac人工操作条件并恢复Goal；QA92已完成Mac人工补验、全屏背景修复及三平台UI/WindowsGDI检查，已清理；其后Goal因人工条件未答标为blocked；用户现已明确跳过当前Mac第二输入法交叉验证，范围已更新，详见下节。禁止自动开启旁白；各旧轮证据保留原来源。
+此前用户要求暂停并换会话；2026-11-01按明确请求恢复Goal并从R01推进。QA91软件RC批次完成后，同一外部环境阻塞连续三个Goal回合未变，其后用户提供当前Mac人工操作条件并恢复Goal；QA92已完成Mac人工补验、全屏背景修复及三平台UI/WindowsGDI检查，已清理；其后用户跳过第二输入法并再次恢复Goal，QA93已按精简范围完成青简字段与搜索/数字代表补证并清理，详见下节。禁止自动开启旁白；各旧轮证据保留原来源。
 
-## 当前状态（QA92完成后，用户已跳过第二输入法）
+## 最近完成进展（QA93，青简字段补验与代表输入收尾）
 
-- 用户2026-11-01已明确答复“不用测试另外一种输入法了，跳过”。**当前Mac另一种中文输入法交叉验证已取消，不再等待该可用条件、不再要求用户切换输入法，也不得在后续恢复时重新加入。** 这是明确范围决定，不是另一输入法测试通过；已有青简模型名称Enter/Esc/取消结果保留。结构记录见release_plan.json的R01.3 waived_requirements。
-- R01.3仍pending，仅因为尚缺字段的真实composition/输入取消等原范围未完整覆盖；不得把用户只跳过第二输入法扩大成取消全部IME、全部字段或跨平台原生输入。其他R01/R02/R03/R04门禁不变，15发布待验、40帧签收/剩0。本次范围同步不新增QA编号或通过数量。
-- 独立Goal面板实际仍为`blocked`，本次未冒称恢复active；此前等待第二输入法答复的阻塞理由已解除，后续继续时从仍缺字段和其余真实环境条件推进，不能再为第二输入法停工。QA92所有原run终态成功、本机测试会话已结束清理，没有待重启或等待的活进程。
-- 不启动新测试或修改系统。保持禁止自动旁白/AT/输入源/系统缩放，未经另行授权不公开发布。不重开已清理QA92/86 bundle，不重复已确认的Mac全屏修复、40帧/21主题或后台90/900秒；当前无测试临时文件，RC包/必要baseline和共享缓存保留。
+- Goal面板已由用户恢复，get_goal实际核对active；另一Mac中文输入法仍按用户决定跳过，不再询问或切换。复用UI855/inputf756与Coredd9/b920，无产品代码、依赖、构建或CI变化。[总结](benchmarks/rc-round93-summary.json)。
+- 用户报告供应商名称/掩码Key/API地址整组“一切正常”，以及上游模型ID“可以了，没问题”；按请求序列候选Esc/Enter与取消记录，原JPEG/AX独立确认取消后原名称/URL/ID及已保存状态，不虚构逐字段候选/Key明文。用户随后明确让代理继续，自己出门吃饭，无后续人工询问。
+- 唯一首轮`save403`与原断言保留；用户先否认显式保存/CmdS，随后补充“我点过测试链接”。源码test()先save后test可解释这一命令模式，无事件级起源证明，不判Enter故障、不称连接测试成功或零save。后续代理输入无新增变更命令。[首轮](benchmarks/qingjian-fields/provider-fields-first-audit.json)、[调用路径](benchmarks/qingjian-fields/save-source-trace.json)。
+- CUA唯一操作者studio_cua逐键搜索和最大输出tokens一个数字代表：预编辑`ni'hao`经Esc整串消失；数字原JPEG有下划线，Enter实际落ASCII`nihao`、modal保持，再取消恢复原模型/ID/已保存。搜索清空后2供应商恢复。未用typeText/paste冒充IME，候选窗口未直接捕获，不称中文候选提交通过，也不重做已过显示名称/三字段/全屏/hover/拖列/40帧/21主题/后台90或900秒。[代表矩阵](benchmarks/qingjian-fields/streamlined-matrix.json)、[观察](benchmarks/qingjian-fields/cua-observations.json)、[16原JPEG](benchmarks/qingjian-fields/image-manifest.json)。
+- UI95207原生close后PIDgone，退出码未知；Core94928与driver94926/原句柄18530均正常0。退出后只读冷核config与合成models整份字节、5业务表全字段均同基准，2真实请求/2成本保持。1362管理命令仅原save403，native只guard_installed、无open/terminate。Corekernel保护；GUI为独立环境+deny-onlyguard，不称GUIkernel。[最终数据](benchmarks/qingjian-fields/final-data-proof.json)。
+- 专用根`/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-input93-0ysfef9j`已完整/即时owner父链无symlink/mount、库存hash、lsof/ps预检后精确非强制清理：41文件/19子目录52,946,528B约50.49MiB，本轮临时保留0，APFS观测可用增加53,178,368B，系统盘约34.43GiB；必要baseline/原RC/共享cache保留。**不可重开已删QA93/92/86窗口。** 元数据收集缺PIL、首次冷mode=ro查询错误与安全immutable冷读处理另留记录，未重跑产品测试或隐藏首异常。[清理](benchmarks/qingjian-fields/cleanup.json)、[收集说明](benchmarks/qingjian-fields/collection-notes.json)。
+- **40帧签收/剩0；发布待验15=R01 4/R02 4/R03 3/R04 4，Goal active，未公开发布。** 下一步先按源码审计其余特殊输入的提交/关闭处理并合并等价路径，只补差异；本轮代表不扩为所有输入框或整个R01通过。真实AT/平台/有效前台性能和最终RC门禁仍依各项保留。禁止自动旁白/AT/切源/改系统缩放。QA93证据提交后显式--task93一次同步时间线。
 
 ## 最近完成进展（QA92，人工Mac验收与全屏背景修复）
 

@@ -1,0 +1,5 @@
+{
+  "initial_metadata_collection_error": "python3 has no PIL; import failed before any collection output or product action. Used native sips read-only image metadata instead; no install or product test repeat.",
+  "cold_read_error": "First post-stop mode=ro SELECT returned unable to open database file. No file modified. Verified Core exit0, UI PIDgone, owner501/db0600/dir0700 and absent WAL/SHM, then immutable readonly snapshot succeeded. Do not infer product corruption from collection failure.",
+  "first_guard_assertion": "Initial provider audit assertion retained as provider-fields-first-audit.json. Data equal; original save403 caused assertion. Human Test connection clarification preserved."
+}

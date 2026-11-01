@@ -1,0 +1,42 @@
+{
+  "batch": "QA93",
+  "basis": "User requests streamlined remaining tests, skips second Mac IME; source paths checked without product changes.",
+  "completed_human_group": [
+    "provider plain name",
+    "masked API Key",
+    "API URL"
+  ],
+  "next": [
+    "upstream model ID: distinct model-editor cancel scope",
+    "provider search: local filtering with no submit",
+    "one model numeric limit: shared scalar parsing and editor cancel scope"
+  ],
+  "not_repeated": [
+    "model display name (QA92)",
+    "another Mac Chinese IME (waived)",
+    "each duplicate numeric field",
+    "existing Unicode undo/redo and invalid-number validation",
+    "Mac fullscreen/minimize/hover/column drag",
+    "40 accepted frames and 21 theme-language combinations"
+  ],
+  "limitations": [
+    "No field-by-field candidate frames for first group; overall user report only.",
+    "First save403 retained, consistent with user-reported Test connection; connection test did not complete.",
+    "A scalar numeric representative does not prove every context-list/date/price input or platform; separate requirements stay explicit."
+  ],
+  "source_basis": [
+    {
+      "file": "gpui/src/ui.rs",
+      "evidence": "Common input helper and provider-search Change-only subscription; no Enter handler in that subscription."
+    },
+    {
+      "file": "gpui/src/model_options.rs",
+      "evidence": "Four limits created by std::array::from_fn using InputState::new; scalar limits read through number(); context list has additional splitting semantics."
+    },
+    {
+      "file": "gpui/src/ui/model_editor.rs",
+      "evidence": "Shared numeric rendering and model editor focus/cancel scope."
+    }
+  ],
+  "not_acceptance": true
+}

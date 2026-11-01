@@ -2,11 +2,11 @@
   "version": 2,
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-11-01",
-  "state": "blocked",
+  "state": "active",
   "current_batch": "R01",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 92,
+  "historical_tasks": 93,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -785,8 +785,8 @@
           "id": "R01.3",
           "title": "中文IME、Unicode与编辑撤销",
           "acceptance": "pending",
-          "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。 QA81官方v056/057真实Core产生中文/emoji/组合重音配置、价格和12历史，当前CI包冷交接保留原字段与配置字节，原生UI可读。没有新composition/输入源切换，不当逐引擎IME补验。 QA92在dd9/0.6当前Mac模型显示名称用青简输入法，用户报告输入你好、全选替换、Esc取消、候选状态Enter只落字且弹窗保留，底部取消正常；取消后原JPEG/AX显示无壳/遮罩、原模型长名，Core配置和12条请求成本退出后保持。无候选/Enter原帧，人工报告单列，不自动切源。 2026-11-01用户明确“不用测试另外一种输入法了，跳过”：取消当前Mac第二种中文输入法交叉验证要求，保留已有青简结果；这是用户范围决定，不是另一输入法测试通过。",
-          "remaining": "按用户2026-11-01决定，跳过当前Mac另一种中文输入法交叉验证，不再等待或要求切换。已有青简模型显示名称主路径保留；尚未覆盖字段的真实composition Enter/Esc及取消仍按实际条件处理，不把paste/undo或单字段报告扩展为全部字段通过。跨平台原生输入仍由R02按其范围核对，安全Key不从AX猜值；禁止自动切输入源。",
+          "completed": "当前Qingjian逐键nihao产生真实marked text，Space落字你好，第一Esc取消合成、第二Esc关编辑器；Return落ASCII nihao未误确认。名称/模型/URL/Key/搜索/备注Unicode撤销重做和非法数字校验已抽查。模型名中文/emoji/组合字符一次保存，由独立Core/UI冷读逐码点一致，恢复原名后16条历史及成本保持。 QA81官方v056/057真实Core产生中文/emoji/组合重音配置、价格和12历史，当前CI包冷交接保留原字段与配置字节，原生UI可读。没有新composition/输入源切换，不当逐引擎IME补验。 QA92在dd9/0.6当前Mac模型显示名称用青简输入法，用户报告输入你好、全选替换、Esc取消、候选状态Enter只落字且弹窗保留，底部取消正常；取消后原JPEG/AX显示无壳/遮罩、原模型长名，Core配置和12条请求成本退出后保持。无候选/Enter原帧，人工报告单列，不自动切源。 2026-11-01用户明确“不用测试另外一种输入法了，跳过”：取消当前Mac第二种中文输入法交叉验证要求，保留已有青简结果；这是用户范围决定，不是另一输入法测试通过。 QA93复用855/f756 UI与dd9/b920 Core，用户报告供应商名称/掩码Key/API地址整组及上游模型ID的青简候选Esc/Enter与取消正常；原图只独立确认取消后原值，不虚构逐字段候选。用户出门后授权代理继续：CUA真实逐键搜索与最大输出tokens代表，预编辑ni'hao经Esc消失；数字原图见下划线，Enter实际落ASCII nihao且modal保留，取消后原模型/ID/已保存恢复，不称中文候选落字通过。唯一save403保留，用户补充点过测试连接，与test()先save路径相符；后续无新增变更请求，冷读config/models字节及5业务表全字段相同、2请求/成本保持。",
+          "remaining": "当前Mac另一种中文输入法按用户要求跳过，不再要求切换。当前青简显示名称、供应商三字段、上游ID以及搜索/数字代表已有分层证据，不重复；先按源码合并其余不同提交/关闭处理的特殊路径，再仅补实际缺口，不能将代表或ASCII Enter扩称所有字段中文候选提交通过。跨平台原生输入仍由R02核对，安全Key不从AX猜值；禁止自动切源/开启AT。",
           "acceptance_check": "在所用输入法下，合成未提交时不误保存/关闭；字符串往返不损坏；不自动切换输入源，CUA typeText不冒充IME。当前Mac另一种中文输入法交叉验证按用户要求跳过，不计为测试通过。",
           "history_tasks": [
             46,
@@ -795,7 +795,8 @@
             75,
             76,
             81,
-            92
+            92,
+            93
           ],
           "waived_requirements": [
             {
