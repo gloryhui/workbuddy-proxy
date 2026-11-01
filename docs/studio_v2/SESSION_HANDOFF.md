@@ -2,7 +2,15 @@
 
 此前用户要求暂停并换会话；2026-11-01已按本轮明确请求恢复Goal为active，仍从R01推进。恢复动作已核对Git/远端/独立Goal；禁止自动开启旁白。以下旧轮证据保留原来源，不能混称当前候选。
 
-## 最新进展（QA82）
+## 最新进展（QA83）
+
+- 新增真实包冷回滚：test `70712b8`，runtime 仍 `9570451`；Windows/ARM/Intel × v0.5.6/v0.5.7 共 6 例升级后恢复原程序与完整旧 profile，首次 CI `41256459894` 三 job 全部 success。旧 schema6/11、配置/Key 字节及原12有价记录保持，旧 Core 恢复后可新录有价行；候选第13条只在独立保留目录中，保留目录与升级前备份均逐文件字节未变。[QA83](benchmarks/rc-round83-summary.json)、[六例核对](benchmarks/cold-rollback/ci/validation.json)。
+- Windows 使用候选 uninstaller 后原 setup 同路径重装，原244/16文件SHA、版本、注册/快捷方式一致；两Mac保留候选app、恢复原app并核对全树/签名。候选已装GUI生命周期通过，回滚后只验旧Core，不冒称旧GUI/物理输入/热降级/历史自动合并/WorkBuddy会话回退。直接CLI每例3个Core全部0/waited，nativehost0、其子进程仅PIDgone证明。原Desktop全构建故意skipped，不称新的Core全矩阵。
+- 本机最初两次在旧Core退出0后、替换前的cold readonly查询失败，报告原样保留。发现SQLite上下文未显式close并修复，确定性回归已验；closing单独未解决故障。独立冷WAL副本复现RO CANTOPEN而immutable可读；现仅已停/无活跃元数据且WAL空或不存在时immutable，运行中仍普通RO，非空WAL/活跃marker明确拒绝。最终本机ARM两例与CI六例通过，不归因产品迁移错误。[诊断](benchmarks/cold-rollback/readonly-wal-diagnostic.json)。
+- [备份与冷回滚步骤](UPGRADE_ROLLBACK.md)已加入README链接，原包URL/SHA固定；正式版本、changelog、公开截图与最终分发包仍缺，**R04.4继续pending，全部发布待验14项；剩余界面0/40，Goal active。** 其余R01/R02/R03缺口不因回滚通过而豁免。
+- 全部本机进程/挂载结束；精确清理本轮`studio-v2-cold-rollback.5eng36js`694文件/301子目录、607,038,996B约578.92MiB，专用临时0，系统盘约33.86GiB。三runner各清理0，合计815,012,981B不计入本机释放。必要基线50,905,007B/共享Cargo/非本轮preview保留。**不要重开已删除bundle；禁止自动开启旁白、系统辅助功能或切输入源。**[清理](benchmarks/cold-rollback/cleanup.json)。
+
+## 上一轮进展（QA82）
 
 - **R04.2真实安装/覆盖升级/卸载已签收，发布pending15→14。** 实际Windows旧setup→候选setup同一Unicode自选目录覆盖、Mac真实DMG app同路径整体替换（旧app留自有备份）；旧版在安装前已写12有价行、价格、731天/OBSERVE与Unicode配置。v056/schema6与v057/schema11×Win/ARM/Intel 6例首轮通过，安装本身保持旧数据、当前schema11新增第13有价行、已装GUI生命周期后全13字段及配置Key字节仍同，卸载保持外部profile。[QA82总结](benchmarks/rc-round82-summary.json)、[逐项验收](benchmarks/installed-upgrade/acceptance-audit.json)。
 - 测试代码98f2212/0a355e8，运行时代码仍957。冻结三平台包来自原CI41246381635，未编译/修改Core/GPUI/packaging或正式版本。已有desktop手动upgrade_only→同提交reusable矩阵，run41254168866绑定0a355；Intel124693699432/ARM124693699544/Windows124693699610全部success，常规desktop全构建故意skipped，不能称新全Core矩阵。[原始报告与校验](benchmarks/installed-upgrade/ci/validation.json)。

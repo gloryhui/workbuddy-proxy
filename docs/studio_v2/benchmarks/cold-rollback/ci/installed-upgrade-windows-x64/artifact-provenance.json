@@ -1,0 +1,109 @@
+{
+  "id": 13062971813,
+  "name": "installed-upgrade-windows-x64",
+  "bytes": 31861,
+  "sha256": "959e6eded1f5b7e0304d240fd822ac00bb28dc22b6b8fac617464d5ec8eda49f",
+  "source": "70712b82b2a37cb1c3d08cb69587675dd7e95aa7",
+  "members": [
+    {
+      "path": "cleanup.json",
+      "bytes": 510,
+      "sha256": "d90fb4d26027926b63eb82162f88b5cc2c399145641ffddd12914dca7bb7b6bb"
+    },
+    {
+      "path": "logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "dbd813bd402d0053f84298e0c89c5c45c2c5dd3faab54e1b3876b0a8f4839019"
+    },
+    {
+      "path": "logs/v0.5.6/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "7652110f123175d1f68bd0b925d7ce5abef2eafa691aa80e1545de5f9a09b5f9"
+    },
+    {
+      "path": "logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "da1682f682bfa0d1c93d224655234c2301c9314b64192d50a2018bb79333169b"
+    },
+    {
+      "path": "logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "da1682f682bfa0d1c93d224655234c2301c9314b64192d50a2018bb79333169b"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "da1682f682bfa0d1c93d224655234c2301c9314b64192d50a2018bb79333169b"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "da1682f682bfa0d1c93d224655234c2301c9314b64192d50a2018bb79333169b"
+    },
+    {
+      "path": "logs/v0.5.6/released-install.log.txt",
+      "bytes": 110972,
+      "sha256": "4afe8909b44b70d0bbb6e6dd7896a8b03191340b5fe9710deea06ed4bb7f3279"
+    },
+    {
+      "path": "logs/v0.5.6/rollback-released-install.log.txt",
+      "bytes": 110981,
+      "sha256": "535119b14d2d9bbf6e8e1e4775609645c6abef1aba2193dc3a6facb06f4f3b31"
+    },
+    {
+      "path": "logs/v0.5.7/candidate-install.log.txt",
+      "bytes": 12822,
+      "sha256": "bb476730eceaf3c0e30c47f4163e00d56c31debf758831980bb2f12e3adbe213"
+    },
+    {
+      "path": "logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "3c466a654f78b8c0de7057aa99ce8228fcdeb45d6051a0ecaa436fcbb8aa5b9b"
+    },
+    {
+      "path": "logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "3c466a654f78b8c0de7057aa99ce8228fcdeb45d6051a0ecaa436fcbb8aa5b9b"
+    },
+    {
+      "path": "logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "3c466a654f78b8c0de7057aa99ce8228fcdeb45d6051a0ecaa436fcbb8aa5b9b"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "3c466a654f78b8c0de7057aa99ce8228fcdeb45d6051a0ecaa436fcbb8aa5b9b"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 41,
+      "sha256": "3c466a654f78b8c0de7057aa99ce8228fcdeb45d6051a0ecaa436fcbb8aa5b9b"
+    },
+    {
+      "path": "logs/v0.5.7/released-install.log.txt",
+      "bytes": 11495,
+      "sha256": "c47bb59058c5d154ae3a667545fff7d480ecd6f4360e12412c600811ba2d160b"
+    },
+    {
+      "path": "logs/v0.5.7/rollback-released-install.log.txt",
+      "bytes": 11504,
+      "sha256": "adf3e91b63f4c8f4657b1f64efe5c6f60ebe6882a1ecd81d1c3f4175691448b8"
+    },
+    {
+      "path": "report.json",
+      "bytes": 11276,
+      "sha256": "9c1a932ca41405a36d76c93a96d368f7cc6378d9b21ff4149ca3d233ee146a27"
+    },
+    {
+      "path": "v0.5.6.json",
+      "bytes": 4678,
+      "sha256": "b87efd67a80c46d92219a3f2d13c82829978d4b09f272d3713f90d23ed9588ff"
+    },
+    {
+      "path": "v0.5.7.json",
+      "bytes": 4416,
+      "sha256": "66313f04dc9c4198f03954514ececea6e4a4de7d3f63809d4a31d7246dcb18ad"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "source": "70712b82b2a37cb1c3d08cb69587675dd7e95aa7",
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "run_id": 41256459894,
+  "run_attempt": 1,
+  "three_jobs_success": true,
+  "standard_desktop_build": "intentionally skipped; not a new full Core/build matrix",
+  "cases": [
+    {
+      "platform": "macos-arm64",
+      "old_version": "0.5.6",
+      "restored_schema": 6,
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 7,
+        "backup_bytes": 263594,
+        "backup_tree_sha256": "da06418e442d325df692bb8bfc0adc239a98a8258e0b762505c9ecddf48a8bc2",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 6,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "package_rollback": {
+        "method": "Retain candidate app, restore verified original app at identical path",
+        "all_old_resources_and_links_equal": true,
+        "version": "0.5.6",
+        "candidate_app_retained": true,
+        "Finder_interaction_not_performed": true
+      },
+      "three_owned_CLI_Core_children_0_waited": true,
+      "candidate_native_host_0_children_PIDs_gone": true,
+      "candidate_13_data_preserved_after_GUI": true
+    },
+    {
+      "platform": "macos-arm64",
+      "old_version": "0.5.7",
+      "restored_schema": 11,
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 7,
+        "backup_bytes": 476586,
+        "backup_tree_sha256": "020a52c3fdf6917b735ec6328013f82b69a127ccc41acbb302819e0fe90104f3",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 11,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "package_rollback": {
+        "method": "Retain candidate app, restore verified original app at identical path",
+        "all_old_resources_and_links_equal": true,
+        "version": "0.5.7",
+        "candidate_app_retained": true,
+        "Finder_interaction_not_performed": true
+      },
+      "three_owned_CLI_Core_children_0_waited": true,
+      "candidate_native_host_0_children_PIDs_gone": true,
+      "candidate_13_data_preserved_after_GUI": true
+    },
+    {
+      "platform": "macos-x64",
+      "old_version": "0.5.6",
+      "restored_schema": 6,
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 7,
+        "backup_bytes": 263593,
+        "backup_tree_sha256": "bf49bdac8a97160a85696be4737706d69175056de5a14dd5eebe806d8b79e11f",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 6,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "package_rollback": {
+        "method": "Retain candidate app, restore verified original app at identical path",
+        "all_old_resources_and_links_equal": true,
+        "version": "0.5.6",
+        "candidate_app_retained": true,
+        "Finder_interaction_not_performed": true
+      },
+      "three_owned_CLI_Core_children_0_waited": true,
+      "candidate_native_host_0_children_PIDs_gone": true,
+      "candidate_13_data_preserved_after_GUI": true
+    },
+    {
+      "platform": "macos-x64",
+      "old_version": "0.5.7",
+      "restored_schema": 11,
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 7,
+        "backup_bytes": 476585,
+        "backup_tree_sha256": "f2c60e416d206d8191d34282ae359631730e43aa63746681dad9622ede21aa5f",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 11,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "package_rollback": {
+        "method": "Retain candidate app, restore verified original app at identical path",
+        "all_old_resources_and_links_equal": true,
+        "version": "0.5.7",
+        "candidate_app_retained": true,
+        "Finder_interaction_not_performed": true
+      },
+      "three_owned_CLI_Core_children_0_waited": true,
+      "candidate_native_host_0_children_PIDs_gone": true,
+      "candidate_13_data_preserved_after_GUI": true
+    },
+    {
+      "platform": "windows-x64",
+      "old_version": "0.5.6",
+      "restored_schema": 6,
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 6,
+        "backup_bytes": 263197,
+        "backup_tree_sha256": "34425a01f08b27e2654f33cc29a3fa01a3a7654d95db6439acfd92fc84c22b1d",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 6,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "package_rollback": {
+        "method": "Candidate uninstaller then verified original setup at identical path",
+        "old_package_files_equal": 244,
+        "version": "0.5.6",
+        "registration_and_shortcuts_restored": true,
+        "startup_remained_disabled": true
+      },
+      "three_owned_CLI_Core_children_0_waited": true,
+      "candidate_native_host_0_children_PIDs_gone": true,
+      "candidate_13_data_preserved_after_GUI": true
+    },
+    {
+      "platform": "windows-x64",
+      "old_version": "0.5.7",
+      "restored_schema": 11,
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 6,
+        "backup_bytes": 476189,
+        "backup_tree_sha256": "3aa4a3a688ac57d8eaf62642ba3b90c70c7c61421fd91f0e99c8de5888434305",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 11,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "package_rollback": {
+        "method": "Candidate uninstaller then verified original setup at identical path",
+        "old_package_files_equal": 16,
+        "version": "0.5.7",
+        "registration_and_shortcuts_restored": true,
+        "startup_remained_disabled": true
+      },
+      "three_owned_CLI_Core_children_0_waited": true,
+      "candidate_native_host_0_children_PIDs_gone": true,
+      "candidate_13_data_preserved_after_GUI": true
+    }
+  ],
+  "scope": "Six actual old-package restores after real upgrades; whole cold profile bytes/schema/config checked, old Core can price another request, candidate new data retained separately. No old GUI, user keyboard/IME, physical hardware, trust signing or final release claim."
+}

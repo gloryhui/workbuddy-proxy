@@ -1,0 +1,9 @@
+{
+  "purpose": "QA83 actual released-package rollback, synthetic profiles only",
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-cold-rollback.5eng36js",
+  "uid": 501,
+  "created_at": "2026-11-01T08:14:38.898260+08:00",
+  "creator_pid": 12200,
+  "project": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
+  "free_before_bytes": 36441182208
+}

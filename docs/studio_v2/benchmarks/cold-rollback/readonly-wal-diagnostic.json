@@ -1,0 +1,25 @@
+{
+  "Python": "3.9.6",
+  "SQLite": "3.43.2",
+  "before_any_readwrite_open": {
+    "mode_ro": "SQLITE_CANTOPEN while stopped WAL DB has no sidecars",
+    "as_uri_mode_ro": "same failure",
+    "readwrite": "schema6/table read succeeds; creates empty WAL + SHM"
+  },
+  "first_local_failures": [
+    "local/report.json",
+    "local-final/report.json"
+  ],
+  "resource_closing_fix": "Independent valid regression; did not resolve CANTOPEN. No unique product failure inferred.",
+  "isolated_cold_copy": {
+    "ro": {
+      "error": "unable to open database file"
+    },
+    "immutable": {
+      "schema": 6,
+      "rows": 12
+    }
+  },
+  "official_reference": "https://sqlite.org/wal.html#read_only_databases",
+  "policy": "Immutable only for explicitly stopped profiles with no nonempty WAL; live readers remain normal read-only. Never bypass an uncheckpointed WAL."
+}

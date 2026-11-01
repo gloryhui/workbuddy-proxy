@@ -6,7 +6,7 @@
   "current_batch": "R01",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
-  "historical_tasks": 82,
+  "historical_tasks": 83,
   "prerequisite": {
     "id": "P00",
     "title": "最新 Figma 基线核对",
@@ -984,7 +984,7 @@
           "id": "R03.4",
           "title": "Core全套契约与数据不变",
           "acceptance": "passed",
-          "completed": "QA80 13c修复启动前SQLite Busy/Locked使stats永久disabled：迁移态250ms可中断重试，永久/schema-too-new仍拒绝；recover/start_run/interval同事务原子提交。三项确定性红绿回归及真实启动前EXCLUSIVE7秒→释放后同PID ready/import1/12tokens/.1credit/两run各1interval通过。Core580本机测试/27命令/91源码hash、158导入/15故障/19发现/10创建及两既有GPUIignore实际Core补验通过；957最终Core+三平台CI均首次通过。真实longfixture1014请求与成本逐字段一致；原配置所有字段保留，四次允许language写序列化仅补64protocol+64settings+256capsnull共384既有默认字段，配置字节/原始结构并不相等。74b/771/7bec原始失败、无诊断限制、invalid首个probefixture均保留；不声称唯一归因历史CI。 QA81补真实已发布v056/schema6与v057/schema11包的Core→当前957CI Core冷交接：实际旧Core生成12条有价历史、手工价、731天与OBSERVE，schema6→11及11→11逐旧字段/配置字节保持，当前Core各新录第13条。小窗前后全13逐字段一致，原12对照旧版备份跨两native仍一致。此为macOSarm64新增证据，运行时代码未改。 QA82两真实旧版×三原生runner实际安装替换后12旧行/价格/非默认设置/Key配置保持，新13行计价且已装UI生命周期后不变。属于新增包级数据证据，未改运行时代码。",
+          "completed": "QA80 13c修复启动前SQLite Busy/Locked使stats永久disabled：迁移态250ms可中断重试，永久/schema-too-new仍拒绝；recover/start_run/interval同事务原子提交。三项确定性红绿回归及真实启动前EXCLUSIVE7秒→释放后同PID ready/import1/12tokens/.1credit/两run各1interval通过。Core580本机测试/27命令/91源码hash、158导入/15故障/19发现/10创建及两既有GPUIignore实际Core补验通过；957最终Core+三平台CI均首次通过。真实longfixture1014请求与成本逐字段一致；原配置所有字段保留，四次允许language写序列化仅补64protocol+64settings+256capsnull共384既有默认字段，配置字节/原始结构并不相等。74b/771/7bec原始失败、无诊断限制、invalid首个probefixture均保留；不声称唯一归因历史CI。 QA81补真实已发布v056/schema6与v057/schema11包的Core→当前957CI Core冷交接：实际旧Core生成12条有价历史、手工价、731天与OBSERVE，schema6→11及11→11逐旧字段/配置字节保持，当前Core各新录第13条。小窗前后全13逐字段一致，原12对照旧版备份跨两native仍一致。此为macOSarm64新增证据，运行时代码未改。 QA82两真实旧版×三原生runner实际安装替换后12旧行/价格/非默认设置/Key配置保持，新13行计价且已装UI生命周期后不变。属于新增包级数据证据，未改运行时代码。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained.",
           "remaining": "",
           "acceptance_check": "原配置和Key兼容，取消/失败/保存边界不回退，历史快照/导入去重不破坏；全部结果绑定最终提交。",
           "history_tasks": [
@@ -1001,7 +1001,8 @@
             79,
             80,
             81,
-            82
+            82,
+            83
           ]
         },
         {
@@ -1042,7 +1043,7 @@
           "id": "R04.1",
           "title": "最终提交CI全矩阵",
           "acceptance": "passed",
-          "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。",
+          "completed": "QA80最终9570451 Core41246370582、Desktop41246381635（arm124670578779/Intel124670578891/Windows124670578931）四job实际completed/success。Core158导入/15故障、三个包报告与4ZIP size/SHA核对，原始JSON与两Windows GDI PNG逐图保留，source均957。较早13c及b2也各四job成功，7bec Desktop现全绿但其Core156/2首次失败仍保留。一次SSL push失败后误dispatch了旧13c两重复run41244232391/41244235522，核实实际head后取消自有重复run，正常push/remote校验后才正确dispatch b2/957；未绕过TLS或重跑失败到绿。 QA81只新增独立真实旧版数据验证脚本/报告，运行时代码仍957；未新派发CI，不把本机arm64升级测试说成新全矩阵通过。 QA82新增只运行升级的手动分支：0a355测试源码验证冻结957包；原Desktop全构建job故意skipped，3个升级job首轮success，不冒称新一次Core全矩阵。完整运行时代码仍957，原四job证据保持。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained.",
           "remaining": "",
           "acceptance_check": "Core+三平台工作流实际终态通过；待排队/无run/仅本地检查均不标绿；所有报告与候选SHA一致。",
           "history_tasks": [
@@ -1050,14 +1051,15 @@
             79,
             80,
             81,
-            82
+            82,
+            83
           ]
         },
         {
           "id": "R04.2",
           "title": "DMG/ZIP/EXE安装升级卸载",
           "acceptance": "passed",
-          "completed": "QA82真实三平台旧包安装/覆盖升级/卸载签收：测试源码0a355、运行时仍957；官方v056(schema6)/v057(schema11)先通过真实旧Core写12有价行/手工价/731天/OBSERVE/Unicode与配置Key，再关闭旧Core、实际Windows旧setup→候选setup同一Unicode自选目录覆盖或Mac只读DMG app同路径整体替换（不是Finder拖动）。安装本身保持旧DBschema/业务字段/配置字节，候选schema11新录第13有价行；已安装host/Core/GPUI真实打开、关闭留同Core、重开新UI、正常退出，之后全13业务字段与配置字节仍同。Windows包全部portable文件SHA/版本/x64/注册/快捷方式正确；卸载移除文件/注册/快捷方式且不启用登录启动，外部数据保持。Mac所有资源/链接一致、两bundle strict签名和架构/版本正确，移除已装app而外部数据保持。原run41254168866 Intel124693699432/ARM124693699544/Windows124693699610均首轮success；6例原报告与3ZIP digest核验，三remotefixture清理0。直接CLI Core0/waited，nativehost0，host拥有的Core/UI退出码未知但OSPIDgone与3normal run已证。限冷升级/隔离自选外部profile，不当热更新、FinderTrash/Gatekeeper/SmartScreen/像素键盘/物理设备验收；回滚与最终分发仍R04.4/.5。旧sameversion stub/lifecycle及QA81冷交接按原scope保留，不替代本轮真实安装步骤。",
+          "completed": "QA82真实三平台旧包安装/覆盖升级/卸载签收：测试源码0a355、运行时仍957；官方v056(schema6)/v057(schema11)先通过真实旧Core写12有价行/手工价/731天/OBSERVE/Unicode与配置Key，再关闭旧Core、实际Windows旧setup→候选setup同一Unicode自选目录覆盖或Mac只读DMG app同路径整体替换（不是Finder拖动）。安装本身保持旧DBschema/业务字段/配置字节，候选schema11新录第13有价行；已安装host/Core/GPUI真实打开、关闭留同Core、重开新UI、正常退出，之后全13业务字段与配置字节仍同。Windows包全部portable文件SHA/版本/x64/注册/快捷方式正确；卸载移除文件/注册/快捷方式且不启用登录启动，外部数据保持。Mac所有资源/链接一致、两bundle strict签名和架构/版本正确，移除已装app而外部数据保持。原run41254168866 Intel124693699432/ARM124693699544/Windows124693699610均首轮success；6例原报告与3ZIP digest核验，三remotefixture清理0。直接CLI Core0/waited，nativehost0，host拥有的Core/UI退出码未知但OSPIDgone与3normal run已证。限冷升级/隔离自选外部profile，不当热更新、FinderTrash/Gatekeeper/SmartScreen/像素键盘/物理设备验收；回滚与最终分发仍R04.4/.5。旧sameversion stub/lifecycle及QA81冷交接按原scope保留，不替代本轮真实安装步骤。 QA83 adds real package/full-profile cold rollback evidence on3platforms x2oldversions with frozen957 runtime. No new runtime build/full Core matrix; original scope retained.",
           "remaining": "",
           "acceptance_check": "包内Core/UI架构/版本/资源一致；旧配置/Key/用量数据按既有约定保留；无残留在用进程。",
           "history_tasks": [
@@ -1065,7 +1067,8 @@
             79,
             80,
             81,
-            82
+            82,
+            83
           ]
         },
         {
@@ -1083,11 +1086,12 @@
           "id": "R04.4",
           "title": "版本、说明、截图与回滚包",
           "acceptance": "pending",
-          "completed": "当前项目版本0.5.7和历史QA/截图/矩阵存在，不能据此推断新的正式版本号。 QA78以b167/74b/2da分别保留源码、原始截图、候选/包/报告哈希与失败来源；尚未指定新正式版本、替换公开README截图或公开发布，回滚与最终下载包审查仍待。 另保留2da两张原始WindowsPNG的隐私/内容/hash审查，均合成fixture，未自动替换公开README截图。",
-          "remaining": "确定正式版本与变更说明，更新安装/已知限制文档；审查80帧证据和代表性公开截图，准备旧包/配置回滚步骤。",
+          "completed": "当前项目版本0.5.7和历史QA/截图/矩阵存在，不能据此推断新的正式版本号。 QA78以b167/74b/2da分别保留源码、原始截图、候选/包/报告哈希与失败来源；尚未指定新正式版本、替换公开README截图或公开发布，回滚与最终下载包审查仍待。 另保留2da两张原始WindowsPNG的隐私/内容/hash审查，均合成fixture，未自动替换公开README截图。 QA83 test70712b8/runtime957: actual v056/v057 x Windows/ARM/Intel full cold backup and package restore passed6/6 in first CI run41256459894. Whole profile byte-equal before old launch; old schema6/11, prices/settings/config preserved; old Core prices a new request. Candidate13 data remains independently byte-equal, not merged. UPGRADE_ROLLBACK.md and README link added, original package URLs/SHA pinned. Two initial local RO-WAL harness failures retained; explicit connection close and guarded cold immutable reader validated, local ARM2/2 final PASS. No runtime/UI change or final release claim.",
+          "remaining": "Finalize formal version and changelog, audit representative public screenshots and bind final distributable packages/checksums. QA83 proves actual original-package/full-profile cold restoration6/6, not live downgrade, old GUI, WorkBuddy models/session restore or history merge; final release gate remains pending.",
           "acceptance_check": "版本一致、可下载包SHA完整；公开图为合成隔离数据且无Key；文档命令可移植，回滚路径可执行。",
           "history_tasks": [
-            78
+            78,
+            83
           ]
         },
         {

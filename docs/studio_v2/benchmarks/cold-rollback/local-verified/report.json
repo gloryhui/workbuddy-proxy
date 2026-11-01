@@ -1,0 +1,853 @@
+{
+  "result": "PASS",
+  "platform": "macos-arm64",
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "candidate_run_id": 41246381635,
+  "artifact_id": 13060775696,
+  "script_sha256": "ee52aeaf6a2a50b222675b6655d1017a173e381a20f831b0345abdecaa2ec7a1",
+  "data_script_sha256": "4f8e043c184e4c0ab06054a4ddb02f01000716ae10d30b474ed70e74dd32bec3",
+  "verify_rollback": true,
+  "fixture": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-cold-rollback.5eng36js/local-verified",
+  "cases": [
+    {
+      "old_version": "0.5.6",
+      "old_package_sha256": "3f69340b21b3050541ca69e53172427723d1cbdfbf6c0e30ac3eb289a46593f1",
+      "old_package_size": 17067713,
+      "result": "PASS",
+      "old_package": {
+        "core_sha256": "ee82dfa1f837c2cd3ec5bdb882d0ffca1ee19ef492bb7fa9c8cb6df3abedf0e5",
+        "ui_sha256": "0c17c88ae6e837c5c9465eab62cd827d51594f443800af112ee57417a7b71cbb",
+        "strict_signatures": true,
+        "version": "0.5.6",
+        "architecture": "macos-arm64"
+      },
+      "old_exe_sha256": "ee82dfa1f837c2cd3ec5bdb882d0ffca1ee19ef492bb7fa9c8cb6df3abedf0e5",
+      "candidate_package": {
+        "core_sha256": "d150bd325cfa85acfc9bda40015172e8c02ce234b4649290a1acaf53937e674a",
+        "ui_sha256": "63d64ecd770ee5909f0452d47743a3debe41f785071e502a48205940522e0f92",
+        "strict_signatures": true,
+        "version": "0.5.7",
+        "architecture": "macos-arm64"
+      },
+      "health": {
+        "released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 10,
+          "ready": true,
+          "version": "0.5.6"
+        },
+        "candidate": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.5.7"
+        },
+        "rollback-released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 10,
+          "ready": true,
+          "version": "0.5.6"
+        }
+      },
+      "kernel_protection": {
+        "released": {
+          "enforced": true,
+          "pid": 14280,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O"
+        },
+        "candidate": {
+          "enforced": true,
+          "pid": 14289,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O"
+        },
+        "rollback-released": {
+          "enforced": true,
+          "pid": 14294,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O"
+        }
+      },
+      "children": [
+        {
+          "label": "released",
+          "pid": 14280,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "candidate",
+          "pid": 14289,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "rollback-released",
+          "pid": 14294,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        }
+      ],
+      "replacement": {
+        "method": "Actual DMG app bundle replaced at identical install path",
+        "previous_app_renamed_as_owned_backup": true,
+        "legacy_12_rows_existed_before_replacement": true,
+        "all_candidate_resources_and_links_equal": true,
+        "Finder_drag_not_performed": true
+      },
+      "installation_preserved_legacy_data_before_candidate_start": true,
+      "candidate_exe_sha256": "d150bd325cfa85acfc9bda40015172e8c02ce234b4649290a1acaf53937e674a",
+      "old_schema": 6,
+      "candidate_schema": 11,
+      "preserved_tables": {
+        "usage_requests": 12,
+        "usage_costs": 12,
+        "stats_model_prices": 1,
+        "stats_settings": 1,
+        "stats_provider_settings": 1
+      },
+      "candidate_new_columns": {
+        "usage_requests": [
+          "record_origin",
+          "time_basis",
+          "total_tokens_derived",
+          "workbuddy_credit_nanos"
+        ],
+        "usage_costs": [],
+        "stats_model_prices": [],
+        "stats_settings": [
+          "workbuddy_import_enabled",
+          "workbuddy_last_full_scan_ms",
+          "workbuddy_mapping_revision",
+          "workbuddy_namespace_id"
+        ],
+        "stats_provider_settings": []
+      },
+      "all_legacy_business_fields_equal": true,
+      "config_byte_equal": true,
+      "config_sha256": "fbcced26f02d197d49cc28113761990e43d271bc1128af93edf57bc8ad00ca25",
+      "legacy_snapshot_sha256": "ac526aa06c51eae62eefd3f33cade9aafa24a292b10d35d06ddfe3cb41452a59",
+      "legacy_cost_per_request_nanos": 2800000,
+      "candidate_new_request_priced": true,
+      "package_rollback": {
+        "method": "Retain candidate app, restore verified original app at identical path",
+        "all_old_resources_and_links_equal": true,
+        "version": "0.5.6",
+        "candidate_app_retained": true,
+        "Finder_interaction_not_performed": true
+      },
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 9,
+        "backup_bytes": 296291,
+        "backup_tree_sha256": "22580d2761eb3ff49f80b6dad23b778c5b0bd855dd1eda423e8290540a05e182",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 6,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "candidate_recorded_new_request": true,
+      "legacy_rows_equal_after_candidate_shutdown": true,
+      "scope": "Real released Core schema/data \u2192 candidate Core, cold handover in same isolated profile. Optional package/lifecycle/backup-restoration callbacks are separately reported. No live-upgrade, database downgrade/history merge, or universal compatibility claim.",
+      "installed_lifecycle": "Not run locally: delegated computer use is separate",
+      "uninstall": {
+        "method": "Removed only the verified installed app bundle",
+        "installed_path_absent": true,
+        "external_config_bytes_and_all_business_fields_preserved": true,
+        "Finder_Trash_interaction_not_performed": true
+      }
+    },
+    {
+      "old_version": "0.5.7",
+      "old_package_sha256": "eda360615fa080d949c1d4f7c0ba695d04f5dc4445a686a4a4915c5c281d0441",
+      "old_package_size": 15074200,
+      "result": "PASS",
+      "old_package": {
+        "core_sha256": "085e75127bfda7f2fc7a4f4ce7f8d3450e67f1eb4af558ecb2d3b9d358ad440e",
+        "ui_sha256": "41ae28c85f059f9f91cd937f9cd7214b7e01e75b5b59d77ef0053b2c655871d4",
+        "strict_signatures": true,
+        "version": "0.5.7",
+        "architecture": "macos-arm64"
+      },
+      "old_exe_sha256": "085e75127bfda7f2fc7a4f4ce7f8d3450e67f1eb4af558ecb2d3b9d358ad440e",
+      "candidate_package": {
+        "core_sha256": "d150bd325cfa85acfc9bda40015172e8c02ce234b4649290a1acaf53937e674a",
+        "ui_sha256": "63d64ecd770ee5909f0452d47743a3debe41f785071e502a48205940522e0f92",
+        "strict_signatures": true,
+        "version": "0.5.7",
+        "architecture": "macos-arm64"
+      },
+      "health": {
+        "released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.5.7"
+        },
+        "candidate": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.5.7"
+        },
+        "rollback-released": {
+          "app": "workbuddy-proxy",
+          "control_protocol": 12,
+          "ready": true,
+          "version": "0.5.7"
+        }
+      },
+      "kernel_protection": {
+        "released": {
+          "enforced": true,
+          "pid": 14380,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O"
+        },
+        "candidate": {
+          "enforced": true,
+          "pid": 14393,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O"
+        },
+        "rollback-released": {
+          "enforced": true,
+          "pid": 14401,
+          "sandboxed": true,
+          "protected_permissions": {
+            "workbuddy": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_macos": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "proxy_unix": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            },
+            "installed_app": {
+              "file-read-data": [
+                1,
+                1
+              ],
+              "file-write-data": [
+                1,
+                1
+              ],
+              "file-write-create": [
+                1,
+                1
+              ],
+              "file-write-unlink": [
+                1,
+                1
+              ]
+            }
+          },
+          "synthetic_permissions": {
+            "file-read-data": 0,
+            "file-write-data": 0,
+            "file-write-create": 0,
+            "file-write-unlink": 0
+          },
+          "protected_root_exists": {
+            "workbuddy": true,
+            "proxy_macos": true,
+            "proxy_unix": false,
+            "installed_app": true
+          },
+          "method": "sandbox_check permission queries, no protected file I/O"
+        }
+      },
+      "children": [
+        {
+          "label": "released",
+          "pid": 14380,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "candidate",
+          "pid": 14393,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        },
+        {
+          "label": "rollback-released",
+          "pid": 14401,
+          "exit_code": 0,
+          "waited": true,
+          "shutdown_error": null
+        }
+      ],
+      "replacement": {
+        "method": "Actual DMG app bundle replaced at identical install path",
+        "previous_app_renamed_as_owned_backup": true,
+        "legacy_12_rows_existed_before_replacement": true,
+        "all_candidate_resources_and_links_equal": true,
+        "Finder_drag_not_performed": true
+      },
+      "installation_preserved_legacy_data_before_candidate_start": true,
+      "candidate_exe_sha256": "d150bd325cfa85acfc9bda40015172e8c02ce234b4649290a1acaf53937e674a",
+      "old_schema": 11,
+      "candidate_schema": 11,
+      "preserved_tables": {
+        "usage_requests": 12,
+        "usage_costs": 12,
+        "stats_model_prices": 1,
+        "stats_settings": 1,
+        "stats_provider_settings": 1
+      },
+      "candidate_new_columns": {
+        "usage_requests": [],
+        "usage_costs": [],
+        "stats_model_prices": [],
+        "stats_settings": [],
+        "stats_provider_settings": []
+      },
+      "all_legacy_business_fields_equal": true,
+      "config_byte_equal": true,
+      "config_sha256": "e89d2cf5ed35dcc8cf36f3900a29d5b1356f9683790feff6b648bd14e4e8a6e0",
+      "legacy_snapshot_sha256": "fe2083f03002838684cc081e920aed2ab612d36b3c139e633f40eb8600cd2e60",
+      "legacy_cost_per_request_nanos": 2800000,
+      "candidate_new_request_priced": true,
+      "package_rollback": {
+        "method": "Retain candidate app, restore verified original app at identical path",
+        "all_old_resources_and_links_equal": true,
+        "version": "0.5.7",
+        "candidate_app_retained": true,
+        "Finder_interaction_not_performed": true
+      },
+      "rollback": {
+        "result": "PASS",
+        "method": "Restore exact pre-upgrade cold profile and actual old package",
+        "backup_files": 9,
+        "backup_bytes": 509283,
+        "backup_tree_sha256": "49ce610d0ec8a5db817d955abc6d707b561aa3d5268b39e027251f525f6fad6f",
+        "entire_profile_restored_byte_equal_before_launch": true,
+        "restored_schema": 11,
+        "restored_requests": 12,
+        "config_and_keys_byte_equal": true,
+        "old_package_recorded_new_priced_request": true,
+        "original_12_business_rows_preserved": true,
+        "upgraded_13_row_profile_retained_byte_equal": true,
+        "candidate_new_request_not_merged_into_old_profile": true,
+        "pre_upgrade_backup_still_byte_equal": true,
+        "old_package_GUI_not_exercised": true,
+        "scope": "Cold backup restoration, not database downgrade or history merge. Post-backup records remain only in the retained candidate profile."
+      },
+      "candidate_recorded_new_request": true,
+      "legacy_rows_equal_after_candidate_shutdown": true,
+      "scope": "Real released Core schema/data \u2192 candidate Core, cold handover in same isolated profile. Optional package/lifecycle/backup-restoration callbacks are separately reported. No live-upgrade, database downgrade/history merge, or universal compatibility claim.",
+      "installed_lifecycle": "Not run locally: delegated computer use is separate",
+      "uninstall": {
+        "method": "Removed only the verified installed app bundle",
+        "installed_path_absent": true,
+        "external_config_bytes_and_all_business_fields_preserved": true,
+        "Finder_Trash_interaction_not_performed": true
+      }
+    }
+  ],
+  "candidate_archive_verified": {
+    "platform": "macos-arm64",
+    "id": 13060775696,
+    "bytes": 38304358,
+    "sha256": "e912e02066c4f751e9367923faf0333b0631966c0c13caf01b9308a45d02ca79"
+  },
+  "candidate_packages": [
+    {
+      "name": "workbuddy-proxy-0.5.7-macos-arm64.dmg",
+      "sha256": "cdb2d0761e10cf4d58f9570ccf1de1288582af1d36390cca82d9b12e5579b386",
+      "bytes": 38381412
+    }
+  ],
+  "fixture_bytes_before_cleanup": 289707209
+}

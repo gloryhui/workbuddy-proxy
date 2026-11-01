@@ -1,0 +1,12 @@
+{
+  "source": "70712b82b2a37cb1c3d08cb69587675dd7e95aa7",
+  "remote_equal_before_dispatch": true,
+  "runtime_source": "9570451e5006e25118cb2cafa6b3da69353836da",
+  "workflow": "desktop.yml",
+  "inputs": {
+    "upgrade_only": true
+  },
+  "before": "2026-11-01T00:22:22.265993+00:00",
+  "run_id": 41256459894,
+  "url": "https://github.com/gloryhui/workbuddy-proxy/actions/runs/41256459894"
+}

@@ -1771,3 +1771,15 @@ $targetProcessId = (Get-Content -LiteralPath (Join-Path $demoConfig 'gpui.json')
 - 三runner清理原报告均removed/剩余0：Intel289,588,026B、ARM275,780,745B、Windows145,742,450B，合计711,111,221B在各自CI机器，非本机释放值。所有已知进程/挂载完成。依明确RunID/job/script ownership与临时边界、句柄/进程检查，仅清理各自可再生fixture，原始报告保留。
 - 本机专用根`studio-v2-installed-upgrade.2pamppmx`经完整父链/uid/realpath/无链接或嵌套mount/库存/lsof0/ps0及即时复核，精确非强制删除705文件/280子目录、623,689,644B约594.80MiB，专用临时0，系统盘约33.95GiB。共享Cargo/必要基线50,905,007B/非本轮preview未动。不要重启已删除bundle。[本机清理](benchmarks/installed-upgrade/cleanup.json)。
 - 没有开启旁白/辅助功能/切输入源，没有新UI运行时代码、正式版本号或公开发布。R04.2passed，其余14项仍按原要求推进；R01全状态/实际slot、真实列拖宽、逐引擎IME、真实AT与R03启动慢样本/焦点CPU/长驻留不因安装通过而签收。
+
+## 小功能 83：真实三平台完整备份冷回滚与旧包恢复（2026-11-01）
+
+- 测试代码`70712b8`新增`--verify-rollback`与真实旧包恢复回调，runtime仍957，未改Core/GPUI/打包/正式版本。候选先经过QA82同类实际升级及已装GUI生命周期，再冷恢复原程序与完整profile；不只恢复SQLite表、不把旧版直接指向新DB。[总结](benchmarks/rc-round83-summary.json)、[操作文档](UPGRADE_ROLLBACK.md)。
+- Windows实际卸载候选、以原setup同路径重装，v056原244文件/v057原16文件SHA及Core版本、注册和快捷方式保持；Mac将候选app留独立目录并恢复原app，完整资源/链接/strict签名与版本核对。恢复后旧Core三平台各两版本真实运行，不冒称旧GUI或Finder/物理键鼠验收。
+- 每例升级前真实旧Core写12条USD .0028请求/成本、手工USD2/8价格、731天/OBSERVE/Unicode配置，完整目录冷复制并逐文件/空目录核对。候选schema11新写第13条并运行已装GUI；回滚时当前目录整体保留，原目录从备份复制，启动前全树字节相同，schema6/11及全部旧业务/配置字节一致。旧Core可再录一条有价请求，原12保持；候选新增request_id没有混入旧目录，独立候选13行目录与备份原件字节均保持。没有数据库降级、自动合并或无损保留全部新历史的承诺。
+- 本机第一次与closing修正后的第二次均在旧Core退出0后冷RO读取报CANTOPEN、未替换包/启动候选；原报告保留。SQLite连接context不负责close已由确定性前后回归证实并修复，不能据此声称解决第二次失败。独立停止WAL副本普通RO/as_uri_RO失败，immutable读schema6/12行成功；现cold明确断言无活跃instance/GPUI/frontend且WAL不存在/空，才启immutable，运行中仍普通RO。非空WAL、活跃marker拒绝及最终显式close回归通过。[原始诊断](benchmarks/cold-rollback/readonly-wal-diagnostic.json)、[边界回归](benchmarks/cold-rollback/guard-validation.json)、[SQLite官方条件](https://sqlite.org/wal.html#read_only_databases)。
+- 最终本机ARM两例实际app/profile回滚通过，无本机GUI，源码SHA与70712b8一致，6个直接拥有Core均0/waited。只派发一次源码绑定CI run[41256459894](https://github.com/gloryhui/workbuddy-proxy/actions/runs/41256459894)，Windows124700556982/Intel124700557124/ARM124700557164均首次success；原Desktop全构建skipped，不当新完整Core矩阵。[原始报告与独立核对](benchmarks/cold-rollback/ci/validation.json)。每CI例3个直接CLI Core0/waited；候选nativehost0，host子Core/UI仅OS PIDgone与3normal run，不虚报不可得的退出码。
+- 三结果ZIP13062971813/13063915944/13062926915 digest/size与各原JSON/log逐字节核对，Windows源码仅Git LF→CRLF双SHA精确匹配，原JSON CRLF与UTF16 installer日志保留。首次本机失败按原scope保留，不重标PASS；没有CI失败重跑到绿。
+- 完整备份/原包SHA与URL、实际配置路径确认、完整退出、无覆盖恢复、候选新增历史独立保留、默认路径/WorkBuddy模型目录边界已写入UPGRADE_ROLLBACK并链接README。正式版本/changelog、代表性公开截图和最终固定分发包仍待，R04.4整项保持pending；仍剩0/40界面、14发布待验，Goal active。
+- 本机完整父链/owner/realpath/无链接或嵌套mount/库存/lsof0/ps0及即时预检后，精确非强制删除`studio-v2-cold-rollback.5eng36js`694文件/301目录、607,038,996B约578.92MiB；本轮临时0，系统盘约33.86GiB。必要基线50,905,007B/共享Cargo/非本轮preview保留。三runner分别清理ARM327,948,372B/Intel342,320,120B/Windows144,744,489B，合计815,012,981B在远端，均剩余0。[清理](benchmarks/cold-rollback/cleanup.json)。
+- 没有开启旁白、系统辅助功能或切输入源，没有公开发布。R01真实状态/slot/列拖宽/逐引擎IME/真实AT及R03慢marker/焦点CPU/长驻留结论仍缺，按现有能力继续，不重做40帧/21主题或重复无效拖动。

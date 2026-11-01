@@ -1,0 +1,48 @@
+{
+  "source": "70712b82b2a37cb1c3d08cb69587675dd7e95aa7",
+  "sources": [
+    {
+      "platform": "macos-arm64",
+      "file": "scripts/installed_upgrade_test.py",
+      "git_LF_sha256": "ee52aeaf6a2a50b222675b6655d1017a173e381a20f831b0345abdecaa2ec7a1",
+      "runner_file_sha256": "ee52aeaf6a2a50b222675b6655d1017a173e381a20f831b0345abdecaa2ec7a1",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "macos-arm64",
+      "file": "scripts/release_upgrade_test.py",
+      "git_LF_sha256": "4f8e043c184e4c0ab06054a4ddb02f01000716ae10d30b474ed70e74dd32bec3",
+      "runner_file_sha256": "4f8e043c184e4c0ab06054a4ddb02f01000716ae10d30b474ed70e74dd32bec3",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "macos-x64",
+      "file": "scripts/installed_upgrade_test.py",
+      "git_LF_sha256": "ee52aeaf6a2a50b222675b6655d1017a173e381a20f831b0345abdecaa2ec7a1",
+      "runner_file_sha256": "ee52aeaf6a2a50b222675b6655d1017a173e381a20f831b0345abdecaa2ec7a1",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "macos-x64",
+      "file": "scripts/release_upgrade_test.py",
+      "git_LF_sha256": "4f8e043c184e4c0ab06054a4ddb02f01000716ae10d30b474ed70e74dd32bec3",
+      "runner_file_sha256": "4f8e043c184e4c0ab06054a4ddb02f01000716ae10d30b474ed70e74dd32bec3",
+      "exact_checkout_transformation": "none"
+    },
+    {
+      "platform": "windows-x64",
+      "file": "scripts/installed_upgrade_test.py",
+      "git_LF_sha256": "ee52aeaf6a2a50b222675b6655d1017a173e381a20f831b0345abdecaa2ec7a1",
+      "runner_file_sha256": "87bb7af8493bd1f7804e9a72b7db36a6a46c363a243321ac3009c1b117c818fb",
+      "exact_checkout_transformation": "LFtoCRLF"
+    },
+    {
+      "platform": "windows-x64",
+      "file": "scripts/release_upgrade_test.py",
+      "git_LF_sha256": "4f8e043c184e4c0ab06054a4ddb02f01000716ae10d30b474ed70e74dd32bec3",
+      "runner_file_sha256": "7fb40e0b7f561e63379a19b5c56f5335f6cd94130fb6c4a3b7ed786e77633343",
+      "exact_checkout_transformation": "LFtoCRLF"
+    }
+  ],
+  "raw_reports_unchanged": true
+}

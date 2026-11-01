@@ -1,0 +1,79 @@
+{
+  "id": 13063915944,
+  "name": "installed-upgrade-macos-x64",
+  "bytes": 11296,
+  "sha256": "3ed2d2375fe3d89715472f5439dae67aade43a26d2929d795b6604adf5453393",
+  "source": "70712b82b2a37cb1c3d08cb69587675dd7e95aa7",
+  "members": [
+    {
+      "path": "logs/v0.5.6/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "f5101c948bd70c8a0da54b9dd34e3fdc718f6fab305270737f127f9b64b1df0a"
+    },
+    {
+      "path": "logs/v0.5.6/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b3c5e16b5c2e53b3ecd876a1f42ebf89a2430bdb2563350702cbd5a4b519639c"
+    },
+    {
+      "path": "cleanup.json",
+      "bytes": 520,
+      "sha256": "b07d2bba5ea91f27f1b3d7c443a4d58ab8ad3ea7f6eabd2389a5e8e84d4ec443"
+    },
+    {
+      "path": "logs/v0.5.6/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b3c5e16b5c2e53b3ecd876a1f42ebf89a2430bdb2563350702cbd5a4b519639c"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b3c5e16b5c2e53b3ecd876a1f42ebf89a2430bdb2563350702cbd5a4b519639c"
+    },
+    {
+      "path": "logs/v0.5.6/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "b3c5e16b5c2e53b3ecd876a1f42ebf89a2430bdb2563350702cbd5a4b519639c"
+    },
+    {
+      "path": "logs/v0.5.7/candidate-profile-retained/candidate.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "50e267701d64c7eda637e89db5f75a60640cc65ac688c6ef828fe15e715a7822"
+    },
+    {
+      "path": "logs/v0.5.7/candidate-profile-retained/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "50e267701d64c7eda637e89db5f75a60640cc65ac688c6ef828fe15e715a7822"
+    },
+    {
+      "path": "logs/v0.5.7/pre-upgrade-profile-backup/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "50e267701d64c7eda637e89db5f75a60640cc65ac688c6ef828fe15e715a7822"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "50e267701d64c7eda637e89db5f75a60640cc65ac688c6ef828fe15e715a7822"
+    },
+    {
+      "path": "logs/v0.5.7/private-data/rollback-released.stdout.log.txt",
+      "bytes": 108,
+      "sha256": "50e267701d64c7eda637e89db5f75a60640cc65ac688c6ef828fe15e715a7822"
+    },
+    {
+      "path": "report.json",
+      "bytes": 25807,
+      "sha256": "09a59328b46fa12bc3b3371279cadfaddd8f8d9155f8ec5c95a99626190ddf91"
+    },
+    {
+      "path": "v0.5.6.json",
+      "bytes": 10862,
+      "sha256": "38f3eb46d19e2839b4891a0307b960081214806488a0e59f9b42db68c217180c"
+    },
+    {
+      "path": "v0.5.7.json",
+      "bytes": 10612,
+      "sha256": "56ec2e75409704be99201aa7ac7ba2a4e5532edfa88627a2d028439f702b5d35"
+    }
+  ]
+}
