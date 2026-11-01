@@ -1,0 +1,14 @@
+{
+  "actual_goal_tool_status": "complete",
+  "tool_updated_at_unix": 1793535191,
+  "goal_time_used_seconds_at_completion": 64004,
+  "scope": "User-authorized fast release published; original 12 full-profile tasks deferred unverified, not passed.",
+  "status_sync_at": "2026-11-01T12:13:38.421701+00:00",
+  "QA_number": 94,
+  "batch_generator_rerun": false,
+  "embedded_JSON_matches": true,
+  "JS_syntax_passed": true,
+  "frozen_evidence_hashes_passed": 111,
+  "new_product_tests_or_CI": 0,
+  "main_source_remains": "763f2aefb5e644d84250590aaa3bdc96a90b6e11"
+}

@@ -5,7 +5,7 @@
   "branch": "feat/studio_v2_gpui",
   "code_head": "85540e1256842a5e6553bffd9749088af545084e",
   "phase": "v0.6.0 已发布 · 延期专项未计通过",
-  "goal_status": "active",
+  "goal_status": "complete",
   "counts": {
     "pending": 0,
     "partial": 0,
@@ -9555,5 +9555,7 @@
       "label": "功能保护矩阵",
       "href": "feature_regression_matrix.md"
     }
-  ]
+  ],
+  "goal_completed_at": "2026-11-01T12:13:38.421701+00:00",
+  "goal_completion_scope": "User-authorized fast release published; original 12 full-profile tasks deferred unverified, not passed."
 }

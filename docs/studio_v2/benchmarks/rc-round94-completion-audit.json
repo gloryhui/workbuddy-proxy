@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-01T12:12:58.475349+00:00",
+  "result": "passed",
+  "release_URL": "https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0",
+  "release_id": 430497408,
+  "published_at": "2026-11-01T11:35:34Z",
+  "main_tag_source": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "feature_archive_head_before_goal_status_sync": "0ad47ba6b3cbb9387b6dcb81d32dd9b080380d67",
+  "main_output_preserved": true,
+  "product_README_images_equal_main": true,
+  "assets": [
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 420,
+      "sha256": "cae8ff1a2708ef4c7d4d4733630c62844d80db858a999b61bf60f3d3516dc4d9"
+    },
+    {
+      "name": "workbuddy-proxy-0.6.0-macos-arm64.dmg",
+      "bytes": 38865857,
+      "sha256": "93e333e8cb986454ec384b986c020c3cfae85f09c8a171c3a4e5806b6b2a1776"
+    },
+    {
+      "name": "workbuddy-proxy-0.6.0-macos-x64.dmg",
+      "bytes": 40263870,
+      "sha256": "ba17a1689706740967bf1ce7ab01d19f0155780cf4736eb13343ae859fc874c9"
+    },
+    {
+      "name": "workbuddy-proxy-0.6.0-windows-x64-setup.exe",
+      "bytes": 27940726,
+      "sha256": "14ac5b65f84cd110bc79f7899fcfa70ba608e295a3309dff2bb11f8e69819e79"
+    },
+    {
+      "name": "workbuddy-proxy-0.6.0-windows-x64.zip",
+      "bytes": 33827484,
+      "sha256": "1286907f01f19a2697db3dc1501158d37367cf4c405dbcfa75499bc6a351965e"
+    }
+  ],
+  "frozen_evidence_files_verified": 111,
+  "original_full_profile_deferred_unverified": 12,
+  "fast_release_required_work_completed": true,
+  "timeline": {
+    "recorded_tasks": 94,
+    "verified_frames": 40,
+    "remaining_frames": 0
+  },
+  "metadata_read_errors": [
+    {
+      "operation": "prior completion audit git ls-remote",
+      "error": "SSL_ERROR_SYSCALL, exit 128 after release/main/tag/assets/111 evidence checks; no product tests or mutations"
+    }
+  ],
+  "new_CI_or_product_test_runs": 0,
+  "system_volume_free_bytes": 37007798272
+}

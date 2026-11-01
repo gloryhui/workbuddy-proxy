@@ -10,7 +10,7 @@
 - 3实际CI artifact服务器digest/ZIPCRC校验，4新包140,897,937B与420B SHA聚合清单已长期附在Release；5资产服务器SHA匹配本地，公开校验文件全文GET和4二进制rangeGET通过，不称再次完整下载二进制。3平台各11真实包生命周期、Windows10安装器检查/两原GDI图已审且程序sha等实际ZIP，显示恢复成功；每平台158导入检查全过。[公开/tag/main/资产](benchmarks/release94/published-release-verification.json)。
 - 截图fixture只导航，无保存/同步/真实WorkBuddy操作，config/models字节及5业务表全字段/12请求成本保持。初始QA bridge漏放只读stats_breakdown的21条403与首skin原图保留，确认read路径后只加该项，不改产品/注入响应。Core kernel保护已验，GUI仅隔离环境/deny-onlyguard配置，不称GUIkernel。[数据](benchmarks/release94/final-data-proof.json)。
 - 两个QA94本地专用根均已全量/即时owner父链/无symlink/mount/库存hash/lsof/ps核实并精确非强制删除，共194,727,487B约185.71MiB；本轮临时0。新正式包134.37MiB、旧QA91包134.37MiB、2基线97.14MiB和共享Cargo保留，清理时系统盘约34.46GiB。网络EOF/reset仅补读同一资源、保留0B失败下载，不绕TLS、不重派CI。所有驱动/下载/原生UI已终态，**不得重开或重跑已删root及finish-ci/collect脚本**。[清理](benchmarks/release94/artifact-cleanup.json)。
-- **40帧签收/剩0；本次精简发布必需项已完成。原完整12专项明确延期未验证，不计通过、不阻塞用户授权的已发布版本。** R04.1/4/5按本次交付签收，R01/R02/R03和R04.3原未验项保留；不再自动补穷举、真实AT/额外设备/缩放/长前台性能，严格不自动旁白/切源/改系统缩放。QA94证据已提交97ea48d，已显式--task94一次生成时间线；嵌入JSON、2段JS语法、40帧/12延期状态及111份已提交证据hash验证通过。只读隐藏浏览器预览因IAB不可用未渲染，不启动server/不绕过，非产品验收失败。收尾提交生成文件并记录Goal完成，不再问发布授权。[时间线核验](benchmarks/rc-round94-timeline-validation.json)。
+- **40帧签收/剩0；本次精简发布必需项已完成。原完整12专项明确延期未验证，不计通过、不阻塞用户授权的已发布版本。** R04.1/4/5按本次交付签收，R01/R02/R03和R04.3原未验项保留；不再自动补穷举、真实AT/额外设备/缩放/长前台性能，严格不自动旁白/切源/改系统缩放。QA94证据已提交97ea48d，已显式--task94一次生成时间线；嵌入JSON、2段JS语法、40帧/12延期状态及111份已提交证据hash验证通过。只读隐藏浏览器预览因IAB不可用未渲染，不启动server/不绕过，非产品验收失败。Goal工具已标记complete（用户授权的精简发布范围）；完成审计确认公开Release/main/tag/5资产及111份冻结证据一致。时间线仅同步Goal状态、不新增QA或重复生成批次；12项原专项仍延期未验证，不再自动续测或请求发布授权。[完成审计](benchmarks/rc-round94-completion-audit.json)。[时间线核验](benchmarks/rc-round94-timeline-validation.json)。
 
 ## 最近完成进展（QA93，青简字段补验与代表输入收尾）
 
