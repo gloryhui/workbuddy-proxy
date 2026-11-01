@@ -1,6 +1,22 @@
 # 界面截图
 
-## 当前 main：Windows（2026-10-21）
+## 当前 README：Studio V2 v0.6.0（2026-11-01）
+
+当前五张图来自 macOS Apple Silicon 上运行的 v0.6.0 Studio V2 原生应用，原始 JPEG 均为 1440 × 901 像素；没有裁剪、重绘、拼接或图片转码。设置界面运行源码为 `85540e1`（含全屏背景修复），Core 为 `dd9deba`，后续发布准备只更新文档和截图。
+
+| 文件 | 内容 |
+| --- | --- |
+| [studio-v2-providers-20261101.jpg](studio-v2-providers-20261101.jpg) | 供应商连接、模型目录、本地代理与活动日志 |
+| [studio-v2-overview-20261101.jpg](studio-v2-overview-20261101.jpg) | 用量、请求量、缓存命中、趋势与费用 |
+| [studio-v2-usage-20261101.jpg](studio-v2-usage-20261101.jpg) | 请求明细、Token、缓存、费用与固定分页 |
+| [studio-v2-summary-20261101.jpg](studio-v2-summary-20261101.jpg) | 供应商分组、Token 构成与缓存覆盖 |
+| [studio-v2-skins-20261101.jpg](studio-v2-skins-20261101.jpg) | Studio Indigo 与原有六套皮肤 |
+
+使用独立临时配置和隔离环境，演示 Key 始终掩码；12 条请求由本机 loopback 模拟上游产生，费用、Token、速率和成功率均为合成示例，不代表真实账单、服务表现或报价。12 条请求位于同一日，趋势如实显示单点。没有读取真实 WorkBuddy 配置、密钥或调用历史。
+
+[采集与哈希记录](../studio_v2/benchmarks/release94/native-capture.json)保留了原始拍摄动作和来源。截图不是 Windows 实机或 Intel 硬件验收证据。
+
+## 历史截图：Windows v0.5.7（2026-10-21）
 
 - 应用版本号：0.5.6；拍摄时仓库提交为 `49d5d7c`，应用代码对应 `d43f17c`，两者之间仅有 README 文字更新。
 - 来源：当前 main 的本地 Windows 构建，包含皮肤设置、统计布局、独立工具收费和趋势缺失区间等后续改进。不是 GitHub v0.5.6 正式安装附件的界面记录。

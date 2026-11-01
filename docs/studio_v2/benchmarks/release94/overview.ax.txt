@@ -1,0 +1,55 @@
+Window: "", App: WorkBuddy Proxy V2 Screenshots.
+0 standard window Secondary Actions: Raise
+	1 container
+		2 toggle button (settable, boolean) 数据统计, Value: on
+		3 toggle button (settable, boolean) 供应商管理, Value: off
+		4 toggle button (settable, boolean) 统计设置, Value: off
+		5 button 折叠或展开供应商列表
+		6 text field (settable) 搜索供应商
+		7 toggle button (settable, boolean) 示例供应商 A, Value: on
+		8 toggle button (settable, boolean) 示例供应商 B, Value: off
+		9 button 新增供应商
+		10 button 复制供应商
+		11 button 删除供应商
+		12 button 复制代理地址
+		13 toggle button (settable, boolean) 概览, Value: on
+		14 toggle button (settable, boolean) 用量明细, Value: off
+		15 toggle button (settable, boolean) 汇总分析, Value: off
+		16 button 更多筛选
+		17 button 清除筛选
+		18 pop up button (settable) 模型筛选, Value: 全部模型
+		19 pop up button (settable) 供应商筛选, Value: 全部供应商
+		20 button 选择日期范围
+		21 button 统计页面自动刷新间隔
+		22 button 刷新统计
+		23 模型来源
+			24 radio button (selectable, settable, boolean) 全部模型
+			25 radio button (selectable, settable, boolean) 内置模型
+			26 radio button (selectable, settable, boolean) 自定义模型
+		27 container Token 总用量 6600
+			28 button 查看详细指标
+			29 container 最近14个时间桶的Token，未知留空
+		30 container 用量记录 12
+		31 container 代理成功率 100.0%
+		32 container 缓存命中率 80.0%
+		33 toggle button (settable, boolean) 输入, Value: on
+		34 toggle button (settable, boolean) 输出, Value: on
+		35 toggle button (settable, boolean) 缓存读, Value: on
+		36 toggle button (settable, boolean) 缓存写, Value: off
+		37 button 查看费用趋势
+		38 pop up button (settable) 费用币种, Value: USD
+		39 button 查看详情
+		40 button 皮肤设置
+		41 toggle button (settable, boolean) 开机启动, Value: off
+		42 button 检查更新
+		43 button 界面语言
+		44 button 恢复默认窗口尺寸
+		45 button GitHub 项目主页
+		46 button 提交反馈
+	47 close button
+	48 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	49 minimize button
+50 menu bar
+	51 WorkBuddy Proxy V2 Screenshots
+
+The focused UI element is 0 standard window Secondary Actions: Raise

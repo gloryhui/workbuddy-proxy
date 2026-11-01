@@ -1,0 +1,55 @@
+{
+  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release94-866nzb0l",
+  "owner": 501,
+  "created_by_this_session": true,
+  "type": "Owned disposable screenshot fixture with copied binaries and synthetic config/database/key",
+  "reproducible_basis": "Frozen binaries, exact harness and original native images archived outside root; no user data/source/cache/RC package in root",
+  "parent_chain": [
+    {
+      "path": "/",
+      "uid": 0,
+      "mount": true
+    },
+    {
+      "path": "/private",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private/var",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg",
+      "uid": 0,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn",
+      "uid": 501,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T",
+      "uid": 501,
+      "mount": false
+    },
+    {
+      "path": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release94-866nzb0l",
+      "uid": 501,
+      "mount": false
+    }
+  ],
+  "files": 49,
+  "subdirectories": 20,
+  "file_bytes": 54388449,
+  "lsof_exit": 1,
+  "known_pids_gone": true,
+  "system_free_before_bytes": 36912013312
+}

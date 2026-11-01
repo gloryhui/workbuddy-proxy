@@ -1,0 +1,22 @@
+{
+  "UI_pid": 9078,
+  "Core_pid": 8350,
+  "requests": 12,
+  "costs": 12,
+  "config_equal": true,
+  "models_equal": true,
+  "tables_equal": true,
+  "commands": {
+    "stats_prices_list": 1,
+    "stats_filters": 2,
+    "stats_workbuddy_status": 20,
+    "stats_settings_get": 1,
+    "stats_provider_settings_get": 2,
+    "stats_health": 2,
+    "workbuddy_check": 1,
+    "snapshot": 19,
+    "stats_requests": 1,
+    "stats_dashboard": 1
+  },
+  "blocked_or_failed": []
+}

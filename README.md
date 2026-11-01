@@ -35,13 +35,13 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/windows-providers-20261021.png" width="1180" alt="Windows 当前 main 供应商管理：黑白皮肤、协议选择、模型列表、全局设置和日志">
+  <img src="docs/screenshots/studio-v2-providers-20261101.jpg" width="1180" alt="Studio V2 供应商管理：连接配置、模型目录、本地代理与活动日志">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/windows-overview-20261021.png" width="1180" alt="Windows 当前 main 统计概览：过去七天、Token 与积分汇总、缺失时段虚线和费用趋势">
+  <img src="docs/screenshots/studio-v2-overview-20261101.jpg" width="1180" alt="Studio V2 用量概览：Token、请求量、缓存命中、趋势与费用">
 </p>
-<p align="center"><sub>2026-10-21 · Windows 10 当前 main 实拍 · 默认黑白皮肤 · 隔离演示配置，用量、费用与积分均为合成示例</sub></p>
+<p align="center"><sub>2026-11-01 · v0.6.0 Studio V2 · macOS 原生实拍 · 隔离演示配置，数据均为合成示例</sub></p>
 
 ---
 
@@ -59,7 +59,7 @@
 | 🌊 四协议流式接入 | Chat 保留上游流；Responses / Anthropic / Gemini 转为标准 Chat JSON / SSE，支持多轮与工具结果 |
 | 📊 本地统计 | 概览 / 用量明细 / 汇总分析分开查看，筛选、表头与分页固定；默认过去 7 天，记住上次视图和筛选 |
 | 🧾 WorkBuddy 积分 | 导入内置 / 自定义模型与独立工具收费，显示工具名称和标签，积分单独汇总并去重 |
-| 🎨 六套皮肤 | 默认黑白，另有蓝白、紫藤、玫瑰、琥珀、青绿；即时切换，重启后保留 |
+| 🎨 七套皮肤 | 新增 Studio Indigo，保留黑白、蓝白、紫藤、玫瑰、琥珀、青绿；即时切换，重启后保留 |
 | 💰 历史费用快照 | 每次调用冻结单价、币种及费用，当前价格可修改或删除，缺价默认零价，不回写历史 |
 | 🦦 统一图标 | 主图标覆盖应用、窗口、Windows 任务栏 / 托盘、Mac 菜单栏和启动提示 |
 | 🔄 同步与重启确认 | 同步 / 取消同步先确认；macOS 可同步后正常重启 WorkBuddy，启动时检查已同步地址是否一致 |
@@ -74,27 +74,27 @@
 
 ## 下载与安装
 
-### v0.5.7 正式版
+### v0.6.0 · Studio V2
 
-**v0.5.7（2026-10-21）** 新增六套皮肤、WorkBuddy 用量与独立收费导入，重整统计布局，修复工具积分漏计及缺失用量误报，并改进缺失日期的趋势显示。[查看更新记录](CHANGELOG.md#v057--2026-10-21)。
+**v0.6.0（2026-11-01）** 带来 Studio V2：重整供应商、模型与统计页面，新增 Studio Indigo 皮肤，完善草稿和弹窗取消流程，并修复统计启动恢复及全屏背景对齐。[查看更新记录](CHANGELOG.md#v060--2026-11-01)。
 
 提供 Windows x64、Mac Apple Silicon 和 Mac Intel 安装包，保留四协议接入、逐请求价格快照及 Anthropic / Azure 预设。
 
 | 系统 | 下载 | 体积 | 安装方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/workbuddy-proxy-0.5.7-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/workbuddy-proxy-0.5.7-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/workbuddy-proxy-0.5.7-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/workbuddy-proxy-0.6.0-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/workbuddy-proxy-0.6.0-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/workbuddy-proxy-0.6.0-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.5.7/SHA256SUMS.txt)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
-升级前请保留完整私有配置目录与原版安装包。Studio V2 候选的[备份与冷回滚步骤](docs/studio_v2/UPGRADE_ROLLBACK.md)说明了恢复旧目录及保留升级后新增历史的方法；候选尚未正式发布。
+升级前请保留完整私有配置目录与原版安装包。[备份与冷回滚步骤](docs/studio_v2/UPGRADE_ROLLBACK.md)说明了恢复旧目录及保留升级后新增历史的方法。
 
 ## 三步接入 WorkBuddy
 
@@ -171,12 +171,12 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 ### 皮肤设置
 
-点击标题栏里位于“开机启动”前的**衣服图标**，选择黑白、蓝白、紫藤、玫瑰、琥珀或青绿。默认采用**黑白浅色主题**，切换后即时生效并自动保存，重启后恢复上次选择。成功、警告、错误状态和图表系列保留各自的语义颜色。
+点击右上角的**衣服图标**，选择 Studio Indigo，或继续使用黑白、蓝白、紫藤、玫瑰、琥珀、青绿。已有主题设置会保留，切换后即时生效并自动保存。成功、警告、错误状态和图表系列保留各自的语义颜色。
 
 <details>
 <summary><strong>查看皮肤设置实拍</strong></summary>
 
-![Windows 皮肤设置：默认黑白以及蓝白、紫藤、玫瑰、琥珀、青绿六种配色](docs/screenshots/windows-skins-20261021.png)
+![Studio V2 皮肤设置：Studio Indigo 与原有六套配色](docs/screenshots/studio-v2-skins-20261101.jpg)
 
 </details>
 
@@ -187,7 +187,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 <details>
 <summary><strong>查看明细与独立工具收费实拍</strong></summary>
 
-![Windows 用量明细：固定筛选和分页、图片生成工具名称、工具标签、Token 不适用及独立积分](docs/screenshots/windows-usage-details-20261021.png)
+![Studio V2 用量明细：固定筛选、请求记录、Token、缓存、费用与分页](docs/screenshots/studio-v2-usage-20261101.jpg)
 
 </details>
 
@@ -198,7 +198,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 <details>
 <summary><strong>查看供应商汇总实拍</strong></summary>
 
-![Windows 汇总分析：两个演示供应商的 Token 和费用，以及 WorkBuddy 独立收费积分](docs/screenshots/windows-summary-20261021.png)
+![Studio V2 汇总分析：供应商统计、Token 构成与缓存覆盖](docs/screenshots/studio-v2-summary-20261101.jpg)
 
 </details>
 
@@ -213,7 +213,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 </details>
 
-以上截图拍摄于 2026-10-21，来自当前 main 的 Windows 10 原生 GPUI 界面，使用隔离配置、演示 Key 和合成统计记录；未使用真实 WorkBuddy 配置或调用历史。截图展示 main 分支功能，正式下载附件以 Release 更新记录为准。拍摄信息与旧版 macOS 截图见[截图说明](docs/screenshots/README.md)。
+以上截图拍摄于 2026-11-01，来自 v0.6.0 Studio V2 的 macOS 原生界面，使用隔离配置、掩码演示 Key、loopback 上游和合成请求；未使用真实 WorkBuddy 配置或调用历史。平台、版本与原图来源见[截图说明](docs/screenshots/README.md)。
 
 ### Release 更新检测
 

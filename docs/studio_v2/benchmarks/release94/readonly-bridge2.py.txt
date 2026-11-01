@@ -1,0 +1,42 @@
+import json,threading,time,http.client,hmac,os
+from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
+from pathlib import Path
+folder=Path(__file__).resolve().parent/'fixture'
+original=json.loads((folder/'instance-before-bridge-private.json').read_text())
+port=original['port'];key=original['management_key']
+bridge_audit_lock=threading.Lock()
+class ManagementBridge(BaseHTTPRequestHandler):
+    def log_message(self,*args):pass
+    def do_POST(self):
+        if self.path not in ['/_control/action','/_control/stop']:
+            self.send_error(404);return
+        if not hmac.compare_digest(self.headers.get('Authorization',''),'Bearer '+key):
+            self.send_error(401);return
+        length=int(self.headers.get('Content-Length','0'))
+        if length<0 or length>1024*1024:self.send_error(413);return
+        body=self.rfile.read(length);payload=json.loads(body or b'{}');name=payload.get('command','stop')
+        allowed={'snapshot','stats_health','stats_filters','stats_prices_list','stats_settings_get','stats_provider_settings_get','stats_workbuddy_status','workbuddy_check','stats_requests','stats_dashboard','stats_breakdown','stats_summary','stats_usage','model_metadata','stats_request_detail','stats_request_details'}
+        controlled=False;update_mode='real'
+        if name not in allowed or self.path!='/_control/action':
+            status=403;data=b'{"message":"Manual QA permits read-only Core commands; cancel edits"}'
+        else:
+            conn=http.client.HTTPConnection('127.0.0.1',port,timeout=15)
+            try:
+                conn.request('POST',self.path,body,{'Content-Type':'application/json','Authorization':'Bearer '+key});response=conn.getresponse();status=response.status;data=response.read()
+            finally:conn.close()
+        with bridge_audit_lock:
+            with (folder/'bridge2-management-audit.jsonl').open('a') as audit:
+                audit.write(json.dumps({'at_ms':int(time.time()*1000),'command':name,'status':status,'controlled':False,'allowed_read':name in allowed})+'\n')
+        try:
+            self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+        except (BrokenPipeError,ConnectionResetError):pass
+server=ThreadingHTTPServer(('127.0.0.1',0),ManagementBridge)
+thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+bridge=dict(original,port=server.server_port)
+(folder/'config/instance.json').write_text(json.dumps(bridge));(folder/'config/instance.json').chmod(0o600)
+meta={'pid':os.getpid(),'port':server.server_port,'Core_pid':original['pid'],'added_read_command':'stats_breakdown','response_injection':False}
+(folder/'bridge2-ready.json').write_text(json.dumps(meta));print(json.dumps(meta),flush=True)
+try:
+ while not (folder/'bridge2-finished').exists():time.sleep(.1)
+finally:
+ server.shutdown();server.server_close();thread.join();(folder/'bridge2-terminal.json').write_text(json.dumps({'normal_exit':True,'pid':os.getpid()}))

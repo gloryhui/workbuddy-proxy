@@ -1,0 +1,103 @@
+{
+  "blocked": [
+    {
+      "at_ms": 1793527220294,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527234770,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527239925,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527245102,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527250267,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527255450,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527260628,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527265788,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527270968,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527276153,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527281326,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527286507,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527291669,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    },
+    {
+      "at_ms": 1793527296851,
+      "command": "stats_breakdown",
+      "status": 403,
+      "controlled": false,
+      "allowed_read": false
+    }
+  ],
+  "cause": "Isolated QA-only bridge whitelist omitted stats_breakdown; no product failure conclusion; original first result preserved."
+}

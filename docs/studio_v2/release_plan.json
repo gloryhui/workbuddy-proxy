@@ -3,7 +3,7 @@
   "title": "Studio V2 正式版批次计划",
   "as_of": "2026-11-01",
   "state": "active",
-  "current_batch": "R01",
+  "current_batch": "R04",
   "baseline_commit": "a6e9618de67589173098a1ad67e268a111207e39",
   "current_known_frames": 40,
   "historical_tasks": 93,
@@ -34,7 +34,7 @@
   "acceptance_model": {
     "implementation": "主体已实现/历史分项已验证：已有代码和证据，不等于新设计或最终发行包通过。",
     "frame": "40个界面按B01–B05逐帧记录最新设计、完整路径和两尺寸的界面验收；R01汇总签收。平台/性能/安装门禁独立记录，不能让同一全局待办重复阻塞40次界面施工。",
-    "release": "正式发布必须同时满足40帧界面签收和R01–R04所有全局门禁。界面数量归零仍不等于正式版可发布。",
+    "release": "完整质量门禁保留原状态，不把未测试项标通过。按2026-11-01用户快速发布与直接发布授权，执行fast_release_policy必需检查后发布，并在说明披露延后的未验证专项；不再等待穷举专项。",
     "native_fidelity": "核对布局/资产/字号角色/层级/可见状态；原生ICC/AA差异明记，不新增逐字形PostScript、字体文件版本或全RGB字节相等门禁。",
     "severity": "数据丢失/崩溃/错误保存为P0；阻断流程/误导结果/不可达为P1；实际可见布局或状态差异为P2。P0/P1先修，P2同批集中修，合理原生栅格差异留说明。"
   },
@@ -1432,5 +1432,33 @@
         "R02.4"
       ]
     }
-  ]
+  ],
+  "fast_release_policy": {
+    "date": "2026-11-01",
+    "user_requests": [
+      "有些不用测试，快速推进",
+      "后续直接更新release，然后把REAME更新一下，使用最新版的v2截图，把主分支代码更新为v2的新版。"
+    ],
+    "scope_decision": "Agent selects streamlined checks under explicit user acceleration and publication authorization. Deferred original full gates remain unverified, not passed.",
+    "required_now": [
+      "One final source frozen after README/screenshots",
+      "Core and three-platform Desktop workflow terminal results",
+      "Packaged installation/startup and configuration/history protection reports",
+      "Four downloadable packages and independent SHA256SUMS",
+      "README current V2 native screenshots",
+      "main updated to V2 and v0.6.0 Release published with limitations"
+    ],
+    "deferred_unverified": [
+      "Remaining exhaustive input/hover/pressed/Tooltip/slot/focus matrix",
+      "Additional Mac Chinese input method (separately waived earlier)",
+      "Real assistive technology acceptance",
+      "Intel physical GUI/tray/performance and Windows physical input/IME/tray",
+      "Multi-monitor and exhaustive scaling matrix",
+      "Real login/autostart and existing WorkBuddy session interoperability",
+      "Long-running valid foreground CPU/footprint/peak/startup performance conclusions"
+    ],
+    "historical_acceptance_states_preserved": true,
+    "publish_authorized": true,
+    "main_update_authorized": true
+  }
 }

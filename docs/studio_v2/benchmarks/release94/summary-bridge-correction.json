@@ -1,0 +1,6 @@
+{
+  "cause": "QA-only first bridge omitted read-only stats_breakdown; original403 audit preserved",
+  "source_checked": "src/stats/mod.rs stats_breakdown routes ReadJob; gpui stats_backend reloads own instance endpoint per call",
+  "correction": "Separate owned bridge identical deny-only mutation policy plus one confirmed read command; redirects only synthetic instance endpoint, no Core/UI code change or response injection",
+  "not_a_product_failure": true
+}

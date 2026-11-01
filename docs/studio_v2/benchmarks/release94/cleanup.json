@@ -1,0 +1,18 @@
+{
+  "removed_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release94-866nzb0l",
+  "removed_files": 49,
+  "removed_subdirectories": 20,
+  "removed_file_bytes": 54388449,
+  "retained_this_fixture_bytes": 0,
+  "system_free_before_bytes": 36912013312,
+  "system_free_after_bytes": 36966760448,
+  "observed_APFS_free_delta_bytes": 54747136,
+  "delta_note": "Global APFS movement includes concurrent system activity, not exact exclusive physical reclamation.",
+  "preserved": [
+    "Native images and reports",
+    "QA91 packages",
+    "Baseline kits",
+    "Shared Cargo caches",
+    "Other sessions and main output/"
+  ]
+}

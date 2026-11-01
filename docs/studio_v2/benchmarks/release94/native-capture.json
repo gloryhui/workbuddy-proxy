@@ -1,0 +1,55 @@
+{
+  "ui_pid": 9078,
+  "core_pid": 8350,
+  "format": "CUA original JPEG; no crop or transcode",
+  "observations": [
+    "providers saved, masked key",
+    "overview 12 requests / 6600 tokens; single-day trend",
+    "usage 12 requests",
+    "summary first empty due to fixture read-only bridge omission; after bridge stats_breakdown allowed, automatic refresh showed 1 group / 12 requests / 6600 tokens; no manual refresh",
+    "skins menu seven choices, Studio selected; Escape closed menu"
+  ],
+  "images": [
+    {
+      "page": "providers",
+      "path": "docs/screenshots/studio-v2-providers-20261101.jpg",
+      "ax": "docs/studio_v2/benchmarks/release94/providers.ax.txt",
+      "sha256": "5da7300088d446aa6e8ad9949c2383ac43fd6acb3c7e3de7cb0c865fe58fbab3",
+      "magic": "ffd8ffe0"
+    },
+    {
+      "page": "overview",
+      "path": "docs/screenshots/studio-v2-overview-20261101.jpg",
+      "ax": "docs/studio_v2/benchmarks/release94/overview.ax.txt",
+      "sha256": "9939538b0cfc28db017ba9cb386f8ad729a8dce1698d1004256c864fead2a820",
+      "magic": "ffd8ffe0"
+    },
+    {
+      "page": "usage",
+      "path": "docs/screenshots/studio-v2-usage-20261101.jpg",
+      "ax": "docs/studio_v2/benchmarks/release94/usage.ax.txt",
+      "sha256": "ec08ea4f47a9bb3a1b6ddc9667a487289ade43e3a965eece4b37d1317ab584aa",
+      "magic": "ffd8ffe0"
+    },
+    {
+      "page": "summary",
+      "path": "docs/screenshots/studio-v2-summary-20261101.jpg",
+      "ax": "docs/studio_v2/benchmarks/release94/summary.ax.txt",
+      "sha256": "95e5d5f4a6f982ca0f224ab3525b5cfad142964217fdea810004c355e5ef0c61",
+      "magic": "ffd8ffe0"
+    },
+    {
+      "page": "skins",
+      "path": "docs/screenshots/studio-v2-skins-20261101.jpg",
+      "ax": "docs/studio_v2/benchmarks/release94/skins.ax.txt",
+      "sha256": "da8f7309932f8cfa7859f44be4bbb19f378284ad1a9877a5148478b947056573",
+      "magic": "ffd8ffe0",
+      "prior_original": {
+        "path": "docs/studio_v2/benchmarks/release94/skins-before-read-allowlist-fix.jpg",
+        "sha256": "6a29aa78b5cdd676044ed42373f915137718140e92ffe253561c181e55f34503"
+      },
+      "recapture_reason": "Only skins recaptured after fixture read-only stats_breakdown allowlist fixed and summary automatically showed one group; earlier image preserved unmodified"
+    }
+  ],
+  "created_at": "2026-11-01T10:02:45.949Z"
+}
