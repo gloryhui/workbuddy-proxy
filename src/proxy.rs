@@ -1997,7 +1997,7 @@ mod tests {
         let temp = tempfile::tempdir().unwrap();
         let marker = temp.path().join("update-maintenance");
         std::fs::write(&marker, b"owned update marker").unwrap();
-        let bridge = Bridge::for_controller(Config::default(), temp.path().to_path_buf()).unwrap();
+        let bridge = Bridge::build(Config::default(), temp.path().to_path_buf(), false).unwrap();
         assert!(bridge.update_blocks_requests());
         std::fs::remove_file(&marker).unwrap();
         assert!(!bridge.update_blocks_requests());
