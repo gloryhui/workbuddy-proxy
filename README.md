@@ -86,7 +86,7 @@
 | Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.1/workbuddy-proxy-0.6.1-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 | Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.1/workbuddy-proxy-0.6.1-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
-Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
+Windows 推荐使用安装 EXE，便携 ZIP 见 Release 附件；Mac 提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 

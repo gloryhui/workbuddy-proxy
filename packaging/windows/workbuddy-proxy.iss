@@ -88,7 +88,7 @@ function UninstallProcessImage(Process: THandle; Flags: Cardinal; Buffer: String
   external 'QueryFullProcessImageNameW@kernel32.dll stdcall';
 function UninstallLongPath(Path: String; Buffer: String; Size: Cardinal): Cardinal;
   external 'GetLongPathNameW@kernel32.dll stdcall';
-function UninstallOpenFile(Path: String; Access, Share: Cardinal; Security: SIZE_T;
+function UninstallOpenFile(Path: String; Access, Share: Cardinal; Security: UINT_PTR;
   Creation, Attributes: Cardinal; Template: THandle): THandle;
   external 'CreateFileW@kernel32.dll stdcall';
 function UninstallCloseHandle(Handle: THandle): BOOL;
