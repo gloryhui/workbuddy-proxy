@@ -52,5 +52,7 @@ def main():
                 print(json.dumps(result,ensure_ascii=False,indent=2))
             finally:stop(process,port,directory,log)
     finally:server.shutdown();server.server_close()
-    if args.output:args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    if args.output:
+        args.output.parent.mkdir(parents=True,exist_ok=True)
+        args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
 if __name__=='__main__':main()
