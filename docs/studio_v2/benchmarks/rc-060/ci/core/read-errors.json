@@ -1,7 +1,0 @@
-[
-  {
-    "name": "jobs.json",
-    "error": "Get \"https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/runs/41278921019/jobs\": EOF\n",
-    "scope": "Read only; no test or CI rerun"
-  }
-]

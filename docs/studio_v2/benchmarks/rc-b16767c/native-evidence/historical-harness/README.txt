@@ -1,1 +1,0 @@
-Audit-only exact session helper sources with SESSION_ROOT placeholder. Not a portable executable workflow. Real CUA UI operations and native results are recorded separately. Do not copy historical paths as current environment configuration.

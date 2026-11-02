@@ -1,9 +1,0 @@
-Window: "", App: WorkBuddy Proxy QA85 Functional.
-0 standard window Secondary Actions: Raise
-	1 close button
-	2 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
-	3 minimize button
-4 menu bar
-	5 WorkBuddy Proxy QA85 Functional
-
-The focused UI element is 0 standard window Secondary Actions: Raise

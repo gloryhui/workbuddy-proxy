@@ -1,3 +1,0 @@
-PASS native frame limit: explicit safe stream error without success terminal
-PASS native aggregate limit: explicit safe stream error without success terminal
-PASS native 4 in flight, fifth 429, slow-consumer backpressure, cancellation/reuse, 8-MiB input guard; baseline 10.6 MiB / sampled peak 37.3 MiB / growth 26.7 MiB

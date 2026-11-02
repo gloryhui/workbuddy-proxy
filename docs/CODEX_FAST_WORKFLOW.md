@@ -77,7 +77,7 @@ cargo build --manifest-path gpui/Cargo.toml --release --locked
 ## Token / 上下文 / Agent 预算
 
 - 简单任务直接做，不反复复述历史需求。复杂任务的计划和进度更新简短、只报实质性节点。
-- 优先精确文件、`rg`、限定行号；不把 `docs/studio_v2/baseline_and_qa.md`、`SESSION_HANDOFF.md`、庞大时间线 JSON、Cargo/CI 原始日志整体灌入上下文。
+- 优先精确文件、`rg`、限定行号；历史 QA 和交接从 [固定版本快照](https://github.com/gloryhui/workbuddy-proxy/tree/v0.6.1/docs/studio_v2) 定向追溯，不把庞大时间线或 Cargo/CI 原始日志整体灌入上下文。
 - **成功只报结论及必要计数；失败只报首个根因、关键上下文和少量日志尾部**。原始日志可留在本地或 CI Artifacts，不全文粘贴到对话。
 - 默认**单 Agent**；独立并行能明显缩短关键路径时最多用 2 个子 Agent，避免重复读取、测试和汇报。
 - 除用户另有要求，最终中文报告建议 **6–12 行**：改动、结果、已执行检查、未验证/风险、提交或 PR。禁逐命令流水账、同义反复。

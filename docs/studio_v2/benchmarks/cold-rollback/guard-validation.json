@@ -1,9 +1,0 @@
-{
-  "explicit_connection_close": true,
-  "cold_no_sidecar_schema": 6,
-  "nonempty_WAL_rejected": true,
-  "active_instance_marker_rejected": true,
-  "Python_AST_both_scripts": true,
-  "runtime_changed": false,
-  "SQLite": "3.43.2"
-}

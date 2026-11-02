@@ -1,1 +1,0 @@
-PASS: protocol 10, Anthropic/Azure/default auth, deployment names without catalog fallback, manual entry, save/reopen, Chat/Responses JSON+SSE, probes, header and metadata isolation

@@ -1,7 +1,0 @@
-{
-  "exact_root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release94-866nzb0l",
-  "owner_chain_inventory_hashes_unchanged": true,
-  "no_lsof_refs": true,
-  "known_pids_gone": true,
-  "command": "rm -r -- exact literal absolute root"
-}

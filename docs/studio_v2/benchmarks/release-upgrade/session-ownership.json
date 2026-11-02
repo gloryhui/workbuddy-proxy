@@ -1,9 +1,0 @@
-{
-  "session": "01a192ed-9fb7-77c3-b543-da7332068939",
-  "root": "/private/var/folders/zg/0qx2fqyj0h5fmsk421t3ypy80000gn/T/studio-v2-release-upgrade.1ldx41h9",
-  "uid": 501,
-  "worktree": "/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy",
-  "created": "2026-11-01T06:57:53.740314+08:00",
-  "purpose": "QA81 genuinev0.5.6/schema6 andv0.5.7/schema11 officialrelease package tocurrent957RC upgrade; isolatedsyntheticdata only",
-  "source_commit": "5ce5ccab34cdd2c387dd31447fa1b746e4cbc06d"
-}

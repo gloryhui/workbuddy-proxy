@@ -6,7 +6,7 @@
 
 - 设计文件：[WorkBuddy Proxy](https://www.figma.com/design/zxDfIQ4lhNcTXrFT7qk8QZ)，file key `zxDfIQ4lhNcTXrFT7qk8QZ`；页面 `51:2`，名称 `WorkBuddy Proxy · Studio V2 · Rust GPUI`。
 - 2026-11-02 通过官方 Figma MCP `use_figma` 只读核对供应商管理 `54:2` 的结构、指定节点属性、实际变量绑定与组件定义；未修改 Figma，也未重新验收全部 40 帧。
-- 源码基线：`763f2aefb5e644d84250590aaa3bdc96a90b6e11`（本轮核实与 GitHub main 相同）。下述“当前实现”来自该基线的静态阅读，后续开工须复核当前版本。
+- 源码基线：`763f2aefb5e644d84250590aaa3bdc96a90b6e11`（设计结构核对时的历史基线；当前正式版为 v0.6.1）。下述“当前实现”来自该基线的静态阅读，后续开工须复核当前版本。
 - [figma_node_map.md](figma_node_map.md) 继续拥有完整的「状态画板 → Rust 文件」索引和既有验收记录；本文补充关键工程语义，不复制整表、不重置历史签收。
 - 产品维持 Rust + GPUI 原生架构、深色侧栏与浅色主区、旧主题兼容。MCP 返回的 React / Tailwind / HTML / CSS 只用于理解设计，不能成为运行时实现或引入 WebView / Electron 的理由。
 
@@ -46,7 +46,7 @@ Figma 数据表明设计目标；源码表明实现方式；运行证据表明�
 
 | 属性/组件 | 当前复用入口 | 使用约束 |
 | --- | --- | --- |
-| 字体角色 | `theme::font`、`theme::line_height` | 保留字号、字重、行高语义；系统字体与 fallback 优化见 [Issue #4](https://github.com/gloryhui/workbuddy-proxy/issues/4)，本文不改变当前嵌入实现。 |
+| 字体角色 | `theme::font`、`theme::line_height` | 保留字号、字重、行高语义；系统字体与 fallback 优化见 [Issue #4](https://github.com/gloryhui/workbuddy-proxy/issues/4)，v0.6.1 已使用系统字体，不再嵌入 Noto Sans SC / Inter。 |
 | 尺寸、间距、半径 | `theme::size`、`space`、`radius`、`stroke` | 优先既有 tokens；页面局部值确需共享时再提升，不能按历史表机械覆盖。 |
 | 通用按钮 | `action_button`、`button` | 当前标注按钮高 36、圆角 9；`button` 统一处理 disabled / busy / loading，业务事件留在调用者。 |
 | 输入与 Select | `text_input`、`masked_input`、`provider_field`、`select` | 保留 Kit 原生编辑、焦点和选择引擎；供应商字段高 40、圆角 10，焦点边框由 `provider_field` 表达。 |

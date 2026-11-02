@@ -1,1 +1,0 @@
-{"real_http_seed": 1000, "barrier_every": 20, "rows": 1000, "stage": "After originalsave64, before timedidle/HTTP workload. Nativepreseed was beforeUI/save64; controls are separately matched within headless, not subtracted as exactcausal contribution."}

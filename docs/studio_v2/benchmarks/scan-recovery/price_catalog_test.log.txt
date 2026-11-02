@@ -1,8 +1,0 @@
-  PASS startup imports prices and persists the successful local day 
-  PASS a real forwarded request freezes the imported USD price 
-  PASS same-day restart preserves edits without another automatic update 
-  PASS manual refresh silently overwrites manual prices and keeps historical costs 
-  PASS the forwarding key cannot trigger price updates 
-  PASS failed downloads keep prices and the successful-day marker unchanged 
-  PASS a previous-day marker triggers one new startup update 
-PASS: 7 price catalogue integration checks

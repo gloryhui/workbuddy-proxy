@@ -1,2 +1,0 @@
-   Compiling workbuddy-proxy v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy)
-    Finished `release` profile [optimized] target(s) in 39.22s

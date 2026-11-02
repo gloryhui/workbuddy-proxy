@@ -1,5 +1,0 @@
-{
-  "initial_setup": "First seed wrongly composed alias got400, uncounted. Actual model alias inspected before valid synthetic seed, not a product test retry.",
-  "summary_read": "First QA bridge omitted stats_breakdown,403 preserved; confirmed source read path before separate read-only bridge addition; no product changes. First affected skin image preserved.",
-  "cold_read": "First collection required absent WAL and stopped on assertion; actual WAL/SHM retained after Core0. Used WAL-aware mode=ro, never immutable with WAL or checkpointed/copied only main DB."
-}

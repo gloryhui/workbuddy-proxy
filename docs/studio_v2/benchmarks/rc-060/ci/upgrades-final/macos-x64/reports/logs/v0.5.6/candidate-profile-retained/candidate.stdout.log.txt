@@ -1,2 +1,0 @@
-WorkBuddy Proxy 0.6.0 · 127.0.0.1:49178
-Price catalogue update: Connection failed; check network and proxy

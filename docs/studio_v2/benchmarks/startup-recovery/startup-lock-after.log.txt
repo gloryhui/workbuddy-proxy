@@ -1,9 +1,0 @@
-   Compiling workbuddy-proxy v0.5.7 (/Volumes/1TB/codex/worktrees/studio-v2-gpui/workbuddy-proxy)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.49s
-     Running unittests src/main.rs (/Volumes/1TB/Downloads/git/workbuddy-proxy/target/debug/deps/workbuddy_proxy-4822dc3a02dc7397)
-
-running 1 test
-test stats::tests::startup_database_lock_recovers_without_restarting_or_duplicate_intervals ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 579 filtered out; finished in 0.75s
-

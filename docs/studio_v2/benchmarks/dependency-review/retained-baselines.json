@@ -1,8 +1,0 @@
-{
-  "new_frozen_reference": "/Volumes/1TB/Downloads/git/workbuddy-proxy/gpui/target/studio-v2-baselines/9570451-arm64-release-46585f86",
-  "new_reference_bytes": 50954403,
-  "previous_a6e_reference_bytes": 50905007,
-  "total_necessary_reference_bytes": 101859410,
-  "shared_build_caches": "retained; not deleted",
-  "reason": "Preserve last accepted UI4658/Core1146 baseline after sharedflatUI advances to3c19; needed for outstanding foreground/final comparisons. No profile/config/credentials. Not a newCargo target; existingtarget referenceartifacts only."
-}

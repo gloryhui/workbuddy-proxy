@@ -1,5 +1,0 @@
-{
-  "raw_utf8": "vmmap[3812]: vmmap cannot examine process 3623 (with name like '3623') because it no longer appears to be running.\nvmmap[3812]: [fatal] mach port for process 0 not valid\n",
-  "source_sha256": "12adaad14107932ddcbbc92059170f3c1e4cd83a0547c53e7eca0d7ea1cd2628",
-  "scope": "Original vmmap output, derived readable txt has whitespace/EOF normalized."
-}

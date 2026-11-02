@@ -1,8 +1,0 @@
-{
-  "phase": "prepared_not_started",
-  "benchmark_sha256": "bc7e053788c3731043ff85f31b82f2a98d8f94f6f6ce71d15396d086ba15f6c2",
-  "baseline_sha256": "d08f0ae1b73b7f03033197c07a5795fcc7b95c481e5c16050538b60f4373e21f",
-  "candidate_sha256": "78f84cf0c1e10b3de255254e44f0552356b82e32aaafd344a424bba5b95fc8bc",
-  "compile_exit": 0,
-  "condition": "Same 1x window pixels and same actual GUI actions, frozen Core, unmodified load, P/C/C/P. Requires whole native lifecycle closure first."
-}

@@ -1,67 +1,34 @@
-# 性能测量与历史记录
+# 体积与性能 · v0.6.1
 
-## v0.5.2 正式版
+## 正式发行包体积
 
-来源：[三平台发布构建](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38675797234)，提交 `b0782b2cd84d3b17ecb549e26274fbcaad703c6f`。配置为 1 个供应商、64 个模型。
+下表来自 v0.6.1 正式附件的文件字节数，与 v0.6.0 正式附件对比；收益包含系统字体、编译参数、图片依赖、导出和图标优化，不能全部归因于字体。
 
-| CI 环境 | 单独核心空闲 RSS | 设置打开：核心 + 托盘 + 界面 | 设置关闭：核心 + 托盘 |
+| 附件 | v0.6.0 字节 | v0.6.1 字节 | 减少 |
 | --- | ---: | ---: | ---: |
-| Windows x64 | 9.26 MiB | 75.53 MiB | 22.73 MiB |
-| Mac Apple Silicon | 11.91 MiB | 148.77 MiB | 52.80 MiB |
-| Mac Intel | 4.59 MiB | 72.46 MiB | 21.76 MiB |
+| macOS ARM64 DMG | 38,865,857 | 13,281,771 | 65.83% |
+| macOS x64 DMG | 40,263,870 | 14,344,758 | 64.37% |
+| Windows x64 安装 EXE | 27,940,726 | 8,968,933 | 67.90% |
+| Windows x64 ZIP | 33,827,484 | 9,905,711 | 70.72% |
 
-核心空闲值与界面开／关值来自不同的隔离测试进程，不能相减推断单个组件的精确占用。RSS 合计可能重复计算共享页面，GPU 内存未单独测量；CI 硬件与运行环境不同，不能据此比较平台优劣。
+[正式附件与 SHA256SUMS.txt](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.1)。包体积下降不代表吞吐、启动时间或 RSS 同比例改善。
 
-- `gpui-*.json`：实际发行包的核心、托盘、设置进程生命周期和 RSS。关闭窗口释放设置进程，保留两个后台进程。
-- `core-*.json`：无界面核心；直连与代理各 200 个小请求，4 并发、80 个约 1 MiB 请求，记录采样峰值和负载后 RSS。
-- `windows-installer.json`：自定义安装目录下的实际程序生命周期和 RSS；对应构建另验证安装目录、快捷方式、重复安装、卸载清理启动项及保留配置。
+## 各平台程序大小
 
-原始 JSON 保存在 [benchmarks/v0.5.2](benchmarks/v0.5.2/)。正式安装包体积：Windows 安装 EXE 7.29 MiB、Mac ARM DMG 12.06 MiB、Mac Intel DMG 12.85 MiB，来自 [v0.5.2 Release](https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.5.2) 的附件大小。
-
-转发基准使用本机 HTTP 模拟上游，不含真实模型推理、公网延迟或 TLS；客户端每次新建连接，上游连接池复用。中位数差值可能受测量波动影响，不能当作真实模型速度或跨平台排名。下方保留历史版本记录。
-
-## v0.5.0 正式版
-
-来源：[主分支发布构建](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38558550741)，提交 `510e853fdc685f42477307d8fa9c66de2032fbd5`。配置为 1 个供应商、64 个模型。
-
-| CI 环境 | 单独核心空闲 RSS | 设置打开：核心 + 托盘 + 界面 | 设置关闭：核心 + 托盘 |
-| --- | ---: | ---: | ---: |
-| Windows x64 | 9.23 MiB | 77.54 MiB | 23.31 MiB |
-| Mac Apple Silicon | 11.83 MiB | 147.60 MiB | 51.73 MiB |
-| Mac Intel | 4.58 MiB | 71.13 MiB | 20.62 MiB |
-
-核心空闲值与界面开/关值来自不同的隔离测试进程，不能相减推断单个组件的精确占用。RSS 合计可能重复计算共享页面，GPU 内存未单独测量，CI 机器与物理设备存在差异。
-
-- `gpui-*.json`：真实发行包的核心、托盘、设置进程生命周期和 RSS。关闭窗口释放设置进程，保留两个后台进程。
-- `core-*.json`：无界面核心；直连与代理各 200 个小请求，4 并发、80 个约 1 MiB 请求，记录采样峰值和负载后 RSS。
-- 转发测试使用本机 HTTP 模拟上游，客户端每次新建连接，上游连接池复用；中位数差值出现负数不代表代理没有成本，不能作为真实模型速度或跨平台排名。
-
-原始 JSON 保存在 [benchmarks/v0.5.0](benchmarks/v0.5.0/)。本版发行包为 Windows 安装 EXE 7.00 MiB、Mac ARM DMG 13.67 MiB、Mac Intel DMG 14.45 MiB。
-
-## 历史原生版记录
-
-下方记录属于已经归档的旧设置界面，不代表当前 GPUI 版本。旧源码保存在 [backup 分支](https://github.com/gloryhui/workbuddy-proxy/tree/backup)。
-
-数据来自 `scripts/benchmark.py`。它们是过程测量，**不是全网最小内存或最快速度排名**。每个 JSON 保留平台、模式、样本数、二进制大小和测试边界。
-
-| 测量 | Mac ARM64 本机 | Windows x64 CI |
+| 平台 | Proxy/Core 字节 | GPUI 设置界面字节 |
 | --- | ---: | ---: |
-| 无界面核心空闲 RSS | 6.23 MiB | 8.61 MiB |
-| 设置界面打开时核心 RSS | 6.22 MiB | 8.68 MiB |
-| 界面 + 核心进程 RSS 和 | 78.22 MiB | 26.07 MiB |
-| 4 并发、1 MiB 输入的核心采样峰值 | 35.41 MiB | 11.72 MiB |
-| 核心负载结束后 RSS | 35.41 MiB | 10.05 MiB |
-| 小请求代理本地 p50 | 0.189 ms | 15.733 ms |
-| 小请求代理本地 p95 | 0.264 ms | 16.111 ms |
+| macOS ARM64 | 6,340,752 | 14,598,512 |
+| macOS x64 | 6,989,408 | 16,362,160 |
+| Windows x64 | 7,862,272 | 17,236,480 |
 
-Mac 数据取自本机 ARM64 发行构建。Windows 数据取自 GitHub Actions 运行 [38376533657](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38376533657)，代码提交 `58cb754`。后续核心进程隔离修复不改变转发热路径，仍需以对应 CI 原始数据为准。
+此处是解包后的程序大小，不是完整安装目录占用或进程内存。关闭设置窗口会释放 GPUI 进程，Core 和托盘继续运行。
 
-Mac / Windows 的 RSS 与 Working Set 含义不完全相同，CI 机器与本机硬件、调度器、Python mock 上游也不同，**不能根据该表推断某个平台本身更快**。客户端每次建立新连接，代理复用上游连接，代理 p50 可能低于直接请求；这不能证明代理没有开销或能让真实模型推理更快。
+## 测量与历史证据
 
-首版 v0.1.0 的设置窗口按需存在。v0.1.1 起 Windows 关闭 / 最小化保留托盘与 UI 进程，因此正常托盘模式占用应参考“原生界面总 RSS”；Mac 仍在关闭窗口时释放 UI 进程。核心继续工作，恢复窗口仍使用原来的核心 PID。进程 RSS 和可能把共享页面重复计算，但不会遗漏 UI 进程。Mac AppKit 初始化显著高于核心，因此没有把“后台 6.23 MiB”当成界面打开时的总占用。
+编译参数 A/B 应保持源码、平台、依赖、构建模式和负载一致；图标、字体与编译收益分组对照。性能需报告样本、延迟分位数、吞吐和波动，不能用不同机器结果证明优化因果。RSS 合计可能重复计算共享页，GPU 内存须另测。本地模拟上游不能代表真实模型推理速度。
 
-1 MiB 输入负载后，分配器和连接缓冲可能保留内存，所以负载结束的 RSS 不一定立即回到启动值。8 MiB 输入上限和 4 并发是逻辑工作预算，不是操作系统 RSS 上限；短时峰值也可能被 150 ms 采样遗漏。
+- [Proxy 编译与 GPUI 第二轮 A/B](https://github.com/gloryhui/workbuddy-proxy/blob/v0.6.1/docs/studio_v2/SIZE_OPTIMIZATION_ROUND2.md)
+- [字体同条件 A/B](https://github.com/gloryhui/workbuddy-proxy/blob/v0.6.1/docs/studio_v2/ISSUE4_SYSTEM_FONTS.md)
+- [旧版原始性能记录](https://github.com/gloryhui/workbuddy-proxy/tree/v0.6.1/docs/benchmarks)
 
-本表使用本地 HTTP mock，未覆盖 TLS 握手、公网延迟、上游限流或模型思考。另做的真实 OpenCode Go / 原生 TLS 流式连接测试返回 HTTP 200；它仅证明该请求可以连通，不是全面 WorkBuddy 人工验收。
-
-原始记录位于 [benchmarks](benchmarks/)。每次 CI 的最新测量也保存在该次 Actions 构建附件中。
+历史报告中的本地构建目录可能已清理；保留下来的 Git 数据只证明记录当时的候选，不构成当前性能验收。v0.6.1 的验证和未覆盖范围见 [发布说明](RELEASE_v0.6.1.md)。

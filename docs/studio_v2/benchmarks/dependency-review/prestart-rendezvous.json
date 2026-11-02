@@ -1,8 +1,0 @@
-{
-  "first_driver_exit": 1,
-  "stage": "Before observer process or timed sample",
-  "reason": "Ready announcement preceded on-disk ready JSON; fixed5s rendezvous timeout stopped before spawn.",
-  "resource_file_existed": false,
-  "correction": "Confirmed ready file exists, start the first actual observer once; do not reacquire window focus or rerun a timed sample.",
-  "at": "2026-11-01T10:24:47.919385+08:00"
-}

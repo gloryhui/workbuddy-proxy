@@ -1,8 +1,0 @@
-{
-  "source_before": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
-  "locked_dependency": "gpui-component0.7.3 title_bar.rs",
-  "cause": "Kitfullscreenadds pl_3 toinnerdragbar. Applicationpainted fixedwidthsidebaraschildofpaddedbar, shiftsdarkregionrightand exposeslightouterbackground. Usercropandnativefullscreenreproagree.",
-  "change": "Windowanchoredabsolute sidebarbackground in24pxwrapper; nativeTitleBartransparentoverit. No dependency/registry/Core/input change.",
-  "first_repro": "fullscreen-before-fix.jpg/.ax.txt",
-  "scope": "UI-only build/nativewindowed+fullscreenvisual checks and scoped3platformUI CI. No duplicateCore/import/6upgrade/40frame/theme/performance suites. FinalfullRCmustrebindnewpaintsource."
-}

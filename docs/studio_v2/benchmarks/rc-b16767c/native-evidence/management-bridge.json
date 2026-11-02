@@ -1,8 +1,0 @@
-{
-  "pid": 89535,
-  "host": "127.0.0.1",
-  "core_port": 57803,
-  "bridge_port": 57812,
-  "core_pid": 89536,
-  "scope": "Only own synthetic instance.json endpoint redirected. Config port and Core unchanged; bridge forwards all real commands except explicitly controlled update/language fault cases. Controlled results are not GitHub/Core updater E2E."
-}

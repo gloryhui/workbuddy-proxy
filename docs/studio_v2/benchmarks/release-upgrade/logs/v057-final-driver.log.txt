@@ -1,1 +1,0 @@
-PASS: real released Core data/config preserved and candidate continued recording

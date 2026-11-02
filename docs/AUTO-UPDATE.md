@@ -13,10 +13,6 @@
 
 检查中、没有新版、网络失败、下载、校验、准备、待安装、等待请求、安装、完成、取消、安装失败和恢复失败均有独立反馈。检查动作写入活动日志，详细过程保留在本机状态文件；不会把管理 Key、上游配置或带令牌的重定向地址写入更新日志。
 
-![隔离演示的更新弹窗](studio_v2/screenshots/online-update-available-final.png)
-
-图片为真实 GPUI 二进制配合合成控制器的演示。当前版本 v0.5.7 / 可更新 v0.6.0 由夹具提供，用于验收“发现新版”状态，不代表此次开发包的实际版本或正式发布结果。
-
 ## 下载和安装边界
 
 仅查询 `gloryhui/workbuddy-proxy` 的 GitHub 正式 Release，版本按三段数字比较。公开 HTTPS 下载源和重定向受白名单限制，安装包最大 512 MiB，元数据和日志均有限额。资产按 macOS ARM64 / Intel、Windows x64 精确匹配；校验 `SHA256SUMS.txt` 的文件名、长度和 SHA-256，不执行任意 URL 或外部传入的安装命令。
@@ -63,4 +59,4 @@ python3 scripts/online_update_macos_test.py --help
 
 复用当前兼容的 Cargo 缓存。集成测试只使用本轮创建的一次性目录，启用真实用户配置和已安装应用的内核访问隔离，不覆盖 HOME。测试结束后停止所有夹具进程再清理，保留报告。macOS helper 夹具直接准备签名暂存应用，验证真实替换、重启、健康检查与失败回滚；它不代表互联网安装包下载到 DMG 准备的全链路验收。
 
-本轮验证范围和体积记录见 [实现验收报告](studio_v2/ONLINE_UPDATE_IMPLEMENTATION.md)，界面验收见 [原始报告](studio_v2/online-update-gui-review.json)。Windows 在线安装 / 自动回滚实机、Intel Mac 完整 GUI 专项、真实公网新版本全链路更新、辅助技术朗读与系统安全提示仍未验证；不能将本机 macOS ARM 结果扩展为这些项目通过。
+首次实现的历史验证范围和体积记录见 [实现验收报告](https://github.com/gloryhui/workbuddy-proxy/blob/v0.6.1/docs/studio_v2/ONLINE_UPDATE_IMPLEMENTATION.md)，界面验收见 [原始报告](https://github.com/gloryhui/workbuddy-proxy/blob/v0.6.1/docs/studio_v2/online-update-gui-review.json)。Windows 在线安装 / 自动回滚实机、Intel Mac 完整 GUI 专项、真实公网新版本全链路更新、辅助技术朗读与系统安全提示仍未验证；不能将本机 macOS ARM 结果扩展为这些项目通过。

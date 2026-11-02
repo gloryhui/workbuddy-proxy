@@ -1,6 +1,0 @@
-{
-  "before": "2026-11-01T03:37:26.817403+00:00",
-  "dispatch_exit": 1,
-  "stdout": "",
-  "stderr": "Get \"https://api.github.com/repos/gloryhui/workbuddy-proxy/actions/workflows/desktop.yml\": EOF\n"
-}

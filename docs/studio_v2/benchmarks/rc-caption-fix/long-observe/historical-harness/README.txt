@@ -1,1 +1,0 @@
-Audit-only helper source from this owned session. SESSION_ROOT is a placeholder, not an executable command or a current environment path. The resource observer reads PID/process metrics only; original native operations and phase identities are recorded separately. Core runtime/source unchanged.

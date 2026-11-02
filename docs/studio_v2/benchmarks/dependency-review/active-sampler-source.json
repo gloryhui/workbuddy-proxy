@@ -1,6 +1,0 @@
-{
-  "file": "harness-audit/observe-active.py.txt",
-  "sha256": "8d77b050f9bb1d8ee4e59bf3772aea808f947280ff8cad2ba5ddc8415e903835",
-  "condition_checks_unchanged": true,
-  "sampling_auto_raise_or_retry": false
-}

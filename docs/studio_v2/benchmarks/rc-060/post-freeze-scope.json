@@ -1,9 +1,0 @@
-{
-  "runtime_and_package_inputs_equal_frozen_source": true,
-  "frozen_source": "dd9debade83e91b0d11c6b28f18f97edb227abbd",
-  "syntax_parse": [
-    "scripts/windows_frozen_native.py",
-    "scripts/update_studio_progress.py"
-  ],
-  "scope": "No rebuilt product for reporting/CI-pin helper edits; only actual remaining package-upgrade checks will be dispatched."
-}

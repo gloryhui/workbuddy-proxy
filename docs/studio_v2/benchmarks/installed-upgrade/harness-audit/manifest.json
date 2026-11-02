@@ -1,7 +1,0 @@
-{
-  "executable": false,
-  "source_sha256": "6197f36ff18f80a8c96ca985275314e273fb7e3ff3149647caf7ef2933109231",
-  "archive_sha256": "6197f36ff18f80a8c96ca985275314e273fb7e3ff3149647caf7ef2933109231",
-  "path_substitution_only": true,
-  "scope": "Historicalaudit; verifyfreshsource/owner/paths beforeanyrerun"
-}

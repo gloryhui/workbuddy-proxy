@@ -35,11 +35,11 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/studio-v2-providers-20261101.jpg" width="1180" alt="Studio V2 供应商管理：连接配置、模型目录、本地代理与活动日志">
+  <img src="https://raw.githubusercontent.com/gloryhui/workbuddy-proxy/v0.6.1/docs/screenshots/studio-v2-providers-20261101.jpg" width="1180" alt="Studio V2 供应商管理：连接配置、模型目录、本地代理与活动日志">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/studio-v2-overview-20261101.jpg" width="1180" alt="Studio V2 用量概览：Token、请求量、缓存命中、趋势与费用">
+  <img src="https://raw.githubusercontent.com/gloryhui/workbuddy-proxy/v0.6.1/docs/screenshots/studio-v2-overview-20261101.jpg" width="1180" alt="Studio V2 用量概览：Token、请求量、缓存命中、趋势与费用">
 </p>
 <p align="center"><sub>2026-11-01 · v0.6.0 Studio V2 · macOS 原生实拍 · 隔离演示配置，数据均为合成示例</sub></p>
 
@@ -176,7 +176,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 <details>
 <summary><strong>查看皮肤设置实拍</strong></summary>
 
-![Studio V2 皮肤设置：Studio Indigo 与原有六套配色](docs/screenshots/studio-v2-skins-20261101.jpg)
+![Studio V2 皮肤设置：Studio Indigo 与原有六套配色](https://raw.githubusercontent.com/gloryhui/workbuddy-proxy/v0.6.1/docs/screenshots/studio-v2-skins-20261101.jpg)
 
 </details>
 
@@ -187,7 +187,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 <details>
 <summary><strong>查看明细与独立工具收费实拍</strong></summary>
 
-![Studio V2 用量明细：固定筛选、请求记录、Token、缓存、费用与分页](docs/screenshots/studio-v2-usage-20261101.jpg)
+![Studio V2 用量明细：固定筛选、请求记录、Token、缓存、费用与分页](https://raw.githubusercontent.com/gloryhui/workbuddy-proxy/v0.6.1/docs/screenshots/studio-v2-usage-20261101.jpg)
 
 </details>
 
@@ -198,7 +198,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 <details>
 <summary><strong>查看供应商汇总实拍</strong></summary>
 
-![Studio V2 汇总分析：供应商统计、Token 构成与缓存覆盖](docs/screenshots/studio-v2-summary-20261101.jpg)
+![Studio V2 汇总分析：供应商统计、Token 构成与缓存覆盖](https://raw.githubusercontent.com/gloryhui/workbuddy-proxy/v0.6.1/docs/screenshots/studio-v2-summary-20261101.jpg)
 
 </details>
 
@@ -213,7 +213,7 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 </details>
 
-以上截图拍摄于 2026-11-01，来自 v0.6.0 Studio V2 的 macOS 原生界面，使用隔离配置、掩码演示 Key、loopback 上游和合成请求；未使用真实 WorkBuddy 配置或调用历史。平台、版本与原图来源见[截图说明](docs/screenshots/README.md)。
+以上截图拍摄于 2026-11-01，来自 v0.6.0 Studio V2 的 macOS 原生界面，使用隔离配置、掩码演示 Key、loopback 上游和合成请求；未使用真实 WorkBuddy 配置或调用历史。平台、版本与原图来源见[截图说明](https://github.com/gloryhui/workbuddy-proxy/blob/v0.6.1/docs/screenshots/README.md)。
 
 ### 软件更新（v0.6.1 起）
 
@@ -370,7 +370,7 @@ Anthropic 官方预设使用 `https://api.anthropic.com/v1` 和 Messages 协议�
 - 导入记录没有 HTTP 状态，明细里显示"已记录"而不是任何 HTTP 结果。
 - 日志里的点数（credit）是独立指标，**不代表账号余额**，也不会混进费用。
 
-导入功能的设计与验收材料在 [`docs/workbuddy-import/`](docs/workbuddy-import/)，逐项证据在 [`evidence/`](evidence/)。
+导入操作与实现入口见 [导入说明](docs/workbuddy-import/README.md)，历史逐项证据保留在 [`evidence/`](evidence/)。
 
 ## 性能实测
 
@@ -386,7 +386,7 @@ Anthropic 官方预设使用 `https://api.anthropic.com/v1` 和 Messages 协议�
 
 这些数值包含界面开销；关闭设置会释放设置进程。不同机器和 GPU 环境会影响占用，不能据此比较平台优劣。RSS 合计可能重复计算共享页，GPU 内存未独立测量。核心延迟测试使用本机模拟 HTTP 上游，不代表真实模型推理速度。
 
-[查看 v0.5.2 原始数据](docs/benchmarks/v0.5.2) · [三平台构建与测试](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38675797234) · [测量方法与历史记录](docs/PERFORMANCE.md)
+[查看 v0.5.2 原始数据](https://github.com/gloryhui/workbuddy-proxy/tree/v0.6.1/docs/benchmarks/v0.5.2) · [三平台构建与测试](https://github.com/gloryhui/workbuddy-proxy/actions/runs/38675797234) · [测量方法与历史记录](docs/PERFORMANCE.md)
 
 ### 轻量实现
 
@@ -518,7 +518,7 @@ Windows 包内有 `Diagnose.cmd`，可查看无界面启动诊断。启动日志
 
 Cargo 默认复用当前仓库的 `target/`、`gpui/target/`；如需共享 worktree 缓存，可在本机配置 `CARGO_TARGET_DIR`。临时文件默认使用系统临时目录；需要其他磁盘时，在启动构建或 Python 进程前设置 `TMPDIR`、`TMP`、`TEMP` 为本机存在且可写的目录。项目不要求特定外置盘、盘符或用户目录；平台专用的签名、沙箱和打包脚本仍需在对应平台运行。
 
-`docs/` 和 `evidence/` 中带日期的日志、报告及 GUI 自动化脚本是历史快照，其中的旧机器路径只用于追溯，不是当前配置或执行要求。复跑时以当前 `AGENTS.md`、本节和脚本参数为准；归档的原生 GUI 脚本需先按目标平台迁移，不能直接作为跨平台测试入口，也不能用旧结果代替新验收。
+`docs/` 只维护当前正式版适用文档，入口为 [文档索引](docs/README.md)。固定 Git 标签和 `evidence/` 中带日期的日志、报告及 GUI 自动化脚本是历史快照，其中的旧机器路径只用于追溯，不是当前配置或执行要求。复跑时以当前 `AGENTS.md`、本节和脚本参数为准；归档的原生 GUI 脚本需先按目标平台迁移，不能直接作为跨平台测试入口，也不能用旧结果代替新验收。
 
 仅修改 GPUI 时，可使用 Desktop workflow 的 `ui_only=true` 手动入口，在 Windows、macOS ARM 和 Intel 上检查 GPUI 格式、Clippy、单元测试、Release 构建及 `--version`。例如将 `BRANCH` 替换为待验证分支后执行 `gh workflow run desktop.yml --ref BRANCH -f ui_only=true`。此模式不运行 Core、安装器或迁移测试，也不生成正式安装包；默认完整流程保留，最终 RC 仍需完整发布门禁。已通过且未受改动影响的检查无需在每次小调整后重复运行。
 

@@ -8,7 +8,7 @@ canary字符串 SYNTHETIC_PROMPT_MUST_NOT_PERSIST 只允许存在源fixture与�
 
 ## 本目录新增样例（S01.04）
 
-设计包 `docs/workbuddy-import/fixtures/` 的四个文件按字节复制到本目录（SHA256 与设计包相同），另加三个合成样例：
+设计包 [固定版本中的设计夹具](https://github.com/gloryhui/workbuddy-proxy/tree/v0.6.1/docs/workbuddy-import/fixtures) 的四个文件按字节复制到本目录（SHA256 与设计包相同），另加三个合成样例：
 
 | 文件 | 场景 | 人工预期 |
 |---|---|---|

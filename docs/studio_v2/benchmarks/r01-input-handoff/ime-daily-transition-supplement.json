@@ -1,8 +1,0 @@
-{
-  "original_report": "ime-unattended-cua.json",
-  "original_failed_observation_preserved": "ime_unicode_cancelled",
-  "daily_transition_evidence": "daily-price-transition.json",
-  "daily_transition_evidence_sha256": "1c7e069cddaeab2c58ccc94d4fefc51abd99845adf08d38f319012311d1de407",
-  "parent_observation": "after_daily_transition passed after narrowly accepting exact three price revision 1 to 2 transition; config, models, settings and 15 history records remain strictly protected",
-  "no_claim": "IME composition was not tested; original error not erased or reclassified as passed"
-}

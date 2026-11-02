@@ -1,2 +1,0 @@
-vmmap[3472]: vmmap cannot examine process 3248 (with name like '3248') because it no longer appears to be running.
-vmmap[3472]: [fatal] mach port for process 0 not valid

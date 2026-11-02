@@ -1,8 +1,0 @@
-{
-  "kind": "Expected Core safety rejection exposed an incorrect fixture expectation, not a product bug",
-  "native_UI": "供应商已保存，后续操作失败：WorkBuddy 已存在相同标识，未覆盖配置",
-  "actual": "A name saved; installed0; original2 models byte-exact; no native restart",
-  "original_expected_installed5_was_wrong": true,
-  "source_boundary": "src/workbuddy.rs rejects manually owned alias collisions; previous backups apply only to already tracked managed records. Product Core is unchanged.",
-  "correction": "Retain refusal as acceptance evidence. Use explicit native A rename to distinct B05 retry A for success; B05 verified A for later invalid-JSON save-before-install failure. Original two manual entries remain protected."
-}

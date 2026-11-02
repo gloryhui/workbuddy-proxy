@@ -1,6 +1,0 @@
-{
-  "exit_code": 0,
-  "installed": true,
-  "guard_sha256": "0b5c7e20940d69a08f33f26e15965c752bbeb105fd81574ab1dd18a03d925e12",
-  "purpose": "AppKitCLI constructor validates correct B05 prefix/root; no appwindow oropenactions"
-}

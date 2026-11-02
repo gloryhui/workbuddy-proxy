@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Refresh the standalone Studio V2 timeline from QA, frame mapping and Git.
+"""Refresh the archived Studio V2 timeline from QA, frame mapping and Git.
+
+The inputs were retired after v0.6.1. Use the complete v0.6.1 checkout
+to reproduce historical reports; current docs no longer maintain a timeline.
 
 Run after a complete feature or substantial milestone, then commit HTML and JSON.
 Do not refresh for individual spacing edits, compiler runs, or intermediate builds.
@@ -230,6 +233,11 @@ def main():
     parser.add_argument("--goal-status", choices=["active", "paused", "blocked", "complete"],
                         help="Last observed Goal panel state; records it without controlling Goal")
     args = parser.parse_args()
+    required = ["baseline_and_qa.md", "visual_review.json", "release_plan.json",
+                "feature_regression_matrix.md"]
+    if any(not (DOCS / name).is_file() for name in required):
+        parser.error("旧版施工台账已归档；请在独立的 v0.6.1 完整检出中复现。"
+                     "当前文档入口为 docs/README.md，不再生成旧版时间线。")
     previous = json.loads(DATA.read_text(encoding="utf-8")) if DATA.exists() else {}
     frames, timeline = frame_rows(), tasks()
     current = dict(previous.get("current_task", {}))

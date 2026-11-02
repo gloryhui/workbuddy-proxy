@@ -1,7 +1,0 @@
-{
-  "baseline": "pgrep VoiceOver no matching process before test; baseline preference value was not read",
-  "first_attempt": "CUA super+F5 produced no visible AX change and no matching process",
-  "second_attempt": "CUA getApp system VoiceOver timed out; Quickstart PID 55890 appeared. Its welcome explicitly offered 使用旁白; selected through CUA, then VoiceOver PID 56137 and scrod observed. One Ctrl+Option+Right on test Statistics: no visible navigation/phrase evidence. No real screenreader claim.",
-  "stop": "At user objection stopped verification, no further narration attempted. super+F5 did not restore; CUA System Settings Accessibility > VoiceOver showed switch on, clicked off; switch reported off, defaults read com.apple.universalaccess voiceOverOnOffKey returned 0; pgrep VoiceOver/ScreenReader/scrod no match and ps confirmed 55890 and 56137 gone. Closed System Settings window.",
-  "user_impact": "VoiceOver was temporarily enabled; user reported it. Apology handled by parent. No future automated VoiceOver attempt."
-}

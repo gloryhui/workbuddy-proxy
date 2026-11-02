@@ -1,2 +1,0 @@
-vmmap[3122]: vmmap cannot examine process 2834 (with name like '2834') because it no longer appears to be running.
-vmmap[3122]: [fatal] mach port for process 0 not valid

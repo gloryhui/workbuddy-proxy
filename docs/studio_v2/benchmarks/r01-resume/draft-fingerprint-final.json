@@ -1,9 +1,0 @@
-{
-  "candidate": "631599",
-  "disk_config_sha256": "57a46d5242840b09298c91b98997bbcb7ab97e3d320d211573d38916383f7023",
-  "private_draft_base": "57a46d5242840b09298c91b98997bbcb7ab97e3d320d211573d38916383f7023",
-  "base_matches": true,
-  "draft_name": "R01 local draft",
-  "draft_models": 64,
-  "live_UI_not_closed_yet": true
-}

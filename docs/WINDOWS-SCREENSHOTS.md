@@ -1,6 +1,6 @@
 # Windows 原生界面截图
 
-Windows 截图优先使用 GDI：Python Pillow 的 `ImageGrab.grab(bbox=..., all_screens=True)`，配合目标进程 PID 和 DWM 原生窗口边界。2026-10-21 已用该方式完成 README 的五张 Windows 10 实拍，见[图片及来源说明](screenshots/README.md)。
+Windows 截图优先使用 GDI：Python Pillow 的 `ImageGrab.grab(bbox=..., all_screens=True)`，配合目标进程 PID 和 DWM 原生窗口边界。2026-10-21 已用该方式完成 README 的五张 Windows 10 实拍，见[图片及来源说明](https://github.com/gloryhui/workbuddy-proxy/blob/v0.6.1/docs/screenshots/README.md)。
 
 ## 隔离 CI 包截图
 

@@ -1,6 +1,0 @@
-{
-  "file": "harness-audit/observe-background.py.txt",
-  "sha256": "3fc26f55d7efe8f3aa2c6bb8c17df0a35957d04442d28f8eb2d9ef6d3461949c",
-  "timed_samples_started": 0,
-  "source": "Separate background protocol; active-prerequisite samples remain invalid and retained."
-}

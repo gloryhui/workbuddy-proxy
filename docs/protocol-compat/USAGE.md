@@ -33,7 +33,7 @@ Gemini 当前明确拒绝非 text response_format、strict=true 工具和 parall
 
 ## 统计与价格
 
-四种协议使用同一统计生命周期、写队列和 SQLite；当前 schema 6；schema 4 引入的 upstream_protocol 使历史行默认 Chat，不改历史价格和费用。统计详情显示上游协议。
+四种协议使用同一统计生命周期、写队列和 SQLite；v0.6.1 的 schema 为 11（以 `src/stats/store.rs` 为准）；schema 4 引入的 upstream_protocol 使历史行默认 Chat，不改历史价格和费用。统计详情显示上游协议。
 
 价格表可直接增删改。每次接纳请求时冻结币种、计价方式、输入/输出/缓存单价和来源版本；结束时按该快照结算。修改或删除当前价格不改变过去或已经开始的调用。缺少价格时按配置币种默认零价；缺少有效 Token 时仍为未知，不能用 0 冒充用量和费用。
 
