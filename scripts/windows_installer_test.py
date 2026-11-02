@@ -9,6 +9,7 @@ import platform
 import shutil
 import socket
 import sqlite3
+from contextlib import closing
 import subprocess
 import tempfile
 import time
@@ -208,7 +209,7 @@ $targets | ConvertTo-Json -Compress
             assert not (install / 'internal').exists()
             assert sentinel.read_bytes() == b'keep user content'
             assert other_core.poll() is None
-            with sqlite3.connect(data / 'usage.sqlite3') as connection:
+            with closing(sqlite3.connect(data / 'usage.sqlite3')) as connection:
                 assert all(reason == 'normal' for reason, in
                            connection.execute('SELECT stop_reason FROM stats_runs'))
             assert (data / 'config.json').read_bytes() == original_config
