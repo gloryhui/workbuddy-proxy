@@ -101,16 +101,33 @@ impl Proxy {
         .detach();
     }
 
+    pub(super) fn restore_control(&self, cx: &mut Context<Self>) -> AnyElement {
+        crate::ui_components::system_button_base(
+            "restore-window-size",
+            "studio/restore.svg",
+            self.t("恢复默认窗口尺寸", "Restore default window size"),
+            self.resetting_window,
+        )
+        .when(!self.window_restore.open, |button| {
+            button.tooltip(self.t(
+                "恢复默认窗口尺寸（1440 × 900）",
+                "Restore default window size (1440 × 900)",
+            ))
+        })
+        .on_click(cx.listener(|this, _, window, cx| this.restore_window_size(window, cx)))
+        .into_any_element()
+    }
+
     pub(super) fn restore_toolbar(
         &self,
         toolbar: AnyElement,
         cx: &mut Context<Self>,
     ) -> AnyElement {
-        // Figma104:2258 uses full-toolbar right alignment, y24+93=117.
+        // Measure the restore button itself so resizing keeps the notice attached.
         Popup::new("window-restore-popup", toolbar)
             .anchor(Anchor::TopRight)
-            .offset(px(73.))
-            .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
+            .offset(px(4.))
+            .w(px(crate::theme::size::SYSTEM_BUTTON))
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .when(self.window_restore.open, |popup| {
                 popup.content(self.restore_notice(cx))

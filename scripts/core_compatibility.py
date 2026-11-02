@@ -134,7 +134,7 @@ def check(exe, version, protocol):
             assert running['port'] == port, 'Core replacement changed the configured port'
             with urllib.request.urlopen(f'http://127.0.0.1:{port}/health', timeout=3) as response:
                 health = json.load(response)
-            assert health['version'] == current_version and health['control_protocol'] == 12
+            assert health['version'] == current_version and health['control_protocol'] == 13
             saved = json.loads((root / 'config.json').read_text())
             assert saved['providers'][0]['models'][0]['model'] == 'fixture-model'
             assert saved['providers'][0]['api_key'] == 'fixture-upstream'

@@ -288,7 +288,7 @@ impl Editor {
         scroll: &ScrollHandle,
         height: Pixels,
         needs_gutter: bool,
-        cx: &App,
+        _cx: &App,
     ) -> AnyElement {
         let t = |cn: &str, en: &str| if zh { cn.to_owned() } else { en.to_owned() };
         let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
@@ -357,8 +357,8 @@ impl Editor {
                     .child(div().mt(px(10.)).h(px(35.)).flex_none().px(px(13.))
                         .flex().items_center().rounded(px(9.)).bg(rgb(color::BG_TABLE_HEAD))
                         .child(Label::new("Anthropic-Version: 2023-06-01")
-                            .font_family(mono.clone()).text_size(px(12.)).text_color(rgb(color::TEXT_2))
-                            .when(studio, |label| crate::studio_fonts::latin(label, cx)
+                            .when(!studio, |label| label.font_family(mono.clone())).text_size(px(12.)).text_color(rgb(color::TEXT_2))
+                            .when(studio, |label| label
                                 .font_weight(FontWeight::MEDIUM).line_height(px(17.)))))
             }))
             .child(div().flex_none().pt(px(if gemini { 22. } else { 0. }))
@@ -393,9 +393,9 @@ impl Editor {
                         .h(px(row_height))
                         .child(div().w(px(crate::theme::size::MAPPING_LABEL_WIDTH)).h(px(33.)).flex_shrink_0().px(px(12.))
                             .rounded(px(7.)).bg(rgb(color::BG_TABLE_HEAD)).flex().items_center()
-                            .child(Label::new(effort).font_family(mono.clone()).text_size(px(12.))
+                            .child(Label::new(effort).when(!studio, |label| label.font_family(mono.clone())).text_size(px(12.))
                                 .text_color(rgb(color::TEXT_2))
-                                .when(studio, |label| crate::studio_fonts::latin(label, cx)
+                                .when(studio, |label| label
                                     .font_weight(FontWeight::MEDIUM).line_height(px(17.)))))
                         .child(div().flex_1().min_w_0().child(input(state, format!("{effort} mapping"), row_height)))
                 }));

@@ -248,7 +248,7 @@ fn spark_heights(samples: &[Option<i64>]) -> Vec<Option<f32>> {
 }
 
 impl Statistics {
-    fn primary_metric(&self, metric: PrimaryMetric, width: f32, cx: &App) -> AnyElement {
+    fn primary_metric(&self, metric: PrimaryMetric, width: f32, _cx: &App) -> AnyElement {
         let PrimaryMetric {
             label,
             value,
@@ -296,7 +296,7 @@ impl Statistics {
                     ),
             )
             .child(
-                crate::studio_fonts::latin(Label::new(value), cx)
+                Label::new(value)
                     .mt(px(20.))
                     .text_size(px(font_size))
                     .line_height(px(line_height))
@@ -439,7 +439,7 @@ impl Statistics {
             })
             .child(
                 div().flex().items_center().justify_between().child(
-                    crate::studio_fonts::latin(Label::new("TOKEN VOLUME"), cx)
+                    Label::new("TOKEN VOLUME")
                         .text_size(px(11.))
                         .line_height(px(16.))
                         .font_weight(FontWeight::SEMIBOLD)
@@ -453,7 +453,7 @@ impl Statistics {
                     .mt(px(14.))
                     .gap(px(14.))
                     .child(
-                        crate::studio_fonts::latin(Label::new(amount.to_string()), cx)
+                        Label::new(amount.to_string())
                             .text_size(px(47.))
                             .line_height(px(67.))
                             .font_weight(FontWeight::BOLD)

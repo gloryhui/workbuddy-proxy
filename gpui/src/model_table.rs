@@ -263,8 +263,8 @@ impl TableDelegate for Models {
         };
         // Long display names and model IDs are ellipsised inside their column.
         // The full value stays reachable on hover, so trimming the display never
-        // hides what was actually configured (FX03). Studio54:2 uses Inter
-        // for upstream IDs; existing skins keep their original code face.
+        // hides what was actually configured (FX03). Studio uses the native UI
+        // family for upstream IDs; existing skins retain their code face.
         let full = value.to_owned();
         let text = if col == 1 {
             Label::new(value.to_owned())
@@ -273,7 +273,7 @@ impl TableDelegate for Models {
                 .text_ellipsis()
                 .map(|text| {
                     if crate::theme::current_skin() == crate::theme::Skin::StudioIndigo {
-                        crate::studio_fonts::latin(text, cx)
+                        text
                     } else {
                         text.font_family(cx.theme().mono_font_family.clone())
                     }

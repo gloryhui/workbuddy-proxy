@@ -385,8 +385,8 @@ pub fn cost_hint(status: CostStatus, zh: bool) -> String {
     }
 }
 
-/// Text roles from Figma56:8/57:8. Keep names and localized explanations in
-/// Noto; only the explicitly Latin/number roles use the embedded Inter faces.
+/// Text roles from Figma56:8/57:8. Sizes, weights and leading remain explicit;
+/// every role inherits the native UI family and system glyph fallback.
 #[derive(Clone, Copy)]
 enum CellFont {
     Header,
@@ -400,28 +400,23 @@ enum CellFont {
     Breakdown,
 }
 
-fn table_label(text: impl Into<SharedString>, role: CellFont, color: u32, cx: &App) -> Label {
-    let (size, leading, weight, latin) = match role {
-        CellFont::Header => (11., 16., FontWeight::MEDIUM, false),
-        CellFont::Body => (12., 17., FontWeight::MEDIUM, false),
-        CellFont::Timestamp => (11., 16., FontWeight::MEDIUM, true),
-        CellFont::Latency => (12., 17., FontWeight::NORMAL, false),
-        CellFont::GroupName => (13., 18., FontWeight::MEDIUM, false),
-        CellFont::GroupCount => (12., 17., FontWeight::SEMIBOLD, true),
-        CellFont::Ratio => (12., 17., FontWeight::MEDIUM, true),
-        CellFont::TokenTotal => (15., 21., FontWeight::BOLD, true),
-        CellFont::Breakdown => (11., 16., FontWeight::NORMAL, false),
+fn table_label(text: impl Into<SharedString>, role: CellFont, color: u32, _cx: &App) -> Label {
+    let (size, leading, weight) = match role {
+        CellFont::Header => (11., 16., FontWeight::MEDIUM),
+        CellFont::Body => (12., 17., FontWeight::MEDIUM),
+        CellFont::Timestamp => (11., 16., FontWeight::MEDIUM),
+        CellFont::Latency => (12., 17., FontWeight::NORMAL),
+        CellFont::GroupName => (13., 18., FontWeight::MEDIUM),
+        CellFont::GroupCount => (12., 17., FontWeight::SEMIBOLD),
+        CellFont::Ratio => (12., 17., FontWeight::MEDIUM),
+        CellFont::TokenTotal => (15., 21., FontWeight::BOLD),
+        CellFont::Breakdown => (11., 16., FontWeight::NORMAL),
     };
-    let label = Label::new(text)
+    Label::new(text)
         .text_size(px(size))
         .line_height(px(leading))
         .font_weight(weight)
-        .text_color(rgb(color));
-    if latin {
-        crate::studio_fonts::latin(label, cx)
-    } else {
-        label
-    }
+        .text_color(rgb(color))
 }
 
 fn header_cell(title: SharedString, column: usize, cx: &App) -> Stateful<Div> {

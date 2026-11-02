@@ -3,14 +3,14 @@ use super::*;
 use crate::theme::{color, size};
 use gpui_kit::component::{Disableable, FocusableExt};
 
-fn section(number: &'static str, title: &'static str, cx: &App) -> Div {
+fn section(number: &'static str, title: &'static str, _cx: &App) -> Div {
     div()
         .flex()
         .items_center()
         .gap(px(3.))
         .pl(px(if number == "02" { 1. } else { 0. }))
         .child(
-            crate::studio_fonts::latin(Label::new(number), cx)
+            Label::new(number)
                 .w(px(if number == "02" { 29. } else { 30. }))
                 .text_size(px(12.))
                 .line_height(px(17.))
@@ -645,7 +645,7 @@ impl Proxy {
                     .text_size(px(11.))
                     .line_height(px(16.))
                     .font_weight(FontWeight::MEDIUM)
-                    // Optical alignment of the native Noto ink with54:220;
+                    // Preserve the existing optical adjustment for54:220;
                     // the92×27 box and its position stay in the layout flow.
                     .when(
                         self.zh

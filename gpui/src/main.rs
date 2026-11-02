@@ -36,10 +36,12 @@ mod stats_controller;
 #[allow(dead_code)]
 #[path = "../../src/stats/dto.rs"]
 mod stats_dto;
-mod studio_fonts;
 mod theme;
 mod ui;
 mod ui_components;
+#[path = "../../src/updater/dto.rs"]
+mod update_dto;
+mod update_monitor;
 #[allow(dead_code)]
 #[path = "../../src/protocol/config.rs"]
 mod upstream_config;
@@ -83,6 +85,13 @@ fn main() {
                         std::env::set_var("WORKBUDDY_PROXY_CONFIG_DIR", path);
                     }
                 }
+            }
+            "--update-progress" => {
+                let Some(path) = args.next() else {
+                    return;
+                };
+                update_monitor::run(std::path::PathBuf::from(path));
+                return;
             }
             "--version" => {
                 println!("{}", env!("CARGO_PKG_VERSION"));

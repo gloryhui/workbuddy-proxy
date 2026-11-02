@@ -51,13 +51,15 @@ impl State {
 impl Proxy {
     pub(super) fn language_menu(&self, cx: &mut Context<Self>) -> AnyElement {
         let was_open = self.language_menu.open;
-        crate::ui_components::system_button(
+        crate::ui_components::system_button_base(
             "language",
             "studio/language.svg",
-            self.t("切换界面语言", "Change interface language"),
             self.t("界面语言", "Interface language"),
             self.busy,
         )
+        .when(!self.language_menu.open, |button| {
+            button.tooltip(self.t("切换界面语言", "Change interface language"))
+        })
         .on_mouse_down(
             MouseButton::Left,
             cx.listener(move |this, _, window, cx| {
@@ -129,13 +131,11 @@ impl Proxy {
         toolbar: AnyElement,
         cx: &mut Context<Self>,
     ) -> AnyElement {
-        // The design aligns to the full toolbar: window8+height36+gap71=115,
-        // right32. Popup owns only native anchoring and pointer occlusion; it
-        // adds no Enter/Space handler around the other six toolbar buttons.
+        // Anchor to the language button, with a small gap below the toolbar.
         Popup::new("studio-language-popup", toolbar)
             .anchor(Anchor::TopRight)
-            .offset(px(71.))
-            .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
+            .offset(px(4.))
+            .w(px(crate::theme::size::SYSTEM_BUTTON))
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .when(self.language_menu.open, |popup| {
                 popup.content(self.language_panel(cx))

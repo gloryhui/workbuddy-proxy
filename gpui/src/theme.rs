@@ -12,9 +12,8 @@ mod skin;
 pub use skin::{Skin, current_skin, load_skin, palette, save_skin};
 
 pub fn apply_skin(skin: Skin, cx: &mut App) {
-    let registered_families = crate::studio_fonts::prepare(skin == Skin::StudioIndigo, cx);
     skin::select(skin);
-    install(cx, registered_families);
+    install(cx);
 }
 
 /// Kit reads its backdrop from the active theme. Select it only at a modal
@@ -280,19 +279,17 @@ pub mod shadow {
 ///
 /// `Theme::change` remains the only mode switch; `Theme::update` carries every
 /// visual value. No page, window, key binding or platform lifecycle is touched.
-fn install(cx: &mut App, registered_families: Option<Vec<String>>) {
+fn install(cx: &mut App) {
     Theme::change(ThemeMode::Light, None, cx);
 
     // Font families are resolved from the fonts GPUI actually sees. A failed
     // or missing name is not evidence that the family is unavailable; it only
     // means this candidate cannot be selected. The Kit-resolved system family
     // remains the fallback when no explicit candidate is found.
-    let installed = registered_families.unwrap_or_else(|| cx.text_system().all_font_names());
-    let sans_family = if current_skin() == Skin::StudioIndigo {
-        crate::studio_fonts::sans(cx).or_else(|| resolve_sans(&installed))
-    } else {
-        resolve_sans(&installed).or_else(|| crate::studio_fonts::original_sans(cx))
-    };
+    let installed = cx.text_system().all_font_names();
+    // Every skin now uses the same native sans policy. With no per-skin font
+    // override, Kit's resolved system family survives every theme switch.
+    let sans_family = resolve_sans(&installed);
     let mono_family = resolve_mono(&installed);
 
     Theme::update(cx, move |theme| {

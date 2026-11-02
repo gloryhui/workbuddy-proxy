@@ -32,6 +32,7 @@ jobs:
       - run: python scripts/multimodal_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/model_discovery.py --exe target/release/workbuddy-proxy
       - run: python scripts/model_capabilities_test.py --exe target/release/workbuddy-proxy
+      - run: python scripts/online_update_test.py --exe target/release/workbuddy-proxy --output dist/online-update-api.json
       - run: python scripts/connection_test.py --exe target/release/workbuddy-proxy
       - run: python scripts/port_change.py --exe target/release/workbuddy-proxy
       - run: python scripts/native_protocol_test.py --exe target/release/workbuddy-proxy

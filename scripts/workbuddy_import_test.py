@@ -49,7 +49,7 @@ DEFAULT_OUTPUT = REPO_ROOT / 'dist' / 'workbuddy-import-validation' / 'workbuddy
 CATALOG_TEST_URL = 'http://127.0.0.1:1/catalog'
 
 # Baseline value; S08.07 raises this together with the control protocol.
-EXPECTED_CONTROL_PROTOCOL = 12
+EXPECTED_CONTROL_PROTOCOL = 13
 
 # Synthetic canaries (AC007, X44): they may live in fixtures and assertions only,
 # never in a log, a configuration file, the database or an API response.

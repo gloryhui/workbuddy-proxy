@@ -90,7 +90,7 @@ impl Proxy {
             .when(self.error && self.editing.is_none(), |card| card.child(
                 Label::new(self.status.clone()).mt(px(8.)).text_size(px(12.)).text_color(rgb(color::DANGER))))
             .child(div().mt(px(21.)).h(px(27.)).flex().items_start().justify_between().gap(px(8.))
-                .child(crate::studio_fonts::latin(Label::new(address), cx).flex_1().min_w_0().text_ellipsis().h(px(20.)).text_size(px(18.)).line_height(px(26.)).font_weight(FontWeight::SEMIBOLD))
+                .child(Label::new(address).flex_1().min_w_0().text_ellipsis().h(px(20.)).text_size(px(18.)).line_height(px(26.)).font_weight(FontWeight::SEMIBOLD))
                 .child(crate::ui_components::action_button("copy-relay-address").ghost().size(px(27.)).p_0().mr(px(7.)).relative().top(px(-3.))
                     .accessibility_label(self.t("复制代理地址", "Copy relay address"))
                     .tooltip(self.t("复制代理地址", "Copy relay address"))
@@ -113,7 +113,7 @@ impl Proxy {
                 [self.t("供应商", "Providers"), self.t("模型", "Models"), self.t("请求", "Requests")]
                     .into_iter().zip(self.proxy_counts).map(|(label, count)| {
                         div().flex_1().flex().flex_col()
-                            .child(crate::studio_fonts::latin(Label::new(count.to_string()), cx).h(px(33.)).text_size(px(25.)).font_weight(FontWeight::BOLD).line_height(px(36.)))
+                            .child(Label::new(count.to_string()).h(px(33.)).text_size(px(25.)).font_weight(FontWeight::BOLD).line_height(px(36.)))
                             .child(Label::new(label).h(px(20.)).text_size(px(11.)).line_height(px(16.)).text_color(rgb(color::TEXT_3)))
                     })))
             .child(div().flex().items_center().gap(px(9.))

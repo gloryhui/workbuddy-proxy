@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-02",
+  "environment": "macOS, isolated synthetic fixture, monochrome theme; sandbox enforced",
+  "runs": [
+    {"fixture": "gui_v2", "pid": 91686, "purpose": "update footer and wide/small toolbar layout"},
+    {"fixture": "gui_v3", "pid": 92551, "purpose": "targeted tooltip overlap fix verification"}
+  ],
+  "update_dialog": {
+    "latest": "Observed only 前往 GitHub and 完成; 暂不更新 and log expand/collapse buttons absent; content and footer visible.",
+    "available": "Observed 暂不更新, 前往 GitHub and 立即更新; log expand/collapse buttons absent; release text and footer visible without clipping.",
+    "scope": "These two synthetic states were inspected; real download, installation and external links were not exercised."
+  },
+  "toolbar": {
+    "wide": "Language, autostart feedback and restore feedback appeared immediately beneath their own controls, approximately 4 logical pixels apart, within the window. Skin menu remained beneath its control.",
+    "small": "At 1100×700, language and autostart feedback remained beneath their controls and within the window. Clicking restore immediately reset the window to 1440×900, where its feedback appeared beneath the control; an open restore popup at unchanged 1100×700 was therefore not observed.",
+    "synthetic_autostart": "Toggled on and off in v2; v3 was toggled on for the targeted hover check. Fixture controller only; no system login item was exercised.",
+    "initial_issue": "In v2, the language button tooltip appeared over part of the language popup close control while hovered.",
+    "fix_retest": "In v3, pointer left over language, autostart and restore buttons for approximately 1.8 seconds after opening each popup; no tooltip covered the popup and each close control remained visible."
+  },
+  "screenshots": [
+    {"file": "screenshots/online-update-footer-latest.png", "pixels": [2880, 1802], "run": "gui_v2"},
+    {"file": "screenshots/online-update-footer-available.png", "pixels": [2880, 1800], "run": "gui_v2"},
+    {"file": "screenshots/online-toolbar-language.png", "pixels": [2880, 1802], "run": "gui_v2", "note": "Initial tooltip overlap, before fix."},
+    {"file": "screenshots/online-toolbar-restore.png", "pixels": [2880, 1800], "run": "gui_v2"},
+    {"file": "screenshots/online-toolbar-autostart.png", "pixels": [2880, 1800], "run": "gui_v2"},
+    {"file": "screenshots/online-toolbar-language-small.png", "pixels": [2200, 1400], "run": "gui_v2"},
+    {"file": "screenshots/online-toolbar-language-final.png", "pixels": [2880, 1802], "run": "gui_v3", "note": "Pointer held over language button after opening; no tooltip overlap."}
+  ],
+  "limits": "GUI observations used synthetic fixture data only; update states and small-window layout were not repeated on v3 because the final change targeted tooltips. No real user configuration, external browser, download or installation was used."
+}

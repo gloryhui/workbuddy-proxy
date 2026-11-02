@@ -322,7 +322,7 @@ impl Proxy {
                             .font_weight(FontWeight::BOLD),
                     )
                     .child(
-                        crate::studio_fonts::latin(Label::new("PROXY · DESKTOP"), cx)
+                        Label::new("PROXY · DESKTOP")
                             .text_size(px(10.))
                             .line_height(px(14.))
                             .font_weight(FontWeight::MEDIUM)
@@ -516,7 +516,7 @@ impl Proxy {
                     .bg(rgb(color::SIDEBAR_LINE)),
             )
             .child(
-                crate::studio_fonts::latin(Label::new("WORKSPACE"), cx)
+                Label::new("WORKSPACE")
                     .text_size(px(10.))
                     .line_height(px(14.))
                     .font_weight(FontWeight::SEMIBOLD)
@@ -529,18 +529,15 @@ impl Proxy {
             .child(providers)
             .child(self.sidebar_relay(compact, cx))
             .child(
-                crate::studio_fonts::latin(
-                    Label::new(format!("v{}  ·  RUST / GPUI", env!("CARGO_PKG_VERSION"))),
-                    cx,
-                )
-                .text_size(px(10.))
-                .line_height(px(14.))
-                .font_weight(FontWeight::MEDIUM)
-                .text_color(rgb(color::SIDEBAR_MUTED))
-                .flex_shrink_0()
-                .h(px(20.))
-                .mt(px(if compact { 12. } else { 26. }))
-                .ml(px(8.)),
+                Label::new(format!("v{}  ·  RUST / GPUI", env!("CARGO_PKG_VERSION")))
+                    .text_size(px(10.))
+                    .line_height(px(14.))
+                    .font_weight(FontWeight::MEDIUM)
+                    .text_color(rgb(color::SIDEBAR_MUTED))
+                    .flex_shrink_0()
+                    .h(px(20.))
+                    .mt(px(if compact { 12. } else { 26. }))
+                    .ml(px(8.)),
             )
             .into_any_element()
     }
@@ -713,7 +710,7 @@ impl Proxy {
                             .w_full()
                             .min_w_0()
                             .child(
-                                crate::studio_fonts::latin(Label::new(address.to_owned()), cx)
+                                Label::new(address.to_owned())
                                     .text_color(rgb(color::SIDEBAR_TEXT))
                                     .text_size(px(13.))
                                     .line_height(px(19.))

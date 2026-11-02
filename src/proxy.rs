@@ -245,6 +245,9 @@ pub struct Bridge {
     started: std::time::Instant,
     pub management_key: String,
     update_busy: AtomicBool,
+    pub updater: Arc<crate::updater::Updater>,
+    update_installing: Arc<AtomicBool>,
+    update_recovering: AtomicBool,
     pub stop: Mutex<Option<oneshot::Sender<()>>>,
     pub port_changes: Mutex<Option<tokio::sync::mpsc::Sender<crate::port::Request>>>,
     mutations: tokio::sync::Mutex<()>,
@@ -281,6 +284,8 @@ impl Bridge {
         } else {
             stats::StatsHandle::for_controller(dir.clone())
         };
+        let updater = crate::updater::Updater::new(&dir);
+        let update_recovering = dir.join("update-maintenance").exists();
         Ok(Self {
             catalog: Arc::new(crate::catalog::Catalog::load(&dir)),
             routes: Mutex::new(routes),
@@ -297,6 +302,9 @@ impl Bridge {
             started: std::time::Instant::now(),
             management_key: crate::config::token(),
             update_busy: AtomicBool::new(false),
+            updater,
+            update_installing: Arc::new(AtomicBool::new(false)),
+            update_recovering: AtomicBool::new(update_recovering),
             stop: Mutex::new(None),
             port_changes: Mutex::new(None),
             mutations: tokio::sync::Mutex::new(()),
@@ -346,6 +354,18 @@ impl Bridge {
             return format!("{prefix}{}", report.json());
         }
         redact(text)
+    }
+    fn update_blocks_requests(&self) -> bool {
+        if self.update_installing.load(Ordering::Acquire) {
+            return true;
+        }
+        if self.update_recovering.load(Ordering::Acquire) {
+            if self.dir.join("update-maintenance").exists() {
+                return true;
+            }
+            self.update_recovering.store(false, Ordering::Release);
+        }
+        false
     }
     pub fn set_status(&self, text: String) {
         *self.status.lock().unwrap() = text.clone();
@@ -871,6 +891,12 @@ async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>)
             );
         }
     };
+    if a.update_blocks_requests() {
+        return fail(
+            StatusCode::SERVICE_UNAVAILABLE,
+            "Update installation is pending; retry after restart",
+        );
+    }
     // The deadline also prevents a caller with a valid key from holding an input slot forever.
     let bytes =
         match tokio::time::timeout(Duration::from_secs(30), to_bytes(body, BODY_LIMIT)).await {
@@ -1174,6 +1200,11 @@ impl Bridge {
                     | "workbuddy_check"
                     | "copy"
                     | "check_update"
+                    | "update_status"
+                    | "update_start"
+                    | "update_apply"
+                    | "update_cancel"
+                    | "update_ack"
                     | "record"
                     | "clear_logs"
                     | "model_metadata"
@@ -1258,12 +1289,55 @@ impl Bridge {
                     }
                 }
                 let _reset = Reset(&self.update_busy);
-                crate::update::check(
+                let start = "Checking GitHub Releases / 开始检查 GitHub 正式版本";
+                self.set_status(start.into());
+                self.updater.note(start);
+                let result = crate::update::check(
                     &self.client,
                     &self.dir,
                     p["force"].as_bool().unwrap_or(false),
                 )
-                .await
+                .await;
+                let message = match &result {
+                    Ok(text) => {
+                        let value: serde_json::Value =
+                            serde_json::from_str(text).map_err(|_| "Invalid release response")?;
+                        let tag = value["tag"].as_str().unwrap_or("");
+                        if value["available"] == true {
+                            format!("Update available {tag} / 发现新版本 {tag}")
+                        } else {
+                            format!("Already up to date {tag} / 当前已是最新版本 {tag}")
+                        }
+                    }
+                    Err(error) => format!(
+                        "Update check failed: {error} / 检查更新失败：{}",
+                        crate::i18n::message(error, true)
+                    ),
+                };
+                self.set_status(message.clone());
+                self.updater.note(&message);
+                result
+            }
+            "update_status" => {
+                serde_json::to_string(&self.updater.status()).map_err(|e| e.to_string())
+            }
+            "update_start" => serde_json::to_string(&self.updater.start(
+                &self.dir,
+                p["tag"].as_str().ok_or("Missing release version")?,
+            )?)
+            .map_err(|e| e.to_string()),
+            "update_apply" => serde_json::to_string(&self.updater.apply(
+                p["tag"].as_str().ok_or("Missing release version")?,
+                self.permits.clone(),
+                self.update_installing.clone(),
+            )?)
+            .map_err(|e| e.to_string()),
+            "update_cancel" => {
+                serde_json::to_string(&self.updater.cancel()?).map_err(|e| e.to_string())
+            }
+            "update_ack" => {
+                self.updater.acknowledge()?;
+                Ok("Update dismissed / 更新提示已关闭".into())
             }
             "snapshot" => {
                 let cfg = self.config.lock().unwrap();
@@ -1917,5 +1991,19 @@ mod tests {
         h.insert("authorization", "Bearer local".parse().unwrap());
         assert!(authorized(&h, "local"));
         assert!(!authorized(&h, "wrong"));
+    }
+    #[test]
+    fn a_restarted_core_does_not_admit_requests_until_update_health_is_verified() {
+        let temp = tempfile::tempdir().unwrap();
+        let marker = temp.path().join("update-maintenance");
+        std::fs::write(&marker, b"owned update marker").unwrap();
+        let bridge = Bridge::for_controller(Config::default(), temp.path().to_path_buf()).unwrap();
+        assert!(bridge.update_blocks_requests());
+        std::fs::remove_file(&marker).unwrap();
+        assert!(!bridge.update_blocks_requests());
+        bridge.update_installing.store(true, Ordering::Release);
+        assert!(bridge.update_blocks_requests());
+        bridge.update_installing.store(false, Ordering::Release);
+        assert!(!bridge.update_blocks_requests());
     }
 }

@@ -1,0 +1,58 @@
+{
+  "platform": "macOS",
+  "candidate_ui_sha256": "e93588fb16c8bfb83adf11437ffef6456b7938f84b669c731cfe37dfffab5be2",
+  "fixture": "isolated synthetic provider, masked synthetic key, 2 models and 3 requests totaling 36150 tokens",
+  "window_bounds_points": {
+    "wide": [
+      560,
+      251,
+      1440,
+      900
+    ],
+    "small": [
+      560,
+      251,
+      1100,
+      700
+    ]
+  },
+  "png_pixels": {
+    "wide": [
+      2880,
+      1800
+    ],
+    "small": [
+      2200,
+      1400
+    ]
+  },
+  "checks": [
+    "Native app opens with readable accessibility tree; navigation to providers, overview and statistics settings",
+    "Wide overview metrics and chart displayed, logo and navigation icons visible",
+    "Model editor displays mixed Chinese, English, Japanese, Korean, Arabic and emoji; synthetic text select-all, copy and paste verified by AX values and canceled with Escape",
+    "Protocol options dialog opened and dismissed using Escape",
+    "Studio to Mono to Studio theme change",
+    "Small window scroll reveals model table and test/save controls"
+  ],
+  "baseline_observation": "Both before and after show the WorkBuddy address check Operation not permitted in the isolated fixture.",
+  "limitations": [
+    "macOS only, not a full 40-screen regression",
+    "No real IME composition or screen reader",
+    "No real sync, login, auto-start or live upstream tested"
+  ],
+  "screenshots": [
+    "screenshots/size2-before-provider.png",
+    "screenshots/size2-before-overview.png",
+    "screenshots/size2-after-provider.png",
+    "screenshots/size2-after-overview.png",
+    "screenshots/size2-after-model-dialog.png",
+    "screenshots/size2-after-provider-small.png"
+  ],
+  "native_close": {
+    "initial_pid": 55810,
+    "pid_change": "After initial close and subsequent CUA state observation, parent discovered PID 56872 running from the same candidate bundle and holding the isolated gpui.lock. The trigger and parent PID of 56872 were not established.",
+    "cmd_w": "did not close the initial observed window",
+    "final_close": "Clicked the native close button on the current after window; subsequent read-only ps showed PID 56872 absent, lsof showed no holder of isolated gpui.lock, and pgrep found no process matching the after bundle. PID 55810 remained a zombie awaiting parent reaping; Core 54683 remained running.",
+    "observation_boundary": "No getApp, getState, screenshot, or AX observation was performed after final close."
+  }
+}

@@ -228,7 +228,7 @@ impl Statistics {
                     ),
             )
             .child(
-                crate::studio_fonts::latin(Label::new(amount), cx)
+                Label::new(amount)
                     .text_size(px(31.))
                     .line_height(px(44.))
                     .font_weight(FontWeight::BOLD)

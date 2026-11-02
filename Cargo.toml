@@ -1,6 +1,6 @@
 [package]
 name = "workbuddy-proxy"
-version = "0.6.0"
+version = "0.6.1"
 edition = "2024"
 rust-version = "1.88"
 description = "A small native proxy for WorkBuddy, with bounded memory and streaming passthrough"
@@ -30,7 +30,8 @@ cc = "1"
 [profile.release]
 lto = "thin"
 codegen-units = 1
-opt-level = 3
+# Size-focused after same-source loopback A/B. Keep unwind-based recovery.
+opt-level = "z"
 strip = true
 
 [dev-dependencies]

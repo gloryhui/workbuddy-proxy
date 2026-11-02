@@ -227,7 +227,7 @@ impl Backend {
                         && let Err(error) = &mut result {
                         *error = format!("Provider saved; subsequent action failed: {} / 供应商已保存，后续操作失败：{}",crate::i18n::message(error,false),crate::i18n::message(error,true));
                     }
-                    let snapshot = if matches!(job.tag.as_str(), "metadata" | "workbuddy_check") {
+                    let snapshot = if matches!(job.tag.as_str(), "metadata" | "workbuddy_check" | "update_status") {
                         None
                     } else if job.tag == "poll" {
                         result
@@ -240,7 +240,7 @@ impl Backend {
                             .and_then(|s| serde_json::from_str(&s).ok())
                     };
                     let config =
-                        if !matches!(job.tag.as_str(), "metadata" | "workbuddy_check") {
+                        if !matches!(job.tag.as_str(), "metadata" | "workbuddy_check" | "update_status") {
                             if job.tag == "poll" || (job.tag == "delete" && result.is_err()) {
                                 // Polls only read an existing, bounded, migrated
                                 // configuration. Never initialize or rewrite it.

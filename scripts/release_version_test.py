@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 
 from release_version import ROOT, manifest_version, project_version, release_version
 
@@ -73,14 +74,32 @@ class ReleaseVersionTests(unittest.TestCase):
                     self.assertIn('must match', result.stderr)
                     self.assertFalse(output.exists())
 
-    def test_rollback_guidance_is_in_the_user_document_snapshot(self):
-        from package import copy_user_docs
+    def test_portable_package_contains_runtime_and_licenses_without_documentation(self):
+        # Exercise the real staging/archive path. The repository already has
+        # README/CHANGELOG, docs, screenshots and historical QA to exclude.
         with tempfile.TemporaryDirectory(prefix='release-version-') as raw:
-            output = Path(raw) / 'docs'
-            copy_user_docs(output)
-            relative = 'studio_v2/UPGRADE_ROLLBACK.md'
-            self.assertEqual((output / relative).read_bytes(), (ROOT / 'docs' / relative).read_bytes())
-            self.assertFalse((output / 'studio_v2/benchmarks').exists())
+            directory = Path(raw)
+            core, ui = directory / 'core.exe', directory / 'ui.exe'
+            core.write_bytes(b'synthetic core')
+            ui.write_bytes(b'synthetic UI')
+            output = directory / 'packages'
+            subprocess.run([sys.executable, '-B', 'scripts/package.py',
+                            '--exe', str(core), '--gpui', str(ui),
+                            '--platform', 'windows-x64', '--output', str(output)],
+                           cwd=ROOT, check=True, capture_output=True)
+            with zipfile.ZipFile(next(output.glob('*.zip'))) as archive:
+                files = {name.split('/', 1)[1]: name for name in archive.namelist()}
+                self.assertEqual(set(files), {
+                    'workbuddy-proxy.exe', 'internal/workbuddy-settings.exe',
+                    'Diagnose.cmd', 'assets/icon-128.png', 'licenses/LICENSE',
+                    'licenses/THIRD-PARTY-NOTICES.txt',
+                    'licenses/LICENSE-APACHE-GPUI.txt', 'licenses/magpie-LICENSE.txt',
+                })
+                self.assertEqual(archive.read(files['workbuddy-proxy.exe']), core.read_bytes())
+                self.assertEqual(archive.read(files['internal/workbuddy-settings.exe']), ui.read_bytes())
+                self.assertEqual(archive.read(files['licenses/LICENSE']), (ROOT / 'LICENSE').read_bytes())
+                self.assertEqual(archive.read(files['licenses/THIRD-PARTY-NOTICES.txt']),
+                                 (ROOT / 'docs/GPUI-NOTICES.md').read_bytes())
 
 
 if __name__ == '__main__':

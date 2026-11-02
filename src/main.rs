@@ -20,6 +20,7 @@ mod proxy;
 mod session;
 mod stats;
 mod update;
+mod updater;
 #[path = "protocol/config.rs"]
 pub mod upstream_config;
 mod workbuddy;
@@ -37,9 +38,9 @@ use std::{
 
 // Bump when native controllers require new management commands or semantics.
 // Release versions alone cannot distinguish successive local review builds.
-/// 10: API-key provider presets and explicit Azure authentication settings.
+/// 13: confirmed online update commands, cancellation, progress and recovery.
 /// Protocol 9 is also used by the separate automatic-update development branch.
-const CONTROL_PROTOCOL: u32 = 12;
+const CONTROL_PROTOCOL: u32 = 13;
 
 #[derive(Serialize, Deserialize)]
 struct Instance {
@@ -51,7 +52,12 @@ struct Instance {
 fn main() {
     if let Err(e) = run() {
         let message = format!("WorkBuddy Proxy startup failed\n{e}");
-        if std::env::args().any(|arg| matches!(arg.as_str(), "--headless" | "--autostart")) {
+        if std::env::args().any(|arg| {
+            matches!(
+                arg.as_str(),
+                "--headless" | "--autostart" | "--apply-update"
+            )
+        }) {
             eprintln!("{message}");
         } else {
             platform::error(&message);
@@ -66,6 +72,10 @@ fn run() -> Result<(), String> {
     let mut args = std::env::args().skip(1);
     while let Some(arg) = args.next() {
         match arg.as_str() {
+            "--apply-update" => {
+                let path = args.next().ok_or("Missing update installation plan")?;
+                return updater::run_helper(std::path::Path::new(&path));
+            }
             "--headless" => headless = true,
             "--autostart" => autostart = true,
             "--port" => {

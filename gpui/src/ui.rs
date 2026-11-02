@@ -476,6 +476,12 @@ impl Proxy {
         self.sync_preset(window, cx);
     }
     fn app_controls(&self, cx: &mut Context<Self>) -> AnyElement {
+        let autostart = self.autostart_control(cx);
+        let autostart = self.autostart_toolbar(autostart, cx);
+        let language = self.language_menu(cx);
+        let language = self.language_toolbar(language, cx);
+        let restore = self.restore_control(cx);
+        let restore = self.restore_toolbar(restore, cx);
         // Figma 103:442: all seven original actions, in their original order.
         // The shared native buttons retain focus, tooltips and disabled rules.
         let toolbar = div()
@@ -493,7 +499,7 @@ impl Proxy {
             .on_mouse_down(MouseButton::Left, |_, _, cx| cx.stop_propagation())
             .on_double_click(|_, _, cx| cx.stop_propagation())
             .child(self.skin_control(cx))
-            .child(self.autostart_control(cx))
+            .child(autostart)
             .child(
                 crate::ui_components::system_button(
                     "check-update",
@@ -506,20 +512,8 @@ impl Proxy {
                     cx.listener(|this, _, window, cx| this.check_update_with_notice(window, cx)),
                 ),
             )
-            .child(self.language_menu(cx))
-            .child(
-                crate::ui_components::system_button(
-                    "restore-window-size",
-                    "studio/restore.svg",
-                    self.t(
-                        "恢复默认窗口尺寸（1440 × 900）",
-                        "Restore default window size (1440 × 900)",
-                    ),
-                    self.t("恢复默认窗口尺寸", "Restore default window size"),
-                    self.resetting_window,
-                )
-                .on_click(cx.listener(|this, _, window, cx| this.restore_window_size(window, cx))),
-            )
+            .child(language)
+            .child(restore)
             .child(
                 crate::ui_components::system_button(
                     "project-homepage",
@@ -541,9 +535,6 @@ impl Proxy {
                 .on_click(|_, _, cx| cx.open_url(FEEDBACK_URL)),
             )
             .into_any_element();
-        let toolbar = self.language_toolbar(toolbar, cx);
-        let toolbar = self.restore_toolbar(toolbar, cx);
-        let toolbar = self.autostart_toolbar(toolbar, cx);
         self.update_toolbar(toolbar, cx)
     }
     fn restore_window_size(&mut self, window: &mut Window, cx: &mut Context<Self>) {
@@ -1638,6 +1629,7 @@ impl Proxy {
         }
     }
     fn tick(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        self.poll_update(cx);
         if self.dir.join("gpui-stop.json").exists() || !self.dir.join("instance.json").exists() {
             self.capture(cx);
             let _ = self.drafts.persist(&self.dir);
@@ -1656,6 +1648,23 @@ impl Proxy {
             cx.activate(true);
         }
         while let Ok(mut reply) = self.backend.replies.try_recv() {
+            if reply.tag == "update_status" {
+                self.finish_update_status(reply.result, cx);
+                continue;
+            }
+            if reply.tag == "update_ack" {
+                continue;
+            }
+            if matches!(
+                reply.tag.as_str(),
+                "update_start" | "update_apply" | "update_cancel"
+            ) {
+                if let Some(snapshot) = reply.snapshot.take() {
+                    self.snapshot(snapshot, window, cx);
+                }
+                self.finish_update_action(reply.result, cx);
+                continue;
+            }
             if reply.tag == "language" && reply.result.is_err() {
                 self.restore_saved_language(reply.config.as_ref(), window, cx);
             }
@@ -2074,6 +2083,10 @@ impl Proxy {
         }
     }
     fn dismiss(&mut self, _: &Dismiss, window: &mut Window, cx: &mut Context<Self>) {
+        if self.update_notice.open {
+            self.close_update_notice(window, cx);
+            return;
+        }
         self.picker = None;
         self.picker_projection.clear();
         self.editing = None;
@@ -2165,7 +2178,8 @@ impl Proxy {
             || self.startup_sync_open
             || self.port_open
             || self.pending_port.is_some()
-            || self.protocol_open;
+            || self.protocol_open
+            || self.update_notice.open;
         if active && !self.dialog_open {
             crate::theme::dialog_overlay(self.delete_open, cx);
             self.dialog_open = true;
@@ -2179,6 +2193,7 @@ impl Proxy {
             });
             let is_provider_delete = self.delete_open;
             let is_protocol = self.protocol_open;
+            let is_update = self.update_notice.open;
             let is_picker = self.picker.is_some();
             let is_model_editor = self.editing.is_some();
             let is_sync_confirmation = self.sync_open || self.unsync_open;
@@ -2210,7 +2225,19 @@ impl Proxy {
                 }
                 let confirm_owner = owner.clone();
                 let owner = owner.clone();
-                let dialog = if is_provider_delete {
+                let dialog = if is_update {
+                    let height = (window.viewport_size().height - px(64.)).min(px(560.));
+                    let content_body = body.clone();
+                    dialog
+                        .border_0()
+                        .width(px(620.))
+                        .h(height)
+                        .p(px(24.))
+                        .rounded(px(16.))
+                        .bg(rgb(crate::theme::color::BG_BAR))
+                        .margin_top((window.viewport_size().height - height) / 2.)
+                        .content(move |content, _, _| content.gap_0().child(content_body.clone()))
+                } else if is_provider_delete {
                     let content_body = body.clone();
                     dialog
                         .width(px(532.))
@@ -2354,13 +2381,15 @@ impl Proxy {
                     dialog.w(px(width)).child(body.clone())
                 };
                 dialog
+                    .keyboard(!is_update)
                     .close_button(
-                        !(crate::theme::current_skin() == crate::theme::Skin::StudioIndigo
-                            && (is_protocol
-                                || is_picker
-                                || is_model_editor
-                                || is_provider_delete
-                                || is_sync_confirmation)),
+                        !is_update
+                            && !(crate::theme::current_skin() == crate::theme::Skin::StudioIndigo
+                                && (is_protocol
+                                    || is_picker
+                                    || is_model_editor
+                                    || is_provider_delete
+                                    || is_sync_confirmation)),
                     )
                     .overlay_closable(false)
                     .on_ok(move |_, window, cx| {
@@ -2566,7 +2595,9 @@ impl Proxy {
     }
 
     fn dialog_body(&mut self, window: &mut Window, cx: &mut Context<Self>) -> Option<AnyElement> {
-        let content = if self.port_open {
+        let content = if self.update_notice.open {
+            self.update_dialog(window, cx)
+        } else if self.port_open {
             self.port_dialog(cx)
         } else if self.protocol_open {
             self.protocol_dialog(window, cx)
@@ -2689,7 +2720,9 @@ impl Proxy {
     }
 
     fn modal_accessible_title(&self) -> &'static str {
-        if self.port_open {
+        if self.update_notice.open {
+            self.t("软件更新", "Software updates")
+        } else if self.port_open {
             self.t("修改本地端口", "Change local port")
         } else if self.protocol_open {
             self.t("协议选项", "Protocol options")
@@ -2904,13 +2937,16 @@ impl Render for ModalBody {
                         .aria_label(this.modal_accessible_title())
                         .a11y_synthetic_children(|tree| tree.parent_node().set_modal())
                         .track_focus(&this.modal_focus)
-                        .when(this.protocol_open || this.delete_open, |body| {
-                            // The modal view lives in Kit's window layer, outside
-                            // Proxy's dispatch tree. Its generic body focus needs
-                            // a local dismissal route too, not only input focus.
-                            body.key_context("ProxyModal")
-                                .on_action(cx.listener(Proxy::dismiss))
-                        })
+                        .when(
+                            this.protocol_open || this.delete_open || this.update_notice.open,
+                            |body| {
+                                // The modal view lives in Kit's window layer, outside
+                                // Proxy's dispatch tree. Its generic body focus needs
+                                // a local dismissal route too, not only input focus.
+                                body.key_context("ProxyModal")
+                                    .on_action(cx.listener(Proxy::dismiss))
+                            },
+                        )
                         .when(this.editing.is_some(), |body| {
                             body.key_context("ModelEditor")
                                 .on_action(cx.listener(Proxy::dismiss_model_input))

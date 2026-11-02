@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package executables/docs only: Windows installer staging ZIP, macOS drag-to-install DMG."""
+"""Package runtime files and licenses: Windows staging ZIP or macOS DMG."""
 import argparse
 import hashlib
 from pathlib import Path
@@ -10,19 +10,20 @@ import tempfile
 import zipfile
 from release_version import release_version
 
-USER_DOCS = (
-    'DESKTOP.md', 'GPUI-NOTICES.md', 'LICENSE-APACHE-GPUI.txt',
-    'third-party/magpie-LICENSE.txt', 'MODEL-CAPABILITIES.md',
-    'PROVIDER-PRESETS.md', 'protocol-compat/USAGE.md',
-    'protocol-compat/CONTRACTS.md', 'studio_v2/UPGRADE_ROLLBACK.md',
+LICENSE_FILES = (
+    ('LICENSE', 'LICENSE'),
+    ('docs/GPUI-NOTICES.md', 'THIRD-PARTY-NOTICES.txt'),
+    ('docs/LICENSE-APACHE-GPUI.txt', 'LICENSE-APACHE-GPUI.txt'),
+    ('docs/third-party/magpie-LICENSE.txt', 'magpie-LICENSE.txt'),
 )
 
 
-def copy_user_docs(destination):
-    for filename in USER_DOCS:
-        target = destination / filename
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy(Path('docs') / filename, target)
+def copy_licenses(destination):
+    # Explicit files only: never sweep docs, screenshots or historical evidence
+    # into a distributable. Notices are legal attribution, not user guides.
+    destination.mkdir(parents=True, exist_ok=True)
+    for source, filename in LICENSE_FILES:
+        shutil.copy(source, destination / filename)
 
 
 def main():
@@ -56,14 +57,8 @@ def main():
             else:
                 internal=root/'internal';internal.mkdir()
                 shutil.copy(args.gpui,internal/'workbuddy-settings.exe')
-            shutil.copy('docs/DESKTOP.md',root/'DESKTOP.md')
-        shutil.copy('README.md',root/'README.md');shutil.copy('LICENSE',root/'LICENSE');shutil.copy('CHANGELOG.md',root/'CHANGELOG.md')
         if args.platform.startswith('macos'):
-            # Ship user guidance and licenses, never development screenshots or evidence.
-            documentation=resources/'Documentation';documentation.mkdir()
-            for filename in ['README.md','LICENSE','CHANGELOG.md']:
-                shutil.copy(root/filename,documentation/filename)
-            copy_user_docs(documentation/'docs')
+            copy_licenses(resources/'Licenses')
             subprocess.run(['codesign','--force','--sign','-',str(app)],check=True)
             subprocess.run(['codesign','--verify','--strict',str(app)],check=True)
             try:
@@ -86,7 +81,7 @@ def main():
         if args.platform.startswith('macos'):
             return
         (root/'assets').mkdir();shutil.copy('assets/icon-128.png',root/'assets/icon-128.png')
-        copy_user_docs(root/'docs')
+        copy_licenses(root/'licenses')
         archive=out/(name+'.zip')
         with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
             for path in sorted(root.rglob('*')):

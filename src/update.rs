@@ -7,10 +7,24 @@ use std::{
 };
 const API: &str = "https://api.github.com/repos/gloryhui/workbuddy-proxy/releases/latest";
 const PAGE: &str = "https://github.com/gloryhui/workbuddy-proxy/releases/tag/";
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
+pub struct Release {
+    pub tag_name: String,
+    #[serde(default)]
+    pub name: String,
+    #[serde(default)]
+    pub body: String,
+    #[serde(default)]
+    pub published_at: String,
+    #[serde(default)]
+    pub assets: Vec<serde_json::Value>,
+}
 #[derive(Serialize, Deserialize)]
 struct Cache {
     checked_at: u64,
     tag: String,
+    #[serde(default)]
+    release: Option<Release>,
 }
 fn version(tag: &str) -> Option<[u32; 3]> {
     if tag.len() > 32 {
@@ -39,7 +53,7 @@ fn now() -> u64 {
         .as_secs()
 }
 fn cached(path: &Path) -> Option<Cache> {
-    if std::fs::metadata(path).ok()?.len() > 4096 {
+    if std::fs::metadata(path).ok()?.len() > 128 * 1024 {
         return None;
     }
     let value: Cache = serde_json::from_slice(&std::fs::read(path).ok()?).ok()?;
@@ -48,7 +62,7 @@ fn cached(path: &Path) -> Option<Cache> {
     }
     Some(value)
 }
-async fn network(client: &reqwest::Client, api: &str) -> Result<String, String> {
+async fn network(client: &reqwest::Client, api: &str) -> Result<Release, String> {
     let response = client
         .get(api)
         .header("Accept", "application/vnd.github+json")
@@ -80,26 +94,59 @@ async fn network(client: &reqwest::Client, api: &str) -> Result<String, String> 
     }
     let tag = data["tag_name"].as_str().ok_or("Invalid release version")?;
     version(tag).ok_or("Invalid release version")?;
-    Ok(tag.to_owned())
+    let release: Release = serde_json::from_value(data).map_err(|_| "Invalid release response")?;
+    if release.name.len() > 512 || release.body.len() > 64 * 1024 || release.published_at.len() > 64
+    {
+        return Err("Invalid release response".into());
+    }
+    Ok(release)
 }
 pub async fn check(client: &reqwest::Client, dir: &Path, force: bool) -> Result<String, String> {
     let path = dir.join("update-cache.json");
-    if !force && let Some(cache) = cached(&path) {
-        return result(&cache.tag, env!("CARGO_PKG_VERSION"), true);
-    }
-    let tag = tokio::time::timeout(std::time::Duration::from_secs(8), network(client, API))
-        .await
-        .map_err(|_| "Update check timed out")??;
-    // Disk failure must not turn a valid network result into 'up to date' or hide an update.
-    let _ = crate::config::write_json(
-        &path,
-        &Cache {
-            checked_at: now(),
-            tag: tag.clone(),
-        },
+    let (release, from_cache) = if !force && let Some(cache) = cached(&path) {
+        (
+            cache.release.unwrap_or(Release {
+                tag_name: cache.tag,
+                ..Default::default()
+            }),
+            true,
+        )
+    } else {
+        let release = tokio::time::timeout(std::time::Duration::from_secs(8), network(client, API))
+            .await
+            .map_err(|_| "Update check timed out")??;
+        let _ = crate::config::write_json(
+            &path,
+            &Cache {
+                checked_at: now(),
+                tag: release.tag_name.clone(),
+                release: Some(release.clone()),
+            },
+        );
+        (release, false)
+    };
+    let mut value: serde_json::Value = serde_json::from_str(&result(
+        &release.tag_name,
+        env!("CARGO_PKG_VERSION"),
+        from_cache,
+    )?)
+    .map_err(|_| "Invalid release response")?;
+    value["name"] = serde_json::json!(release.name);
+    value["body"] = serde_json::json!(release.body);
+    value["published_at"] = serde_json::json!(release.published_at);
+    value["platform"] = serde_json::json!(format!(
+        "{} / {}",
+        std::env::consts::OS,
+        std::env::consts::ARCH
+    ));
+    let support = crate::updater::availability(
+        &serde_json::json!({"tag_name":release.tag_name,"draft":false,"prerelease":false,"assets":release.assets}),
     );
-    result(&tag, env!("CARGO_PKG_VERSION"), false)
+    value["online_supported"] = serde_json::json!(support.is_ok());
+    value["online_error"] = serde_json::json!(support.err());
+    Ok(value.to_string())
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -127,6 +174,7 @@ mod tests {
             &Cache {
                 tag: "v0.5.0".into(),
                 checked_at: now(),
+                release: None,
             },
         )
         .unwrap();
@@ -136,6 +184,7 @@ mod tests {
             &Cache {
                 tag: "v0.5.0".into(),
                 checked_at: now() - 86401,
+                release: None,
             },
         )
         .unwrap();

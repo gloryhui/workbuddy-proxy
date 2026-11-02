@@ -77,6 +77,8 @@ jobs:
         run: python scripts/model_discovery.py --exe "${{ matrix.core }}"
       - name: Automatic model capabilities and offline cache
         run: python scripts/model_capabilities_test.py --exe "${{ matrix.core }}"
+      - name: Authenticated online updater API and visible check logs
+        run: python scripts/online_update_test.py --exe "${{ matrix.core }}" --output "bench-results/online-update-${{ matrix.platform }}.json"
       - name: Connection diagnostic checks
         run: python scripts/connection_test.py --exe "${{ matrix.core }}"
       - name: Live port and WorkBuddy migration checks

@@ -214,7 +214,7 @@ impl Proxy {
                     .child(Tag::custom(rgb(if studio { 0xeeedff } else { crate::theme::palette().tint }).into(), rgb(crate::theme::palette().dark).into(),
                         rgb(if studio { 0xeeedff } else { crate::theme::palette().tint }).into()).small().h(px(27.)).w(px(126.))
                         .rounded(px(8.)).text_size(px(11.))
-                        .when(studio, |tag| crate::studio_fonts::latin(tag, cx)
+                        .when(studio, |tag| tag
                             .font_weight(FontWeight::MEDIUM).line_height(px(16.)).px(px(11.)).py_0())
                         .child(tag)))
                 .child(Label::new(self.t("配置不同上游协议的思考参数，不改变 WorkBuddy 本地入口。",

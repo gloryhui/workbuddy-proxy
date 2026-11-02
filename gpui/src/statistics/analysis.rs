@@ -181,7 +181,7 @@ impl Statistics {
             .into_any_element()
     }
 
-    pub(super) fn analysis_cards(&self, cx: &App) -> AnyElement {
+    pub(super) fn analysis_cards(&self, _cx: &App) -> AnyElement {
         let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
         let summary = self.dashboard.as_ref().map(|dashboard| &dashboard.summary);
         let input = summary.and_then(|summary| summary.input_tokens);
@@ -226,15 +226,12 @@ impl Statistics {
                             .build(window, cx)
                     })
                     .child(
-                        crate::studio_fonts::latin(
-                            Label::new(usage_table::compact(total, self.zh)),
-                            cx,
-                        )
-                        .text_size(px(32.))
-                        .line_height(px(45.))
-                        .font_weight(FontWeight::BOLD)
-                        .text_color(rgb(INK))
-                        .when(studio, |value| value.min_w(px(157.))),
+                        Label::new(usage_table::compact(total, self.zh))
+                            .text_size(px(32.))
+                            .line_height(px(45.))
+                            .font_weight(FontWeight::BOLD)
+                            .text_color(rgb(INK))
+                            .when(studio, |value| value.min_w(px(157.))),
                     )
                     .child(
                         caption(self.t("当前范围已记录用量", "Recorded usage in this range"))
@@ -379,7 +376,7 @@ impl Statistics {
                     .gap(px(24.))
                     .when(studio, |row| row.mt(px(1.)).pr(px(6.)).h(px(38.)))
                     .child(
-                        crate::studio_fonts::latin(Label::new(usage_table::percent(cache)), cx)
+                        Label::new(usage_table::percent(cache))
                             .text_size(px(27.))
                             .line_height(px(38.))
                             .font_weight(FontWeight::BOLD)
@@ -423,7 +420,7 @@ impl Statistics {
                             .when(studio, |label| label.h(px(20.))),
                     )
                     .child(
-                        crate::studio_fonts::latin(Label::new(usage_table::percent(coverage)), cx)
+                        Label::new(usage_table::percent(coverage))
                             .text_size(px(18.))
                             .line_height(px(26.))
                             .font_weight(FontWeight::BOLD)

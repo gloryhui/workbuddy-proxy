@@ -1,360 +1,606 @@
-//! Feedback for the existing forced, public stable-release check.
+//! Native update dialog; all network, verification and installation work belongs to Core.
 use super::*;
-use gpui_kit::base::{DeferredPopover, GlobalState, Popup};
+use crate::update_dto::{Phase, Progress};
+use gpui_kit::component::Disableable;
 
-gpui_kit::actions!(update_notice, [Close]);
-
-pub(super) fn init(cx: &mut App) {
-    cx.bind_keys([KeyBinding::new("escape", Close, Some("UpdateNotice"))]);
+fn accessible_label(value: impl Into<SharedString>) -> Stateful<Div> {
+    let value = value.into();
+    div()
+        .id(value.clone())
+        .role(Role::Label)
+        .aria_label(value.clone())
+        .child(value.to_string())
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 struct UpdateInfo {
     available: bool,
     tag: String,
     current: String,
+    name: String,
+    body: String,
+    published_at: String,
+    platform: String,
+    online_supported: bool,
+    online_error: Option<String>,
 }
-
+fn valid_version(value: &str) -> bool {
+    let parts: Vec<_> = value
+        .strip_prefix('v')
+        .unwrap_or(value)
+        .split('.')
+        .collect();
+    value.len() <= 32
+        && parts.len() == 3
+        && parts.iter().all(|p| {
+            !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit()) && p.parse::<u32>().is_ok()
+        })
+}
 fn parse_result(text: &str) -> Result<UpdateInfo, ()> {
     let value: Value = serde_json::from_str(text).map_err(|_| ())?;
     let label = |name: &str| {
         value[name]
             .as_str()
-            .filter(|s| !s.is_empty() && s.len() <= 32 && !s.chars().any(char::is_control))
+            .filter(|v| valid_version(v))
             .map(str::to_owned)
             .ok_or(())
     };
+    let field = |name: &str, limit: usize| -> Result<String, ()> {
+        match value.get(name) {
+            None | Some(Value::Null) => Ok(String::new()),
+            Some(Value::String(s)) if s.len() <= limit => Ok(s.clone()),
+            _ => Err(()),
+        }
+    };
     Ok(UpdateInfo {
-        // The Core owns version ordering. Do not repeat its comparison here.
         available: value["available"].as_bool().ok_or(())?,
         tag: label("tag")?,
         current: label("current")?,
+        name: field("name", 512)?,
+        body: field("body", 64 * 1024)?,
+        published_at: field("published_at", 64)?,
+        platform: field("platform", 128)?,
+        online_supported: value
+            .get("online_supported")
+            .map(Value::as_bool)
+            .unwrap_or(Some(false))
+            .ok_or(())?,
+        online_error: value["online_error"].as_str().map(str::to_owned),
     })
 }
 
-enum Phase {
-    Checking,
-    Complete(UpdateInfo),
-    Failed(String),
-}
-
 pub(super) struct State {
-    open: bool,
-    phase: Phase,
-    focus: FocusHandle,
+    pub(super) open: bool,
+    checking: bool,
+    info: Option<UpdateInfo>,
+    error: Option<String>,
+    progress: Progress,
+    polling: bool,
+    last_poll: Instant,
+    first_status: bool,
     previous_focus: Option<FocusHandle>,
-    deferred: Option<DeferredPopover>,
-    viewport: Option<Size<Pixels>>,
-    focus_pending: bool,
+    scroll: ScrollHandle,
 }
-
+pub(super) fn init(_: &mut App) {}
 impl State {
-    pub(super) fn new(cx: &mut App) -> Self {
+    pub(super) fn new(_: &mut App) -> Self {
         Self {
             open: false,
-            phase: Phase::Checking,
-            focus: cx.focus_handle().tab_stop(false),
+            checking: false,
+            info: None,
+            error: None,
+            progress: Progress::default(),
+            polling: false,
+            last_poll: Instant::now() - Duration::from_secs(2),
+            first_status: true,
             previous_focus: None,
-            deferred: None,
-            viewport: None,
-            focus_pending: false,
+            scroll: ScrollHandle::new(),
         }
     }
+    fn locked(&self) -> bool {
+        self.progress.phase == Phase::Installing
+    }
 }
-
 impl Proxy {
     pub(super) fn check_update_with_notice(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        if self.busy {
+        if self.busy || self.dialog_open {
             return;
         }
-        if !self.update_notice.open {
-            self.update_notice.previous_focus =
-                window.focused(cx).or_else(|| Some(self.focus.clone()));
-            self.update_notice.deferred = Some(GlobalState::register_deferred_popover(cx));
-        }
+        self.update_notice.previous_focus = window.focused(cx);
         self.update_notice.open = true;
-        self.update_notice.phase = Phase::Checking;
-        self.update_notice.viewport = Some(window.viewport_size());
-        self.update_notice.focus.focus(window, cx);
+        if !matches!(
+            self.update_notice.progress.phase,
+            Phase::Idle | Phase::Cancelled
+        ) {
+            cx.notify();
+            return;
+        }
+        self.start_update_check(cx);
+    }
+    fn start_update_check(&mut self, cx: &mut Context<Self>) {
+        self.update_notice.scroll.set_offset(point(px(0.), px(0.)));
+        self.update_notice.checking = true;
+        self.update_notice.error = None;
+        self.update_notice.info = None;
+        self.update_notice.progress = Progress::default();
         self.send(
             "check_update",
-            vec![json!({"command":"check_update","force":true})],
+            vec![
+                json!({"command":"update_ack"}),
+                json!({"command":"check_update","force":true}),
+            ],
             cx,
         );
         if !self.busy {
             self.finish_update_notice(Err(self.status.clone()), cx);
         }
     }
-
     pub(super) fn finish_update_notice(
         &mut self,
         result: Result<String, String>,
         cx: &mut Context<Self>,
     ) {
-        self.update_notice.phase = match result {
+        self.update_notice.scroll.set_offset(point(px(0.), px(0.)));
+        self.update_notice.checking = false;
+        match result {
             Ok(text) => match parse_result(&text) {
-                Ok(info) => Phase::Complete(info),
+                Ok(info) => {
+                    self.update_notice.info = Some(info);
+                    self.update_notice.error = None;
+                }
                 Err(()) => {
-                    // A malformed reply must not become a false "up to date".
-                    // Keep the existing error area consistent with this view.
-                    self.error = true;
-                    self.status = self
-                        .t("更新检查返回了无效结果", "Invalid update check response")
-                        .into();
-                    Phase::Failed(self.status.clone())
+                    self.update_notice.error = Some(
+                        self.t("更新服务返回了无效结果", "Invalid update check response")
+                            .into(),
+                    )
                 }
             },
-            Err(reason) => Phase::Failed(reason),
+            Err(error) => self.update_notice.error = Some(error),
+        }
+        cx.notify();
+    }
+    pub(super) fn poll_update(&mut self, _cx: &mut Context<Self>) {
+        if !self.update_notice.polling
+            && self.update_notice.last_poll.elapsed() >= Duration::from_millis(500)
+            && (self.update_notice.first_status
+                || self.update_notice.open
+                || self.update_notice.progress.busy())
+            && self
+                .backend
+                .jobs
+                .try_send(Job {
+                    tag: "update_status".into(),
+                    steps: vec![json!({"command":"update_status"})],
+                })
+                .is_ok()
+        {
+            self.update_notice.polling = true;
+            self.update_notice.last_poll = Instant::now();
+        }
+    }
+    pub(super) fn finish_update_status(
+        &mut self,
+        result: Result<String, String>,
+        cx: &mut Context<Self>,
+    ) {
+        self.update_notice.polling = false;
+        let Ok(text) = result else {
+            return;
         };
-        // Dismissal is independent of the original request: no cancellation,
-        // no automatic reopening when a later reply arrives.
-        if self.update_notice.open {
+        let Ok(progress) = serde_json::from_str::<Progress>(&text) else {
+            return;
+        };
+        let first = self.update_notice.first_status;
+        self.update_notice.first_status = false;
+        if first
+            && matches!(
+                progress.phase,
+                Phase::Complete | Phase::Failed | Phase::RecoveryFailed
+            )
+            && !self.dialog_open
+        {
+            self.update_notice.open = true;
+        }
+        if progress != self.update_notice.progress {
+            if progress.phase != self.update_notice.progress.phase {
+                self.update_notice.scroll.set_offset(point(px(0.), px(0.)));
+            }
+            self.update_notice.progress = progress;
             cx.notify();
         }
     }
-
-    fn close_update_notice(&mut self, window: &mut Window, cx: &mut Context<Self>) {
-        if !self.update_notice.open {
+    pub(super) fn finish_update_action(
+        &mut self,
+        result: Result<String, String>,
+        cx: &mut Context<Self>,
+    ) {
+        self.busy = false;
+        match result {
+            Ok(text) => match serde_json::from_str::<Progress>(&text) {
+                Ok(p) => {
+                    if p.phase != self.update_notice.progress.phase {
+                        self.update_notice.scroll.set_offset(point(px(0.), px(0.)));
+                    }
+                    self.update_notice.progress = p;
+                    self.update_notice.error = None;
+                }
+                Err(_) => {
+                    self.update_notice.error =
+                        Some(self.t("更新状态无效", "Invalid update status").into())
+                }
+            },
+            Err(error) => self.update_notice.error = Some(error),
+        }
+        cx.notify();
+    }
+    pub(super) fn close_update_notice(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        if self.update_notice.locked() {
             return;
         }
-        let restore_focus =
-            self.update_notice.focus.contains_focused(window, cx) || window.focused(cx).is_none();
         self.update_notice.open = false;
-        self.update_notice.viewport = None;
-        self.update_notice.deferred = None;
-        if let Some(focus) = self.update_notice.previous_focus.take()
-            && restore_focus
-        {
+        if !self.update_notice.progress.busy() && !self.update_notice.checking {
+            let _ = self.backend.jobs.try_send(Job {
+                tag: "update_ack".into(),
+                steps: vec![json!({"command":"update_ack"})],
+            });
+            self.update_notice.progress = Progress::default();
+        }
+        if let Some(focus) = self.update_notice.previous_focus.take() {
             focus.focus(window, cx);
         }
         cx.notify();
     }
-
     pub(super) fn subscribe_update_notice_bounds(
         &self,
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
-        cx.observe_window_bounds(window, |this, window, cx| {
-            if !this.update_notice.open {
-                return;
+        cx.observe_window_bounds(window, |this, _, cx| {
+            if this.update_notice.open {
+                cx.notify();
             }
-            let viewport = window.viewport_size();
-            if this.update_notice.viewport == Some(viewport) {
-                return;
-            }
-            this.update_notice.viewport = Some(viewport);
-            if this.update_notice.focus_pending {
-                return;
-            }
-            this.update_notice.focus_pending = true;
-            cx.on_next_frame(window, |this, window, cx| {
-                this.update_notice.focus_pending = false;
-                if this.update_notice.open {
-                    this.update_notice.focus.focus(window, cx);
-                    cx.notify();
-                }
-            });
         })
         .detach();
     }
-
-    pub(super) fn update_toolbar(&self, toolbar: AnyElement, cx: &mut Context<Self>) -> AnyElement {
-        Popup::new("check-update-popup", toolbar)
-            .anchor(Anchor::TopRight)
-            .offset(px(73.))
-            .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
-            .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
-            .when(self.update_notice.open, |popup| {
-                popup.content(self.update_notice(cx))
-            })
-            .into_any_element()
+    pub(super) fn update_toolbar(&self, toolbar: AnyElement, _: &mut Context<Self>) -> AnyElement {
+        toolbar
     }
-
-    fn update_notice(&self, cx: &mut Context<Self>) -> AnyElement {
-        let (message, footer) = match &self.update_notice.phase {
-            Phase::Checking => (
-                self.t("◌  正在检查更新…", "◌  Checking for updates…")
-                    .to_owned(),
-                self.t("来源：GitHub Releases", "Source: GitHub Releases")
-                    .to_owned(),
-            ),
-            Phase::Complete(info) => (
-                if info.available {
-                    format!("{} {}", self.t("发现新版本", "Update available"), info.tag)
-                } else {
-                    self.t("当前已是最新版本", "Already up to date").to_owned()
-                },
-                format!(
-                    "{} {}",
-                    self.t("当前版本：", "Current version:"),
-                    info.current
-                ),
-            ),
-            Phase::Failed(reason) => (
-                crate::i18n::message(reason, self.zh)
-                    .lines()
-                    .next()
-                    .unwrap_or("")
+    fn update_primary(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        if self.busy || self.update_notice.checking {
+            return;
+        }
+        match self.update_notice.progress.phase {
+            Phase::Ready=>{let tag=self.update_notice.progress.tag.clone();self.send("update_apply",vec![json!({"command":"update_apply","tag":tag})],cx);}
+            Phase::Idle|Phase::Cancelled|Phase::Failed=>{
+                if let Some(info)=&self.update_notice.info && info.available && info.online_supported {
+                    let tag=info.tag.clone();self.update_notice.error=None;self.send("update_start",vec![json!({"command":"update_start","tag":tag})],cx);
+                } else if self.update_notice.error.is_some() || self.update_notice.progress.phase==Phase::Failed {self.start_update_check(cx);}
+                else {self.close_update_notice(window,cx);}
+            }
+            Phase::Complete=>self.close_update_notice(window,cx),
+            Phase::RecoveryFailed=>cx.open_url("https://github.com/gloryhui/workbuddy-proxy/blob/main/docs/studio_v2/UPGRADE_ROLLBACK.md"),
+            _=>{}
+        }
+    }
+    fn update_cancel(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        if matches!(
+            self.update_notice.progress.phase,
+            Phase::Downloading | Phase::Verifying | Phase::Preparing | Phase::Waiting
+        ) {
+            let waiting = self.update_notice.progress.phase == Phase::Waiting;
+            self.send(
+                "update_cancel",
+                vec![json!({"command":"update_cancel"})],
+                cx,
+            );
+            if waiting {
+                self.update_notice.open = false;
+            }
+        } else {
+            self.close_update_notice(window, cx);
+        }
+    }
+    pub(super) fn update_dialog(&self, window: &Window, cx: &mut Context<Self>) -> AnyElement {
+        let u = &self.update_notice;
+        let p = &u.progress;
+        let info = u.info.as_ref();
+        let (title, headline, description) = if u.checking {
+            (
+                self.t("检查软件更新", "Check software updates"),
+                self.t("正在检查最新版本…", "Checking for the latest release…")
                     .to_owned(),
                 self.t(
-                    "点击顶部刷新按钮重试。",
-                    "Click the update button to retry.",
+                    "正在连接 GitHub Releases，请稍候。",
+                    "Connecting to GitHub Releases. Please wait.",
                 )
                 .to_owned(),
-            ),
+            )
+        } else if let Some(error) = &u.error {
+            (
+                self.t("操作未完成", "Could not complete the update"),
+                self.t("请检查错误详情后重试", "Review the error and retry")
+                    .to_owned(),
+                crate::i18n::message(error, self.zh),
+            )
+        } else {
+            match p.phase {
+                Phase::Downloading=>(self.t("正在下载更新","Downloading update"),format!("{} {}",self.t("正在下载","Downloading"),p.tag),self.t("下载期间可以继续使用本地代理。","The local relay remains available during the download.").into()),
+                Phase::Verifying|Phase::Preparing=>(self.t("正在校验更新","Verifying update"),self.t("下载完成，正在校验文件","Download complete; verifying files").into(),self.t("校验文件、平台与应用版本，完成后再安装。","Checking the file, platform and application version before installation.").into()),
+                Phase::Ready=>(self.t("更新已准备就绪","Update ready"),format!("{} {}",self.t("安装并重新打开","Install and reopen"),p.tag),self.t("安装将短暂中断本地代理。我们会先等待进行中的请求完成，再退出并安装。","Installation briefly interrupts the relay. Active requests finish before the application exits and installs.").into()),
+                Phase::Waiting=>(self.t("正在准备安装","Preparing installation"),self.t("等待进行中的请求完成","Waiting for active requests").into(),self.t("新请求暂不接入。不会强制中断已有请求，也可以选择稍后安装。","New requests are paused. Active requests will not be interrupted; you can defer installation.").into()),
+                Phase::Installing=>(self.t("正在安装更新","Installing update"),format!("{} {}",self.t("正在安装","Installing"),p.tag),self.t("更新程序将在安装完成后重新打开应用。","The updater will reopen the application after installation.").into()),
+                Phase::Complete=>(self.t("更新完成","Update complete"),format!("{} {}",self.t("欢迎使用","Welcome to"),p.tag),self.t("已核对运行版本，本地代理已恢复。","The running version and local relay have been verified.").into()),
+                Phase::Failed|Phase::RecoveryFailed=>(self.t("本次更新未完成","Update was not completed"),self.t("请根据下方原因处理","Review the reason below").into(),p.error.as_deref().map(|e|crate::i18n::message(e,self.zh)).unwrap_or_default()),
+                Phase::Cancelled=>(self.t("已取消更新","Update cancelled"),self.t("当前版本未改变","The installed version is unchanged").into(),self.t("可以重新下载，或前往 GitHub 手动下载。","Retry the download or download manually from GitHub.").into()),
+                _=>match info {
+                    Some(i) if i.available=>(self.t("发现新版本","Update available"),if i.name.is_empty(){format!("WorkBuddy Proxy {}",i.tag)}else{i.name.clone()},String::new()),
+                    Some(i)=>(self.t("已是最新版本","Already up to date"),format!("WorkBuddy Proxy {}",i.current),self.t("当前已是最新正式版本，暂无需要安装的更新。","You are running the latest stable release.").into()),
+                    None=>(self.t("软件更新","Software updates"),self.t("检查最新正式版本","Check the latest stable release").into(),String::new()),
+                }
+            }
+        };
+        let updating = matches!(
+            p.phase,
+            Phase::Downloading
+                | Phase::Verifying
+                | Phase::Preparing
+                | Phase::Waiting
+                | Phase::Installing
+        );
+        let online_disabled = self.busy
+            || u.checking
+            || updating
+            || info.is_some_and(|i| i.available && !i.online_supported) && p.phase == Phase::Idle;
+        let primary = match p.phase {
+            Phase::Ready => self.t("重启并安装", "Restart and install"),
+            Phase::Waiting => self.t("等待中…", "Waiting…"),
+            Phase::Installing => self.t("正在安装…", "Installing…"),
+            Phase::Downloading => self.t("下载中…", "Downloading…"),
+            Phase::Verifying | Phase::Preparing => self.t("校验中…", "Verifying…"),
+            Phase::Complete => self.t("开始使用", "Continue"),
+            Phase::RecoveryFailed => self.t("查看恢复指引", "Recovery guide"),
+            Phase::Failed => self.t("重试更新", "Retry update"),
+            _ if u.checking => self.t("正在检查…", "Checking…"),
+            _ if u.error.is_some() => self.t("重新检查", "Retry check"),
+            _ if info.is_some_and(|i| i.available) => self.t("立即更新", "Update now"),
+            _ => self.t("完成", "Done"),
+        };
+        let no_update = !u.checking
+            && u.error.is_none()
+            && matches!(p.phase, Phase::Idle | Phase::Cancelled)
+            && info.is_some_and(|i| !i.available);
+        let cancel = match p.phase {
+            Phase::Downloading | Phase::Verifying | Phase::Preparing => {
+                self.t("取消下载", "Cancel download")
+            }
+            Phase::Ready | Phase::Waiting => self.t("稍后安装", "Install later"),
+            _ => self.t("暂不更新", "Not now"),
+        };
+        let mut content = crate::ui_components::scrollable_form("update-release-scroll")
+            .track_scroll(&u.scroll)
+            .gap(px(12.));
+        content = content.child(
+            accessible_label(headline)
+                .text_size(px(22.))
+                .line_height(px(31.))
+                .font_weight(FontWeight::BOLD)
+                .whitespace_normal()
+                .text_color(rgb(INK)),
+        );
+        if !description.is_empty() {
+            content = content.child(
+                accessible_label(description)
+                    .text_size(px(13.))
+                    .line_height(px(18.))
+                    .whitespace_normal(),
+            );
+        }
+        if let Some(i) = info {
+            content = content.child(
+                accessible_label(format!(
+                    "{} v{}  →  {} {}",
+                    self.t("当前版本", "Current"),
+                    i.current.trim_start_matches('v'),
+                    self.t("最新正式版", "Latest stable"),
+                    i.tag
+                ))
+                .text_size(px(12.)),
+            );
+            let date = chrono::DateTime::parse_from_rfc3339(&i.published_at)
+                .map(|d| {
+                    d.with_timezone(&chrono::Local)
+                        .format("%Y-%m-%d")
+                        .to_string()
+                })
+                .unwrap_or_default();
+            content = content.child(
+                accessible_label(format!(
+                    "{date} · {} · GitHub Releases",
+                    match i.platform.as_str() {
+                        "macos / aarch64" => "macOS · Apple Silicon",
+                        "macos / x86_64" => "macOS · Intel",
+                        "windows / x86_64" => "Windows · x64",
+                        other => other,
+                    }
+                ))
+                .text_size(px(12.)),
+            );
+            if !updating && p.phase != Phase::Complete {
+                if !i.body.is_empty() {
+                    content = content
+                        .child(div().h(px(1.)).bg(rgb(crate::theme::color::BORDER)))
+                        .child(
+                            accessible_label(self.t("本次更新", "Release notes"))
+                                .text_size(px(15.))
+                                .font_weight(FontWeight::BOLD),
+                        );
+                    for (index, line) in i.body.lines().enumerate() {
+                        if !line.trim().is_empty() {
+                            content = content.child(
+                                div()
+                                    .id(("release-line", index))
+                                    .role(Role::Label)
+                                    .aria_label(line.trim_start_matches('#').trim().to_owned())
+                                    .text_size(px(13.))
+                                    .line_height(px(18.))
+                                    .whitespace_normal()
+                                    .child(line.trim_start_matches('#').trim().to_owned()),
+                            );
+                        }
+                    }
+                }
+                if let Some(reason) = &i.online_error {
+                    content = content.child(
+                        accessible_label(crate::i18n::message(reason, self.zh))
+                            .whitespace_normal()
+                            .text_size(px(12.))
+                            .text_color(rgb(MUTED)),
+                    );
+                }
+            }
+        }
+        if p.phase == Phase::Downloading && p.total > 0 {
+            let ratio = (p.downloaded as f32 / p.total as f32).clamp(0., 1.);
+            content = content
+                .child(accessible_label(format!(
+                    "{:.0}% · {:.1} / {:.1} MiB",
+                    ratio * 100.,
+                    p.downloaded as f64 / 1048576.,
+                    p.total as f64 / 1048576.
+                )))
+                .child(
+                    div()
+                        .w_full()
+                        .h(px(6.))
+                        .rounded(px(3.))
+                        .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
+                        .child(
+                            div()
+                                .w(relative(ratio))
+                                .h_full()
+                                .rounded(px(3.))
+                                .bg(rgb(crate::theme::palette().primary)),
+                        ),
+                );
+        }
+        if let Some(path) = &p.backup_path {
+            content = content.child(
+                accessible_label(format!("{} {path}", self.t("备份位置：", "Backup:")))
+                    .whitespace_normal()
+                    .text_size(px(12.)),
+            );
+        }
+        let tag = info.map(|i| i.tag.as_str()).unwrap_or(&p.tag);
+        let github = if valid_version(tag) {
+            format!("https://github.com/gloryhui/workbuddy-proxy/releases/tag/{tag}")
+        } else {
+            "https://github.com/gloryhui/workbuddy-proxy/releases/latest".into()
         };
         div()
-            .id("check-update-notice")
-            .role(Role::Dialog)
-            .aria_label(self.t("检查软件更新", "Check software updates"))
-            .key_context("UpdateNotice")
-            .track_focus(&self.update_notice.focus)
-            .tab_group()
-            .w(px(299.))
-            .h(px(113.))
+            .w_full()
+            .h((window.viewport_size().height - px(112.)).min(px(512.)))
             .flex()
             .flex_col()
-            .gap_0()
-            .border_1()
-            .border_color(rgb(crate::theme::color::BORDER))
-            .rounded(px(12.))
-            .bg(rgb(crate::theme::color::BG_BAR))
-            .shadow(vec![BoxShadow {
-                color: rgba(0x121c3d1f).into(),
-                offset: point(px(0.), px(8.)),
-                blur_radius: px(22.),
-                spread_radius: px(0.),
-                inset: false,
-            }])
-            .on_action(cx.listener(|this, _: &Close, window, cx| {
-                this.close_update_notice(window, cx);
-                cx.stop_propagation();
-            }))
-            .on_mouse_down(MouseButton::Left, |_, window, _| window.prevent_default())
-            .on_mouse_down_out(
-                cx.listener(|this, _, window, cx| this.close_update_notice(window, cx)),
-            )
+            .gap(px(16.))
             .child(
                 div()
-                    .h(px(38.))
-                    .flex_none()
                     .flex()
-                    .items_start()
-                    .justify_between()
-                    .pl(px(13.))
-                    .pr(px(6.))
+                    .items_center()
+                    .gap(px(12.))
                     .child(
-                        Label::new(self.t("检查软件更新", "Check software updates"))
-                            .w(px(238.))
-                            .h(px(20.))
-                            .mt(px(11.))
-                            .text_size(px(14.))
-                            .line_height(px(20.))
+                        div()
+                            .flex_1()
+                            .text_size(px(17.))
+                            .line_height(px(24.))
                             .font_weight(FontWeight::BOLD)
-                            .text_color(rgb(INK)),
+                            .id("software-update-heading")
+                            .role(Role::Label)
+                            .aria_label(title)
+                            .child(title),
                     )
                     .child(
-                        crate::ui_components::action_button("close-check-update")
+                        crate::ui_components::action_button("close-software-update")
                             .ghost()
-                            .w(px(27.))
-                            .h(px(27.))
+                            .size(px(24.))
                             .p_0()
-                            .border_0()
-                            .mt(px(6.))
-                            .flex_none()
-                            .rounded(px(7.))
-                            .bg(rgb(crate::theme::color::BG_TABLE_HEAD))
-                            .accessibility_label(self.t("关闭更新提示", "Close update notice"))
+                            .disabled(u.locked())
+                            .accessibility_label(self.t("关闭更新提示", "Close update dialog"))
                             .child(
-                                Label::new("×")
-                                    .text_size(px(16.))
-                                    .line_height(px(22.))
-                                    .text_color(rgb(MUTED)),
+                                Icon::default()
+                                    .path("studio/update-close.svg")
+                                    .with_size(px(13.7)),
                             )
                             .on_click(cx.listener(|this, _, window, cx| {
                                 this.close_update_notice(window, cx)
                             })),
                     ),
             )
+            .child(content)
             .child(
                 div()
-                    .id("check-update-result")
-                    .aria_label(message.clone())
-                    .w(px(254.))
-                    .h(px(20.))
-                    .ml(px(13.))
-                    .mt(px(5.))
-                    .overflow_hidden()
-                    .child(
-                        Label::new(message)
-                            .w_full()
-                            .text_size(px(12.))
-                            .line_height(px(17.))
-                            .font_weight(FontWeight::MEDIUM)
-                            .truncate()
-                            .text_color(rgb(
-                                if matches!(self.update_notice.phase, Phase::Failed(_)) {
-                                    crate::theme::color::DANGER
-                                } else {
-                                    crate::theme::color::TEXT_2
-                                },
-                            )),
-                    ),
+                    .h(px(1.))
+                    .flex_none()
+                    .bg(rgb(crate::theme::color::BORDER)),
             )
             .child(
-                Label::new(footer)
-                    .w(px(265.))
-                    .h(px(20.))
-                    .ml(px(13.))
-                    .mt(px(11.))
-                    .text_size(px(11.))
-                    .line_height(px(15.))
-                    .text_color(rgb(MUTED)),
+                div().flex().items_center().justify_between().child(
+                    accessible_label("GitHub Releases")
+                        .text_size(px(12.))
+                        .text_color(rgb(MUTED)),
+                ),
+            )
+            .child(
+                div()
+                    .flex()
+                    .justify_end()
+                    .flex_none()
+                    .gap(px(8.))
+                    .when(!no_update, |row| {
+                        row.child(
+                            crate::ui_components::action_button("cancel-software-update")
+                                .label(cancel)
+                                .disabled(u.locked() || (self.busy && !u.checking))
+                                .on_click(cx.listener(|this, _, window, cx| {
+                                    this.update_cancel(window, cx)
+                                })),
+                        )
+                    })
+                    .child(
+                        crate::ui_components::action_button("download-update-github")
+                            .label(self.t("前往 GitHub", "Go to GitHub"))
+                            .disabled(u.locked())
+                            .on_click(move |_, _, cx| cx.open_url(&github)),
+                    )
+                    .child(
+                        crate::ui_components::action_button("apply-software-update")
+                            .primary()
+                            .label(primary)
+                            .disabled(online_disabled)
+                            .on_click(
+                                cx.listener(|this, _, window, cx| this.update_primary(window, cx)),
+                            ),
+                    ),
             )
             .into_any_element()
     }
 }
-
 #[cfg(test)]
 mod tests {
-    use super::{UpdateInfo, parse_result};
-
+    use super::parse_result;
     #[test]
-    fn respects_the_core_result_without_reordering_versions() {
-        assert_eq!(
-            parse_result(
-                r#"{"available":true,"tag":"v0.6.0","current":"0.5.7","cached":false,"url":"https://github.com/gloryhui/workbuddy-proxy/releases/tag/v0.6.0"}"#
-            ),
-            Ok(UpdateInfo {
-                available: true,
-                tag: "v0.6.0".into(),
-                current: "0.5.7".into()
-            })
-        );
-        assert_eq!(
-            parse_result(r#"{"available":false,"tag":"v0.5.0","current":"0.5.7"}"#),
-            Ok(UpdateInfo {
-                available: false,
-                tag: "v0.5.0".into(),
-                current: "0.5.7".into()
-            })
-        );
-    }
-
-    #[test]
-    fn incomplete_or_wrongly_typed_replies_cannot_claim_up_to_date() {
+    fn requires_typed_result_and_safe_versions_but_tolerates_older_metadata() {
+        let i = parse_result(r#"{"available":true,"tag":"v0.6.0","current":"0.5.7"}"#).unwrap();
+        assert!(i.available);
+        assert!(!i.online_supported);
         for text in [
             "{}",
             "null",
-            "[]",
             "not json",
-            r#"{"available":"false","tag":"v0.5.7","current":"0.5.7"}"#,
-            r#"{"available":false,"tag":"","current":"0.5.7"}"#,
-            r#"{"available":false,"tag":"v0.5.7"}"#,
-            r#"{"available":false,"tag":"v0.5.7\n","current":"0.5.7"}"#,
+            r#"{"available":"false","tag":"v0.6.0","current":"0.5.7"}"#,
+            r#"{"available":true,"tag":"../bad","current":"0.5.7"}"#,
+            r#"{"available":false,"tag":"v0.6.0\n","current":"0.5.7"}"#,
         ] {
-            assert!(parse_result(text).is_err(), "{text}");
+            assert!(parse_result(text).is_err());
         }
     }
 }

@@ -68,29 +68,29 @@
 | 🪟 单例启动 | 重复打开唤回原窗口，保留未保存的输入，复用后台核心 |
 | 🚀 开机启动 | 默认关闭；开启后登录系统只启动托盘与代理服务 |
 | 📜 运行日志 | 新日志自动滚动到底部，支持清空与复制，不记录 Key 或对话内容 |
-| 🔔 更新检测 | 自动检测 GitHub 正式 Release，也可手动检查 |
+| 🔔 软件更新 | Release 详情、确认下载、SHA-256 校验和失败恢复 |
 
 最多 **64 个供应商、合计 256 个模型**，共用一个转发核心和一个本地端口。
 
 ## 下载与安装
 
-### v0.6.0 · Studio V2
+### v0.6.1 · Studio V2
 
-**v0.6.0（2026-11-01）** 带来 Studio V2：重整供应商、模型与统计页面，新增 Studio Indigo 皮肤，完善草稿和弹窗取消流程，并修复统计启动恢复及全屏背景对齐。[查看更新记录](CHANGELOG.md#v060--2026-11-01)。
+**v0.6.1（2026-11-02）** 新增带 Release 详情的更新弹窗与确认式在线安装，精简内嵌字体、图片资源和安装包内容，修复 Windows 卸载残留与工具栏浮层位置。[查看更新记录](CHANGELOG.md#v061--2026-11-02)。
 
 提供 Windows x64、Mac Apple Silicon 和 Mac Intel 安装包，保留四协议接入、逐请求价格快照及 Anthropic / Azure 预设。
 
 | 系统 | 下载 | 体积 | 安装方式 |
 | --- | --- | ---: | --- |
-| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/workbuddy-proxy-0.6.0-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
-| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/workbuddy-proxy-0.6.0-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
-| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/workbuddy-proxy-0.6.0-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Windows 10 / 11，x64 | [Windows 安装包](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.1/workbuddy-proxy-0.6.1-windows-x64-setup.exe) | 见 Release 附件 | 中文向导，自选目录，默认创建桌面图标 |
+| Mac，Apple Silicon | [M 系列芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.1/workbuddy-proxy-0.6.1-macos-arm64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
+| Mac，Intel | [Intel 芯片 DMG](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.1/workbuddy-proxy-0.6.1-macos-x64.dmg) | 见 Release 附件 | 打开 DMG，将 WorkBuddy Proxy.app 拖入“应用程序” |
 
 Windows 正式分发只提供安装 EXE，Mac 只提供 DMG。程序名称统一为 **WorkBuddy Proxy**。无需 Rust、Python、Node 或 WebView 运行时。分享时直接发送安装包，每个人填写自己的 Key。
 
 Windows 与 Mac 使用同一套设置界面。关闭设置窗口后，托盘 / 菜单栏和转发核心继续运行；需要设置时再打开。
 
-[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.0/SHA256SUMS.txt)
+[全部版本](https://github.com/gloryhui/workbuddy-proxy/releases) · [SHA256 校验值](https://github.com/gloryhui/workbuddy-proxy/releases/download/v0.6.1/SHA256SUMS.txt)
 
 > 升级前先从托盘或菜单栏退出旧版。当前 Mac 包为 ad-hoc 签名，未做 Developer ID 公证；Windows 未做 Authenticode 签名，系统可能提示未知开发者。
 
@@ -157,7 +157,7 @@ WorkBuddy 的旧会话可能保留旧模型配置；新增或修改模型后若�
 
 每次打开设置默认进入**数据统计**。左侧的**数据统计 / 供应商管理**为可折叠一级目录，供应商为二级列表；新增、复制、删除固定在列表底部，滚动时仍可访问。进入供应商后采用三栏布局：供应商侧栏、模型设置、全局设置与滚动日志。右侧“同步 WorkBuddy”作用于所有已保存供应商；“取消同步”先提示“移除并重启 / 仅移除 / 取消”；移除代理添加的条目，如曾覆盖已有条目则恢复原条目。只有成功移除后才执行用户选择的重启；取消不会改动配置。简体中文 / English 默认跟随系统，点击右上角地球图标选择语言，菜单标记当前选项，界面每次只显示一种语言。旁边的四角图标将窗口恢复为默认 **1440 × 900** 逻辑像素，最小尺寸仍为 **1100 × 700**；全屏或最大化时先退出该状态再恢复尺寸。主图标与系统托盘 / 菜单栏保持一致。
 
-右上角开机启动使用电源图标，开启时高亮，悬停显示当前状态，点击切换；“检查更新”仅显示刷新图标，悬停可查看说明。GitHub 图标打开项目主页，反馈图标打开项目的新建 Issue 页面，由用户填写并提交。
+右上角开机启动使用电源图标，开启时高亮，悬停显示当前状态，点击切换；“检查更新”打开软件更新弹窗，可查看最新 Release 信息、检查日志并选择更新或前往 GitHub。GitHub 图标打开项目主页，反馈图标打开项目的新建 Issue 页面，由用户填写并提交。
 
 顶部图标依次为皮肤设置（衣服）、开机启动、检查更新、语言、恢复默认窗口尺寸、GitHub 和反馈，版本号显示在副标题末尾。**开机启动默认关闭**，旧配置未设置此项时也保持关闭。开启后，Windows / macOS 在当前用户登录系统时启动托盘与代理服务，不自动弹出设置；关闭会移除本软件的登录启动项，选择立即保存。设置失败会回滚选择并显示错误。手动打开应用仍会显示设置窗口；Windows 卸载时清理本软件的启动项并保留配置。
 
@@ -215,11 +215,13 @@ WorkBuddy 的列表名称为 **显示名 · 供应商**，模型 ID 使用 **供
 
 以上截图拍摄于 2026-11-01，来自 v0.6.0 Studio V2 的 macOS 原生界面，使用隔离配置、掩码演示 Key、loopback 上游和合成请求；未使用真实 WorkBuddy 配置或调用历史。平台、版本与原图来源见[截图说明](docs/screenshots/README.md)。
 
-### Release 更新检测
+### 软件更新（v0.6.1 起）
 
-打开设置窗口时自动检查本仓库的最新正式 Release，成功结果缓存 24 小时。右上角可手动立即检查；发现更高版本后按钮显示下载入口，点击打开对应 Release 页面。按数字比较主 / 次 / 修订版本，不会把预发布版当作正式更新。
+点击右上角“检查更新”，显示检查过程、最新正式 Release 的名称、版本、发布日期和完整说明，检查过程写入活动日志。底部提供“立即更新”“前往 GitHub”“暂不更新”；检查失败显示具体原因并可重试。仅按主 / 次 / 修订版本的数字比较，不将预发布版或相同版本当作升级。
 
-检测不需要 GitHub 登录，不发送供应商 Key；网络超时为 8 秒。失败只显示状态 / 日志，保留当前程序继续使用。下载并替换程序前，先从托盘 / 菜单栏退出旧版。
+“立即更新”先下载适用于本机的官方安装包并校验 SHA-256，此时代理继续运行，可以取消下载。完成准备后，必须再确认“重启并安装”；程序暂停接入新请求、等待已有请求完成，备份配置和 SQLite（含 WAL），再由独立更新进程替换程序、重新启动并核对版本和服务。等待期间可以选择稍后安装；退出后仍有独立进度窗口和更新日志。安装或启动失败会尝试恢复程序和数据，只有实际检查通过才显示已恢复；恢复失败提供手动指引。
+
+从只读 DMG、缺少对应平台安装包、校验信息或写入权限时不会强行安装，可以前往 GitHub 手动下载。不会重启 WorkBuddy，不自动提权，也不移除系统安全标记。已发布的 v0.5.7/v0.6.0 不包含本次更新器，首次使用需手动安装 v0.6.1 或后续版本。Mac ARM 已作隔离升级与回滚验证；Windows 在线安装与自动回滚的专项实机验收仍待完成。详见 [自动更新与恢复](docs/AUTO-UPDATE.md)。
 
 ### 上游没有模型列表接口？
 
@@ -400,7 +402,7 @@ Anthropic 官方预设使用 `https://api.anthropic.com/v1` 和 Messages 协议�
 | 上游读取 | 单次读取的空闲超时 180 秒 |
 | Go 会话缓存 | 最多 64 个会话，每个最多 128 个消息哈希，按需清理 |
 
-界面按需运行。模型目录由用户配置；用量摘要保存在本地 SQLite；程序没有后台余额轮询、自动下载安装更新、遥测或聊天正文日志。更完整的取舍见 [设计与性能边界](docs/ARCHITECTURE.md)，历史测量见 [首版记录](docs/PERFORMANCE.md)。
+界面按需运行。模型目录由用户配置；用量摘要保存在本地 SQLite；程序没有后台余额轮询、遥测或聊天正文日志；下载和安装更新均由用户确认后执行。更完整的取舍见 [设计与性能边界](docs/ARCHITECTURE.md)，历史测量见 [首版记录](docs/PERFORMANCE.md)。
 
 ## 常见问题
 

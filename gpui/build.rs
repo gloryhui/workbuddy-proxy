@@ -1,5 +1,8 @@
 fn main() {
     if std::env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
+        // This settings executable has no plug-in ABI. Cocoa callbacks use
+        // registered addresses; exporting every Rust dependency is unnecessary.
+        println!("cargo:rustc-link-arg-bin=workbuddy-proxy-gpui=-Wl,-no_exported_symbols");
         cc::Build::new()
             .file("../native/workbuddy_restart.m")
             .flag("-fobjc-arc")

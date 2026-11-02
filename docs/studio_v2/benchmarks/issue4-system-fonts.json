@@ -1,0 +1,379 @@
+{
+  "issue": 4,
+  "source_base": "763f2aefb5e644d84250590aaa3bdc96a90b6e11",
+  "branch": "codex/issue4-system-fonts",
+  "date": "2026-11-02",
+  "host": "aarch64-apple-darwin",
+  "rustc": "1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "1.98.1 (797e8a9bc 2026-08-05)",
+  "release_parameters": [
+    "--release",
+    "--locked"
+  ],
+  "profile": {
+    "opt-level": "s",
+    "lto": "thin",
+    "codegen-units": 1,
+    "strip": true,
+    "panic": "abort",
+    "MACOSX_DEPLOYMENT_TARGET": "12.0"
+  },
+  "packaging": {
+    "script": "scripts/package.py",
+    "platform": "macos-arm64",
+    "dmgbuild": "1.6.7",
+    "ds-store": "1.3.3",
+    "mac-alias": "2.2.3",
+    "format": "UDZO",
+    "filesystem": "HFS+",
+    "signing": "ad-hoc, both builds; no release/notarization",
+    "documentation_policy": "Runtime files and four legal notices only; README, CHANGELOG, docs, screenshots and history excluded on all platforms. Windows ZIP uses exact payload regression test; macOS DMG inspected read-only.",
+    "same_new_packaging_rules_for_both_font_variants": true,
+    "script_sha256": "141ff0670e558efa171810186d7645003612958ab8a1f051c6a85d8a284cd969"
+  },
+  "ui_binaries": [
+    {
+      "stage": "before",
+      "bytes": 43810848,
+      "sha256": "f756a70901da78e19185b9b9c1e4a29b1cfaaa0ee8fce35b0f8f2cd7772c491c",
+      "path": "dist/issue4-system-fonts/before/workbuddy-proxy-gpui"
+    },
+    {
+      "stage": "after",
+      "bytes": 16697632,
+      "sha256": "936d9ab715d74287c4ac8acbaa2ab2fe9dae741249035385fb0f36171a0df457",
+      "path": "dist/issue4-system-fonts/after/workbuddy-proxy-gpui"
+    }
+  ],
+  "ui_comparison": {
+    "before_bytes": 43810848,
+    "after_bytes": 16697632,
+    "reduction_bytes": 27113216,
+    "reduction_percent": 61.887
+  },
+  "dmg_comparison": {
+    "before_bytes": 39109397,
+    "after_bytes": 15970708,
+    "reduction_bytes": 23138689,
+    "reduction_percent": 59.164
+  },
+  "packages": [
+    {
+      "stage": "before",
+      "dmg_bytes": 39109397,
+      "dmg_sha256": "a0317699e434d3ce8e6a290cbe0da7838a79a497420afe3c613682e21d408211",
+      "packaged_ui_bytes": 43828976,
+      "complete_font_blobs": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "loose_font_files": [],
+      "both_bundle_signatures": "verified",
+      "ui_nonsignature_code_equal": true,
+      "core_nonsignature_code_equal": true,
+      "core_normalized_sha256": "14ff7afda824dd7e5aec9c92ed147d5ede1d829f712ee00855c7349d1b472fde",
+      "payload_files": [
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist",
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns",
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources",
+        "Contents/Info.plist",
+        "Contents/MacOS/workbuddy-proxy",
+        "Contents/Resources/Licenses/LICENSE",
+        "Contents/Resources/Licenses/LICENSE-APACHE-GPUI.txt",
+        "Contents/Resources/Licenses/THIRD-PARTY-NOTICES.txt",
+        "Contents/Resources/Licenses/magpie-LICENSE.txt",
+        "Contents/Resources/app-icon.icns",
+        "Contents/_CodeSignature/CodeResources"
+      ],
+      "documentation_and_screenshots_absent": true
+    },
+    {
+      "stage": "after",
+      "dmg_bytes": 15970708,
+      "dmg_sha256": "263089e1dc29c4f97ab28980d4c4ee01b5582a0506977d914042114b02767e36",
+      "packaged_ui_bytes": 16715760,
+      "complete_font_blobs": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "loose_font_files": [],
+      "both_bundle_signatures": "verified",
+      "ui_nonsignature_code_equal": true,
+      "core_nonsignature_code_equal": true,
+      "core_normalized_sha256": "14ff7afda824dd7e5aec9c92ed147d5ede1d829f712ee00855c7349d1b472fde",
+      "payload_files": [
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Info.plist",
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/MacOS/workbuddy-proxy-gpui",
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/Resources/app-icon.icns",
+        "Contents/Helpers/WorkBuddy Proxy Settings.app/Contents/_CodeSignature/CodeResources",
+        "Contents/Info.plist",
+        "Contents/MacOS/workbuddy-proxy",
+        "Contents/Resources/Licenses/LICENSE",
+        "Contents/Resources/Licenses/LICENSE-APACHE-GPUI.txt",
+        "Contents/Resources/Licenses/THIRD-PARTY-NOTICES.txt",
+        "Contents/Resources/Licenses/magpie-LICENSE.txt",
+        "Contents/Resources/app-icon.icns",
+        "Contents/_CodeSignature/CodeResources"
+      ],
+      "documentation_and_screenshots_absent": true
+    }
+  ],
+  "font_blob_audit": [
+    {
+      "file": "NotoSansSC-Regular.otf",
+      "bytes": 8331336,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    },
+    {
+      "file": "NotoSansSC-Medium.otf",
+      "bytes": 8345436,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    },
+    {
+      "file": "NotoSansSC-Bold.otf",
+      "bytes": 8543168,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    },
+    {
+      "file": "Inter-Regular.ttf",
+      "bytes": 411640,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    },
+    {
+      "file": "Inter-Medium.ttf",
+      "bytes": 417300,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    },
+    {
+      "file": "Inter-SemiBold.ttf",
+      "bytes": 419744,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    },
+    {
+      "file": "Inter-Bold.ttf",
+      "bytes": 420428,
+      "before_contains_full_font": true,
+      "after_contains_full_font": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.652
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "seconds": 3.762
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "seconds": 10.356
+    },
+    {
+      "name": "release",
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--release",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "seconds": 53.092
+    },
+    {
+      "name": "intel-type-check",
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "gpui/Cargo.toml",
+        "--locked",
+        "--target",
+        "x86_64-apple-darwin"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "readonly-dmg-audit",
+      "exit_code": 0,
+      "coverage": "both bundle signatures, all nonsignature code identity, same core, seven font blobs and no loose font files"
+    },
+    {
+      "name": "release-version-and-windows-zip-payload",
+      "command": [
+        "python3.14",
+        "-B",
+        "scripts/release_version_test.py"
+      ],
+      "exit_code": 0,
+      "tests_passed": 7,
+      "coverage": "real Windows ZIP staging/archive with synthetic executables; exact eight-file payload; no docs, three MD files or screenshots"
+    },
+    {
+      "name": "packaging-python-syntax",
+      "exit_code": 0,
+      "files": [
+        "scripts/package.py",
+        "scripts/release_version_test.py",
+        "scripts/windows_installer_test.py"
+      ]
+    }
+  ],
+  "gui_review": "../issue4-gui-review.json",
+  "gui_binary_identity": {
+    "before": true,
+    "after": true
+  },
+  "idle_rss_observations": {
+    "before": {
+      "pid": 15945,
+      "window": [
+        1100,
+        700
+      ],
+      "page": "providers",
+      "samples_kib": [
+        78560,
+        78848,
+        79152
+      ],
+      "method": "ps RSS, three 1-second samples after GUI baseline review; observational, not a controlled benchmark"
+    },
+    "after": {
+      "pid": 17472,
+      "window": [
+        1100,
+        700
+      ],
+      "page": "providers",
+      "samples_kib": [
+        90832,
+        90144,
+        90112
+      ],
+      "method": "ps RSS, three 1-second samples after broader after-GUI review; observational, workload differs from before"
+    }
+  },
+  "rss_comparability": "not controlled; after process visited more pages/dialogs. No memory reduction or cold-start claim.",
+  "synthetic_data_verified_after_gui": {
+    "requests": 3,
+    "tokens": 36150
+  },
+  "unchanged_original_issue5_issue6_documents": {
+    "AGENTS.md": "428296892c5a72a268be39f4b23ac7b10bdbaf07a1fe9afc459b39ea06c0d104",
+    "docs/CODEX_FAST_WORKFLOW.md": "ea24362d3510b7ce4c508317659af0021027d35d29ddac9b022ca0838317cc57",
+    "docs/studio_v2/DESIGN_SPEC.md": "63313eefb919f92d9e8dd4a018e240d02323f3a56305d3d20e804aafbe95dcfa",
+    "docs/studio_v2/figma_node_map.md": "46001ff15b174b04a19bf0f2512fbeba45b13ac723ffe8d07f26a1b82a8e8e2b"
+  },
+  "modified_tracked_files": [
+    "gpui/assets/fonts/Inter-Bold.ttf",
+    "gpui/assets/fonts/Inter-Medium.ttf",
+    "gpui/assets/fonts/Inter-Regular.ttf",
+    "gpui/assets/fonts/Inter-SemiBold.ttf",
+    "gpui/assets/fonts/NotoSansSC-Bold.otf",
+    "gpui/assets/fonts/NotoSansSC-Medium.otf",
+    "gpui/assets/fonts/NotoSansSC-Regular.otf",
+    "gpui/assets/fonts/README.md",
+    "gpui/src/main.rs",
+    "gpui/src/model_table.rs",
+    "gpui/src/protocol_options.rs",
+    "gpui/src/statistics/analysis.rs",
+    "gpui/src/statistics/detail_layout.rs",
+    "gpui/src/statistics/overview.rs",
+    "gpui/src/statistics/recent.rs",
+    "gpui/src/statistics/settings_layout.rs",
+    "gpui/src/statistics/trends.rs",
+    "gpui/src/studio_fonts.rs",
+    "gpui/src/theme.rs",
+    "gpui/src/ui/protocol_dialog.rs",
+    "gpui/src/ui/providers.rs",
+    "gpui/src/ui/relay.rs",
+    "gpui/src/ui/sidebar.rs",
+    "gpui/src/usage_chart.rs",
+    "gpui/src/usage_table.rs",
+    "packaging/windows/workbuddy-proxy.iss",
+    "scripts/package.py",
+    "scripts/release_version_test.py",
+    "scripts/windows_installer_test.py"
+  ],
+  "unverified": [
+    "Windows GUI/build/installer A/B",
+    "macOS Intel GUI/DMG A/B",
+    "1x scaling",
+    "real IME composition and screen reader",
+    "controlled cold-start and idle-RSS benchmark",
+    "Inno Setup compiler and running-app Windows uninstall regression; source/test changes only on macOS"
+  ],
+  "lifecycle": {
+    "all_fixture_children_stopped_and_waited": true,
+    "temporary_cleanup": {
+      "session_directory_removed": true,
+      "python_bytecode_directory_removed": true,
+      "removed_logical_bytes": 241341725,
+      "retained_session_temporary_bytes": 0,
+      "cargo_caches": "preserved",
+      "delivery_artifacts": "dist/issue4-system-fonts/",
+      "packaging_followup_logical_bytes": 67132511,
+      "packaging_followup_removed": true
+    },
+    "system_volume_free_bytes_after_cleanup": 43863416832
+  },
+  "windows_uninstall_fix": {
+    "implementation": "InitializeUninstall matches executable full paths after long-path expansion, sends WM_CLOSE to installed windows, waits up to 15s for executable write locks to clear, aborts on locked/inaccessible files. internal is removed only if empty.",
+    "test_added": "Windows installer integration now uninstalls with tray/core/settings running, checks normal stats shutdown, complete binary/internal removal, preservation of another same-named core and user content.",
+    "inno_compiler_available": false,
+    "windows_runtime_tested": false,
+    "sources": [
+      "https://jrsoftware.org/ishelp/topic_setup_closeapplications.htm",
+      "https://jrsoftware.org/ishelp/topic_scriptevents.htm",
+      "https://jrsoftware.org/ishelp/topic_uninstalldeletesection.htm"
+    ]
+  }
+}

@@ -193,9 +193,7 @@ impl Statistics {
                                             crate::theme::font::LABEL
                                         }))
                                         .when(studio, |id| {
-                                            crate::studio_fonts::latin(id, cx)
-                                                .line_height(px(14.))
-                                                .font_weight(FontWeight::NORMAL)
+                                            id.line_height(px(14.)).font_weight(FontWeight::NORMAL)
                                         })
                                         .text_color(rgb(MUTED)),
                                 ),
@@ -287,9 +285,7 @@ impl Statistics {
                                     ))
                                     .text_size(px(if studio { 13. } else { 12. }))
                                     .when(studio, |price| {
-                                        crate::studio_fonts::latin(price, cx)
-                                            .line_height(px(18.))
-                                            .font_weight(FontWeight::SEMIBOLD)
+                                        price.line_height(px(18.)).font_weight(FontWeight::SEMIBOLD)
                                     })
                                     .text_color(rgb(INK)),
                                 )

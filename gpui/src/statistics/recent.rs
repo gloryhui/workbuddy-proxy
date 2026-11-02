@@ -167,18 +167,15 @@ impl Statistics {
                         .gap_x(px(if wide { 0. } else { 14. }))
                         .gap_y(px(10.))
                         .child(
-                            crate::studio_fonts::latin(
-                                Label::new(usage_table::timestamp(row.started_at_ms, self.zh)),
-                                cx,
-                            )
-                            // Figma row labels start 8px below the 28px tag.
-                            // A centered line receives half its top margin.
-                            .mt(px(5.))
-                            .when(wide, |label| label.w(px(150.)))
-                            .text_size(px(12.))
-                            .line_height(px(17.))
-                            .font_weight(FontWeight::NORMAL)
-                            .text_color(rgb(MUTED)),
+                            Label::new(usage_table::timestamp(row.started_at_ms, self.zh))
+                                // Figma row labels start 8px below the 28px tag.
+                                // A centered line receives half its top margin.
+                                .mt(px(5.))
+                                .when(wide, |label| label.w(px(150.)))
+                                .text_size(px(12.))
+                                .line_height(px(17.))
+                                .font_weight(FontWeight::NORMAL)
+                                .text_color(rgb(MUTED)),
                         )
                         .child(
                             Label::new(if row.provider_name.is_empty() {

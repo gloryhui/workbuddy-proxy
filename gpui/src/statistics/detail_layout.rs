@@ -8,7 +8,7 @@ fn row(
     value: String,
     color: u32,
     wrap: bool,
-    cx: &App,
+    _cx: &App,
 ) -> Stateful<Div> {
     let studio = crate::theme::current_skin() == crate::theme::Skin::StudioIndigo;
     let name = name.into();
@@ -55,7 +55,7 @@ fn row(
                         .font_weight(FontWeight::NORMAL)
                         .when(!wrap, |label| label.relative().top(px(-4.)))
                         .when(!wrap && index == 0, |label| {
-                            crate::studio_fonts::latin(label, cx).font_weight(FontWeight::MEDIUM)
+                            label.font_weight(FontWeight::MEDIUM)
                         })
                 }),
         )

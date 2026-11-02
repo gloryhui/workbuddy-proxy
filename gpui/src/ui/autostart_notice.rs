@@ -59,27 +59,29 @@ impl Proxy {
                 .text_color(rgb(crate::theme::palette().primary))
         })
         .on_click(cx.listener(|this, _, window, cx| this.toggle_autostart(window, cx)));
-        let owner = cx.entity().downgrade();
-        // Kit's string tooltip retains its text for the current hover. Use the
-        // native GPUI host and the existing styled Tooltip view, observing the
-        // owner only for this visible view's lifetime, so an in-place result
-        // updates it without another mouse move or an additional polling timer.
-        button.interactivity().tooltip(move |_, cx| {
-            let owner = owner.clone();
-            cx.new(|cx| {
-                if let Some(proxy) = owner.upgrade() {
-                    cx.observe(&proxy, |_, _, cx| cx.notify()).detach();
-                }
-                gpui_kit::component::tooltip::Tooltip::element(move |_, cx| {
-                    let text = owner
-                        .upgrade()
-                        .map(|proxy| proxy.read(cx).autostart_tooltip_text())
-                        .unwrap_or_else(|| "Launch at login".into());
-                    Label::new(text)
+        if !self.autostart_notice.open {
+            let owner = cx.entity().downgrade();
+            // Kit's string tooltip retains its text for the current hover. Use the
+            // native GPUI host and the existing styled Tooltip view, observing the
+            // owner only for this visible view's lifetime, so an in-place result
+            // updates it without another mouse move or an additional polling timer.
+            button.interactivity().tooltip(move |_, cx| {
+                let owner = owner.clone();
+                cx.new(|cx| {
+                    if let Some(proxy) = owner.upgrade() {
+                        cx.observe(&proxy, |_, _, cx| cx.notify()).detach();
+                    }
+                    gpui_kit::component::tooltip::Tooltip::element(move |_, cx| {
+                        let text = owner
+                            .upgrade()
+                            .map(|proxy| proxy.read(cx).autostart_tooltip_text())
+                            .unwrap_or_else(|| "Launch at login".into());
+                        Label::new(text)
+                    })
                 })
-            })
-            .into()
-        });
+                .into()
+            });
+        }
         button.into_any_element()
     }
 
@@ -189,11 +191,11 @@ impl Proxy {
         toolbar: AnyElement,
         cx: &mut Context<Self>,
     ) -> AnyElement {
-        // Figma104:1600: full-toolbar right anchor, window y24+93=117.
+        // Anchor feedback to its own toolbar button, including after resizing.
         Popup::new("autostart-popup", toolbar)
             .anchor(Anchor::TopRight)
-            .offset(px(73.))
-            .w(px(crate::theme::size::SYSTEM_TOOLBAR_WIDTH))
+            .offset(px(4.))
+            .w(px(crate::theme::size::SYSTEM_BUTTON))
             .h(px(crate::theme::size::TOP_ICON_ROW_HEIGHT))
             .when(self.autostart_notice.open, |popup| {
                 popup.content(self.autostart_notice(cx))

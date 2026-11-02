@@ -1,0 +1,60 @@
+{
+  "platform": "macOS",
+  "scope": "Isolated synthetic controller and GPUI fixture; no real download, install, external link, user configuration, or production process modified.",
+  "fixtures": {
+    "initial_pid": 78061,
+    "final_pid": 79954,
+    "window_points": {
+      "wide": [
+        1440,
+        901
+      ],
+      "small": [
+        1100,
+        700
+      ]
+    },
+    "observed_png_pixels": {
+      "wide": [
+        2880,
+        1802
+      ],
+      "small": [
+        2200,
+        1400
+      ]
+    },
+    "scale": "2x"
+  },
+  "initial_findings": [
+    "Buttons along bottom of 620x560 dialog had their bottom border and rounded corners clipped.",
+    "AX dialog exposed buttons but not visible title, version, date and body.",
+    "After scrolling the body, switching to Ready retained the scroll offset and hid the Ready headline."
+  ],
+  "final_retest": {
+    "available": "Centered approximately 620x560; release name, current and new versions, date, body, and three buttons visible. Bottom borders and corners are complete at both window sizes.",
+    "accessibility": "AX exposes dialog title, version, date, paragraphs and expanded log entries. Tab and Shift+Tab visibly move focus; Enter activates the focused close control; Escape closes the dismissible dialog. AX reported focused UI element as window during the visible focus checks; screen reader was not enabled or tested.",
+    "scroll": "Long body and timestamped logs scroll inside dialog; Available scrolled to bottom then Ready resets to top and shows the full Ready headline.",
+    "latest": "Synthetic latest shows current and latest v0.6.0 and completion button; sample fixture logs are static and not evidence of actual latest-check logging.",
+    "error": "Synthetic HTTP 403 shows the error, timestamped log and retry button; retry returned to checking then the same synthetic error.",
+    "close_icon": "Visible and clickable; exact 13.7-point glyph measurement not independently verified from screenshots."
+  },
+  "initial_fixture_behavior": [
+    "Synthetic download displayed 42% and 42.0/100.0 MiB; cancel returned cancelled state.",
+    "Synthetic Ready to Waiting via install, then Later closed dialog and controller phase returned Ready.",
+    "Synthetic Installing disabled close, cancel and main action; clicking them and Escape did not dismiss dialog."
+  ],
+  "limitations": [
+    "Only macOS synthetic controller path tested; no real package download, installation, rollback, external browser or restart.",
+    "No VoiceOver or physical screen-reader validation.",
+    "Figma comparison was against the supplied design criteria; no independent Figma node inspection in this subtask."
+  ],
+  "screenshots": [
+    "screenshots/online-update-available.png",
+    "screenshots/online-update-downloading.png",
+    "screenshots/online-update-small.png",
+    "screenshots/online-update-available-final.png",
+    "screenshots/online-update-small-final.png",
+    "screenshots/online-update-error-final.png"
+  ]
+}

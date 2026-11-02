@@ -409,12 +409,13 @@ impl Plot for UsagePlot {
             window,
             cx,
         );
-        // Figma52:2 uses Inter Regular for dates, and Noto for the value axis.
-        // Scoping the native painter preserves its grid, scaling and series.
-        let date_style = crate::studio_fonts::latin_style(cx).map(|mut style| {
-            style.font_weight = Some(FontWeight::NORMAL);
-            style
-        });
+        // Keep the Studio date labels' normal weight while inheriting the
+        // same native family and system glyph fallback as the rest of the UI.
+        let date_style = (crate::theme::current_skin() == crate::theme::Skin::StudioIndigo)
+            .then_some(TextStyleRefinement {
+                font_weight: Some(FontWeight::NORMAL),
+                ..Default::default()
+            });
         window.with_text_style(date_style, |window| {
             PlotLabel::new(date_labels).paint(
                 &Bounds {
