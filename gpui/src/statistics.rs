@@ -3,14 +3,26 @@
 //! storage sections.
 //!
 //! Everything is server-side: the page sends one `stats_dashboard` and one
-//! `stats_requests` (or `stats_breakdown`) query per filter generation and
-//! discards replies whose generation is stale. It never opens the database and
-//! never blocks the shared settings backend.
+//! `stats_requests` (or `stats_breakdown`) query per visible report batch and
+//! uses each resource's seq/tag plus current identity to discard stale replies.
+//! It never opens the database and never blocks the shared settings backend.
 //!
 //! `Statistics` 本身是 GPUI UI 线程上的 Entity；`StatsScheduler` 另起
 //! `statistics-control` 客户端线程，通过本机管理 HTTP 查询 Core。UI 负责筛选
 //! 草稿、generation、分页历史和结果合并，后台只负责按顺序执行已经构造的命令。
 //! 统计页不直接打开 SQLite，也不占用供应商设置使用的 `settings-control` 队列。
+//!
+//! 完整链路是：GPUI 点击/选择事件先落到 `Statistics` 的 UI 方法，方法把当前
+//! 控件值收集成 JSON 命令并交给 `StatsScheduler`；唯一的 `statistics-control`
+//! 线程通过本机管理 HTTP POST 给 Core；Core 查询完成后 worker 发送 `StatsReply`；
+//! UI tick 排空 replies，释放同资源 in-flight，再由 `handle_reply` 做 seq、tab、
+//! generation/tag、request id 等资源专属校验，最后合并 DTO 并 `cx.notify()`
+//! 触发 GPUI 重绘。`submit_*` 或刷新函数返回只代表 intent 已登记，不代表 Core
+//! 已处理完，更不代表 DTO 已经显示。
+//!
+//! `Context<Self>` 是 GPUI 在调用方法时传入的能力句柄，不是 Spring 容器，也不会
+//! 自动注入依赖；`Entity<T>`/`WeakEntity<T>` 只是共享状态对象的句柄。`clone`
+//! 通常复制句柄而不复制整个页面，`WeakEntity` 还避免父页面与子表格形成所有权环。
 use crate::{
     stats_backend::{JobKey, JobKind, StatsReply, StatsScheduler},
     stats_dto::{
@@ -243,8 +255,8 @@ pub struct Statistics {
     visible: bool,
     /// 统计专用 scheduler，持有到 Core 的短超时查询队列和回复 channel。
     backend: StatsScheduler,
-    /// Sequence of the newest dashboard read; a reply that does not match is
-    /// stale and must not touch the overview.
+    /// 最近一次 dashboard 读的 scheduler seq；0 表示当前没有可接受回复。
+    /// dashboard Reply 的主去旧比较就是这里，而不是每次重算或比较 DTO。
     dashboard_seq: u64,
     /// The WorkBuddy import panel: switch, health line and counters.
     import: crate::workbuddy_import::ImportPanel,
@@ -274,9 +286,11 @@ pub struct Statistics {
     import_seq: u64,
     /// How many more times the page may poll a running scan.
     import_poll: crate::stats_controller::ScanPollBudget,
-    /// Identity of the newest rows read; replies carrying an older identity are
-    /// dropped instead of clearing a newer pending flag.
+    /// 请求明细最近一次发布的 ReplyGate。主门禁比较其中 seq，且 `route_reply`
+    /// 要求当前 tab 仍是 Requests；身份里的其他字段描述请求归属，不由
+    /// `may_apply_seq` 逐项比较。
     rows_gate: crate::stats_controller::ReplyGate,
+    /// 汇总分析使用独立 ReplyGate 和分页器，避免与请求明细互相覆盖。
     groups_gate: crate::stats_controller::ReplyGate,
     /// Full health snapshot; the badge reflects collection health, not the fact
     /// that a query happened to succeed.
@@ -335,6 +349,9 @@ pub struct Statistics {
     /// Current model search text (R07 wires the input to this).
     model_query: String,
     model_options: Vec<FilterOptionDto>,
+    /// Core dashboard 回复携带的筛选身份键，绑定筛选数据与 cursor 语义。
+    /// UI 当前只接收并保存它；Reply 去旧主要靠各资源 seq/tab/tag，不能说
+    /// 每个回复都会重新比较这个 DTO 字段。
     filter_key: String,
     tab: Tab,
     page_size: i64,
@@ -452,6 +469,9 @@ impl Statistics {
         let settings_scroll = ScrollHandle::new();
         let settings_anchors =
             std::array::from_fn(|_| ScrollAnchor::for_handle(settings_scroll.clone()));
+        // 这是显式构造，不是依赖注入：统计页拥有 scheduler 值，scheduler
+        // 内部另起标准线程。`dir` clone 只是为 worker 复制一个拥有所有权的
+        // PathBuf，使 UI 与线程不必借用同一个栈变量。
         let backend = StatsScheduler::new(dir.clone());
         let page_input = cx.new(|cx| InputState::new(window, cx).placeholder("1"));
         let page_size_select =
@@ -586,6 +606,8 @@ impl Statistics {
         let price_write = cx.new(|cx| InputState::new(window, cx).placeholder("0"));
         let price_label = cx
             .new(|cx| InputState::new(window, cx).placeholder(if zh { "备注" } else { "Label" }));
+        // 表格 Entity 被父页面持有；表格若再强持有父 Entity 会形成所有权环。
+        // `downgrade` 得到 WeakEntity，clone 只复制这个弱句柄。
         let owner = cx.entity().downgrade();
         let usage_table = cx.new(|cx| {
             TableState::new(
@@ -621,6 +643,9 @@ impl Statistics {
             .sortable(false)
             .col_movable(false)
         });
+        // `async move` 把 wake 接收端移入 UI task。每个循环同时等待 worker
+        // 唤醒或 250ms timer，先到者推动一次 `tick`。这是 GPUI 前台协调任务，
+        // 真正阻塞式 HTTP 仍在 stats worker；两者不是同一个线程。
         let timer = cx.spawn_in(window, async move |this, cx| {
             loop {
                 // worker 完成回复时会向容量为 1 的 wake channel 发送信号。
@@ -648,6 +673,8 @@ impl Statistics {
                 }
             }
         });
+        // `_timer` 作为 Statistics 字段保留 Task 句柄；页面 Entity 存活期间
+        // 定时协调任务才有明确所有者。这里没有 Arc 包裹整页状态。
         let mut this = Self {
             preferences_dir: dir,
             saved_preferences: preferences.clone(),
@@ -919,8 +946,9 @@ impl Statistics {
         }
         self.visible = visible;
         if !visible {
-            // 取消尚未从 scheduler 发出的读请求；已经到 Core 的请求无法撤回，
-            // 但回执会因 identity/seq 失效或被 `!visible` 分支丢弃。
+            // `cancel_reads` 只删 scheduler 中尚未发出的读 intent，已进入 worker
+            // 的 HTTP 和 Core 中可能已开始的 SQL 都不会被物理取消。随后分开失效
+            // 各页面身份/pending；迟到的读 Reply 仍要经过各自分派门禁。
             self.persist_preferences();
 
             self.backend.cancel_reads();
@@ -941,8 +969,9 @@ impl Statistics {
         }
         if visible {
             // 重新进入页面建立新的 dashboard/列表批次，同时刷新健康、设置、
-            // 导入、筛选选项、价格和 provider mode 等独立资源。写请求不会因
-            // 离开页面而从 scheduler 队列中取消。
+            // 导入、筛选选项、价格和 provider mode 等独立资源。真正 dashboard
+            // 批次仍在 mark_dirty 设置的 250ms debounce 后由 tick 发起；
+            // provider mode 等辅助资源立即登记 intent。写请求不会因离页取消。
             self.mark_dirty(cx);
             self.request_health(cx);
             self.request_settings(cx);
@@ -1087,6 +1116,10 @@ impl Statistics {
     }
 
     fn mark_dirty(&mut self, cx: &mut Context<Self>) {
+        // 用户一改筛选就立即递增 generation 并清列表身份，不能等到 debounce
+        // 发出新 HTTP 后才失效；否则中间到达的旧 Reply 可能短暂覆盖新筛选。
+        // Recent 由自己的 generation/seq 判断，Rows/Groups 由 ReplyGate 的 seq
+        // 与当前 tab 判断，Dashboard 由 dashboard_seq 判断。
         self.recent.invalidate();
         self.generation += 1;
         self.debounce_until = Some(Instant::now() + DEBOUNCE);
@@ -1107,14 +1140,13 @@ impl Statistics {
         cx.notify();
     }
 
-    /// Drops every page cursor and re-captures the time window, so the next
-    /// query and its pages share one frozen filter.
-    /// The grouping listing restarts whenever its grouping or sort changes: the
-    /// cursors belong to the old ordering.
+    /// 只重置分组列表的分页。分组维度或排序改变后，旧 cursor 属于旧顺序。
     fn reset_group_pagination(&mut self) {
         self.group_pages.reset();
     }
 
+    /// 清空请求明细与分组两个列表的分页，并重新捕获时间窗口，使下一次查询和
+    /// 后续页共享同一组 from/to 毫秒值。这里的 `now` 只在重置时读取一次。
     fn reset_pagination(&mut self) {
         self.frozen_range = Some(self.compute_range());
         self.rows_cursors.reset();
@@ -1128,6 +1160,9 @@ impl Statistics {
     }
 
     fn filter(&self) -> Value {
+        // 生成的是交给 Core 的拥有所有权的 JSON，而不是借用 UI 字段的视图。
+        // 时间均为 epoch milliseconds。timezone 发送空串，由 Core 解析本机 IANA
+        // 时区；GPUI 不在每次请求时自行拼一个可能不一致的时区名称。
         let (from_ms, to_ms) = self.frozen_range.unwrap_or_else(|| self.compute_range());
         let option = |value: &str| -> Value {
             if value.is_empty() {
@@ -1157,20 +1192,22 @@ impl Statistics {
 
     /// 生成并提交 dashboard 读意图。
     ///
-    /// tag 带当前筛选 generation，请求体读取 `filter()`；`submit_read` 返回
-    /// scheduler seq，并存入 `dashboard_seq`。同一 `JobKey::Dashboard` 的旧
-    /// pending read 会被最新 intent 替换，但已发出回复仍要再与最新 seq 比较。
+    /// 请求体来自 `filter()`；`submit_read` 返回 scheduler seq 并存入
+    /// `dashboard_seq`。当前 tag 使用 `FilterCoordinator` 的 generation，但真正
+    /// 的 dashboard 去旧门禁是 `dashboard_seq`。同一 JobKey 的旧 pending read
+    /// 会被最新 intent 替换，已发出的旧回复仍因 seq 不匹配而不能再展示。
     fn request_dashboard(&mut self, cx: &mut Context<Self>) {
-        // The tag carries the filter generation, so a reply is always judged
-        // against the filters it was issued for.
+        // tag 是请求相关字符串，不能单独承担页面门禁；`self.generation` 主要在
+        // rows/groups/detail 等 tag 中使用，dashboard 这里读取的是 coordinator
+        // 的 generation。迟到的 dashboard 仍由下面的 dashboard_seq 拒绝。
         let tag = format!("dash-{}", self.coordinator.generation());
         let request = crate::stats_backend::command(
             "stats_dashboard",
             &tag,
             json!({"filter": self.filter(), "granularity": "auto"}),
         );
-        // A dashboard request settles the one request a filter change owes; the
-        // generation it was issued under is what a stale reply is judged by.
+        // `take_request` 的 bool 在此被丢弃；它不控制是否提交请求，也不参与
+        // Reply 门禁。保留这个调用只表达“本批 dashboard 已发出”的状态变化。
         self.coordinator.take_request();
         self.dashboard_seq = self.backend.submit_read(JobKey::Dashboard, tag, request);
         self.loading_dashboard = true;
@@ -1194,8 +1231,8 @@ impl Statistics {
     ///
     /// 筛选使用 `frozen_range`，分页起点来自 `rows_cursors`。首次点击下一批时
     /// 可直接带已知 next cursor；跳往未访问页可能同时发送当前快照与 `page`，
-    /// 由 Core 回显页码。ReplyGate 身份绑定 tab/group/sort/cursor，scheduler
-    /// 尚未返回 seq 时先记录本地 identity，再立即替换成 job seq。
+    /// 由 Core 回显页码。ReplyGate 记录发起时的领域 identity，随后替换为实际
+    /// scheduler seq；当前去旧判断比较 seq，并要求当前 tab 仍是 Requests。
     fn request_rows(&mut self, cx: &mut Context<Self>) {
         let tag = format!("rows-{}", self.generation);
         let mut fields = json!({
@@ -1260,8 +1297,9 @@ impl Statistics {
             fields["page"] = json!(page);
         }
         let request = crate::stats_backend::command("stats_breakdown", &tag, fields);
-        // The identity records the grouping, sort and cursor this page was
-        // fetched with, so a reply for a different grouping cannot land.
+        // identity 记录 group_by/sort/cursor 的业务归属；scheduler 尚未返回 seq
+        // 时先保存本地值，随后 replace_seq 换成实际回复序号。`route_reply`
+        // 还会另查当前 tab，不能把 identity 字段误解成已逐项比较的复合门禁。
         self.groups_gate.issue(
             self.generation,
             crate::stats_controller::StatsTab::Groups,
@@ -1546,6 +1584,9 @@ impl Statistics {
         {
             self.reset_pagination();
         }
+        // 这一批登记的是四个独立资源：dashboard、导入状态、当前视图列表
+        // （Overview 用 Recent，明细/汇总各用自己的分页资源）以及最后 health。
+        // 登记顺序不等于 worker 完成顺序；不同 JobKey 最终仍由同一 worker 串行执行。
         self.request_dashboard(cx);
         // The import panel refreshes with the rest of the statistics; its read
         // is keyed by resource, so two refreshes in a row collapse into one.
@@ -1566,9 +1607,10 @@ impl Statistics {
     ///
     /// 顺序是：处理离页/过期预览 → pump 已授权写请求和可见读请求 → 同步控件
     /// 到筛选值 → debounce 到点发查询 → 周期刷新/子资源轮询 → 排空 Reply。
-    /// `backend.complete` 先释放该 key 的 in-flight，再让 `handle_reply` 检查
-    /// generation/seq/tag。因此即使 Reply 已过期，也不会永久卡住后续同资源
-    /// 请求；而过期内容本身仍不能修改页面。
+    /// `backend.complete` 先释放该 key 的 in-flight，再让 `handle_reply` 执行
+    /// 资源专属检查。Dashboard 比 dashboard seq，Rows/Groups 比各自 seq 与 tab，
+    /// Recent 比 seq/generation，价格草稿比 tag；并非所有资源共用同一套字段。
+    /// 因此过期 Reply 不会永久卡住同资源新请求，但每种资源的展示门禁需分别阅读。
     pub fn tick(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if !self.visible && self.mapping_ui.open {
             self.close_mapping_state();
@@ -1637,12 +1679,11 @@ impl Statistics {
 
     /// 把一条已完成后台 Reply 路由到唯一消费者。
     ///
-    /// Recent 和导入分支先按自己的 seq/generation 过滤；Dashboard、Rows、
-    /// Groups 再由 `route_reply` 检查列表身份和当前 tab；价格、设置、详情、
-    /// provider/model 选项再使用各自 seq/tag。过期回复在任一门槛处直接返回，
-    /// 不清除新请求的 pending 标记，也不展示旧错误。通过身份门槛后的普通
-    /// 解析/查询失败会保留已有页面数据并显示 error；cursor 过期是显式例外，
-    /// 会重置对应分页并从第一页重取。
+    /// Recent 分支按自己的 seq/generation 过滤，Dashboard、Rows、Groups 走
+    /// `route_reply`，价格/设置/详情/provider/model 选项再走各自 seq/tag。
+    /// 过期回复在相应门槛处直接返回，不清除新请求 pending，也不展示旧错误。
+    /// 当前 Dashboard/普通分页失败通常保留旧页面；Recent 失败会清值，详情在
+    /// 请求开始时就已清旧值，价格列表换页前也已清行，因此不能一概而论。
     fn handle_reply(&mut self, reply: StatsReply, window: &mut Window, cx: &mut Context<Self>) {
         let StatsReply {
             seq,
@@ -1653,6 +1694,9 @@ impl Statistics {
         } = reply;
         if kind == JobKind::Recent {
             if self.visible && self.view == preferences::View::Overview {
+                // Overview 的 Recent 是独立读：只取返回页第一条。它不携带表格
+                // cursor，也不读取用户当前停留的第三页。`RecentRead::apply`
+                // 对当前失败会清掉旧 value 并设置 error，避免旧行继续冒充最新。
                 let parsed = result.and_then(|value| {
                     serde_json::from_value::<crate::stats_dto::RequestPageDto>(value)
                         .map(|page| page.items.into_iter().next())
@@ -1698,6 +1742,9 @@ impl Statistics {
         if kind.is_read() && !self.visible {
             return;
         }
+        // 这些资源有页面级 seq；Filter 再按 tag 前缀区分供应商/模型选项。
+        // Maintenance、ClearPreview、写任务等不走这张 expected 表，其门禁由后续
+        // tag/草稿/串行 FIFO 语义分别决定，不能概括为“所有 Reply 都检查 seq”。
         let expected = match kind {
             JobKind::Prices => Some(self.prices_seq),
             JobKind::Settings => Some(self.settings_seq),
@@ -1711,6 +1758,8 @@ impl Statistics {
         }
         if kind == JobKind::PriceSave && self.price_draft.tag.as_deref() != Some(&tag) {
             if result.is_ok() {
+                // 旧草稿失败不会影响新草稿；但旧保存若已在 Core 成功，价格列表
+                // 事实上仍可能变化，所以这里只刷新价格目录，不关闭当前新草稿。
                 self.request_prices(cx);
             }
             return;
@@ -1782,6 +1831,8 @@ impl Statistics {
         });
         match result {
             Err(failure) => {
+                // 失败先清各自资源状态。Dashboard/Rows/Groups 不清已有列表；
+                // Recent/Detail/Prices 的不同清空点分别在各自读取入口或 RecentRead。
                 if kind == JobKind::PriceSync {
                     self.price_sync_pending = false;
                     self.price_sync_error = Some(failure.clone());
@@ -1810,6 +1861,8 @@ impl Statistics {
                 // maintenance revision moved under us; restart pagination
                 // instead of showing a stale page.
                 if rows_reply && failure.contains(crate::stats_dto::ERR_CURSOR_EXPIRED) {
+                    // Core 游标过期会重置两个客户端分页器，但只为刚失败的这个
+                    // listing 自动重取第一页；另一个 tab 等用户切换/后续刷新再取。
                     self.reset_pagination();
                     self.error = Some(
                         self.t(
@@ -1828,7 +1881,8 @@ impl Statistics {
                     cx.notify();
                     return;
                 }
-                // Keep whatever data is on screen and report the failure.
+                // 对 Dashboard/普通分页而言这里保留屏幕旧 DTO，只显示 error；
+                // 这不是对所有 kind 的统一保证，详情和价格列表在请求开始时已清值。
                 self.error = Some(failure);
                 self.loading_dashboard = false;
                 self.loading_rows = false;
@@ -1857,6 +1911,9 @@ impl Statistics {
             self.pending_dashboard = false;
             self.loading_dashboard = false;
             if let Ok(dashboard) = serde_json::from_value::<DashboardDto>(value) {
+                // filter_key 来自 Core 的规范化筛选身份，供后续领域/cursor 语义
+                // 使用；到达这里前 dashboard_seq 已通过，filter_key 不是另一道
+                // 每次 Reply 都重新计算的 UI 去旧条件。
                 self.filter_key = dashboard.filter_key.clone();
                 self.dashboard = Some(dashboard);
                 self.error = None;
@@ -1882,7 +1939,8 @@ impl Statistics {
                         } else {
                             self.total_rows
                         };
-                        // Only the core decides whether another page exists.
+                        // 只有成功 Reply 才把 Core 的 next cursor 写进 Pager；
+                        // 失败分支调用 Pager.fail 丢弃 pending 导航，但保留已显示页。
                         self.rows_cursors.finish_page(page.next_cursor);
                         self.rows = page.items;
                         self.usage_table.update(cx, |table, cx| {
@@ -2037,6 +2095,7 @@ impl Statistics {
             return;
         }
         if kind == JobKind::PriceDelete {
+            // 删除写成功后才刷新价格第一页；发起时不会先清空当前列表。
             self.request_prices(cx);
             return;
         }
@@ -2048,6 +2107,7 @@ impl Statistics {
                 .cloned()
                 .and_then(|value| serde_json::from_value(value).ok());
             self.error = None;
+            // 同步成功后重新读取价格列表，当前统计费用不在这里重算。
             self.request_prices(cx);
             cx.notify();
             return;
@@ -2062,6 +2122,9 @@ impl Statistics {
                 // a rejection must leave the form open with its values.
                 window.close_dialog(cx);
                 self.error = None;
+                // 保存成功后代码显式刷新价格规则列表和当前统计显示；两批读仍是
+                // intent，必须继续等待各自 Reply。不能据此断言历史费用会按新价格
+                // 重算，价格快照与历史口径由 Core/查询层决定。
                 self.request_prices(cx);
                 // The current price changed, so the visible statistics may now
                 // price new requests differently.
@@ -2121,6 +2184,8 @@ impl Statistics {
                     self.error = None;
                 }
                 if status.status != MaintenanceStatus::Running {
+                    // 清理达到 Completed/Failed 等终态后，统计页面原分页和价格
+                    // 展示可能已受维护影响；这里登记显式刷新与价格重读。
                     self.refresh(cx);
                     self.request_prices(cx);
                 }

@@ -1,9 +1,17 @@
-//! Read-only statistics queries: filters, buckets, dashboard, pagination,
-//! breakdowns and option lists.
+//! 统计查询的只读实现：把筛选条件变成参数化 SQL，生成时间桶，并读取
+//! dashboard、请求分页、详情、分组和筛选项。
 //!
-//! Every query runs on the dedicated reader connection with a 2 second budget
-//! enforced through `progress_handler`. Amounts are accumulated with `i128` in
-//! Rust, never with floating point or `SUM()` of money columns.
+//! 调用方是 `stats-reader` 线程中的 `run_read`。本模块不创建线程，也不拥有
+//! 数据库连接；它只借用已经打开的只读 `rusqlite::Connection`，所以同一个
+//! reader 上的任务按队列逐个执行。查询本身不插入或更新统计行。
+//!
+//! 熟悉 Spring Boot 的读者可把这些入口看作“只读 Repository + DTO 组装层”：
+//! SQLite 返回行，Rust 再把行转换成稳定的 DTO。区别在于这里显式处理 SQL
+//! 错误码、时间桶和分页快照，而且 `Connection` 的借用生命周期由编译器检查。
+//!
+//! `Budget` 会把 2 秒 deadline 传给 SQLite 的 progress handler；它只约束
+//! SQLite VM 执行期间的检查，不覆盖命令排队、Rust 计算或 HTTP 交付耗时。
+//! 金额先按币种分别用 `i128` 精确累加，不用浮点数，也不跨币种相加。
 use crate::stats::dto::{
     BreakdownCursor, BreakdownItemDto, CostDto, CostStatus, CostTotalDto, Currency, DashboardDto,
     ERR_BUSY, ERR_CURSOR_EXPIRED, ERR_INVALID, ERR_NOT_FOUND, ERR_QUERY_TOO_LARGE, ERR_TIMEOUT,
@@ -23,21 +31,38 @@ use std::{
 
 mod dashboard_aggregate;
 
-/// Hard budget for a single statistical query.
+/// SQLite 查询执行阶段的目标时限。
+///
+/// `Budget::install` 设置 deadline，SQLite 每约 2,000 个虚拟机步骤调用一次
+/// progress handler；到点后返回 `OperationInterrupted`，再映射为
+/// `stats_query_timeout`。因此它是 SQL 执行控制，不是“整个 HTTP 请求最多
+/// 2 秒返回”的端到端保证，也没有另外调用 `Connection::interrupt`。
 pub const QUERY_BUDGET: Duration = Duration::from_secs(2);
-/// Rows allowed to match one query before the caller must narrow the range.
+/// dashboard 合并各时间桶请求摘要时允许累计的最大请求行数。
+///
+/// 当前检查位于 `dashboard_aggregate::Accumulator::merge_raw`。请求列表首屏
+/// 执行的实际 `COUNT(*)` 只用于填充 `total_rows`，没有与这个常量比较，所以
+/// 不能把该常量描述成所有查询入口共同执行的行数门禁。
 pub const ROW_BUDGET: i64 = MAX_MATCHING_ROWS;
-/// Groups reported for one breakdown page; the total is capped at this + 1.
+/// breakdown 首屏总组数的计数上限：SQL 最多计数到 `MAX_GROUPS + 1`，以判断
+/// 是否超出上限。它不是单页返回上限，分页的 `LIMIT` 使用页参数 `limit + 1`。
 pub const MAX_GROUPS: i64 = super::dto::MAX_COUNTED_GROUPS;
 
+/// 时间桶的半开区间 `[start_ms, end_ms)`。
+///
+/// 毫秒值与筛选条件使用相同时间基准。相邻桶首尾相接；首桶和末桶可以因
+/// 查询边界而短于完整的小时、日或周。
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Bucket {
     pub start_ms: i64,
     pub end_ms: i64,
 }
 
-/// Resolves the IANA timezone requested by the client. An empty name means
-/// "use this machine's zone", which is what the native UI defaults to.
+/// 把 API 中的时区字符串解析为 `chrono_tz::Tz`。
+///
+/// 空字符串和 `local` 表示读取本机 IANA 时区；读取或解析失败时回退 UTC。
+/// 显式给出非法名称则返回 `stats_invalid_argument`，不会悄悄改成 UTC。
+/// 返回值第二个元素是准备回传给客户端的规范化名称。
 pub fn resolve_timezone(name: &str) -> Result<(Tz, String), String> {
     let name = name.trim();
     if name.is_empty() || name.eq_ignore_ascii_case("local") {
@@ -52,6 +77,10 @@ pub fn resolve_timezone(name: &str) -> Result<(Tz, String), String> {
         .map_err(|_| error(ERR_INVALID, "timezone is not a known IANA name"))
 }
 
+/// 根据查询时长选择 `Auto` 粒度。
+///
+/// 48 小时以内用小时桶，90 天以内用日桶，更长用周桶。显式粒度原样返回；
+/// 桶数上限由后续 `build_buckets` 检查。
 pub fn choose_granularity(range_ms: i64, requested: Granularity) -> Granularity {
     match requested {
         Granularity::Auto if range_ms <= 48 * 3_600_000 => Granularity::Hour,
@@ -85,7 +114,11 @@ fn local_date(tz: &Tz, ms: i64) -> NaiveDate {
         .unwrap_or_else(|| NaiveDate::from_ymd_opt(1970, 1, 1).unwrap())
 }
 
-/// Builds strictly increasing, non-overlapping buckets covering `[from, to)`.
+/// 生成覆盖整个筛选区间且互不重叠的时间桶。
+///
+/// 小时桶从 `filter.from_ms` 起每 3,600,000 ms 等距递增，不强行对齐整点。
+/// 日桶和周桶使用请求时区的本地午夜，周从周一开始；夏令时会使某一天短于或
+/// 长于 24 小时。最多允许 400 个桶，超过时返回参数错误，不做采样。
 pub fn build_buckets(
     filter: &StatsFilter,
     granularity: Granularity,
@@ -151,7 +184,10 @@ pub fn build_buckets(
     Ok((buckets, granularity))
 }
 
-/// Builds the shared `WHERE` clause. Values are always bound, never formatted.
+/// 所有统计 SQL 共用的筛选片段及绑定参数。
+///
+/// `clause` 只包含固定列名和 `?` 占位符；用户值放在 `params` 中绑定，避免把
+/// API 输入拼进 SQL。调用方可给列加表别名，以适配单表查询和 join。
 struct FilterSql {
     clause: String,
     params: Vec<Value>,
@@ -281,8 +317,11 @@ fn budget_error(failure: rusqlite::Error) -> String {
     }
 }
 
-/// Installs the deadline handler for the duration of one query and always
-/// removes it again, including on early error returns.
+/// 一个查询入口的 SQLite deadline guard。
+///
+/// `install` 把 2 秒 deadline 转为 progress callback；`Drop` 在正常返回或任一
+/// `?` 提前返回时撤销 handler。callback 只在 SQLite VM 定期推进时检查，无法
+/// 强制结束正在 sleep 的调用方、排队任务或 Rust 侧 CPU 工作。
 struct Budget<'a> {
     conn: &'a Connection,
 }
@@ -301,7 +340,11 @@ impl Drop for Budget<'_> {
     }
 }
 
-/// Aggregated numbers produced by the shared summary SQL.
+/// 一份请求摘要的数据库聚合结果。
+///
+/// 计数字段用 `i64`，`COALESCE(...,0)` 后的“没有匹配行”表示为 0。token、
+/// 耗时等可缺失指标用 `Option`：`None` 表示没有可信值，不能改写成 0；
+/// 只有确实观察到零时才会得到 `Some(0)`。耗时字段单位是毫秒。
 #[derive(Default)]
 struct RawSummary {
     request_count: i64,
@@ -402,7 +445,13 @@ fn read_summary(row: &rusqlite::Row<'_>, base: usize) -> rusqlite::Result<RawSum
     })
 }
 
-/// Per-currency accumulation with checked 128-bit addition.
+/// 按币种分别累计的金额状态。
+///
+/// 数据库金额单位是“一个货币单位的十亿分之一”，业务上按 nanos 存放，例如
+/// 一美元的十亿分之一，而不是一美分的十亿分之一。USD 与 CNY 各用 `i128`
+/// 相加，`usd_count`/`cny_count` 记录实际纳入金额的行数。
+/// 这和 Java 中按币种拆开的 `BigDecimal` 累加器目标相近，但当前实现使用整数
+/// nanos，运算规则是精确整数加法。
 #[derive(Default, Debug, Clone)]
 struct CostAccumulator {
     usd: i128,
@@ -663,8 +712,12 @@ fn has_classified_costs(conn: &Connection) -> Result<bool, String> {
     .map_err(budget_error)
 }
 
-/// Money totals plus optional per-bucket splits, accumulated with `i128` in
-/// Rust because SQLite `SUM` over nano amounts can overflow `i64`.
+/// dashboard 一次费用扫描的结果。
+///
+/// `totals` 服务总览，`buckets` 服务趋势；二者来自同一次遍历，避免用两套
+/// 查询产生不同结果。金额在 Rust 按币种累加，以规避 SQLite `SUM(i64)` 对
+/// nanos 金额可能发生的溢出。`unpriced`、`incomplete` 是“未定价”和“费用
+/// 尚未可计算”两种不同业务状态，不能合并。
 struct CostScan {
     /// False when the money scan was skipped; the caller then derives the
     /// unpriced/incomplete counts from the request summary instead.
@@ -760,6 +813,13 @@ fn scan_costs(
     filter: &StatsFilter,
     buckets: Option<&[Bucket]>,
 ) -> Result<CostScan, String> {
+    // 费用事实表也包含导入来源，但供应商成本快照只属于代理记录。此扫描
+    // 明确限定 record_origin='proxy'；导入未定价数在 dashboard 汇总阶段由
+    // OriginCounts 单独加入，不能把两类来源混成同一次供应商计费。
+    //
+    // 每一行按 cost_status 分成：已结算金额、unpriced、incomplete。已结算且
+    // 金额非 NULL 的行才进入币种累计和 settled 计数。若传入 buckets，同一个
+    // 循环还按 started_at_ms 把金额放入对应半开时间桶。
     let mut sql = FilterSql::build(filter, "");
     let query = format!(
         "SELECT cost_status, currency, total_cost_nanos, started_at_ms
@@ -828,7 +888,11 @@ fn scan_costs(
     Ok(scan)
 }
 
-/// Counts the unpriced/incomplete buckets from an already-computed summary.
+/// 在费用事实扫描被跳过时，从请求摘要推导两类费用计数。
+///
+/// 这是兼容既有未分类数据的回退路径，并不读取金额。`incomplete` 取代理
+/// 平台费用不完整计数；`unpriced` 再从已终态请求中排除明确“不适用”和费用
+/// 不完整部分，并用 `max(0)` 防止历史不一致产生负数。
 fn derived_cost_counts(raw: &RawSummary) -> (i64, i64) {
     let incomplete = raw.proxy_cost_incomplete_count;
     let unpriced = (raw.finished_count - raw.proxy_token_not_applicable_count - incomplete).max(0);
@@ -854,8 +918,8 @@ pub fn dashboard(
     request_tag: &str,
     generated_at_ms: i64,
 ) -> Result<DashboardDto, String> {
-    // The summary aggregation already counts the matching rows, so the row
-    // budget is checked there instead of with a second full scan.
+    // 外层只负责给整个 dashboard 读操作安装同一个 SQLite 执行 deadline；
+    // 行数预算由 dashboard_aggregate 合并桶摘要时检查，避免再全表扫描一次。
     let _budget = Budget::install(conn);
     dashboard_inner(
         conn,
@@ -878,6 +942,13 @@ fn dashboard_inner(
     request_tag: &str,
     generated_at_ms: i64,
 ) -> Result<DashboardDto, String> {
+    // 先在内存解析时区并建立桶，再打开 deferred 只读事务。事务内的聚合、
+    // 费用、series 和采集覆盖看到同一 SQLite 读快照；任一 `?` 返回都会让
+    // transaction 被丢弃，`commit` 只是结束这次只读快照。
+    //
+    // `generation`、`request_tag` 和 `generated_at_ms` 是 reader 任务入队前
+    // 附带的元数据，不参与 SQL，也不是本事务的 id。`filter_key` 是筛选身份
+    // 摘要，用于后续 cursor 一致性校验，不是鉴权凭证。
     let (buckets, granularity_used) = build_buckets(filter, granularity)?;
     let (_, timezone) = resolve_timezone(&filter.timezone)?;
     // Aggregates and money share one read snapshot and the existing deadline.
@@ -1194,8 +1265,10 @@ fn warnings(
     Ok(out)
 }
 
-/// Merged collection intervals used to decide whether an empty bucket is a
-/// proven zero or an unknown gap.
+/// 查询区间内已经合并的采集覆盖区间。
+///
+/// 只有一整桶都被 `[from,to)` 覆盖时，空的请求结果才可解释为“确实没有请求”
+/// 的 0；未覆盖区间的空值只能表示 unknown，不能替用户补零。
 struct Coverage {
     intervals: Vec<(i64, i64)>,
 }
@@ -1219,6 +1292,8 @@ impl Coverage {
 }
 
 fn collection_coverage(conn: &Connection, from_ms: i64, to_ms: i64) -> Result<Coverage, String> {
+    // 只读取 state='collecting' 的区间。仍未结束的区间把本次查询上界当作
+    // 临时结束点；随后把各区间裁到 [from_ms,to_ms) 并合并重叠部分。
     let mut statement = conn
         .prepare(
             "SELECT started_at_ms, COALESCE(ended_at_ms, ?2) FROM stats_collection_intervals
@@ -1245,6 +1320,11 @@ fn collection_coverage(conn: &Connection, from_ms: i64, to_ms: i64) -> Result<Co
     Ok(Coverage { intervals })
 }
 
+/// 请求列表的一页及跨页水位。
+///
+/// `as_of_id` 是首屏捕获的最大请求行 id；后续页用它限制 `id <= as_of_id`。
+/// 它不是请求开始时间，也不代表跨多个 HTTP 请求保持同一个数据库事务。
+/// 后续页的 `total_rows` 当前用 -1 表示沿用首屏总数。
 pub struct RequestPage {
     pub as_of_id: i64,
     pub total_rows: i64,
@@ -1258,14 +1338,17 @@ pub fn requests(
     page_size: i64,
     cursor: Option<&RequestCursor>,
 ) -> Result<RequestPage, String> {
-    // The first page counts the matching rows anyway, so that count doubles as
-    // the row-budget check instead of adding a second full scan.
+    // 请求列表没有额外的 ROW_BUDGET 检查。首屏 COUNT(*) 的职责只是填充
+    // total_rows；即使匹配数超过 MAX_MATCHING_ROWS，这里也不会仅凭该计数报错。
     let _budget = Budget::install(conn);
     requests_inner(conn, filter, page_size, cursor, None)
 }
 
-/// Direct jumps seek only ordered request keys; ordinary next-page reads keep
-/// their keyset cursor. A supplied cursor freezes the same snapshot on a jump.
+/// 请求列表入口，可带显式页码。
+///
+/// 普通下一页走 keyset；页码大于 1 时先用 OFFSET 找到目标页之前的最后一条
+/// 有序键，再读取目标窗口。带 cursor 的跳页沿用其 `as_of_id` 上界，但每个
+/// HTTP 调用仍各自开启短事务，不共享长期数据库快照。
 pub fn requests_at_page(
     conn: &Connection,
     filter: &StatsFilter,
@@ -1460,12 +1543,12 @@ pub fn pending_page(
     Ok((groups, next))
 }
 
-/// Rejects a cursor whose identity no longer matches the query it addresses.
+/// 校验请求分页 cursor 是否仍属于同一个查询身份。
 ///
-/// A cursor embeds the filter, the collection run and the maintenance revision
-/// it was issued under; if any of them changed (or the numeric fields are out
-/// of range) the page it points at is not reproducible any more and the caller
-/// must restart pagination instead of silently receiving a wrong page.
+/// 校验覆盖非负字段、`filter_key`、Core `run_id` 和
+/// `maintenance_revision`。任一不符返回 `stats_cursor_expired`，客户端应从
+/// 第一页重新开始。这些检查保证逻辑身份一致，不保证 in-flight 行内容在两次
+/// HTTP 请求之间没有更新。
 pub fn validate_cursor(
     cursor: &RequestCursor,
     filter: &StatsFilter,
@@ -1549,6 +1632,10 @@ fn requests_inner(
     cursor: Option<&RequestCursor>,
     page: Option<i64>,
 ) -> Result<RequestPage, String> {
+    // 首屏在同一短事务里读取当前 MAX(id) 和筛选后的 COUNT(*)，再把
+    // (started_at_ms,id) 作为 keyset。cursor 续页复用旧 as_of_id，因此只冻结
+    // “后来插入的行”这一上界；已有行仍可能从 in_flight 更新为终态，费用等
+    // 关联字段也可能变化。事务在本页返回前提交，不会跨 HTTP 持有。
     let sql = FilterSql::build(filter, "");
     let transaction = conn.unchecked_transaction().map_err(budget_error)?;
     let as_of_id = match cursor {
@@ -1671,11 +1758,19 @@ pub struct CostPartsRow {
 }
 
 pub fn request_detail(conn: &Connection, request_id: &str) -> Result<RequestDetail, String> {
+    // detail 同样受 SQLite 执行 deadline 约束；连接和错误传播方式与列表入口
+    // 相同，调用方随后通过 reader 的普通 DTO 序列化路径返回。
     let _budget = Budget::install(conn);
     request_detail_inner(conn, request_id)
 }
 
 fn request_detail_inner(conn: &Connection, request_id: &str) -> Result<RequestDetail, String> {
+    // 这里执行两次普通 autocommit SELECT：第一次读取请求主行及费用摘要，
+    // 第二次读取费用分项与准入价格快照。它们没有像 dashboard 那样包进同一个
+    // 显式事务，因此不能宣称两条语句看到完全相同的数据库快照。
+    //
+    // 主请求不存在才是 stats_not_found；主行存在但费用行或价格快照为空时，
+    // None 是合法业务状态，用于表达尚未定价或历史数据缺失。
     let query = format!(
         "SELECT {ROW_COLUMNS}, r.parser_version, r.created_at_ms, r.updated_at_ms
          FROM usage_requests r LEFT JOIN usage_costs c ON c.request_id=r.request_id

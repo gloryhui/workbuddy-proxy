@@ -301,6 +301,8 @@ reasoning 全部匹配且 HTTP 为 2xx 时才显示 Passed。任何可见字段�
 
 ## 7. 统计页完整链路
 
+本节先看界面状态与调度；SQLite 读事务、时间桶、来源聚合、费用扫描和游标边界继续读 [统计查询与界面专题](STATS_QUERY_UI.md)。
+
 ### 7.1 从筛选变化到查询
 
 ```text
@@ -390,8 +392,8 @@ debounce expires while page visible and no blocking popover/dialog
 - Core 必须回显所请求 page，否则 UI 报“需要更新并重启后台核心”。
 
 排序或筛选变化会使旧 cursor 失去意义，因此会重置分页器。Core 返回
-`cursor_expired` 时，只重置发生错误的 Rows 或 Groups，并重新请求该列表的
-第一页；不会把另一个 tab 的分页历史一起移动。
+`cursor_expired` 时，当前实现调用 `reset_pagination`，重置 Rows 与 Groups
+两个分页器并重新捕获时间窗，但只立即重取发生错误的列表第一页。
 
 ### 7.5 错误与保留数据
 
@@ -404,15 +406,15 @@ normal successful reply
 → apply data + cursor + timestamps
 → clear relevant error/loading
 
-ordinary query error
+ordinary dashboard/list query error
 → keep existing visible data
 → show error
 → clear the relevant loading/pending flag only for the current identity
 
 cursor_expired
 → keep the explicit “back to page 1” path
-→ reset only the affected list pagination
-→ re-request page 1
+→ reset both pagers and re-capture the time range
+→ re-request page 1 for the affected listing
 
 price save error
 → keep dialog, typed values and error
@@ -426,6 +428,9 @@ maintenance failed
 
 采集健康只来自 `stats_health` 的完整 `HealthDto`。dashboard/rows 查询成功
 只证明相应管理响应成功，不能把 Badge 改成“采集正常”。
+
+Recent 有独立的错误策略：当前读取为空或失败时会清掉旧行，显示空态或错误，
+避免把旧数据继续称为“最近请求”。不能将上面的普通列表保留策略套到所有子资源。
 
 ## 8. 推荐断点和观察点
 

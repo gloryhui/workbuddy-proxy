@@ -8,6 +8,8 @@ Core 独占 SQLite 写入；GPUI 通过本地鉴权管理协议操作统计，�
 
 用量合并、缓存拆分、价格快照和整数金额见 [用量与费用源码导读](../source-guide/STATS_USAGE_PRICING.md)。
 
+只读查询、时区分桶、费用汇总、分页及 GPUI 回复门禁见 [查询与界面源码导读](../source-guide/STATS_QUERY_UI.md)。
+
 | 关注点 | 当前源码 |
 | --- | --- |
 | Core 统计协调、生命周期与管理入口 | [src/stats/mod.rs](../../src/stats/mod.rs) |

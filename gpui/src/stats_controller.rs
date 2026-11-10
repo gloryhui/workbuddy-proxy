@@ -8,6 +8,11 @@
 //! `statistics::Statistics` 在 GPUI UI 线程调用这些纯状态函数。它们不联网、
 //! 不入队、也不修改 Entity，只生成查询身份、判断 Reply 是否仍属于当前页面，
 //! 并维护价格草稿与游标历史。网络调用由 `stats_backend` 的独立客户端线程完成。
+//!
+//! 这些类型没有 `Arc`、`Entity` 或数据库连接，所有权随值传入 `Statistics`
+//! 的普通字段。它们可以独立测试，不代表页面上还有另一套未被生产代码使用的
+//! 控制器。对 Java 读者而言，它们更接近没有 Spring 注解的纯领域状态对象；
+//! `Clone` 只是 Rust 值复制能力，是否深拷贝取决于每个字段自己的 `Clone`。
 
 use crate::stats_dto::{Currency, GroupBy, InputMode, PriceRuleDto, SortMetric, SourceScope};
 use serde_json::{Value, json};
@@ -41,11 +46,12 @@ pub enum StatsTab {
     Groups,
 }
 
-/// Identity of one statistics read.
+/// Identity snapshot of one statistics read.
 ///
-/// A reply is only allowed to touch page state while its identity is still the
-/// current one. Changing a filter invalidates the old identities *immediately*,
-/// not when the debounce finally issues the next request.
+/// 这些字段记录请求发出时的筛选、页面和游标，便于控制器表达“这是哪一页”的
+/// 领域身份。实际 `ReplyGate::may_apply_seq` 当前只比较 `seq`；当前 tab 由
+/// `route_reply` 另查，近况读取和价格草稿另有 generation/tag。不要把这个结构
+/// 中保存的所有字段误写成同一个函数会逐项比较的复合门禁。
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct QueryIdentity {
     /// 发起查询时的筛选 generation；筛选一改就使旧 Reply 过期。
@@ -84,9 +90,9 @@ impl QueryIdentity {
 
 /// Latest-issued read per resource.
 ///
-/// Every request records the identity it was issued with; a reply is accepted
-/// only when it still matches. Stale replies cannot clear a newer pending flag
-/// or overwrite newer data.
+/// 每次 issue 会替换上次记录的 identity，并把本地序号换成 scheduler 分配的
+/// 实际 seq。列表 Reply 的主要去旧条件因此是 seq；身份中的筛选/tab/游标字段
+/// 为领域状态和后续扩展保留，不能据此宣称 `may_apply_seq` 比较了它们全部。
 #[derive(Default)]
 pub struct ReplyGate {
     /// 最近一次发出的列表身份。新请求发布后旧 identity 会被覆盖。
@@ -253,18 +259,17 @@ impl MappingFlow {
 /// What a filter change implies for the page.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum FilterChange {
-    /// Outstanding reads were invalidated and pagination was reset; the page
-    /// may now issue exactly one request. A click on the option that was already
-    /// selected produces **no** change at all, so no request follows.
+    /// The controller's generation advanced and one request is now owed.
+    /// Whether an unchanged control reaches this method, and when the owed
+    /// request is actually submitted, are decisions made by the view layer.
     Invalidated,
 }
 
-/// Applies filter changes in the only order that keeps a page consistent.
+/// Records a filter-change generation and the request it owes.
 ///
-/// A change first invalidates every outstanding reply, then resets pagination,
-/// and only then allows **one** new request. Doing it in any other order is how
-/// a slow reply for the previous filters ends up painted over the new ones, or
-/// how a single click produces a burst of requests.
+/// 这个纯状态对象不会直接清分页、提交请求或判断回复；`Statistics::mark_dirty`
+/// 和来源控件重置会分别执行这些集成步骤。`request_pending` 最多记录“尚欠一次”，
+/// 不能仅凭本类型就声称整页在任意调用顺序下都只会发出一个 HTTP 请求。
 #[derive(Clone, Debug, Default)]
 pub struct FilterCoordinator {
     generation: u64,
@@ -287,6 +292,8 @@ impl FilterCoordinator {
 
     /// Records a change and says what the caller must do.
     pub fn change(&mut self) -> FilterChange {
+        // generation 立即递增；纯控制器不持有 Entity 或网络客户端，真正使旧
+        // Reply 失效仍要靠页面的 seq/generation/tag 等状态。
         self.generation += 1;
         self.request_pending = true;
         // A preview belongs to the page it was taken on, so moving on closes it.
@@ -303,6 +310,8 @@ impl FilterCoordinator {
 
     /// Takes the one request owed for the last change.
     pub fn take_request(&mut self) -> bool {
+        // `std::mem::take` 把 bool 取成 false 并返回旧值；连续调用只有第一次
+        // 得到 true。生产调用点是否消费返回值属于集成层语义。
         std::mem::take(&mut self.request_pending)
     }
 }
@@ -399,6 +408,9 @@ impl ReplyGate {
     /// Adopts the sequence number the scheduler assigned to the read that was
     /// just queued, keeping one identity per outstanding reply.
     pub fn replace_seq(&mut self, tab: StatsTab, seq: u64) {
+        // `Statistics` 先保存领域 identity，再由 backend 分配实际 seq；这里补写
+        // seq/tab，使随后到达的 Reply 能匹配同一个资源。没有当前 identity 时
+        // 只记录 seq，下一次 issue 仍会构造完整身份。
         if let Some(current) = self.identity.as_mut() {
             current.tab = tab;
             current.seq = seq;
@@ -565,7 +577,7 @@ impl PriceDraft {
         self.is_editing()
     }
 
-    /// Records that the draft was submitted and builds the payload.
+    /// Records intent to submit the draft and builds the payload.
     ///
     /// The boxes hold per-million amounts a human typed; the API stores integer
     /// nano units, so the conversion happens here — exactly once.
@@ -640,8 +652,8 @@ impl PriceDraft {
         Ok(payload)
     }
 
-    /// Applies a reply. Returns true when the save really landed and the dialog
-    /// may close. A reply for an older draft is ignored entirely.
+    /// Applies a reply. Returns true when the save succeeded and the dialog may
+    /// close. A reply for an older draft is ignored entirely.
     pub fn apply_reply(&mut self, tag: &str, result: Result<(), String>) -> bool {
         if self.tag.as_deref() != Some(tag) {
             // A reply for a draft the user has already replaced.

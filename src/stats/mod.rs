@@ -338,6 +338,11 @@ impl Inner {
             && self.counters.accepting.load(Ordering::Relaxed)
     }
 
+    /// Core 运行代次与已提交批次计数组成的回复元数据，不是 GPUI 筛选 generation。
+    ///
+    /// 查询任务捕获此字符串后还可能排队；不能把它当作 SQLite 事务版本或证明
+    /// 某次读取精确对应某个提交序号。分页一致性另由 run_id、维护 revision、
+    /// filter_key 和 as_of_id 等字段约束，界面去旧另用 scheduler seq。
     fn generation(&self) -> String {
         format!(
             "{}:{}",

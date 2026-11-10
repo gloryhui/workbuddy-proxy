@@ -192,4 +192,4 @@ amount_nanos = (product + 500000) / 1000000      // 非负数 half-up
 | 同上 | `rounding_is_half_up_per_part` | 每项独立舍入 |
 | [`price_catalog.rs`](../../src/price_catalog.rs) | `provider_prices_win_and_ambiguous_gateways_do_not_pick_a_reseller` | 目录候选优先级与歧义拒绝 |
 
-读完应能回答：为什么 input 不能再加一次缓存读？为什么缺价格可显示零，缺用量却可能显示未知？为什么相同的请求在不同计价模式下费用不同？为什么删除价格不能让历史明细失去单价？下一步可以沿查询模块查看这些事实怎样聚合并到达界面。
+读完应能回答：为什么 input 不能再加一次缓存读？为什么缺价格可显示零，缺用量却可能显示未知？为什么相同的请求在不同计价模式下费用不同？为什么删除价格不能让历史明细失去单价？下一步按 [统计查询与界面导读](STATS_QUERY_UI.md) 查看这些事实怎样聚合并到达界面。

@@ -10,6 +10,18 @@
 //! `statistics-control` 标准线程，而 `Statistics` 的 GPUI Entity 仍只在 UI
 //! 上下文修改：后台线程把结果写入 `StatsReply` channel，UI tick 读取后先
 //! 调用 `complete` 释放资源，再由控制器判断是否为当前结果。
+//!
+//! 对熟悉 Spring Boot 的读者，可以把 `Statistics` 看成持有页面状态的界面对象，
+//! 把 `StatsScheduler` 看成一个很小的本机客户端：它不是 CDI/Spring 自动注入的
+//! 单例，也不在普通 HTTP 请求线程里运行。`Statistics::new` 显式创建调度器；
+//! 调度器再显式创建 `statistics-control` 线程。线程通过有界 channel 接收已经
+//! 构造好的 JSON `Value`；真正的 HTTP JSON 序列化在 `call` 的 `send_json` 时发生，
+//! worker 再通过另一个 channel 把 `StatsReply` 交还 UI。
+//!
+//! 这里的“读资源独立”指不同 `JobKey` 有不同待发槽位，例如供应商选项与模型
+//! 选项、不同 request id 的详情、Recent 与 Rows。同一个 key 的新读仍会替换尚未
+//! 发出旧读，所以同 key 的新筛选不会同时保留新旧 intent。所有槽位仍由同一个
+//! worker 线程逐条访问 Core，并不是多条并行查询 lane，更不是多个 HTTP 请求线程。
 use serde_json::{Value, json};
 use std::{
     path::{Path, PathBuf},
@@ -30,30 +42,52 @@ pub const MAX_REPLY_BYTES: u64 = 1024 * 1024;
 /// change.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum JobKind {
+    /// 概览汇总。新筛选会让旧 dashboard 回复失去展示价值。
     Dashboard,
+    /// 请求明细的一页；分页 cursor 属于当前筛选快照。
     Rows,
+    /// 概览中的“最近一条请求”，与明细分页是两个不同读资源。
     Recent,
+    /// 按供应商或模型聚合的一页。
     Groups,
+    /// 供应商或模型筛选选项。
     Filters,
+    /// 一个请求的详情；`JobKey` 还会绑定具体 request id。
     Detail,
+    /// Core 给出的采集健康快照，不能从查询成功反推。
     Health,
+    /// 价格规则列表。
     Prices,
+    /// 统计设置读取。
     Settings,
+    /// 清理任务的进度读取。
     Maintenance,
+    /// 清理前预览，成功后带短期 token。
     ClearPreview,
+    /// 新建或编辑价格规则。
     PriceSave,
+    /// 删除价格规则。
     PriceDelete,
+    /// 从外部目录同步价格规则。
     PriceSync,
+    /// 设置更新写操作；设置读取使用 `Settings`。
     SettingsUpdate,
+    /// 单个供应商的使用量采集模式。读取和更新共用这一 kind。
     ProviderMode,
+    /// 开始已经预览过的清理任务。
     ClearStart,
     /// An import read: status, pending list or a preview.
     WorkbuddyRead,
+    /// 导入开关变更或发起增量/全量扫描等写操作。
     WorkbuddyWrite,
 }
 
 impl JobKind {
-    /// Read-only intents may be replaced by a newer one.
+    /// 本 helper 当前用于两处判断：jobs channel 满时区分读/写任务放回哪条队列，
+    /// 以及 UI 在页面隐藏后是否拒收该 kind 的回复。
+    ///
+    /// 它不决定 `submit_read` 的待发槽位，也不直接决定 `cancel_reads` 清理什么；
+    /// `ProviderMode` 和 `ClearPreview` 虽然也走 `submit_read`，却不在该分类里。
     pub fn is_read(self) -> bool {
         matches!(
             self,
@@ -140,14 +174,16 @@ impl JobKey {
 }
 
 pub struct StatsJob {
-    /// scheduler 单调递增序号，Reply 原样带回；它是去旧的第二道身份，页面
-    /// 还会再校验筛选 generation、tab 和资源。
+    /// scheduler 单调递增序号，Reply 原样带回。UI 用具体资源对应的 seq 门禁
+    /// 判断新旧；部分回复另有 generation/tag、当前 tab 或 request id 校验。
+    /// 不存在一个统一函数替所有资源比较这些字段。
     pub seq: u64,
     /// 读资源的身份。相同 `JobKey` 的读 intent 可以合并；`in_flight` 也按它跟踪。
     pub key: JobKey,
     /// 从 `key` 得到的粗粒度种类，决定读/写策略和 UI 分派。
     pub kind: JobKind,
-    /// Core `request_tag` 及 UI 回复标签；价格、导入等还靠它区分同一 kind。
+    /// 发往 Core 的 `request_tag`，也是同一粗粒度 kind 下区分批次、草稿或
+    /// 子资源的字符串。它不会替代 seq；例如价格保存还要匹配当前草稿 tag。
     pub tag: String,
     /// 已构造的管理命令；worker 不再重新读取 UI 状态。
     pub request: Value,
@@ -160,8 +196,10 @@ pub struct StatsReply {
     pub key: JobKey,
     pub kind: JobKind,
     pub tag: String,
-    /// `call/parse_message` 已把管理 envelope 解开为统计 JSON；格式错误保留
-    /// 为 Err，不能伪装成空列表或零值。
+    /// `call/parse_message` 已把外层管理 envelope 解开为内层统计 JSON；格式
+    /// 错误保留为 `Err(String)`，不能伪装成空列表或零值。`Result` 在这里是
+    /// Rust 的显式成功/失败枚举，类似 Java 中二选一的结果对象，但调用者必须
+    /// 用 `match`/组合器处理两种分支。
     pub result: Result<Value, String>,
 }
 
@@ -173,7 +211,9 @@ struct Pending {
     reads: std::collections::HashMap<JobKey, StatsJob>,
     /// 写操作必须保序且不能被新请求覆盖，因此使用有界 FIFO。
     writes: std::collections::VecDeque<StatsJob>,
-    /// 每个资源尚有多少任务在 worker 中，防止同资源并发覆盖。
+    /// 每个资源尚有多少任务已经离开 pending、但还没有在 UI 收到 Reply。
+    /// `JobKey` 不同并不代表 worker 并行：worker 仍串行；这张表只阻止同一个
+    /// 资源在旧回复到来前再向 jobs channel 放入另一条任务。
     in_flight: std::collections::HashMap<JobKey, usize>,
     /// scheduler 内部分配 seq 的计数器；默认从 0 开始，提交时先加一再使用。
     next_seq: u64,
@@ -186,15 +226,17 @@ pub const MAX_WRITE_BACKLOG: usize = 32;
 ///
 /// Read intents collapse to the newest one per resource `JobKey`, write intents
 /// are queued and retried until the worker takes them, and `pump` moves work
-/// over only when the channel has room. Every reply carries its `seq`, so a
-/// late answer can never be mistaken for the current one.
+/// over only when the channel has room. Every reply carries its `seq` so the
+/// UI can identify the submission; each page/resource still applies its own
+/// additional gate before changing visible state.
 pub struct StatsScheduler {
     /// UI 向 worker 投递任务的有界同步 channel，容量 8。
     jobs: SyncSender<StatsJob>,
     /// worker 向 UI 投递回执的有界 channel，容量 64。
     replies: Receiver<StatsReply>,
-    /// UI 线程与 tick/pump 共享的待发队列；每次访问只持有短暂互斥锁，
-    /// 锁本身不把任何后台 I/O 包进 UI 线程。
+    /// UI 线程与 tick/pump 共享的待发队列，由 `Mutex` 提供 Rust 编译期之外的
+    /// 运行时互斥。每次访问只持有短暂锁，网络 I/O 在解锁后的 worker 中执行；
+    /// 不要把 `Mutex` 理解成“任务会在另一个线程并行执行”。
     pending: std::sync::Mutex<Pending>,
     /// 新任务和完成回复都会触发的单槽异步唤醒 channel。
     wake: async_channel::Sender<()>,
@@ -207,6 +249,8 @@ impl StatsScheduler {
         // 队列稍大（64）给 UI 在 250ms tick 之间排空结果。`wake` 容量 1，
         // 一批通知会合并为一个唤醒，不要求 UI 每 250ms 才能发现新结果。
         let (jobs, requests) = mpsc::sync_channel::<StatsJob>(8);
+        // `results` 是 worker 持有的发送端，`replies` 是 UI 读取结果的接收端。
+        // 两个变量名描述的是同一 channel 的两端，不是两份结果。
         let (results, replies) = mpsc::sync_channel(64);
         let (wake, wake_receiver) = async_channel::bounded(1);
         let reply_wake = wake.clone();
@@ -214,11 +258,13 @@ impl StatsScheduler {
             .name("statistics-control".into())
             .stack_size(512 * 1024)
             .spawn(move || {
-                // 该客户端线程逐条调用 Core，因此同一次统计查询不会阻塞
-                // GPUI 渲染线程。请求仍先由 Core 的网络 runtime 接收并完成
-                // 鉴权/解析，再交给 Core 的统计处理；这里不能据此认为管理
-                // HTTP 请求拥有与普通请求隔离的 Core 线程。
+                // 这个标准线程逐条调用 Core，因此一次统计请求不会占用 GPUI
+                // 渲染线程。它也不是 Core 的 HTTP 服务线程：请求发出后由
+                // Core 自己的网络 runtime 接收和管理 API 处理。这里说“不阻塞
+                // GPUI”有证据，说“与普通用户流量使用隔离线程”则没有。
                 while let Ok(job) = requests.recv() {
+                    // `call` 是同步函数，当前 worker 会等它返回后才接收下一项。
+                    // 这形成一个串行客户端队列；JobKey 只隔离身份和重排策略。
                     let result = call(&dir, &job.request);
                     if results
                         .send(StatsReply {
@@ -248,8 +294,9 @@ impl StatsScheduler {
     /// Wake the window on new work and completed replies instead of waiting
     /// for its periodic maintenance timer. Bursts collapse to a single wake.
     pub fn wake_receiver(&self) -> async_channel::Receiver<()> {
-        // `clone` 共享同一个异步 channel 的接收端能力；它不复制任何统计
-        // Entity 或后台结果。
+        // `async_channel::Receiver::clone` 增加共享同一 channel 的句柄，类似
+        // 复制一个 Java 对象引用；它不深拷贝统计 Entity 或结果。这里把接收端
+        // 交给 UI timer，调度器仍保留自己的句柄。
         self.wake_receiver.clone()
     }
 
@@ -310,6 +357,10 @@ impl StatsScheduler {
         // 每次循环只短暂锁定 pending，随后在不持锁时 `try_send`。写请求优先
         // 于读请求；读请求中 rows/recent/groups/detail 优先于后台资源。
         // `allow_reads=false` 时仍可泵出已授权的写操作。
+        //
+        // 多个 JobKey 可以同时在 in_flight/待发集合中，但 jobs channel 的
+        // 另一端仍是一个顺序 worker。这里所谓 lane 只是 identity/priority，
+        // 不是并行线程池，也没有为每个 JobKey 创建一个 HTTP executor。
         loop {
             let next = {
                 let mut pending = self.pending.lock().unwrap();
@@ -366,8 +417,9 @@ impl StatsScheduler {
     /// Marks a reply as handled so its resource can be scheduled again.
     pub fn complete(&self, key: &JobKey) {
         // 这必须在 UI 处理 Reply 前/同一步调用：它释放 in-flight 名额，
-        // 允许等待中的同资源最新 intent 随后发出。完成本身不保证展示结果，
-        // 过期结果仍由 Statistics 的 identity/generation 门禁丢弃。
+        // 允许等待中的同资源最新 intent 随后发出。完成本身不会判断内容新旧；
+        // `Statistics::handle_reply` 随后按资源选择 dashboard/列表/详情/价格等
+        // 各自门禁，不能概括成所有回复都只比较 generation。
         let mut pending = self.pending.lock().unwrap();
         if let Some(count) = pending.in_flight.get_mut(key) {
             *count = count.saturating_sub(1);
@@ -386,9 +438,10 @@ impl StatsScheduler {
     /// retain their order even while the statistics page is hidden.
     pub fn cancel_reads(&self) {
         // 只清掉尚未从 scheduler 发出的读 intent。已经进入 worker 的请求
-        // 无法撤回；返回后具体由 `Statistics` 各资源的 visibility/tag/seq/
-        // generation 门禁决定，本函数不保证所有隐藏页面的 Reply 都走同一
-        // 分支。写请求不清空，否则用户可能失去已授权的价格、设置或清理操作。
+        // 无法撤回，HTTP 已经发出后也不能据此取消 Core 内的 SQL 查询。返回后
+        // 具体由 `Statistics` 各资源的 visibility/tag/seq/generation 等规则
+        // 决定是否展示，本函数不保证所有隐藏页面的 Reply 都走同一分支。
+        // 写请求不清空，否则用户可能失去已授权的价格、设置或清理操作。
         self.pending.lock().unwrap().reads.clear();
     }
 
@@ -473,6 +526,8 @@ pub fn parse_message(success: bool, data: &Value) -> Result<Value, String> {
     if !success {
         return Err(message);
     }
+    // `message` 本身是“装 JSON 的字符串”，所以要再解析一次。成功信封但内层
+    // 畸形时返回 Err；这使 UI 能区分协议错误与真实的空查询结果。
     serde_json::from_str(&message).map_err(|_| "Invalid statistics response".to_owned())
 }
 

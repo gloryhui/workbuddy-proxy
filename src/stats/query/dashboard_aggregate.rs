@@ -1,8 +1,19 @@
-//! One bounded result per bucket feeds both overview and series. Imported
-//! records use the schema's recorded/unknown-transport invariant; proxy rows
-//! retain the complete original summary expression. No result cache is used.
+//! dashboard 的桶级共享聚合。
+//!
+//! `aggregate` 在同一个 SQLite 读事务中逐桶查询代理与导入记录；每个桶只保留
+//! 一份有界 `RawSummary`。总览累加这些同一批摘要，`series` 再直接使用它们，
+//! 所以两条展示路径不各扫一遍原始请求。这里没有跨请求缓存。
+//!
+//! 代理记录保留原始 outcome/transport/usage 摘要；导入记录采用 schema 固定的
+//! `recorded` 与未知传输语义。导入行的信用额单独累计，不与供应商货币费用相加。
 use super::*;
 
+/// 导入来源的桶内聚合列，列位置必须与 `read_summary` 对齐。
+///
+/// 导入记录没有代理请求特有的 completed/failed/rejected/cancelled/interrupted
+/// 计数，所以这些位置填 0；请求总数、usage 状态、token 和 WorkBuddy credit
+/// 仍按真实行聚合。credit 的商和余数分两列求 SUM，随后在 Rust 用 `i128`
+/// 重组，避免 SQLite i64 累加溢出。
 const IMPORT_COLUMNS: &str = "
  COUNT(*), 0, 0, 0, 0, 0, 0, 0, COUNT(*) FILTER(WHERE usage_status<>'not_applicable'),
  COUNT(*) FILTER(WHERE usage_status='complete'),
@@ -26,6 +37,11 @@ const IMPORT_COLUMNS: &str = "
  COALESCE(SUM(workbuddy_credit_nanos / 1000000000),0),
  COALESCE(SUM(workbuddy_credit_nanos % 1000000000),0)";
 
+/// 跨桶累计总览时使用的可变累加器。
+///
+/// `raw` 保存业务摘要，`origin` 保存代理/导入/信用等来源拆分。耗时不能直接平
+/// 均各桶 `AVG`：`duration_weight` 先还原每个桶的“均值 × 样本数”总和，最后
+/// 再除以真实样本数。
 #[derive(Default)]
 struct Accumulator {
     raw: RawSummary,
@@ -40,6 +56,8 @@ fn add(left: i64, right: i64) -> Result<i64, String> {
 }
 
 fn nullable_add(left: Option<i64>, right: Option<i64>) -> Result<Option<i64>, String> {
+    // None 表示该桶没有可信值；Some(0) 表示可信的零。两者不能互换。
+    // 只有一侧有时保留该侧；两侧都有的值才做 checked i64 加法。
     match (left, right) {
         (Some(left), Some(right)) => add(left, right).map(Some),
         (left, right) => Ok(left.or(right)),
@@ -48,6 +66,10 @@ fn nullable_add(left: Option<i64>, right: Option<i64>) -> Result<Option<i64>, St
 
 impl Accumulator {
     fn merge_raw(&mut self, row: &RawSummary, duration_count: i64) -> Result<(), String> {
+        // 这是 ROW_BUDGET 当前真正生效的位置：逐桶摘要累计后超过上限即返回
+        // stats_query_too_large。先检查请求数，再合并其余计数、None-aware 指标
+        // 和耗时；所有 checked_add 失败都映射为稳定的统计错误。来源拆分由
+        // merge_origin 另行合并。
         if add(self.raw.request_count, row.request_count)? > ROW_BUDGET {
             return Err(error(
                 ERR_QUERY_TOO_LARGE,
@@ -115,6 +137,8 @@ impl Accumulator {
 }
 
 fn proxy_bucket(conn: &Connection, filter: &StatsFilter) -> Result<(RawSummary, i64), String> {
+    // 只聚合 record_origin='proxy'，并额外返回 completed 且 duration_ms 非空的
+    // 样本数，供跨桶加权平均。来源范围或 capture 条件排除代理时直接返回空摘要。
     if !filter.source_scope.includes_proxy()
         || filter.capture_method == crate::stats::dto::CaptureMethod::Workbuddy
     {
@@ -139,6 +163,8 @@ fn imported_bucket(
     conn: &Connection,
     filter: &StatsFilter,
 ) -> Result<(RawSummary, OriginCounts), String> {
+    // 导入事实的 outcome 固定按 recorded 解释；筛选了其他 outcome 时无需查库。
+    // 返回值中的 imported_unpriced 来自来源计数本身，而不是代理费用扫描。
     if !filter.source_scope.includes_imported()
         || filter.capture_method == crate::stats::dto::CaptureMethod::Proxy
         || filter
@@ -199,6 +225,12 @@ pub(super) fn aggregate(
     filter: &StatsFilter,
     buckets: &[Bucket],
 ) -> Result<(RawSummary, OriginCounts, Vec<RawSummary>), String> {
+    // 顺序遍历每个 bucket：代理和导入各查一次，再把两份摘要合成该桶结果。
+    // `rows` 只保存最多 MAX_BUCKETS 份聚合摘要；总览使用同一个 combined.raw
+    // 累加，所以 overview 与 series 来自完全相同的桶边界和数据快照。
+    //
+    // pending import 数最后单独读取，只进入来源告警字段，不混入请求数、token
+    // 或成本；它表达尚未完成分类的导入候选。
     let mut total = Accumulator::default();
     let mut rows = Vec::with_capacity(buckets.len());
     for bucket in buckets {
@@ -241,6 +273,10 @@ fn pending_import_count(conn: &Connection, filter: &StatsFilter) -> Result<i64, 
 }
 
 fn quality(raw: &RawSummary, covered: bool) -> (SeriesQuality, bool) {
+    // 质量与采集覆盖是两个维度：完整覆盖的空桶是 Empty；未覆盖的空桶是
+    // Unknown。有请求时，只有 eligible usage 全部 complete 才是 Known；
+    // 有 complete/partial 但未全量则为 Partial；其余没有可信 usage 时为
+    // Unknown。collection_warning 直接由是否完整覆盖产生。
     let warning = !covered;
     if raw.request_count == 0 {
         (
@@ -266,6 +302,9 @@ fn point(
     covered: bool,
     costs: Vec<CostTotalDto>,
 ) -> SeriesPointDto {
+    // 只有“请求数确实为 0 且整桶已覆盖采集”才输出 token 0。已经有请求但
+    // usage 不 complete 时保留 None，让图表显示缺口。费用由同桶费用累加器
+    // 消耗后转成 DTO；未知或零金额由 CostTotalDto 的币种条目另行表达。
     let (quality, collection_warning) = quality(raw, covered);
     let proven_zero = raw.request_count == 0 && covered;
     let usage = raw.usage_complete_count > 0;
@@ -307,6 +346,10 @@ pub(super) fn series(
     rows: &[RawSummary],
     costs: &mut [CostAccumulator],
 ) -> Result<Vec<SeriesPointDto>, String> {
+    // 本函数不重扫 usage_requests：`rows` 是 aggregate 已算好的同序桶摘要，
+    // `costs` 是 scan_costs 填充的同序桶费用。只额外读取 collection coverage，
+    // 然后按桶 zip 生成最终点。`std::mem::take` 把金额所有权移入 DTO，避免
+    // 再复制一份累加器。
     let coverage = collection_coverage(conn, filter.from_ms, filter.to_ms)?;
     Ok(buckets
         .iter()
