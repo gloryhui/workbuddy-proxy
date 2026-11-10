@@ -1,17 +1,53 @@
 //! Vendor usage -> the existing statistics collector's Chat usage contract.
 //! Missing parents remain absent; malformed counts invalidate usage, not relay.
+//!
+//! 本模块位于协议适配层：输入是 Responses、Anthropic Messages 或 Gemini
+//! GenerateContent 返回的 usage 片段，输出是统计 collector 已认识的一组
+//! Chat 风格 token 字段。`Usage` 的所有权属于非流式 `Output`，或流式
+//! `streaming::Common`；它不会直接写 SQLite，也不创建线程。后续由
+//! `proxy::native::observe` 把 `Usage::outcome()` 交给 `RequestGuard`，最终
+//! 由统计 writer 落库。
+//!
+//! 这里处理的是已经解析出的供应商 usage，而不是接口 HTTP、SSE 或输出正文。
+//! 统计侧的 native 观察与响应转换是两个同时存在但职责不同的投影：前者只记录
+//! 上游原始传输字节数、语义首内容时间、响应模型和规范化 `UsageOutcome`；
+//! 后者才构建客户端可见 Chat text/tool calls。原始消息、工具参数、图片及
+//! 不透明签名不会作为统计明细进入队列。
+//!
+//! token 单位均为“个 token”，不是字节或字符。数值缺失时使用
+//! `Option::None`，表示未知；已知的 0 则是合法零值。错误 usage 不把正文响应
+//! 判为失败，但会形成 Invalid 统计结果，绝不能悄悄按 0 计费。
 use super::config::UpstreamProtocol;
 use crate::stats::dto::{MAX_TOKEN_VALUE, MAX_TOTAL_TOKENS};
 use serde_json::{Map, Value, json};
 
+/// 一次上游响应经过质量校验后的 usage 快照。
+///
+/// `Clone` 用于在流式 Decoder 中把当前累计状态交给非拥有型观察接口；它不是
+/// Java 式的通用深拷贝约定，具体复制边界由字段类型决定。
 #[derive(Clone, Debug, Default)]
 pub struct Usage {
+    /// Chat 兼容 usage JSON，例如 `prompt_tokens`、`completion_tokens` 和
+    /// `total_tokens`。字段存在表示已知，缺字段表示未知；值 0 是已知零值。
+    /// `Value::Null` 专门表示没有可用 usage，不能被统计成完整零用量。
     pub chat: Value,
+    /// input、output、total 三个父字段是否全部已知且通过一致性校验。该值
+    /// 描述数值完整度，不描述正文、SSE 或 transport 是否成功。
     pub complete: bool,
+    /// 仅 Anthropic 能证明“未缓存输入”时存在：input_tokens 本身不含缓存读写，
+    /// 该值为未缓存的 token 数。其他协议为 `None`，不能自行套用此分解。
     pub disjoint_uncached: Option<i64>,
+    /// 上游存在 usage，但至少一个可解释的父值非法、越界或彼此矛盾。
+    /// Invalid usage 不会中断本来有效的模型正文，只独立影响统计可信度。
     pub invalid: bool,
 }
 impl Usage {
+    /// 把协议层快照投影成统计 collector 的最终口径。
+    ///
+    /// 调用方是 `proxy::native::observe`。Invalid 优先于内容是否存在；随后
+    /// `Null` 映射为 Missing。其余情况交给 `UsageAccumulator`：父字段完整时
+    /// 为 Complete，部分可得时为 Partial。Anthropic 已证明输入分解时再补充
+    /// Disjoint breakdown 和 uncached 数字。本函数只读，无 I/O。
     pub fn outcome(&self) -> crate::stats::collector::UsageOutcome {
         use crate::stats::{
             collector::{UsageAccumulator, UsageOutcome},
@@ -39,6 +75,10 @@ impl Usage {
         outcome
     }
 }
+/// 读取一个可选的顶层非负整数，并强制协议规定的字段上限。
+///
+/// 缺失键返回 `Ok(None)`；显式 null、浮点数、字符串、负数或超限都视为不可
+/// 信，返回 `Err(())`。`max` 的单位仍是 token 数。
 fn count(v: &Value, key: &str, max: i64) -> Result<Option<i64>, ()> {
     match v.get(key) {
         None => Ok(None),
@@ -49,6 +89,10 @@ fn count(v: &Value, key: &str, max: i64) -> Result<Option<i64>, ()> {
             .ok_or(()),
     }
 }
+/// 读取 `parent.key` 形式的可选明细计数。
+///
+/// 父对象缺省或为 null 表示该明细未知；父对象存在但类型错误则使 usage 无效。
+/// 这样不会把损坏的嵌套结构误解成“供应商没返回缓存数据”。
 fn detail(v: &Value, parent: &str, key: &str) -> Result<Option<i64>, ()> {
     match v.get(parent) {
         None | Some(Value::Null) => Ok(None),
@@ -56,11 +100,15 @@ fn detail(v: &Value, parent: &str, key: &str) -> Result<Option<i64>, ()> {
         _ => Err(()),
     }
 }
+/// 安全相加两个可选计数。
+///
+/// 任一项未知就返回 None，避免用缺失值补 0；溢出或超过上限返回错误。
 fn add(a: Option<i64>, b: Option<i64>, max: i64) -> Result<Option<i64>, ()> {
     a.zip(b)
         .map(|(a, b)| a.checked_add(b).filter(|n| *n <= max).ok_or(()))
         .transpose()
 }
+/// 仅把已知计数写入 Chat usage 对象；None 留给“字段不存在”。
 fn put(m: &mut Map<String, Value>, key: &str, v: Option<i64>) {
     if let Some(v) = v {
         m.insert(key.into(), json!(v));
@@ -70,6 +118,14 @@ fn put(m: &mut Map<String, Value>, key: &str, v: Option<i64>) {
 /// Keep only normalized counter fields from cumulative streaming updates.
 /// Arbitrary vendor metadata cannot grow a retained map indefinitely. Invalid
 /// or decreasing counters stay invalid without aborting otherwise valid text.
+///
+/// 调用方是流式 Anthropic/Gemini 适配器。协议把多帧 usage 作为累计快照，
+/// 因此这里用后值替换白名单字段，不能相加。只保留固定字段可以阻止任意供应商
+/// 元数据无界增长；缺失字段沿用旧快照，当前值已为 null 时保持失效。
+///
+/// 新值必须是非负整数、不超过对应上限，并且不小于同一字段的旧值。下降或非法
+/// 更新把该字段设为 null，让后续 normalize 报告 Invalid；这里故意不返回错误，
+/// 因为 usage 元数据损坏不应丢弃已经成功解析的模型 text/tool 输出。
 pub fn merge_cumulative(current: &mut Value, incoming: &Value, protocol: UpstreamProtocol) {
     let fields: &[&str] = match protocol {
         UpstreamProtocol::AnthropicMessages => &[
@@ -120,6 +176,11 @@ pub fn merge_cumulative(current: &mut Value, incoming: &Value, protocol: Upstrea
     }
 }
 
+/// 把一个供应商 usage 对象严格规范化为 Chat usage。
+///
+/// `native=Null` 表示供应商没有给出 usage，返回默认 Missing 语义。对象解析
+/// 失败则返回 `invalid=true` 且 `chat=Null`；不把供应商原文回显给客户端。
+/// 本函数用于流式最终快照与非流式 `Output`。
 pub fn normalize(protocol: UpstreamProtocol, native: &Value) -> Usage {
     if native.is_null() {
         return Usage::default();
@@ -138,8 +199,15 @@ pub fn normalize(protocol: UpstreamProtocol, native: &Value) -> Usage {
     }
 }
 
-/// Interim streaming counters are lower bounds, not a final output bill.
+/// 规范流式过程中尚不能视为最终账单的累计计数。
+///
+/// Interim counters are lower bounds, not a final output bill.
 /// Keep proven input and quality errors while withholding unfinished output.
+///
+/// Anthropic 会移除尚未被终态确认的 `output_tokens`；Gemini 会移除候选数、
+/// thought 数和 total，只保留 prompt/cache 等已证明输入。Responses 只在完整
+/// terminal snapshot 上提供用法，因此这里不做额外删减。这个函数不回滚已发射
+/// 的正文，也不把不完整 usage 当 0。
 pub fn normalize_partial(protocol: UpstreamProtocol, native: &Value) -> Usage {
     let full = normalize(protocol, native);
     if full.invalid {
@@ -169,6 +237,8 @@ fn normalize_checked(protocol: UpstreamProtocol, v: &Value) -> Result<Usage, ()>
     if !v.is_object() {
         return Err(());
     }
+    // 先按协议解释 native 字段，再统一检查 input/output/total、缓存子集和
+    // reasoning 子集的约束。每个 `None` 都表示该父字段未知，不是零。
     let (input, output, total, read, write, reasoning) = match protocol {
         UpstreamProtocol::OpenaiResponses => {
             let input = count(v, "input_tokens", MAX_TOKEN_VALUE)?;
@@ -192,6 +262,8 @@ fn normalize_checked(protocol: UpstreamProtocol, v: &Value) -> Result<Usage, ()>
             let write = count(v, "cache_creation_input_tokens", MAX_TOKEN_VALUE)?;
             // input_tokens is uncached input on Messages, not total input.
             // Missing cache components cannot be silently priced as zero.
+            // 例如 uncached=10、cache read=40、cache create=5，则统一 prompt
+            // 是 55；只要 read/write 有一项未知，就不能证明这个 55。
             let input = add(
                 add(uncached, read, MAX_TOKEN_VALUE)?,
                 write,
@@ -219,7 +291,11 @@ fn normalize_checked(protocol: UpstreamProtocol, v: &Value) -> Result<Usage, ()>
             let reasoning = count(v, "thoughtsTokenCount", MAX_TOKEN_VALUE)?;
             let total = count(v, "totalTokenCount", MAX_TOTAL_TOKENS)?;
             let output = match (candidates, reasoning) {
+                // 两项都存在时，Chat completion 口径包含可见候选与 thought，
+                // 并且后续会检查二者都不大于合并后的 output。
                 (Some(_), Some(_)) => add(candidates, reasoning, MAX_TOKEN_VALUE)?,
+                // 若只是缺一项，只有 total 与 prompt 都已知时才可推导剩余
+                // output；推导失败就保持未知，不能拿 0 补齐。
                 _ => total
                     .zip(prompt)
                     .and_then(|(t, p)| t.checked_sub(p))
@@ -241,6 +317,8 @@ fn normalize_checked(protocol: UpstreamProtocol, v: &Value) -> Result<Usage, ()>
         }
         UpstreamProtocol::OpenaiChat => return Err(()),
     };
+    // 父三元组必须自洽；缓存读写必须属于输入；reasoning 必须是 output 的
+    // 子集。Anthropic 的 input 已转为“总输入”，read+write 也必须不超过它。
     if input
         .zip(output)
         .zip(total)

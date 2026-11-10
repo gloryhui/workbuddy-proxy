@@ -1,5 +1,32 @@
 //! Incremental native event state. Framing, transport and Chat serialization
 //! remain pull-driven; this module never collects the original SSE stream.
+//!
+//! 本模块拥有一次流式响应的协议状态。上游是 `sse::Event`（已经完成网络
+//! chunk -> SSE Frame -> Event 的转换），下游是代理响应流：`Step.delta` 被
+//! `proxy::native::DeltaCursor` 有界切片并包装成 Chat chunk，最终 `Output`
+//! 再生成 finish、可选 usage 与 `[DONE]`。真实流驱动类型是
+//! `proxy::native::NativeStream`；本模块的公共类型只有 `streaming::Decoder`
+//! 和它返回的 `Step`，不存在名为 `Stream` 的适配器类型。
+//!
+//! `Decoder` 与 `NativeStream` 都由单个响应请求拥有，沿着 body future 可变
+//! 借用前进；未启动独立线程，也不跨客户端共享。网络 chunk、SSE Frame、原生
+//! Event、统一 Chat delta 是四种不同层次：一个网络 chunk 可含多个 Event，一个
+//! Event 也可跨多个网络 chunk；一个原生 Event 还可能只更新 usage、只关闭 block，
+//! 因而产生空 delta。
+//!
+//! `Common` 只保存跨协议语义：每一段已发出文本的长度/SHA-256 前缀证明、
+//! 工具参数终值、usage、模型和最终 Output。它不把全部正文一直聚合成 String。
+//! 为生成真实 replay/final snapshot，Anthropic 和 Gemini 适配器会保留各自的
+//! native block/part 状态，Responses 会保留 item 身份和工具结构；这些保留范围
+//! 受 `OUTPUT_LIMIT`、tool 参数上限和 slot 上限约束，不能笼统说整个原始 SSE
+//! 流都被收集。
+//!
+//! 协议 marker、传输 EOF 和成功 DONE 也不是同一件事：`terminal_seen()` 只说明
+//! 已看到终态线索。调用方必须先检查 Parser/transport clean EOF，再调用
+//! `Decoder::finish`；Decoder 不持有 Parser，只负责协议 final snapshot 和工具
+//! 参数闭合。工具选择约束再由 `proxy::native::pending` 在 finish 之后校验。
+//! 任何协议/transport 错误都应由调用方发送错误事件并结束，不能补发成功
+//! finish 或 DONE。
 mod anthropic;
 mod gemini;
 mod responses;
@@ -15,13 +42,24 @@ use serde_json::{Map, Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 
+/// 一个文本/推理/refusal 通道的已观测前缀证明。
+///
+/// 本结构**不保存正文**，只保存已向客户端发出内容的字节长度和 SHA-256 增量
+/// 摘要。终态 full snapshot 到来时，可用它确认 snapshot 的前缀正是此前发出的
+/// 内容，再只补发未见后缀，避免重复文本。`len` 的单位是 UTF-8 字节。
 #[derive(Clone, Default)]
 struct Track {
+    /// 已确认发出的 UTF-8 字节数。
     len: usize,
+    /// 这些字节的增量 SHA-256；用于校验 snapshot 前缀一致。
     hash: Sha256,
+    /// 对应协议 block/part 已关闭后，不允许继续向该 slot 追加内容。
     closed: bool,
 }
 impl Track {
+    /// 记录一段已发出的文本前缀。
+    ///
+    /// 超限或已关闭时失败；失败不能让调用方继续把截断内容视为成功。
     fn append(&mut self, s: &str) -> Result<(), Error> {
         if self.closed {
             return Err(bad("delta_after_block_done"));
@@ -34,6 +72,10 @@ impl Track {
         self.hash.update(s.as_bytes());
         Ok(())
     }
+    /// 比较 full snapshot 的前缀并借用其未见后缀。
+    ///
+    /// 返回的 `&str` 生命周期绑定 `full`，调用方只在本事件内使用，不长期持有；
+    /// 这样无需把整段 snapshot 再复制到 Common。
     fn tail<'a>(&self, full: &'a str) -> Result<&'a str, Error> {
         let prefix = full
             .get(..self.len)
@@ -44,26 +86,53 @@ impl Track {
         Ok(&full[self.len..])
     }
 }
+/// 跨协议统一后的一个函数调用累积状态。
 struct Tool {
+    /// 适配器自己的稳定 key，例如 Responses 的 output_index 或 Anthropic
+    /// content block index，用于把后续事件归到同一个调用。
     key: String,
+    /// 本代理生成并已发给客户端的 Chat tool id（`wbpt_...`）。
     chat_id: String,
+    /// 上游 call id；Gemini/部分响应可能没有，因此允许空字符串。
     native_id: String,
+    /// 已校验的 ASCII 函数名。
     name: String,
+    /// 按协议增量拼接后的 JSON 文本；这是为了最终严格解析和 replay，而不是
+    /// 每帧都把半截 JSON 当对象执行。
     args: String,
+    /// 是否已经收到该工具块的明确完成信号并验证 args 为 JSON object。
     done: bool,
 }
+/// 三个原生协议共享的流式语义状态。
 #[derive(Default)]
 struct Common {
+    /// 已发出的可见正文前缀证明，不保留正文 String。
     text: Track,
+    /// 已发出的 reasoning summary 前缀证明，不保留正文。
     reasoning: Track,
+    /// 已发出的 refusal 文本前缀证明，不保留正文。
     refusal: Track,
+    /// 原生 item/content/part slot -> 前缀证明。用于按独立块判断 delta/done
+    /// 顺序和 snapshot 一致性；仍然只保存长度与 hash。
     slots: BTreeMap<String, Track>,
+    /// 已开始的工具调用。这里确实保留 args JSON 文本，因为 tool stop 时要严格
+    /// 解析成 object，后续 replay 也需要原始参数。
     tools: Vec<Tool>,
+    /// 当前经过协议规则规范化的 usage。流式累计值在适配器中替换更新，不累加
+    /// 重复快照。
     usage: Usage,
+    /// 各事件中一致的上游模型名；冲突会使流失败。
     model: Option<String>,
+    /// 已知持久 state 的保守字节预算，用于限制 slot key、工具字段和文本等新增
+    /// 驻留量；不是上游传输的总字节计数器。
     size: usize,
+    /// 是否已收到足以确定 assistant 身份/内容的协议确认。代理用它决定何时
+    /// 先发 role chunk；它不代表整个响应成功完成。
     confirmed: bool,
+    /// 是否已由完整 terminal snapshot 构建并校验 `final_output`。设置后禁止
+    /// 继续出现可见内容/工具事件。
     terminal: bool,
+    /// `reconcile` 产出的最终统一结果；由 `Decoder::finish` 取走一次。
     final_output: Option<Output>,
 }
 fn bad(code: &'static str) -> Error {
@@ -119,6 +188,8 @@ fn tool_delta(delta: &mut Map<String, Value>, v: Value) {
     }
 }
 impl Common {
+    /// 增加驻留 state 预算。超限即协议失败，避免只有网络 chunk 有限而解析状态
+    /// 仍无限增长。
     fn charge(&mut self, n: usize) -> Result<(), Error> {
         self.size = self
             .size
@@ -127,6 +198,7 @@ impl Common {
             .ok_or_else(|| bad("upstream_output_too_large"))?;
         Ok(())
     }
+    /// 读取并统一各协议的模型名；一旦已有值就必须完全一致。
     fn model(&mut self, v: &Value, key: &str) -> Result<(), Error> {
         if let Some(value) = v.get(key) {
             let model = value
@@ -140,6 +212,13 @@ impl Common {
         }
         Ok(())
     }
+    /// 把一个协议 slot 的新增可见文本追加到统一通道和当前 Chat delta。
+    ///
+    /// `snapshot=true` 表示输入是该 slot 的累计全文，并非新增后缀；先用
+    /// Track 校验此前已发前缀，只追加未见部分。`close=true` 在本次处理后
+    /// 关闭该 slot；关闭后再次提交非空文本会失败，空 snapshot 不会触发 append。
+    /// 即使文本为空，也可能借此登记/关闭 slot，因此 slot 数量本身也受 4096
+    /// 上限约束。
     fn emit(
         &mut self,
         slot: &str,
@@ -176,6 +255,11 @@ impl Common {
         }
         Ok(())
     }
+    /// 登记一个跨协议工具调用，并固定客户端看到的 index/id。
+    ///
+    /// 同一协议 key 可被后续事件再次提到，但 native id 和 name 必须一致。
+    /// 首次出现时生成本地 `wbpt_` id，并立即形成 Chat tool call 头；后续参数
+    /// 只按固定 index 追加。原生 ID 为空时仍用协议索引保证本地身份稳定。
     fn start_tool(
         &mut self,
         key: String,
@@ -221,6 +305,12 @@ impl Common {
         });
         Ok(i)
     }
+    /// 累积一个工具的 JSON 参数字符串。
+    ///
+    /// `snapshot=true` 表示 `s` 是该工具的累计参数全文，必须以前面已保存文本
+    /// 为前缀，只取后缀；否则 `s` 是真正增量。只有 `done=true`（Responses/
+    /// Anthropic 的完成事件或 Gemini 的完整对象）才严格解析整个 args，并要求
+    /// 顶层是 JSON object。半截 JSON 可以中转给客户端，但不能进入 replay。
     fn args(
         &mut self,
         i: usize,
@@ -264,6 +354,12 @@ impl Common {
     }
     /// Terminal full snapshots validate already-emitted prefixes. Only their
     /// unseen suffix is emitted; tool IDs/indexes keep their first assignment.
+    ///
+    /// 调用方是三个适配器的 `completed/message_stop/Gemini EOF finish` 路径。
+    /// 步骤是：逐通道校验 snapshot 前缀并补发后缀；按 native ID 或协议顺序
+    /// 重绑定 terminal tool calls，补齐早先未完成的参数；拒绝漏工具/重复工具/
+    /// 参数不一致；用同一个 Output 的 usage 覆盖当前 usage；设置 terminal 与
+    /// final_output。只有完成这些校验，本次流才有最终成功候选。
     fn reconcile(&mut self, mut out: Output, delta: &mut Map<String, Value>) -> Result<(), Error> {
         let text = out.assistant.text();
         for (channel, full) in [
@@ -357,20 +453,38 @@ impl Common {
     }
 }
 
+/// 当前响应选中的协议状态机。
+///
+/// 每个 State 只保存该协议自己的 event 顺序、native item/block/part 和终态；
+/// `Common` 只接收已归一化的语义结果。新增协议必须同时实现非流式 Output 解码
+/// 和这里的增量状态，不能假定三种事件名称或工具参数形式相同。
 enum Native {
     Responses(responses::State),
     Anthropic(anthropic::State),
     Gemini(gemini::State),
 }
+/// 一次流式原生响应的跨协议解码器。
+///
+/// 它不拥有网络流或 SSE Parser，只拥有解析后的协议状态；调用方在 clean EOF
+/// 后用 `finish` 取走最终 Output。请求任务可跨 await 持有它，但同一时刻只有
+/// 一个可变借用进入 `event`，无需额外锁。
 pub struct Decoder {
     common: Common,
     native: Native,
 }
+/// 一个原生 Event 转换后的 Chat 增量结果。
 pub struct Step {
+    /// 从流开始到本事件为止，是否已能从协议内容确认 assistant；一旦为 true
+    /// 通常保持 true。它用于发一次 role chunk，不表示 terminal。
     pub confirmed: bool,
+    /// 可直接转成 Chat delta 的字段。可为空 object（例如 usage/stop-only 事件）；
+    /// 调用方不应把空的 `{}` 当作用户可见内容。
     pub delta: Value,
 }
 impl Decoder {
+    /// 按 destination protocol 创建对应状态机。
+    ///
+    /// `OpenaiChat` 走原有字节转发，不由 native adapter 解码，因此返回输入错误。
     pub fn new(protocol: UpstreamProtocol) -> Result<Self, Error> {
         Ok(Self {
             common: Common::default(),
@@ -384,15 +498,28 @@ impl Decoder {
             },
         })
     }
+    /// 当前已确认的上游模型名，供 role chunk 和统计观察使用。
     pub fn model(&self) -> Option<&str> {
         self.common.model.as_deref()
     }
+    /// 当前流式 usage 快照。调用方只借用，不取得所有权；它可能仍是 partial。
     pub fn usage(&self) -> &Usage {
         &self.common.usage
     }
+    /// 是否已经看到协议 terminal marker 或完整 terminal snapshot。
+    ///
+    /// Gemini 在 finishReason/blockReason 出现时即返回 true，Anthropic/Responses
+    /// 主要由 `Common.terminal` 决定。该值用于缩短 terminal 后等待 EOF 的时间，
+    /// 不能单独作为成功条件。
     pub fn terminal_seen(&self) -> bool {
         self.common.terminal || matches!(&self.native,Native::Gemini(s) if s.terminal_seen())
     }
+    /// 消费一个已分帧 Event 并推进对应协议状态。
+    ///
+    /// Event data 必须是 1 MiB Frame 上限内的 object JSON；非 null `error`
+    /// 立即失败。适配器可能返回空 delta，也可能更新 usage/model/terminal。
+    /// 本函数验证单个事件的类型、身份、顺序和增量一致性，但不知道 transport
+    /// 是否已经干净结束，因此不会在这里发送 DONE。
     pub fn event(&mut self, event: sse::Event) -> Result<Step, Error> {
         let v = request::strict_json(event.data.as_bytes(), sse::FRAME_LIMIT)
             .map_err(|_| bad("invalid_upstream_event_json"))?;
@@ -415,6 +542,12 @@ impl Decoder {
     }
     /// Called only after the frame parser and transport reached clean EOF.
     /// A terminal marker alone never turns malformed/truncated tails into DONE.
+    ///
+    /// Gemini 必须在这里用累计 parts、finishReason 和 usage 组装 final native
+    /// snapshot；Responses/Anthropic 的 terminal event 已调用 `reconcile`。随后
+    /// `final_output` 必须存在，否则尾部被截断。该方法消耗 Decoder，不会自行
+    /// 调用 HTTP 层 `Output::validate_request`；后者在
+    /// `proxy::native::pending` 中完成，并决定能否发布 replay。
     pub fn finish(mut self) -> Result<Output, Error> {
         if let Native::Gemini(s) = &mut self.native {
             s.finish(&mut self.common)?;
