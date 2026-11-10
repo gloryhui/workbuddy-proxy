@@ -1,6 +1,6 @@
 # 从 Java / Spring Boot 进入 WorkBuddy Proxy 源码
 
-这份导读面向会写 Java / Spring Boot、第一次接触 Rust 的开发者。目前覆盖服务与界面的核心骨架、协议转换、统计持久化、用量定价与查询展示：应用怎样启动，配置怎样变成路由，界面操作怎样进入核心，一次请求怎样转换与返回，以及统计怎样入队、计费、落库、恢复、聚合并显示。阅读时把代码中的中文注释与本文对照；历史导入和自动更新的深层算法，留作后续专题。
+这份导读面向会写 Java / Spring Boot、第一次接触 Rust 的开发者。目前覆盖服务与界面的核心骨架、协议转换、统计持久化、用量定价、查询展示与历史导入：应用怎样启动，配置怎样变成路由，界面操作怎样进入核心，一次请求怎样转换与返回，以及统计怎样入队、计费、落库、恢复、聚合并显示。阅读时把代码中的中文注释与本文对照；自动更新的深层流程留作后续专题。
 
 ## 先建立项目地图
 
@@ -44,7 +44,7 @@ flowchart LR
 5. 读 `gpui/src/main.rs → ui::Proxy::new`，再按 [界面核心流程](UI_CORE.md) 跟一次保存操作，直到核心响应被合并回界面状态。
 6. 按 [统计持久化导读](STATS_PERSISTENCE.md) 读 `RequestGuard → EventQueue → stats-writer → SQLite`，分清终态发布、事务提交和故障修复，再按 [用量与费用导读](STATS_USAGE_PRICING.md) 理解 token、单价快照和金额，最后按 [查询与界面导读](STATS_QUERY_UI.md) 跟聚合、分页、调度与过期回复过滤。
 7. 需要理解协议细节时，进入 [协议转换总览](PROTOCOL_CONVERSION.md)，依次跟请求、响应与多轮工具回放。
-8. 最后用下方的练习验证理解；遇到具体专题再进入现有统计和更新文档。
+8. 按 [历史导入导读](WORKBUDDY_IMPORT.md) 跟文件分片、归一、去重与提交 ACK，最后用下方的练习验证理解；遇到更新专题再进入现有更新文档。
 
 每到一个函数，先问六件事：谁调用它；输入是谁产生的；当前在哪个进程或线程；它修改什么状态；错误由谁处理；结果最后给谁使用。
 
@@ -131,7 +131,7 @@ cargo test --manifest-path gpui/Cargo.toml --locked external_save64_refreshes_cl
 - [统计持久化源码专题](STATS_PERSISTENCE.md)：双槽预约、请求守卫、SQLite 事务、迁移、故障修复和关闭边界。
 - [用量与费用源码专题](STATS_USAGE_PRICING.md)：累计 usage、输入拆分、价格匹配与快照、整数金额及结算状态。
 - [统计查询与界面专题](STATS_QUERY_UI.md)：读事务、桶聚合、费用扫描、分页、资源调度、回复身份与导入准入协调。
-- [WorkBuddy 用量导入](../workbuddy-import/README.md)：文件读取、归属、去重、检查点与 ACK。
+- [WorkBuddy 历史导入源码专题](WORKBUDDY_IMPORT.md)：文件分片、当前自动分类、身份去重、检查点、提交 ACK、观测与恢复；使用方式见 [用量导入说明](../workbuddy-import/README.md)。
 - [桌面应用](../DESKTOP.md)、[更新与恢复](../AUTO-UPDATE.md)：平台桥接、窗口生命周期、安装与更新。
 
 接口版本请查 [`CONTROL_PROTOCOL`](../../src/main.rs)、[`API_VERSION`](../../src/stats/dto.rs) 和 [`SCHEMA_VERSION`](../../src/stats/store.rs) 的实际定义。发布版本、控制协议、统计 API 与数据库 schema 是不同维度，不应互相替代。

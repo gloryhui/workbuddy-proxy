@@ -1,5 +1,10 @@
 //! Standalone WorkBuddy charges. Tool response payloads are mirrors, never a
 //! second billing source. Keep credit stages separate from model messages.
+//!
+//! `credit-usage` 是独立收费回执，不能拿模型消息的 messageId 去重，也不能把
+//! 工具响应正文中的镜像再记一遍。这里用独立 hash 域及 request/stage 身份生成键，
+//! 输出同一种 Candidate 给 writer；token 状态为 NotApplicable，credit 以精确
+//! nano 积分单独保存，不是 USD/CNY 费用，也不代表账户余额。
 use super::parser::{self, NumberLiteral, NumberText};
 use super::types::{Candidate, MalformedReason, NormalizedUsage, ParseDisposition};
 use sha2::{Digest, Sha256};
@@ -52,6 +57,12 @@ pub(super) fn tool_name(source: &str, stage: &str) -> Option<String> {
     .then(|| name.to_owned())
 }
 
+/// 由 parser::evaluate 的 credit-usage 分支调用，仅处理已提取的收费白名单字段。
+///
+/// 缺失 session 可用文件 stem，明确不一致则拒绝；request/source/stage 身份及
+/// 时间必须有效。金额解析失败只记 credit_invalid，不猜零；当前函数仍可产出
+/// 不含可信金额的摘要候选。Entry 键含 namespace/request/stage，message hash
+/// 含 request/stage，不以随机 history id、文件偏移或模型 messageId 替代。
 pub(super) fn evaluate(row: Charge, stem: &str, namespace: &str, now: i64) -> ParseDisposition {
     let session = row.session_id.as_deref().unwrap_or(stem);
     if session != stem {

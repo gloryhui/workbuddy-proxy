@@ -13,6 +13,16 @@
 //! `conflicting_usage` instead of picking a winner. Cache, reasoning and credit
 //! are filled by their own rules; this module only sets the main three fields
 //! plus the status and reason.
+//!
+//! 中文导览：本模块把“上游可能给出多套同义字段”的观察归一成代理自己的
+//! `NormalizedUsage`，是 parser 之后、writer 事务之前的一层纯计算。函数接收
+//! 借用 `&RawUsage`/`&NormalizedUsageFields`，返回或原地修改拥有所有权的 usage；
+//! 不访问文件、网络或 SQLite，因此失败不会在这里单独回滚任何数据库操作。
+//!
+//! 主 Token 和 cache/reasoning 的优先级策略并不完全相同：主 Token 若最高优先级
+//! 字段存在但非法，整条主 usage 变 invalid；cache/reasoning 允许跳过非法别名，
+//! 选择下一个合法别名，并把较低优先级的数值分歧记为诊断。credit 又是第三条独立
+//! 规则，不参与 Token 加总，失败也只设 `credit_invalid`。
 
 use crate::stats::dto::{InputBreakdown, UsageReason, UsageStatus};
 use crate::stats::workbuddy_import::parser::{NormalizedUsageFields, NumberLiteral, RawUsage};
@@ -67,6 +77,10 @@ fn first_present(candidates: [Option<NumberLiteral>; 3]) -> Option<NumberLiteral
 /// `raw` is the highest-priority `rawUsage` alias, `normalized` the `usage`
 /// counterpart. When both are present they must agree, otherwise the record is
 /// a conflict. An illegal high-priority value is an error, never a fallback.
+///
+/// 注意 `raw`/`normalized` 都只是 `Option<NumberLiteral>`，而 `NumberLiteral` 是
+/// `Copy` 的小枚举；把它们传入函数不会移动整块上游 DTO，也不会像 Java 对象引用那样
+/// 保留对原 JSON 的隐式绑定。两个包装同时存在时必须逐项相等，缺失才允许单边成立。
 fn resolve(
     raw: Option<NumberLiteral>,
     normalized: Option<NumberLiteral>,
@@ -92,6 +106,13 @@ fn resolve(
 /// Only `status`, `reason`, `input_tokens`, `output_tokens`, `total_tokens`,
 /// `total_tokens_derived` and `input_breakdown` are set here; cache, reasoning
 /// and credit stay unknown for their own rules to fill.
+///
+/// 入口从 `NormalizedUsage::missing()` 开始：`None` 表示未知，绝不把未知偷偷改成
+/// 零。`total` 只有在 input、output 都已知且没有显式 total 时才用 checked add 推导；
+/// 有显式 total 但缺少一侧时保持 partial，也不会通过减法“猜”缺的那一侧。
+/// 三项齐全为 Complete，部分已知为 Partial，全空为 Missing；任一主字段有非法数字、
+/// 越界或包装冲突则清空三个主 Token 并标为 Invalid。返回值拥有完整 usage，调用者可在
+/// 同一候选后续继续补 cache、reasoning 和 credit。
 pub fn normalize_usage(
     raw: Option<&RawUsage>,
     normalized: Option<&NormalizedUsageFields>,
@@ -188,6 +209,12 @@ struct AliasPick {
 /// recorded as `cache_alias_disagreement` and never zeroes the winner, and a
 /// value that is present but illegal is never silently used. When no legal alias
 /// exists but an illegal one does, the caller invalidates the record.
+///
+/// `AliasPick` 把“最终值、数值分歧、是否见过非法值”分开保留，避免函数仅返回
+/// `Option<i64>` 而丢掉诊断。优先级完全由调用方传入数组的顺序决定，函数本身不按键名
+/// 排序；例如 cache-read 的首位是嵌套 details，而不是 `prompt_cache_hit_tokens`。
+/// `illegal` 的存在不会自动覆盖已取得的 legal winner，只有“一个合法值都没有”时
+/// 调用方才会把整条 usage 判 invalid。
 fn pick_alias(candidates: [Option<NumberLiteral>; 4], limit: i64) -> AliasPick {
     let mut chosen = None;
     let mut disagreement = false;
@@ -225,6 +252,16 @@ fn detail_reasoning(raw: Option<&RawUsage>) -> Option<NumberLiteral> {
 /// the input count, `reasoning` may not exceed `output`, `cache_read` and
 /// `cache_write` may not exceed `input`, and the input composition is only ever
 /// labelled `read_subset` or `unknown` — never `disjoint`.
+///
+/// 输入 `usage: &mut NormalizedUsage` 表示就地填充同一块 owned DTO；Rust 借用检查
+/// 保证调用期间没有另一个可变引用同时改写它。Token 总量与 cache 是“组成关系”，并非
+/// 两部分相加：cache-read 只能说明输入中至少有一部分来自缓存，不能推出“未缓存”的
+/// 另一半。若一个上限都还没有已知输入/输出，存在的细分值仍可保留，状态转 Partial；
+/// 等之后重读得到更完整数据时再次参与校验。
+///
+/// 本函数先读取各候选再统一做子集约束。只要所选 read 超过已知 input、write 超过已知
+/// input 或 reasoning 超过已知 output，整条 usage 都 invalid，而不是只删掉越界细分项。
+/// 较低别名与 winner 数值不同只设置 `cache_alias_disagreement`，便于容错但仍留痕。
 pub fn normalize_cache_and_reasoning(
     usage: &mut NormalizedUsage,
     raw: Option<&RawUsage>,
@@ -357,6 +394,12 @@ pub enum CreditRejection {
 /// The literal is handled as text: no `f64` ever touches it, so `1.14` becomes
 /// exactly `1_140_000_000`. Exponent notation, signs, extra dots, more than nine
 /// fractional digits and anything that overflows `i64` nanos are refused.
+///
+/// WorkBuddy credit 的单位是 `1_000_000_000` nanos/credit，最多保留 9 位小数；
+/// 它不是美元、人民币或账户余额，也不能换算成 Token。这里把整数部分和 fractional
+/// 部分分别转成 `i64`，每一步使用 checked 运算，避免静默 wrap。返回 `Result` 正是
+/// Rust 可恢复错误的方式：`Ok(i64)` 是精确值，`Err(CreditRejection)` 明确拒绝原因。
+/// 科学计数法虽可能表示同一数，但原文精度与格式无法按此 ABI 无歧义恢复，因此拒绝。
 pub fn parse_credit_nanos(literal: &str) -> Result<i64, CreditRejection> {
     if literal.is_empty() {
         return Err(CreditRejection::NotDecimal);
@@ -408,6 +451,11 @@ pub fn parse_credit_nanos(literal: &str) -> Result<i64, CreditRejection> {
 ///
 /// A refused literal only raises `credit_invalid`: it never invalidates the
 /// record and never touches the Token values (DATA-API section 2).
+///
+/// 调用方可能先已完成 Token 归一化；因此 credit 成功时只写
+/// `workbuddy_credit_nanos`，失败时清掉该字段并打开诊断位。它不会把 Complete/Partial
+/// Token 改成 Invalid，也不会把缺失 Token 填成 0。credit-only 回执的
+/// `NotApplicable` 由独立 `credit-usage` 分支建立，并非本函数凭空制造。
 pub fn normalize_credit(usage: &mut NormalizedUsage, raw: Option<&RawUsage>) {
     let Some(literal) = raw.and_then(|usage| usage.credit.as_ref()) else {
         return;

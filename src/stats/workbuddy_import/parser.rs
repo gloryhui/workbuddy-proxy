@@ -9,6 +9,18 @@
 //! Numbers are captured as [`NumberLiteral`] (a plain integer, or "present but
 //! not a plain integer") instead of being coerced, and the credit literal keeps
 //! its exact decimal text. No `serde_json::Value` is used anywhere.
+//!
+//! 中文导览：本模块是文件 worker 与归一化/存储之间的第一道边界。worker 把一行
+//! 原始 JSONL 字节和文件 stem 交给 `evaluate`，再收集返回结果并提交给 stats writer；
+//! writer 在写入事务中把候选转换成事实和 ledger 更新。
+//! `RawLine` 只反序列化白名单字段；聊天正文、工具参数和图片不会进入 shell，因此
+//! “没持久化正文”不是后面 SQL 的过滤承诺，而是数据从入口起就没有被构造出来。
+//!
+//! Rust 新手可把 `Shell` 想成 Java 中封闭的 DTO 层次，把 `match` 想成穷尽所有
+//! 已知分支的 `switch`：编译器会要求处理每个枚举值。`&[u8]`、`&str` 是借用输入，
+//! 不复制整行；`evaluate` 产生的 `Candidate` 才拥有要交给异步 writer 的数据。
+//! `entry_key` 会作为事实行的 `request_id` 和 ledger key，但计算哈希本身不写数据库；
+//! 是否真正落盘仍由 SQLite 写事务决定，不能把“算出了同一个 key”理解成“已经提交”。
 
 use crate::stats::workbuddy_import::normalize;
 use crate::stats::workbuddy_import::types::{
@@ -20,6 +32,10 @@ use serde_json::value::RawValue;
 use sha2::{Digest, Sha256};
 
 /// A JSON number as it appeared on the wire.
+///
+/// `Integer` 只接收能收进 Rust `i64` 的普通整数；`Other` 表示键确实存在，
+/// 但值是小数、字符串、布尔或越界整数。保留这个区别很关键：缺字段可以继续
+/// 走低优先级别名，而“存在但非法”必须在当前层报错，不能被静默当成缺失。
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum NumberLiteral {
     /// A plain integer that fits in `i64`.
@@ -69,6 +85,11 @@ impl<'de> Deserialize<'de> for NumberLiteral {
 /// An exact JSON number literal, kept exactly as written.
 ///
 /// Used for `rawUsage.credit`, which must never pass through `f64`.
+///
+/// `NumberText` 在 `Deserialize` 中先把 JSON 数字截成 `RawValue`，再拥有原始文本。
+/// 因此 Rust 的所有权会随候选跨越 worker/channel，但文本内容仍是 `1.14`，不会先变成
+/// 二进制浮点数。Java 的 `String` DTO 也常能保存原文，边界在于这里刻意不接受
+/// `serde_json::Value` 或 `f64` 作为中间表示。
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct NumberText(String);
 
@@ -121,6 +142,12 @@ pub struct OutputTokensDetails {
 /// `providerData.rawUsage`: the observed WorkBuddy Chat wrapper (snake_case).
 ///
 /// The top-level `cached_tokens` key is ambiguous and deliberately absent.
+///
+/// 这些字段是源文件里的“原始用量观察”，不是已经通过一致性校验的账单结果：
+/// 同义字段可能同时出现、细分项可能非法，`credit` 甚至与 Token 完全独立。
+/// `Option<NumberLiteral>` 中的 `None` 表示该键缺失或 JSON 值为显式 `null`；
+/// serde 会把这两种情况都反序列化为 `None`。显式数字 `0` 是 `Some(Integer(0))`，
+/// 仍是真实观察值。归一化模块负责优先级、冲突和边界。
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
 pub struct RawUsage {
     #[serde(default)]
@@ -157,6 +184,9 @@ pub struct RawUsage {
 }
 
 /// `providerData.usage`: the normalized wrapper (camelCase).
+///
+/// 它虽名为 normalized，仍只是上游给出的另一种包装，不能直接信任。`normalize`
+/// 会让它与 `rawUsage` 的同义值互相校验，再产出代理自己的 `NormalizedUsage`。
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct NormalizedUsageFields {
@@ -237,6 +267,12 @@ impl ShellError {
 }
 
 /// One usage-bearing record before identity and token rules.
+///
+/// shell 统一了两套上游包装，但仍没有决定最终 usage，也没有把数据库状态放进 DTO。
+/// `message_id` 来自 `providerData.messageId`；`requested_model` 只取
+/// `requestModelId`，而上游展示模型稍后会按 `responseModelId -> model ->
+/// requestModelId` 选择。毫秒时间与“存在但格式坏”由两个字段同时表达。所有权属于
+/// `UsageShell`；`raw_usage`、`usage` 是可选且整块拥有的反序列化结果。
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct UsageShell {
     pub session_id: Option<String>,
@@ -278,6 +314,11 @@ pub enum Shell {
 /// `model-usage` with a missing or `assistant` role. Forwarded child messages,
 /// reasoning and tool results are `NotUsage`. Standalone credit receipts are
 /// handled separately by `evaluate` (DATA-API section 1).
+///
+/// `parse_shell` 只解析单行形状；真正的 `credit-usage` 不走这个模型 shell 分支。
+/// `Shell::Usage(Box<UsageShell>)` 用 `Box` 把较大的枚举载荷放到堆上，枚举本身仍保持
+/// 较小。这里的 `Box` 不改变业务所有权，只改变存放位置；克隆它仍可能复制内部字符串，
+/// 不能因为 Rust 实现了 `Clone` 就认为所有字段都是 Java 中共享引用的轻量复制。
 pub fn parse_shell(line: &[u8]) -> Result<Shell, ShellError> {
     parse_line(line).map(shell_from_line)
 }
@@ -300,6 +341,7 @@ fn parse_line(line: &[u8]) -> Result<RawLine, ShellError> {
 fn shell_from_line(raw: RawLine) -> Shell {
     // Team-member credit receipts account for forwarded child messages. The
     // copies on the leader's history are not independent model charges.
+    // `_fromSubAgent=true` 的转发副本直接排除，避免团队消息在 leader 历史里被二次计费。
     if raw.from_sub_agent {
         return Shell::NotUsage;
     }
@@ -345,6 +387,18 @@ fn shell_from_line(raw: RawLine) -> Shell {
 /// 5. everything else becomes a candidate — including records whose usage is
 ///    `missing` or `invalid`, because the row is still written with its status
 ///    and reason instead of being silently dropped.
+///
+/// 中文执行顺序比上面的英文契约多一个必须单独看的前置分支：JSON object 解析成功后，
+/// `type=credit-usage` 立即交给 `credits::evaluate`。它使用 request/stage 自己的身份域，
+/// 不套用模型消息的 `messageId`，并允许缺失 sessionId 时使用文件 stem。该分支随后
+/// 返回同样的 `ParseDisposition`，所以 writer 不需要知道有两套解析规则。
+///
+/// 普通 `model-usage` 还有一个更窄的特例：只有在 shell 已确认带有 usage object、
+/// `sessionId` 缺失时，才用文件 stem 补齐 response-done 回执的 session；普通
+/// `message` 缺 session 仍然 malformed。`include_usage` 等下游请求设置不由这里伪造。
+/// `evaluate` 返回拥有所有权的 `Candidate`，worker 收集后通过有界 channel 交给唯一
+/// stats writer。任务一旦进入 writer，worker 停止等待或 ACK 丢失都不会撤销已经提交的
+/// 事务；ACK 只是跨线程结果通知，Rust 不保证消息或通知必达，缺 ACK 不能证明未提交。
 pub fn evaluate(line: &[u8], file_stem: &str, namespace_id: &str, now_ms: i64) -> ParseDisposition {
     let raw = match parse_line(line) {
         Ok(raw) => raw,
@@ -377,6 +431,8 @@ pub fn evaluate(line: &[u8], file_stem: &str, namespace_id: &str, now_ms: i64) -
     let mut shell = shell;
     // WorkBuddy's response_done receipts omit sessionId; unlike normal
     // assistant messages, model-usage records belong to the enclosing file.
+    // 这是 `type=model-usage` 专属特例；普通 message/function_call 不借用文件 stem
+    // 掩盖身份缺失。若没有 usage object，上面的 `IgnoredNoUsage` 已提前返回。
     if shell.session_id.is_none() && is_model_receipt {
         shell.session_id = Some(file_stem.to_owned());
     }
@@ -554,6 +610,10 @@ pub const MAX_TIMESTAMP_SKEW_MS: i64 = 24 * 60 * 60 * 1000;
 ///
 /// Only hashes leave this module: the raw session and message ids are never
 /// stored, logged or returned in an error.
+///
+/// `entry_key` 是“同一条消息”的去重键；`session_hash`/`message_hash` 是给代理原生
+/// 标识匹配用的两段摘要。三者用途不同，不能拿 `message_hash` 单独代替 namespace
+/// 隔离后的 ledger key。结构体拥有这些已生成的字符串，所以可以跨线程移动。
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct MessageIdentity {
     /// 64 lowercase hex; equals `usage_requests.request_id` and `ledger.entry_key`.
@@ -607,6 +667,13 @@ pub fn hash_id(value: &str) -> String {
 /// length-prefixed, so no concatenation or trimming can make two different
 /// tuples collide. `conversationRequestId`, trace ids, file offsets and the
 /// top-level `id` deliberately do not take part.
+///
+/// 这与 `CommitItem.normalized_hash` 是两层不同判断：
+/// - `entry_key` 回答“是不是同一条消息”，复制文件或重复 tool response 应落到这里；
+/// - `normalized_hash` 回答“同一条消息的语义内容是否相同”，只在 ledger 找到旧行后比较。
+///
+/// `entry_key` 不含路径、offset 和上传时间；否则同一 JSONL 被复制后会重复计数。
+/// 字节长度前缀让 `("ab","c")` 与 `("a","bc")` 不会因直接拼接而成同一个元组。
 pub fn entry_key(namespace_id: &str, session_id: &str, message_id: &str) -> String {
     let mut hasher = Sha256::new();
     push_field(&mut hasher, ENTRY_KEY_DOMAIN);
@@ -633,6 +700,12 @@ fn check_id(value: &str) -> Result<(), MalformedReason> {
 /// timestamp must be integer milliseconds that are non-negative and no more
 /// than [`MAX_TIMESTAMP_SKEW_MS`] in the future. A record that fails any of
 /// these is diagnosed; the import time is never substituted for the source time.
+///
+/// Java/Spring 读者可把 `identity` 看成 service 层的“校验并组装值对象”，但它不读
+/// 数据库，也不生成 SQL 主键。它只借用 shell 中的数据：先检查 session 与文件归属，
+/// 再检查 message/model 标识、字符边界和事件时间，最后返回自己的字符串副本。
+/// `messageId` 缺失是暂时可重读的 `Pending`，结构损坏是 `Malformed`，两者不能合并；
+/// 时间失败也不会用 `now_ms` 顶替，否则历史重扫会被错误记到当前时间。
 pub fn identify(shell: &UsageShell, file_stem: &str, namespace_id: &str, now_ms: i64) -> Identity {
     let session_id = match shell.session_id.as_deref() {
         None => return Identity::Malformed(MalformedReason::MissingSessionId),

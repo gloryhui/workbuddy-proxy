@@ -155,7 +155,7 @@ Recent 使用 [`RecentRead`](../../gpui/src/statistics/recent.rs) 独立读取�
 
 `ImportYield` 在持续报表下每 400ms 提供一次导入机会，真正准入仍要等待活跃报表结束。没有报表就立即允许。reader 为尚未开始的交接最多等待 75ms，writer 有预约时将空闲轮询缩到最多 25ms。这些不是导入时延保证；优先级更高的工作仍可延迟导入。
 
-Java 类比为 `Lock / Condition` 保护计数与预约；Rust 守卫 Drop 在正常返回、`?` 早退和 panic 展开时释放准入。数据库事务仍归查询/导入函数管理，不能把释放 Mutex 或 Guard 当成事务提交。
+Java 类比为 `Lock / Condition` 保护计数与预约；Rust 守卫 Drop 在正常返回、`?` 早退和 panic 展开时释放准入。数据库事务仍归查询/导入函数管理，不能把释放 Mutex 或 Guard 当成事务提交。源文件读取、批次 ACK 与 ledger 去重继续看 [历史导入源码专题](WORKBUDDY_IMPORT.md)。
 
 ## 11. 用现有测试理解契约
 

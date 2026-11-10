@@ -1,8 +1,27 @@
-//! WorkBuddy local JSONL usage import.
+//! WorkBuddy 本地 JSONL 用量导入。
 //!
-//! Bounded JSONL parsing, durable attribution and reconciliation. The dedicated
-//! runtime worker owns source reads; every mutation uses the existing single
-//! statistics writer, including sync intents and manual attribution tasks.
+//! 有界读取、身份去重与持久化维护：独立 worker 负责源文件 I/O，持久化变更
+//! 由现有统计单 writer 完成。同步意图与观测也借用 writer 的事务；
+//! 旧手工归属入口只保留兼容拒绝，不再执行人工映射写入。
+//!
+//! Java / Spring Boot 阅读入口：生产调度从 `runtime::Runtime::start` 开始，
+//! 不是从下面的 `ImportChannel` 或 `AckWindow` 开始。生产 worker 在独立标准
+//! 线程读取源文件与 SQLite 只读快照，构造拥有数据所有权的 `Work`，通过有界
+//! channel 交给现有 stats-writer。writer 提交事务后才发送 ACK；源文件线程
+//! 等待这个结果，不能凭“读取完成”自行推进数据库检查点。
+//!
+//! 可按以下职责跟踪：
+//! - `reader`：源路径、指纹、完整行与有界读取，不修改用户 JSONL；
+//! - `parser / normalize`：白名单解析、身份与数值校验，产出摘要 Candidate；
+//! - `runtime/worker/file`：读前快照、分片读取、读后文件变化检查；
+//! - `runtime/writer / store`：复核版本，ledger 去重，事实行与检查点同事务；
+//! - `observation / history / reconcile`：同步意图、观测证据和历史维护；
+//! - `manual`：已退役手工归属命令的兼容拒绝入口，不是可操作的确认功能。
+//!
+//! 当前生产候选分类以 `store::attribute_candidate` 为准：先排除已有代理身份，
+//! 再按模型标识决定 Direct/Builtin/Pending；它不按历史映射区间查供应商。
+//! 看到兼容类型或独立契约函数时，先看真实调用方，不能把保留的模型推演成
+//! 当前产品能力。下方多种小状态机用于契约检查，实际 I/O 与事务看 runtime。
 
 pub mod classify;
 mod credits;
@@ -53,11 +72,11 @@ pub enum ImportMessage {
     Shutdown,
 }
 
-/// The dedicated, bounded hand-off into the import worker.
+/// 导入 channel 非阻塞语义的独立契约模型，供启动契约检查与测试使用。
 ///
-/// `offer` is a **non-blocking** send on purpose: the forwarding path must never
-/// wait for the importer. When the queue is full the *worker* is the one that
-/// yields — the proxy's begin/finish keep running untouched.
+/// `offer` 通过 try_send 表达 Accepted/Busy/Closed，不等待容量；它不是生产
+/// 文件批次的实际队列。生产运行时直接创建 `SyncSender<Envelope>`，由导入
+/// worker 发送 Work，stats-writer 取出并提交；两者只复用容量常量。
 pub struct ImportChannel {
     sender: SyncSender<ImportMessage>,
     receiver: Option<Receiver<ImportMessage>>,
@@ -82,7 +101,7 @@ impl ImportChannel {
         }
     }
 
-    /// A sender for the forwarding path.
+    /// 克隆此契约模型的发送端句柄；不表示代理热路径实际使用这个队列。
     pub fn sender(&self) -> SyncSender<ImportMessage> {
         self.sender.clone()
     }
@@ -106,10 +125,10 @@ pub enum AckOutcome {
     Idle,
 }
 
-/// Tracks the single batch that may be waiting for an ACK.
+/// 单批次 ACK 窗口的独立契约模型。
 ///
-/// At most one batch is ever in flight: a second one would mean two writers
-/// racing over the same checkpoint.
+/// 只记录等待的 batch id，不操作事务。生产链路通过 worker::submit 顺序等待
+/// 每个 Envelope 的独立回执实现单批次在途，而不是实例化这个类型来提交数据。
 #[derive(Debug, Default)]
 pub struct AckWindow {
     pending: Option<u64>,

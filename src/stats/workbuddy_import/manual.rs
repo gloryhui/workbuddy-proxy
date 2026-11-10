@@ -1,4 +1,10 @@
 //! Compatibility refusals for retired manual model attribution commands.
+//!
+//! 这里保留旧管理命令签名，使旧调用明确失败，而不是继续写归属映射。preview、
+//! revoke_preview 与 apply 都走 automatic() 返回参数错误；rules::page 返回
+//! 空规则列表。`PreviewCache` 也只是空兼容类型，不持有可确认的历史预览。
+//! 当前候选分类请从 store::attribute_candidate 读起；不要照旧设计文档调用
+//! 这些函数来“确认历史供应商”，也不要把返回空规则误解为数据库没有旧历史。
 use rusqlite::Connection;
 use serde_json::Value;
 #[derive(Default)]

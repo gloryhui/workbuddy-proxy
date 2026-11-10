@@ -1,8 +1,9 @@
 //! Ledger operations for the WorkBuddy local-usage importer.
 //!
-//! Every function borrows the caller's [`rusqlite::Transaction`]: the importer
-//! never opens its own connection, so the ledger, the fact row and the file
-//! checkpoint always commit or roll back together (DATA-API section 3.3).
+//! Every production ledger/mapping function used by the importer borrows the
+//! caller's [`rusqlite::Transaction`]: the importer never opens a second writing
+//! connection, so the ledger, the fact row and the file checkpoint are changed
+//! through one outer writer transaction (DATA-API section 3.3).
 //!
 //! Hard rules implemented here:
 //!
@@ -12,6 +13,20 @@
 //!   any later rescan;
 //! * a candidate payload is only accepted for `pending_classification` and
 //!   `conflict`, and never exceeds the 16 KiB contract bound.
+//!
+//! 中文导览：parser 产出的消息先由 runtime writer 组成一个有界 `FileBatch`，writer
+//! 再调用 `CommitItem::from_candidate` 和这里的 `commit_batch`。本模块不创建 SQLite
+//! 连接，也不自行 `begin/commit`；所有函数借用调用者的 `Transaction<'_>`，所以
+//! ledger、`usage_requests` 事实行和文件 checkpoint 是否一起生效，最终由同一个外层
+//! writer 事务决定。Rust 的 `'_` 生命周期表示这些引用不能比调用者的 transaction 活得更久。
+//!
+//! 读这段代码时要区分三个身份/内容概念：
+//! - `entry_key` 定义“同一条消息”或“同一条 credit stage”；
+//! - `normalized_hash` 定义同一身份下业务用量和模型语义是否相同；
+//! - checkpoint offset 定义文件读取进度，不能反过来充当消息身份。
+//!
+//! 重放安全描述的是这个 ledger 写入边界：相同 key/hash 不会插入第二条事实；它不把
+//! 网络请求、文件发布或外部系统调用整体宣称成 exactly-once。
 
 use crate::stats::workbuddy_import::ImportCounts;
 use crate::stats::workbuddy_import::classify::Attribution;
@@ -23,6 +38,18 @@ use rusqlite::{Connection, OptionalExtension, Transaction, params};
 use std::path::Path;
 
 /// The seven ledger states (DATA-API section 3.3).
+///
+/// 这些状态表达的是“源消息在代理统计中的最终处理位置”，不是 HTTP 请求状态：
+/// - `Imported`：已写 `usage_requests` 事实，可进入统计；
+/// - `ExcludedProxy`：同一 session/message 已有原生代理事实，导入副本抑制；
+/// - `ExcludedRetention`：消息有效但超出保留期，不生成事实；
+/// - `PendingClassification`：缺少可分类的 requested model，先保留受限候选摘要；
+/// - `Conflict`：同身份后来出现不同语义内容，旧 workbuddy 事实可被撤回；
+/// - `DeletedManual`/`DeletedRetention`：墓碑终态，重扫不得复活。
+///
+/// `PendingClassification` 与 `Conflict` 可保留经白名单投影的 candidate JSON；
+/// 其他状态不应长期携带候选载荷。墓碑不是普通“未导入”，而是用户/保留策略已经作出的
+/// 终态决定。
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum LedgerState {
     Imported,
@@ -617,6 +644,11 @@ pub fn checkpoint_contract_check() -> Result<usize, &'static str> {
 }
 
 /// How a historical model was routed (DATA-API section 3.4).
+///
+/// 以下 mapping/evidence/state 类型是 `workbuddy_model_history` 的持久化模型，服务于
+/// 配置观察、同步意图、历史区间维护和后续 reconcile。它们是保留能力，不表示当前生产
+/// 导入的 `attribute_candidate` 会读取这张表并按 `event_at_ms` 查规则。Java 读者可把
+/// 它们看作已有的历史规划领域对象，而当前生产分类入口并未注入这个 repository。
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum MappingClass {
     Proxy,
@@ -896,6 +928,11 @@ pub fn set_mapping_state(
 ///
 /// Zero matches means unknown, one match is authoritative, and more than one is
 /// a conflict: the newest is never picked.
+///
+/// 这是历史区间查询的完整语义：半开区间 `[valid_from_ms, valid_to_ms)` 命中零条为
+/// Unknown、一条为 One、多条为 Conflict。它由 observation/reconcile 等路径使用；
+/// 当前 `attribute_candidate` 不调用它，所以看到这段“按时间选 mapping”的逻辑时，
+/// 不能推导出用户普通导入也会按历史 provider/route 归属。
 pub fn match_mapping(
     tx: &Transaction<'_>,
     namespace_id: &str,
@@ -921,6 +958,21 @@ pub fn match_mapping(
 
 /// Classify only the WorkBuddy format, never who created the model. A native
 /// fact wins only for the exact session/message pair carried by request headers.
+///
+/// 当前生产规则（由 `runtime/writer.rs::normalized_items` 调用）严格按以下顺序执行：
+///
+/// 1. `native_duplicate(session_hash, message_hash)` 找到同 session/message 的原生
+///    proxy fact 时返回 `Proxy`；
+/// 2. `requested_model` 为 `None` 时返回 `Pending`；
+/// 3. requested model 以 `custom-local:` 开头时返回 `Direct`；
+/// 4. 其余非空 requested model 返回 `Builtin`；
+/// 5. 所有路径当前都返回 `mapping_id=None`。
+///
+/// 因此本函数完全不读 `workbuddy_model_history`、`ModelMapping` 或
+/// `match_mapping`，也不会根据事件时间选择历史 interval、provider 或 route。
+/// `_namespace_id` 的占位签名和返回的 mapped id 槽位是兼容/演进接口；现在不能据此
+/// 宣称已经启用历史归属。旧 docs 若仍写“自定义模型需要人工确认后才生效”，应按当前
+/// 生产入口订正：自定义 `custom-local:` 走上述自动规则；manual 模块只是退役兼容拒绝入口。
 pub fn attribute_candidate(
     tx: &Transaction<'_>,
     _namespace_id: &str,
@@ -953,6 +1005,12 @@ pub(super) fn native_duplicate(
 
 /// Part of native Start's transaction. Imports arriving first are withdrawn
 /// atomically with admission of their native original; native rows are untouched.
+///
+/// Start 事务登记原生 proxy 的精确 session/message 身份后，`drain_proxy_identity`
+/// 可在有界批次中把先前误导入的 workbuddy fact 撤回并改成 `excluded_proxy`。该路径只删
+/// `workbuddy_builtin`/`workbuddy_custom` 事实，原生 proxy 行不会被 import 覆盖。
+/// 大量历史依赖 `pending_dedup` 和 `resume_proxy_dedup` 分批续做，而不是在一次调用中
+/// 扫描并改写无限条数据。
 pub(crate) fn record_proxy_identity(
     tx: &Transaction<'_>,
     request: &str,
@@ -1224,7 +1282,8 @@ pub struct CommitItem {
     pub event_at_ms: i64,
     pub normalized_hash: String,
     pub attribution: Attribution,
-    /// Whitelisted candidate JSON; only pending rows may carry one.
+    /// Whitelisted candidate JSON; new inserts retain it only for pending rows,
+    /// while conflict replay may replace the retained payload.
     pub candidate_json: Option<String>,
     /// Fact-row origin; `None` for rows that must not produce a fact.
     pub origin: Option<&'static str>,
@@ -1234,6 +1293,12 @@ impl CommitItem {
     /// Carries only the parser's allowlisted, normalized data to the writer.
     /// The semantic hash is independent of the file path, timestamp, JSON key
     /// order, chat content and diagnostic observations.
+    ///
+    /// Java 类比中它像 service 层组装的 command DTO，但 hash 的覆盖范围必须逐字段看：
+    /// 这里包含 requested/upstream/response model、usage status/reason、Token、cache、
+    /// reasoning、input breakdown 和 credit；不包含文件路径、字节 offset、event time、
+    /// diagnostics 或 tool 展示名。后者可补充展示/诊断，不能把同一收费伪装成新内容。
+    /// `mapping_id` 虽保留在结构中，当前 `attribute_candidate` 始终返回 `None`。
     pub fn from_candidate(
         mut candidate: Candidate,
         attribution: Attribution,
@@ -1426,6 +1491,16 @@ pub fn withdraw_workbuddy_fact(tx: &Transaction<'_>, entry_key: &str) -> Result<
 /// exactly once. A different hash withdraws the workbuddy detail and leaves a
 /// `conflict` behind, which is the honest answer when the same identity now
 /// carries different content.
+///
+/// “count exactly once”的边界是 ledger/事实表：相同 `entry_key + normalized_hash`
+/// 不会再插入一条 workbuddy fact，文件重扫或复制文件只会增加 duplicate 计数。
+/// tombstone 直接视为 terminal duplicate，绝不因后来文件仍在而恢复。已有 pending
+/// 行缺少候选载荷时，可由完整重读 rehydrate 一次；已导入行不按新路径或新时间重建。
+///
+/// 相同 key 但 hash 不同表示同一消息出现了不同业务用量/模型语义：先把 workbuddy 事实
+/// 降为 `conflict` 并删除其 detail，再保留新 candidate。若旧状态已经是
+/// `excluded_proxy`，import 不会改写原生优先决定。此过程不证明外部发布或 HTTP 响应
+/// exactly-once，只说明数据库重放在事务边界内不会重复计费。
 pub fn resolve_replay(
     tx: &Transaction<'_>,
     item: &CommitItem,
@@ -1566,14 +1641,22 @@ pub enum ReplayOutcome {
 
 /// Commits one batch atomically: ledger rows, their fact rows and the checkpoint.
 ///
-/// Everything happens inside the caller's transaction, so **any** failure leaves
-/// no trace at all — in particular the committed offset cannot move ahead of the
-/// facts, because the checkpoint is only written after every row succeeded, in
-/// the same transaction.
+/// This function executes operations inside the transaction owned by its caller;
+/// it never starts, commits or rolls back that transaction itself. When the
+/// outer writer propagates a returned error out of the transaction scope, the
+/// ledger/fact/checkpoint operations made so far are rolled back together. The
+/// checkpoint update is attempted only after every batch item has been handled,
+/// so a successful commit cannot leave the stored offset ahead of the facts.
 ///
 /// The settings revision is re-checked here rather than trusted from the caller:
 /// a batch prepared under an older revision is refused instead of being written
 /// against a configuration that has since changed.
+///
+/// 中文流程：先核对 settings revision 与 namespace，再逐项 `resolve_replay`，对新项写
+/// ledger（Imported 时还要先写 fact），最后才用 guard 做 checkpoint CAS。任意 SQL
+/// 返回错误都会冒泡给外层 writer；outer transaction 因错误离开作用域时负责回滚。
+/// `next_offset == base_offset` 也可以是合法的“文件未增长但仍记录了观察”提交。
+/// 这是数据库写入的幂等/防半提交边界，不是跨 HTTP、文件发布和 UI 通知的系统级事务。
 pub fn commit_batch(
     tx: &Transaction<'_>,
     namespace_id: &str,
