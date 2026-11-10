@@ -28,12 +28,22 @@
 //!    和健康状态决定；
 //! 3. writer 是单个 `stats-writer` 系统线程中的单一写连接，先处理控制队列，再取最多
 //!    `BATCH_EVENTS` 个事件；reader 由第一次查询懒启动，是另一条只读连接线程；
-//! 4. `StatsHandle::shutdown` 最多等待 `SHUTDOWN_FLUSH_BUDGET`，writer 关闭队列后
-//!    `is_stopped` 才为真；统计丢失会体现在 dropped/write_failures/health，而不是
-//!    把对应聊天请求改成失败。
+//! 4. `StatsHandle::shutdown` 最多等待 `SHUTDOWN_FLUSH_BUDGET`，`is_stopped`
+//!    只检查队列关闭信号（也可能由 shutdown 发送失败的后备路径设置），不等于 join。
+//!    统计故障通过 dropped/write_failures/health 暴露，不把对应聊天请求改成失败。
 //!
 //! `Option::None` 在这些 DTO 和统计记录中通常表示未知、未观察到或未使用；
 //! `Some(0)`/数据库中的 0 才表示已经确认的零值。
+//!
+//! 对照 Spring Boot：`StatsHandle` 类似对业务暴露的统计 Service 门面，`StatsEvent`
+//! 类似应用事件，`writer_thread` 类似专用消费线程，`store::Writer` 类似显式管理
+//! 事务的 Repository。这里没有 Spring 容器或 `@Transactional` 拦截器：连接由
+//! writer 线程持有，事务由 `store.rs` 创建并提交；`Arc<Inner>` 只共享协调状态。
+//!
+//! 最重要的可靠性边界：queue 是进程内存，不是持久消息队列；guard 至多发布一次
+//! `Finish`，不代表恰好一次落库。`apply_batch` 内可以有界重试；它最终返回失败后，
+//! 本模块不重新入队整批原始事件，而是记住丢失终态的请求 ID，后续做保守中断修复。
+//! 完整导读见 `docs/source-guide/STATS_PERSISTENCE.md`。
 pub mod collector;
 pub mod dto;
 pub mod event;
@@ -289,6 +299,11 @@ struct ReaderHandle {
     last_used: Instant,
 }
 
+/// 核心进程内的共享协调状态，不包含 SQLite 连接。
+///
+/// `Arc` 让请求、writer 与 reader 任务共同持有它；具体字段仍分别由锁或原子量保护。
+/// 不应把它理解成“一个大锁里的单例 EntityManager”：`queue` 传递事件所有权，
+/// `control` 传递管理命令，`settings/prices` 则是提交后供请求读取的内存投影。
 struct Inner {
     dir: PathBuf,
     run_id: String,
@@ -316,6 +331,8 @@ struct Inner {
 }
 
 impl Inner {
+    // 业务开关和存储就绪是两个维度：用户可关闭采集；存储也可能仍在迁移。
+    // Degraded 仍会开放 accepting，但真实容量由 EventQueue 的双槽预约再次把关。
     fn accepting(&self) -> bool {
         self.counters.enabled.load(Ordering::Relaxed)
             && self.counters.accepting.load(Ordering::Relaxed)
@@ -430,6 +447,9 @@ impl StatsHandle {
         Self { inner }
     }
 
+    /// 只创建内存协调对象；返回的 receiver 随后移交 writer，是控制命令的唯一消费端。
+    /// 每次核心运行生成独立 `run_id`，用于把数据库行、丢失计数和采集时间区间归到本次
+    /// 运行。此时数据库里尚无对应 run；只有 `Writer::open` 的启动事务提交后才存在。
     fn initialize(dir: PathBuf) -> (Arc<Inner>, Receiver<ControlMessage>) {
         let (control, control_rx) = std::sync::mpsc::sync_channel(CONTROL_QUEUE_CAPACITY);
         let inner = Arc::new(Inner {
@@ -477,7 +497,10 @@ impl StatsHandle {
             .store(false, Ordering::Relaxed);
     }
 
-    /// True once the writer thread has flushed and stopped.
+    /// Reports the queue-closed signal used by shutdown coordination.
+    ///
+    /// 实际读取的是事件队列关闭标志，并没有 join writer。shutdown 控制消息无法发送时，
+    /// 调用方也会主动关闭队列，因此 `true` 不能作为线程已退出或所有事件已提交的证明。
     #[allow(dead_code)] // Used by shutdown tests and future health reporting.
     pub fn is_stopped(&self) -> bool {
         self.inner.queue.is_closed()
@@ -562,6 +585,12 @@ impl StatsHandle {
     /// 或队列没有两个配额。Ready 与 Degraded 都允许准入。`None` 不会阻止调用方
     /// 继续代理，只会在可计数时增加 dropped。
     /// 此函数不等待 writer 或 SQLite。
+    ///
+    /// 调用栈可以按 `relay_to / 连接测试 → begin → RequestGuard::begin` 阅读：
+    /// 本层负责业务准入和元数据快照，event 层负责原子预约两个容量配额与发布 Start。
+    /// `admitted` 是 guard 成功创建的计数，不是数据库行数；settings 禁用或初始化未完成
+    /// 时在第一道门禁直接返回，不增加 dropped；已通过门禁却预约失败才增加 dropped。
+    /// 快照锁和队列锁是短同步临界区，“非阻塞准入”指不等待容量、数据库或消费确认。
     pub fn begin(
         &self,
         spec: RequestSpec,
@@ -1599,6 +1628,11 @@ fn run_read(
 
 // ---- writer thread --------------------------------------------------------
 
+/// 统计子系统的消费循环，只在 `stats-writer` 系统线程执行。
+///
+/// `inner` 共享状态，`control` 独占接收端，`writer` 独占可写连接；请求任务只入队，
+/// 不持有连接。正常事件、管理写操作、导入提交和维护最终在同一线程串行执行。
+/// 这相当于专用消费者加 Repository，而不是在 Tokio 请求任务中调用 JDBC。
 fn writer_thread(
     inner: Arc<Inner>,
     control: Receiver<ControlMessage>,
@@ -1805,10 +1839,15 @@ fn writer_thread(
             return;
         }
         // One bounded batch, then loop back to the control queue.
+        // `pop_batch` 会把事件从队列移到这个局部 Vec；队列容量随即释放，数据库尚未提交。
+        // `BATCH_EVENTS` 是事件数上限，不是请求数；同一批可以包含多个请求的交错生命周期，
+        // 一个很快的请求也可能把 Start/Finish 都放入这批。
         let wait = inner.report_reads.writer_wait(BATCH_WAIT);
         let batch = inner.queue.pop_batch(BATCH_EVENTS, wait);
         if !batch.is_empty() {
             let budget = store::WriteBudget::new(store::BATCH_BUDGET);
+            // apply_batch 内部先整批事务+有界重试；确定性的行错误可转为逐事件事务隔离。
+            // 因此 Ok 仍要检查 dropped：它表示有事件提交成功，不保证整批完整写入。
             match writer.apply_batch(&batch, &budget) {
                 Ok(outcome) => {
                     if batch.iter().any(|event|matches!(event,event::StatsEvent::Start(meta) if meta.workbuddy_identity.is_some())) {
@@ -1866,6 +1905,9 @@ fn writer_thread(
                     }
                 }
                 Err(failure) => {
+                    // 不把 batch 重新入队，也不保留 FinishRecord 的用量/时延明细。
+                    // 只把 Finish 对应 ID 交给后续修复：有 Start 行则补 interrupted，
+                    // Start 也丢了则不存在可补的事实行。不得理解成持久消息的原文重放。
                     // The whole batch failed, so its `Finish` events are gone:
                     // remember them per request so recovery can settle the rows
                     // instead of leaving them `in_flight` forever.
@@ -1989,6 +2031,9 @@ fn writer_thread(
 
 /// Requests affected by a dropped event batch, counted once per request so a
 /// lost `Start`+`Finish` pair is not reported twice.
+///
+/// 去重范围只有传入的这组事件；它不是跨批全局唯一请求账本。一个请求在不同批次发生
+/// 多次写入问题时，累计失败计数可能多次包含该 ID，不能拿它直接当历史请求去重总数。
 fn count_requests(events: &[crate::stats::event::StatsEvent]) -> u64 {
     let mut ids = std::collections::HashSet::new();
     for event in events {
@@ -2006,6 +2051,10 @@ fn count_requests(events: &[crate::stats::event::StatsEvent]) -> u64 {
 
 /// Remembers `Finish` events that never reached the database. The list is
 /// bounded; beyond that the oldest entries are settled on the next recovery.
+///
+/// 仅存 request_id，不存 FinishRecord，也不记录只有 Start 的事件。Start 已落库而
+/// Finish 丢失时可据 ID 收尾；两条事件都没落库时，只能判定 ID 已失效并保留损失计数，
+/// 不能重建请求内容。随后 `trim_orphans` 才把该 Vec 控制在 MAX_ORPHANS 以内。
 fn remember_orphans(orphans: &mut Vec<String>, events: &[crate::stats::event::StatsEvent]) {
     for event in events {
         if let crate::stats::event::StatsEvent::Finish { request_id, .. } = event
@@ -2019,9 +2068,13 @@ fn remember_orphans(orphans: &mut Vec<String>, events: &[crate::stats::event::St
 /// Hands the oldest remembered ids to the writer before the list is trimmed.
 ///
 /// Dropping them here would leave rows `in_flight` with no retry path in this
-/// run. They are settled now when the database accepts writes, and counted as
-/// loss when it does not; either way a restart's `recover()` finishes the job,
-/// so a lost terminal event can never be silent.
+/// run. Try immediate settlement, then a durable backlog; if both fail, retain
+/// only the bounded in-memory remainder and report the lost ids. A later startup
+/// scan can repair request rows that actually reached the database.
+///
+/// 超过内存上限时按旧 ID 优先交接：先尝试 `settle_orphans`，再尝试写入 durable
+/// backlog。两者都失败时，仅保留还能容纳的 ID，其余计入 write_failures。
+/// 这是有界、尽力恢复的取舍，不是无限可靠重试；崩溃扫描也只能修复已经存在的行。
 fn trim_orphans(
     writer: &mut store::Writer,
     orphans: &mut Vec<String>,
@@ -2088,6 +2141,12 @@ enum RecoveryProgress {
 /// 会处理启动扫描、degraded 窗口、孤儿终态和 durable backlog 各自的有界部分；只有全部
 /// 条件成立才回到 Ready。失败时不丢弃仍可重试的内存证据，并在无新流量时由空闲探针
 /// 继续调用。
+///
+/// 三种恢复证据的来源不同：`scan` 是启动时冻结的旧行范围，`orphans` 是本轮运行
+/// 在内存记住的丢失 Finish ID，backlog 是已经交给数据库的待修复 ID。扫描每次最多
+/// RECOVERY_BATCH 行，backlog 每次最多 RECOVERY_ROUNDS 轮；还有工作但没有错误
+/// 返回 Progressing，让循环先服务控制/事件再继续，而非对正常进展指数退避。
+/// 恢复会补中断状态与成本终态，不会恢复已经丢失的真实耗时或 token。
 fn recover_collection(
     inner: &Arc<Inner>,
     writer: &mut store::Writer,
@@ -2286,14 +2345,20 @@ fn publish_facts(inner: &Arc<Inner>, stats: &store::DbStats) {
     inner.facts_refreshing.store(false, Ordering::Relaxed);
 }
 
+/// 有界关闭路径；由 writer 消费循环调用，不在请求任务内执行。
+///
+/// main 应先标记 closing、结束并 join 网络 runtime，再通知统计关闭，使仍存活的
+/// guard 有机会发布 interrupted/shutdown。这里自己的四秒 deadline 覆盖取批和批内
+/// 重试，后续 run/interval/checkpoint 仍是分步尽力执行；不是整个关机流程的硬实时保证。
+/// 与正常循环不同，这里不驱动 orphan/backlog 的完整恢复；关闭信号也不是落库 ACK。
 fn flush_and_stop(inner: &Arc<Inner>, writer: &mut store::Writer) {
     // 这是 writer 线程的最终排水点。先关闭新统计准入，再在截止时间内取当前已入队
     // 事件；写入结果只累计失败/丢失计数。随后尝试记录 counters、正常停止 run 和
     // collection interval，并被动 WAL checkpoint。任一数据库步骤失败都不会重开服务，
     // 最终仍关闭内存队列，让 manager 的 shutdown 等待可以结束。
-    // Drain every event that was already admitted, then close the collection
-    // interval and checkpoint. Chat traffic is unaffected: new events are
-    // rejected once `accepting` is false.
+    // Drain already-admitted events within the budget, then attempt to close
+    // the collection interval and checkpoint. Reject new statistics admission
+    // once `accepting` is false; chat traffic has its own lifecycle.
     inner.counters.accepting.store(false, Ordering::Relaxed);
     // Even when the database is refusing writes, shutdown must finish inside a
     // bounded window; whatever is left is dropped and counted.
@@ -2310,6 +2375,8 @@ fn flush_and_stop(inner: &Arc<Inner>, writer: &mut store::Writer) {
             break;
         }
         // The same deadline bounds the batch, its retries and its isolation.
+        // 这里每轮尝试后增加 commits，即使 apply_batch 返回 Err；正常循环则在 Ok 后加一。
+        // 因而 commits / generation 是刷新线索，不是数据库中“成功事务数”的审计凭证。
         let budget = store::WriteBudget::new(deadline.saturating_duration_since(Instant::now()));
         match writer.apply_batch(&batch, &budget) {
             Ok(outcome) => {

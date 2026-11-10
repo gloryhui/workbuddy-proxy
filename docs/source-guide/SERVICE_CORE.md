@@ -265,6 +265,8 @@ guard 的 `Drop` 另有一条兜底顺序：
 
 ## 6. 统计：准入、队列、写入、查询和恢复
 
+本节先建立整体位置；事务、双槽预约、丢失事件修复与迁移的详细教学见 [统计持久化导读](STATS_PERSISTENCE.md)。
+
 统计主入口在 [src/stats/mod.rs](../../src/stats/mod.rs)：
 
 ```text
@@ -294,7 +296,7 @@ writer 拓扑：
 3. 就绪后发布 settings、provider usage mode 和价格 cache；
 4. 主循环先 drain 控制队列，再取最多 `BATCH_EVENTS` 个事件；
 5. 事件较少时最多等待 `BATCH_WAIT`；
-6. 写入失败时进入 degraded，并按 recovery/orphan/backlog 规则有界重试；
+6. 批内写入会有界重试或隔离；最终失败时进入 degraded，记录丢失 Finish 的 ID，按 recovery/orphan/backlog 规则修复，不重放整个原始批次；
 7. 关闭时进入 `flush_and_stop`，在 `SHUTDOWN_FLUSH_BUDGET` 内排水并尝试结束 run/collection interval。
 
 `Degraded` 仍允许新请求做统计 admission，因为 writer 会重试或隔离错误事件；`Migrating`、`Disabled` 和 closing 状态拒绝统计准入。统计失败只体现在 health 和计数，不把 Agent Chat 请求改成失败。
@@ -421,6 +423,6 @@ server future / _control/stop / Ctrl-C
 以下算法只在这里交代入口，不在本文展开：
 
 - 各上游协议的编码、SSE 状态机和 replay 数据格式，由 [协议转换源码专题](PROTOCOL_CONVERSION.md) 展开；具体支持范围见 [协议支持文档](../protocol-compat/USAGE.md)；
-- SQLite 查询、定价、迁移和完整恢复细节，见 [统计开发文档](../statistics/DEVELOPMENT.md)；
+- SQLite 迁移、事务及故障恢复见 [统计持久化导读](STATS_PERSISTENCE.md)；查询和定价从 [统计开发文档](../statistics/DEVELOPMENT.md) 继续；
 - WorkBuddy 日志导入、配置同步、去重与更新恢复，分别从 `src/stats/workbuddy_import/`、`src/workbuddy.rs` 和 [自动更新文档](../AUTO-UPDATE.md) 继续；
 - GPUI 页面状态、任务调度和表格交互由界面专题文档覆盖。

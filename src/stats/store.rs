@@ -1,9 +1,31 @@
-//! SQLite ownership: schema migration, the single write connection, crash
-//! recovery and bounded maintenance work.
+//! 统计持久化边界：SQLite schema 迁移、唯一写连接、只读查询连接、启动恢复和
+//! 有界维护工作的所有者。
 //!
-//! The writer thread is the only place that mutates the database. Every batch is
-//! one transaction; maintenance steps are interleaved between batches so history
-//! work never starves live request recording.
+//! 上游是由请求处理路径投入 `stats::event::EventQueue` 的 `StatsEvent::Start` 和
+//! `StatsEvent::Finish`；下游是同一代理进程内的 `stats-writer` 线程持有一个
+//! `Writer` 并调用本模块。`Writer` 内的 rusqlite `Connection` 只由该线程串行使用，
+//! 不跨线程共享；统计页的 `stats-reader` 线程会另行调用 `open_connection(..., true)`
+//! 建立独立只读连接。数据库文件跨进程重启保留，但这些 Rust 对象和线程内状态只属于
+//! 当前进程。
+//!
+//! 请求路径与 writer 之间还共享 `Arc<Counters>`。`Arc` 只是让多个线程持有同一个计数器
+//! 对象，字段本身使用原子类型；克隆 `Arc` 不会复制计数器，也不是 Java Spring 的依赖
+//! 注入。请求处理线程不会直接调用 `Writer`。
+//!
+//! 普通批次中的多个事件通常由一次 SQLite `IMMEDIATE` 事务提交；但确定性坏行会在
+//! 首次整批失败后改为“每个事件各自一个事务”隔离，因此一次 `apply_batch` 并不保证
+//! 全程只有一个事务。`Start` 与 `Finish` 若恰好处于同一次成功批次，会一起提交；
+//! 若分处不同批次，则 `Start` 可以先落库而后续 `Finish` 失败。
+//!
+//! SQLite 的唯一键和条件更新为重复输入提供“不重复插入、不覆盖已落库终态”的幂等边界；
+//! 它不是事件投递的 exactly-once，也不是把 `RequestGuard` 的 at-most-once 发布自动升级
+//! 成 exactly-once 持久化。批次被整批拒绝时，调用方不会重放原事件对象；它只记住其中
+//! `Finish` 的 `request_id`，后续把可存在的 `in_flight` 请求收敛为中断状态。原
+//! `FinishRecord` 中的精确结果、token 和时延可能已经丢失，恢复不能把这些未知值伪装成
+//! 原终态或成功。
+//!
+//! 维护任务在事件批次之间分步运行，避免长时间占据唯一写连接。本文件负责持久化与
+//! 生命周期接口；定价规则、WorkBuddy 导入算法和清理筛选细节分别属于各自模块。
 use crate::stats::collector::UsageOutcome;
 use crate::stats::dto::{
     CostStatus, Currency, ERR_INVALID, ERR_REVISION_CONFLICT, ERR_UNAVAILABLE, InputBreakdown,
@@ -18,7 +40,12 @@ use std::{
     time::{Duration, Instant},
 };
 
-/// Schema version understood by this build.
+/// 当前构建理解的 schema 版本；数据库 `PRAGMA user_version` 保存同一整数。
+///
+/// v1 建立基础表，v2 引入请求级价格快照，v3 增加持久恢复 backlog，v4 记录协议，
+/// v5 调整供应商 usage 请求默认值，v6 保存价格目录，v7-v11 扩展 WorkBuddy 导入、
+/// 身份关联、解析/展示元数据及“独立导入费用可无 token”的约束。迁移 SQL 通过
+/// `include_str!` 编入二进制；这些是版本化 schema 步骤，不是连接时必须重放的脚本。
 pub const SCHEMA_VERSION: i64 = 11;
 const MIGRATION_0001: &str = include_str!("migrations/0001.sql");
 const MIGRATION_0002: &str = include_str!("migrations/0002.sql");
@@ -35,17 +62,17 @@ const MIGRATION_0011: &str = include_str!("migrations/0011.sql");
 #[path = "store/token_applicability_tests.rs"]
 mod token_applicability_tests;
 const WRITE_RETRIES: usize = 2;
-/// Single lock wait before our own retry loop takes over (was 2000 ms, which
-/// multiplied into seconds per batch under a held lock).
+/// 单次 SQLite 忙等待上限（毫秒）。外层 `apply_batch` 在总预算内负责有限重试，
+/// 避免一次锁等待本身消耗数秒；它是等待策略，不是事务隔离级别。
 pub const BUSY_WAIT_MS: u64 = 250;
-/// Longest one batch may spend, including every retry and isolation attempt.
+/// 一次批次调用及其重试、隔离尝试共用的总时间预算。
 pub const BATCH_BUDGET: Duration = Duration::from_millis(1500);
 
 #[derive(Clone, Debug)]
 pub struct DbError {
     pub message: String,
-    /// SQLite code when the failure came from the database; `None` for our own
-    /// validation errors.
+    /// 来自 SQLite 时可分类重试/隔离的错误码；本项目自己的校验或拒绝错误为
+    /// `None`。`message` 可包含驱动详情，不能直接作为公开 health 文案。
     pub kind: Option<rusqlite::ErrorCode>,
 }
 
@@ -69,7 +96,11 @@ impl From<rusqlite::Error> for DbError {
 }
 
 impl DbError {
-    /// A validation/refusal error that is not a database failure.
+    /// 构造一个非数据库故障的校验/拒绝错误。
+    ///
+    /// `DbError::refused` 的 `kind=None`，所以 `is_transient` 不会把它当成锁冲突；
+    /// 它只是统一本模块的返回类型，类似 Java 中把业务拒绝和底层异常包进一个结果边界，
+    /// 但不会自动回滚已经执行的 SQL，回滚仍由 `Connection`/`Transaction` 决定。
     pub fn refused(message: String) -> Self {
         Self {
             message,
@@ -84,7 +115,16 @@ impl From<String> for DbError {
     }
 }
 
-/// Opens a connection with the documented pragmas and verifies WAL mode.
+/// 按调用用途打开连接并应用本项目约定的 PRAGMA。
+///
+/// `read_only=true` 由统计查询线程使用：以只读/URI 标志打开，设置
+/// `query_only=ON`，把单次忙等待限制为 1000 ms，并设置仅用于报告查询页缓存和
+/// mmap 虚拟地址预算。这个连接不会执行写事务，也不会验证或切换 journal mode。
+///
+/// `read_only=false` 由 `Writer` 启动流程使用：启用外键，设置唯一写连接的页缓存、
+/// `synchronous=NORMAL` 和自动 WAL checkpoint 触发值，再确认数据库确实进入 WAL。
+/// 返回的 `Connection` 归调用线程所有；`&Connection`/`&mut Connection` 是 Rust 的
+/// 借用，离开作用域后连接不会像 Spring bean 那样被容器自动注入到别处。
 pub fn open_connection(path: &Path, read_only: bool) -> Result<Connection, DbError> {
     let conn = if read_only {
         Connection::open_with_flags(
@@ -135,22 +175,39 @@ pub fn open_connection(path: &Path, read_only: bool) -> Result<Connection, DbErr
     Ok(conn)
 }
 
-/// Result of crash recovery.
+/// 启动恢复第一阶段返回的快照。
+///
+/// `recover` 只在启动 `IMMEDIATE` 事务中检测旧 run、结束未闭合的采集区间并冻结
+/// 请求 id 水位；它不会在这个事务里同步扫描全部请求。因此当前实现把
+/// `costs_settled` 和 `interrupted_requests` 返回为 0，真正的行级修复由
+/// `RecoveryScan` 在启动后分批执行。时间字段单位为 Unix epoch 毫秒；`Default`
+/// 表示没有发现旧 run、没有冻结上界且未检测到 unclean。
 #[derive(Clone, Debug, Default)]
 pub struct Recovery {
-    /// Cost rows given a terminal state during startup repair.
+    /// 启动事务本次已结算的费用行数；当前实现固定为 0，后续扫描另行报告。
     pub costs_settled: i64,
-    /// Previous runs closed with `stop_reason='unclean'`.
+    /// 本次启动发现并标记为 `stop_reason='unclean'` 的旧 run 数。
     pub unclean_runs: i64,
-    /// Rows rewritten to `interrupted` because their run never finished.
+    /// 启动事务内改写成 `interrupted` 的请求数；当前实现固定为 0，交给扫描阶段。
     pub interrupted_requests: i64,
-    /// Every request id above this was admitted after startup and is outside
-    /// the repair scope.
+    /// 启动事务提交前观察到的最大 `usage_requests.id`，作为本次恢复扫描的冻结上界。
+    /// 大于它的行属于启动后新请求，不在该扫描范围内。
     pub as_of_id: i64,
+    /// 是否检测到旧进程留下未关闭 run。该标志发布给 health/report 判断损失范围；
+    /// 当前 `scan_recovery_batch` 固定以 `unclean=true` 调用 `repair_one`，因此行级修复
+    /// 原因不由这个布尔值逐行选择。它也不表示历史已经修复完成。
     pub unclean_detected: bool,
 }
 
-/// Creates or upgrades the schema. Never drops an existing database.
+/// 创建或升级 schema，不删除既有数据库。
+///
+/// 调用者是 `Writer::open`，发生在唯一写连接建立之后。版本高于本构建时拒绝；
+/// 已有非空数据库在升级前通过 SQLite backup API 覆盖写
+/// `usage-backup.sqlite3`，随后按版本号逐步骤补齐。每个 `apply_step` 把 SQL 和新的
+/// `user_version` 放在同一个事务中，失败时该步回滚。v2、v7、v11 的表重建需要 SQLite
+/// 在事务外关闭外键；代码在 `apply_step` 成功或失败后都会执行恢复外键的 PRAGMA，
+/// 若恢复语句自身失败，打开流程仍返回错误。迁移不是“打开文件即自动重建”，也不能把
+/// 中途已提交的较早版本误认为整个升级失败后完全没发生变化。
 pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
     let version: i64 = conn.query_row("PRAGMA user_version", [], |row| row.get(0))?;
     if version > SCHEMA_VERSION {
@@ -225,8 +282,12 @@ pub fn migrate(conn: &mut Connection, dir: &Path) -> Result<(), DbError> {
     Ok(())
 }
 
-/// Runs one migration step in its own transaction and records the new version,
-/// so a failure rolls back only that step.
+/// 在独立 `IMMEDIATE` 事务中执行一个迁移步骤，并原子记录目标版本。
+///
+/// `conn` 必须是启动时独占的写连接；迁移 SQL 与 `user_version` 一起提交，失败则
+/// 这一步的表结构、数据和版本号回滚。事务提交前还会运行 `foreign_key_check`。
+/// `Transaction<'_>` 中的 `'_` 借用了连接，事务对象存活期间连接不能被另一个作用域
+/// 可变借用，这由编译器强制，不是运行期连接池锁。
 fn apply_step(conn: &mut Connection, to_version: i64, sql: &str) -> Result<(), DbError> {
     let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
     tx.execute_batch(sql)?;
@@ -247,7 +308,10 @@ fn apply_step(conn: &mut Connection, to_version: i64, sql: &str) -> Result<(), D
     Ok(())
 }
 
-/// Copies an existing database through the SQLite backup API before upgrading.
+/// 在升级已有数据库前，用 SQLite backup API 覆盖本目录唯一的回滚副本。
+///
+/// `target` 是 `usage-backup.sqlite3`；本函数会先尝试移除旧副本，再完整复制。
+/// 返回成功只表示备份文件已写完，不表示后续迁移一定成功。
 fn backup(conn: &Connection, dir: &Path) -> Result<(), DbError> {
     let target = dir.join("usage-backup.sqlite3");
     let _ = std::fs::remove_file(&target);
@@ -259,7 +323,12 @@ fn backup(conn: &Connection, dir: &Path) -> Result<(), DbError> {
     Ok(())
 }
 
-/// Marks previous runs as unclean and closes orphaned in-flight rows.
+/// 执行启动恢复的短事务阶段：标记旧 run，关闭区间，并冻结请求扫描水位。
+///
+/// 它不会直接关闭所有 `in_flight` 请求，也不会在本事务中做无界修复。`as_of_id`
+/// 是本次恢复允许触及的最大行 id；实际请求/费用收敛由之后有界的
+/// `scan_recovery_batch` 完成。调用者必须在同一启动事务里再执行 `start_run`，
+/// 两者一起提交或一起回滚，保证打开失败不会吞掉上一次崩溃证据。
 fn recover(tx: &rusqlite::Transaction<'_>, run_id: &str, now_ms: i64) -> Result<Recovery, DbError> {
     let unclean_runs = tx.execute(
         "UPDATE stats_runs SET stopped_at_ms=:now, stop_reason='unclean'
@@ -271,9 +340,8 @@ fn recover(tx: &rusqlite::Transaction<'_>, run_id: &str, now_ms: i64) -> Result<
          WHERE ended_at_ms IS NULL AND started_at_ms<=:now",
         rusqlite::named_params! {":now": now_ms},
     )?;
-    // The repair itself is a separate, bounded scan owned by the writer: doing
-    // it here meant one immediate transaction and an unbounded amount of work
-    // before the proxy could serve anything. Startup only freezes the scope.
+    // 修复本身由 writer 后续持有并执行为有界扫描。若在这里同步扫全库，会让启动
+    // IMMEDIATE 事务和代理可用时间随历史数据量无界增长；此阶段只冻结上界。
     let as_of_id: i64 = tx.query_row(
         "SELECT COALESCE(MAX(id), 0) FROM usage_requests",
         [],
@@ -289,7 +357,11 @@ fn recover(tx: &rusqlite::Transaction<'_>, run_id: &str, now_ms: i64) -> Result<
     })
 }
 
-/// Starts a fresh run and opens its collection interval.
+/// 在启动事务中登记本次进程 run，并打开对应采集区间。
+///
+/// `run_id` 来自 `stats::Inner`；`enabled` 来自已提交设置。区间状态是
+/// `collecting` 或 `paused`，后者原因记为 `user_disabled`。时间参数均为 epoch 毫秒。
+/// 本函数不自行提交，调用者把它与 `recover` 合并为一个启动事务。
 fn start_run(
     tx: &rusqlite::Transaction<'_>,
     run_id: &str,
@@ -314,13 +386,21 @@ fn start_run(
     Ok(())
 }
 
-/// Settings snapshot shared with the request path.
+/// 请求准入路径读取的设置快照。
+///
+/// `enabled=false` 表示统计关闭；`retention_days=0` 在维护接口中表示关闭自动保留清理。
+/// `default_currency` 固定为静态字符串 `"CNY"` 或数据库已知值；`revision` 用于乐观
+/// 并发控制。`Default` 为启用统计、保留 180 天、默认币种 `"CNY"`、revision 1。
+/// `Settings` 实现 `Copy`，复制的是这个小结构体的值，不会复制数据库或连接。
 #[derive(Clone, Copy, Debug)]
 pub struct Settings {
+    /// 是否接受新统计事件；`true` 为默认。
     pub enabled: bool,
+    /// 自动保留天数；0 表示关闭自动保留清理。
     pub retention_days: i64,
     /// Currency applied to models without a configured price.
     pub default_currency: &'static str,
+    /// 乐观并发版本；每次设置成功修改后递增。
     pub revision: i64,
 }
 
@@ -354,7 +434,14 @@ pub fn load_settings(conn: &Connection) -> Result<Settings, DbError> {
     Ok(settings.unwrap_or_default())
 }
 
-/// Bounded maintenance work executed between event batches.
+/// 在事件批次之间分步执行的维护任务进度。
+///
+/// 生命周期接口：任务由 writer 创建，`Maintenance` 暂存于 `Writer`，
+/// 每次 `maintenance_step` 只走一个有界批次。`cutoff_ms` 和 `started_at_ms` 是 epoch
+/// 毫秒，`as_of_id` 冻结允许触及的行 id，`affected` 初始 0、记录已删除数，`cursor_id`
+/// 初始 0、记录下一批扫描起点，`batch` 是单批上限。`filter` 只保留在内存任务对象中供
+/// 审计意图使用；当前 v2 sweep 收到 `Some(filter)` 也不会按它筛选，`None` 表示没有记录
+/// 用户筛选（现有调用者均传 `None`）。
 #[derive(Debug)]
 pub struct Maintenance {
     pub task_id: i64,
@@ -395,24 +482,41 @@ impl Maintenance {
     }
 }
 
-/// The single writer: one connection, one thread, one transaction per batch.
+/// 唯一写连接及其线程内状态；由 `stats-writer` 线程可变借用并串行调用。
+///
+/// 普通批次走一个事务，坏行隔离时每个事件另起事务，所以不能把“单 writer”误解为
+/// “一次 `apply_batch` 永远只有一个事务”。本结构没有 `Drop` 关闭协议；通常的
+/// `Shutdown` 控制消息会让 writer 在队列仍接收已预约事件时进入 `stats::flush_and_stop`，
+/// 先限时排水，最后关闭队列；队列被直接关闭或控制通道断开只是后备触发路径。
+/// `flush_and_stop` 还会持久化 counters、标记 run/collection interval 结束并尝试 PASSIVE
+/// checkpoint。任一关闭步骤失败可能留下 unclean 证据，下次启动由 `recover` 识别。
 pub struct Writer {
+    /// 独占写连接；只在 writer 线程使用，字段公开用于同模块控制流程。
     pub conn: Connection,
-    /// Current prices, kept in step with the committed table.
+    /// 已提交价格表的内存发布副本，供请求准入冻结价格而不读 SQLite。
     pub prices: PublishedPrices,
-    /// Progress of the bounded startup repair scan.
+    /// 启动恢复扫描游标；构造 `Writer` 时为 `None`，`open` 提交启动事务后设为
+    /// `Some`，即使 `finished()` 为真也保留已完成的游标供检查。
     pub scan: Option<RecoveryScan>,
+    /// 当前进程 run 的稳定标识，用于 run、区间和失败记录关联。
     pub run_id: String,
+    /// 最近一次数据库设置快照。
     pub settings: Settings,
+    /// 当前至多一个分步维护任务；本文件不展开定价、导入和清理算法。
     pub maintenance: Option<Maintenance>,
+    /// 已加载的 provider_id 到 usage mode 映射，控制请求是否向上游要求 usage。
     pub provider_modes: std::collections::HashMap<String, UsageMode>,
-    /// Live counters mirrored into `stats_runs` on every successful batch.
+    /// 与请求路径共享的原子 counters；克隆 `Arc` 只增加引用计数，批次成功时镜像到
+    /// `stats_runs`。它不是事务日志，也不保证每个即时计数都已落库。
     pub counters: std::sync::Arc<crate::stats::event::Counters>,
-    /// Cache of the (relatively expensive) whole-table facts for `stats_health`.
+    /// `stats_health` 使用的全表事实缓存，需显式 `refresh_db_stats` 更新。
     pub db_stats: DbStats,
 }
 
-/// Deadline shared by one batch, its retries and its isolation attempts.
+/// 一次写入调用、其内部重试和逐事件隔离共享的单调时钟截止点。
+///
+/// 单位由 `Duration` 表示；`Copy` 只复制截止时刻，不会刷新预算。它约束本进程本次
+/// 调用的等待时间，不等同于 SQLite 事务超时，也不保证操作系统 I/O 在截止点立即返回。
 #[derive(Clone, Copy, Debug)]
 pub struct WriteBudget {
     deadline: Instant,
@@ -434,9 +538,10 @@ impl WriteBudget {
     }
 }
 
-/// True for failures that a retry can plausibly fix (a held lock, a busy file,
-/// an I/O hiccup). Rows that violate a constraint are *not* transient: only
-/// those may be isolated away from the rest of the batch.
+/// 判断错误是否属于可能自行恢复的锁冲突、I/O 故障或操作中断。
+///
+/// 瞬时错误会按整批在当前调用预算内重试，不进入逐事件隔离；违反约束等确定性错误才会
+/// 触发坏行隔离，避免一个坏事件丢掉健康邻居。
 fn is_transient(failure: &DbError) -> bool {
     matches!(
         failure.kind,
@@ -447,8 +552,12 @@ fn is_transient(failure: &DbError) -> bool {
     )
 }
 
-/// Result of one write batch: how many events landed and which ones could not be
-/// written even in isolation.
+/// 一次 `apply_batch` 的逐事件结果。
+///
+/// `Default` 是 `applied=0`、`dropped` 为空。`applied` 表示被成功处理的事件数，不是
+/// 新增/修改的数据库行数：例如重复 `Start` 被 `ON CONFLICT DO NOTHING` 处理，仍可能
+/// 计入已处理事件。`dropped` 保留失败事件，供调用方统计 request 数并提取可能需要恢复的
+/// `Finish` id；它不承诺保留所有恢复证据，调用方之后也确实可能只留下 request id。
 #[derive(Clone, Debug, Default)]
 pub struct BatchOutcome {
     pub applied: usize,
@@ -463,13 +572,31 @@ impl BatchOutcome {
 
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DbStats {
+    /// 当前请求事实行数；默认 0。
     pub record_count: i64,
+    /// 最早请求开始时间（epoch 毫秒）；空库为 `None`。
     pub earliest_record_at_ms: Option<i64>,
+    /// 主数据库文件字节数；读取失败时辅助函数返回 0。
     pub db_bytes: i64,
+    /// `-wal` 文件字节数；读取失败时辅助函数返回 0。
     pub wal_bytes: i64,
 }
 
 impl Writer {
+    /// 打开统计库、完成必要的 schema 准备，并执行一次启动恢复事务。
+    ///
+    /// 调用者是 `stats::writer_thread`。`dir` 是统计数据目录，数据库固定为其中的
+    /// `usage.sqlite3`；`run_id` 标识本次进程运行；`counters` 与请求路径共享，
+    /// 这里只是克隆 `Arc`。返回值中的 `Writer` 从此由该线程独占并传给后续批次，
+    /// `Recovery` 则只携带启动第一阶段的摘要和冻结水位。
+    ///
+    /// 执行顺序是：打开唯一写连接、迁移、读取设置/provider mode/价格/健康事实，然后
+    /// 开始一个 `IMMEDIATE` 启动事务，在事务中先 `recover` 再 `start_run`。这两步一起
+    /// 提交，失败时事务对象被丢弃并回滚，不会消费旧 run 的未闭合证据，也不会只提交
+    /// 本次 run 或采集区间。此前已成功提交的 schema 迁移不会因这个事务失败而倒退。
+    ///
+    /// 提交后只设置 `scan=RecoveryScan::new(recovery.as_of_id)`；此时历史请求尚未全部
+    /// 修复。writer 主循环稍后会分批推进扫描，并在扫描完成前向 health 暴露恢复未完成。
     pub fn open(
         dir: &Path,
         run_id: &str,
@@ -496,9 +623,9 @@ impl Writer {
         // the published copy.
         writer.prices = load_price_cache(&writer.conn)?;
         writer.refresh_db_stats()?;
-        // A failed open must leave recovery and this run's interval untouched:
-        // startup lock retries can otherwise consume the prior crash report or
-        // create duplicate intervals. No fallible setup remains after commit.
+        // `recover` 和 `start_run` 必须同事务：打开失败时不能先消费旧 crash 证据，
+        // 也不能只留下本次 run/区间。提交后不再有会让整个 open 失败的 setup；
+        // 已提交的迁移不属于这个启动事务，仍可能保留。
         let now_ms = crate::stats::now_ms();
         let tx = writer
             .conn
@@ -540,13 +667,24 @@ impl Writer {
         (size(main), size(wal))
     }
 
-    /// Applies one batch of events inside a shared deadline.
+    /// 在共享截止时间内把一批已从队列取出的统计事件写入 SQLite。
     ///
-    /// Transient failures (a held lock, a busy file) are retried as a whole and
-    /// then reported as a database-level failure: retrying 64 events one by one
-    /// would multiply the lock wait by the batch size, which is what made a
-    /// single batch take seconds. Only deterministic row errors are isolated,
-    /// so one malformed record cannot discard its healthy neighbours.
+    /// 调用者是 `stats::writer_thread`；`batch` 来自 `EventQueue::pop_batch`，`budget` 由
+    /// 调用者创建并传入。正常路径把整批交给 `apply_batch_once`，在一个 `IMMEDIATE`
+    /// 事务内处理 `Start`/`Finish`、请求、费用快照和 run counters。整批遇到锁冲突或
+    /// I/O 等瞬时错误时，本函数只在当前预算内有限重试，随后返回 `Err`；它不会把
+    /// `batch` 重新放回队列。调用者会标记 degraded，并且只把其中的 `Finish` id 记入
+    /// 内存孤儿集或 durable backlog，原始完整 `FinishRecord` 不会自动重放。
+    ///
+    /// 若首次错误是确定性行错误，则改为逐事件调用 `apply_batch_once`。每个事件各自
+    /// 一个事务，成功事件保留，确定性失败事件进入 `BatchOutcome::dropped`；因此不能
+    /// 把整个 `apply_batch` 概括成永远只有一个事务，也不能把坏行隔离理解为整批回滚。
+    /// 逐事件隔离中再次遇到瞬时错误时，当前实现停止本轮并只会确定地返回某些事件，
+    /// 仍未处理的部分进入 `dropped`，不会在当前调用内自动重放。
+    ///
+    /// 返回 `Ok` 仅表示本函数已完成可跟踪的逐事件处理，不表示每个请求的完整生命周期
+    /// 都已持久化；返回 `Err` 表示整批首次事务未提交，或隔离后所有事件都未成功。
+    /// 两种失败边界都只依赖调用方的恢复流程，不保证原事件 exactly-once 投递。
     pub fn apply_batch(
         &mut self,
         batch: &[StatsEvent],
@@ -591,8 +729,8 @@ impl Writer {
             return Err(DbError::refused("write budget exhausted".into()));
         };
         if is_transient(&last_error) {
-            // Transient: report a database-level failure so the caller marks the
-            // window degraded and the whole batch is retried later.
+            // 瞬时失败在当前调用内已用完重试预算。调用方不会重放这些已 pop 的
+            // 事件；它记录 Finish request id，并由启动扫描/orphan/backlog 收敛中断。
             return Err(last_error);
         }
         // Deterministic failure: isolate the offending events. `index` is the
@@ -610,8 +748,8 @@ impl Writer {
                 Ok(()) => outcome.applied += 1,
                 Err(failure) => {
                     if is_transient(&failure) {
-                        // The database went away mid-isolation; stop and let the
-                        // caller retry the remainder later.
+                        // 数据库在隔离过程中再次瞬时失败；本函数不重放入队，剩余事件
+                        // 只能由调用方的 id 级恢复证据尽力收敛。
                         outcome.dropped.extend_from_slice(&batch[index..]);
                         break;
                     }
@@ -631,8 +769,10 @@ impl Writer {
         Ok(outcome)
     }
 
-    /// Cheap write-capability probe used to leave `degraded` without waiting for
-    /// new traffic. It takes and releases the write lock without changing data.
+    /// 不等待新流量即可探测写能力的轻量入口。
+    ///
+    /// 取得 `IMMEDIATE` 写锁后立即 rollback，不修改业务数据。调用者是 writer 空闲/
+    /// degraded 恢复循环；成功只证明当下能开始写事务，不代表之后批次一定成功。
     pub fn probe_write(&mut self) -> Result<(), DbError> {
         let tx = self
             .conn
@@ -641,8 +781,11 @@ impl Writer {
         Ok(())
     }
 
-    /// A successful recovery can be idle: no later request batch may arrive to
-    /// persist the counters for events that were lost while SQLite was locked.
+    /// 把内存原子 counters 显式镜像到当前 run。
+    ///
+    /// 正常成功批次也会更新同一行；本方法供恢复完成或关闭时处理“之后可能再无请求批次”
+    /// 的空闲场景。`now_ms` 单位是 epoch 毫秒；这是 autocommit 的单条 UPDATE，
+    /// 不与调用者内存状态组成更强事务。
     pub fn persist_counters(&self, now_ms: i64) -> Result<(), DbError> {
         self.conn.execute(
             "UPDATE stats_runs SET last_persisted_at_ms=?2, admitted_requests=?3,
@@ -724,8 +867,15 @@ impl Writer {
         Ok(())
     }
 
-    /// Gives a trustworthy terminal state to rows whose `Finish` event was
-    /// dropped: the upstream behaviour is unknown, so nothing is fabricated.
+    /// 把指定 id 中仍为 `in_flight` 的请求收敛为可信的“未知中断”终态。
+    ///
+    /// 调用者是 writer 线程的 `trim_orphans`。输入只有 request id，没有原始
+    /// `FinishRecord`；因此不能恢复真实 outcome、token 或时延。函数在一个事务内更新
+    /// 仍为 `in_flight` 的请求，并按 Start 时保存的价格快照尝试结算费用。已经是终态的
+    /// 请求不会在这里改动，即使其费用行仍 pending；这种旧数据由 `repair_one` 覆盖。
+    /// 返回值是本调用实际从 `in_flight` 转为中断的请求数；它不是“费用行已经终态”的
+    /// 数量。`legacy_unknown` 或费用快照无法结算时，请求仍可能已转中断而费用保持原状，
+    /// 调用者不能仅凭该返回值推断费用生命周期也已完整收敛。
     pub fn settle_orphans(&mut self, ids: &[String], now_ms: i64) -> Result<usize, DbError> {
         if ids.is_empty() {
             return Ok(0);
@@ -753,6 +903,17 @@ impl Writer {
         Ok(settled)
     }
 
+    /// 在一个 `IMMEDIATE` 事务中顺序应用一条或多条事件。
+    ///
+    /// 整批成功时，同一批次内的 `Start`、`Finish`、请求行、费用快照和 run counters
+    /// 一起提交；任一 `?` 返回错误则事务未提交，析构时回滚。若 `Start` 和 `Finish`
+    /// 分属不同批次，它们自然属于不同事务：前一批可先持久化，后一批仍可能失败。
+    ///
+    /// 请求和费用以 `request_id` 唯一约束做幂等门禁：重复 `Start` 不新增请求行；重复
+    /// `Finish` 因请求已不再 `in_flight` 而直接 no-op。正常费用结算只更新 pending 行，
+    /// 没有 pending 行时另有带 `ON CONFLICT DO NOTHING` 的兜底插入。相同 request id 因而
+    /// 不会重复计入两条结果，但批次失败仍可能丢失具体 Finish 载荷，不是外部事件的
+    /// exactly-once 持久化协议。
     fn apply_batch_once(&mut self, batch: &[StatsEvent]) -> Result<(), DbError> {
         if batch.is_empty() {
             return Ok(());
@@ -1756,8 +1917,17 @@ pub fn delete_price_rule(
     Ok(())
 }
 
-/// Stores ids whose terminal event could not be written, so the same run can
-/// retry them in bounded batches instead of dropping them.
+// 恢复 backlog 的职责边界：`apply_batch` 的整批失败或隔离丢弃不会重放原事件；
+// writer 线程只保留 `Finish` 的 request id。内存列表溢出时，`trim_orphans` 调用
+// `push_backlog` 把尚未收敛的 id 持久化；`recover_collection` 再通过 `backlog_len`
+// 和 `repair_backlog_batch` 有界排空。backlog 保存的是“待核对 id”，不是原始事件载荷，
+// 所以它能避免键重复，却不能还原已丢失的 FinishRecord。
+
+/// 把未能落库的终态 request id 写入同进程可重试的持久 backlog。
+///
+/// 调用者和输入边界见上方恢复说明。主键与 `ON CONFLICT DO NOTHING` 使同一 id 可在
+/// 多次失败中被重复尝试排队，但不会产生重复 backlog 行；返回值是本次实际新增的 id 数，
+/// 时间单位为 epoch 毫秒。提交失败时整批新增回滚，调用者必须保留或重新获得这些 id。
 pub fn push_backlog(writer: &mut Writer, ids: &[String], now_ms: i64) -> Result<usize, DbError> {
     let tx = writer
         .conn
@@ -1776,7 +1946,10 @@ pub fn push_backlog(writer: &mut Writer, ids: &[String], now_ms: i64) -> Result<
     Ok(stored)
 }
 
-/// Number of ids still waiting for a terminal settlement.
+/// 读取当前 durable backlog 中的 id 数量。
+///
+/// 调用者是 writer 恢复循环；这是读取瞬间的 COUNT，不是事件载荷数量，也不代表所有
+/// id 都能修复（请求行可能已不存在）。返回错误不能被当作空 backlog。
 pub fn backlog_len(conn: &Connection) -> Result<i64, DbError> {
     Ok(
         conn.query_row("SELECT COUNT(*) FROM stats_recovery_backlog", [], |row| {
@@ -1785,12 +1958,15 @@ pub fn backlog_len(conn: &Connection) -> Result<i64, DbError> {
     )
 }
 
-/// Progress of the bounded startup repair scan.
+/// 启动恢复扫描的冻结范围和游标。
+///
+/// `cursor_id` 是已成功提交扫描到的最大请求行 id；`as_of_id` 是启动事务冻结的上界。
+/// 两者都是 SQLite 自增行 id，不是请求开始时间。扫描不会触碰大于 `as_of_id` 的新请求。
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct RecoveryScan {
-    /// Highest request id already examined.
+    /// 已成功检查并提交的最大 `usage_requests.id`；初值 0。
     pub cursor_id: i64,
-    /// Requests above this id were admitted after startup and are never touched.
+    /// 启动恢复的冻结上界；本扫描完成后也不会越过它。
     pub as_of_id: i64,
 }
 
@@ -1807,11 +1983,22 @@ impl RecoveryScan {
     }
 }
 
-/// Repairs the next batch of rows that can never receive a `Finish`.
+/// 修复启动水位内下一批无法再收到 `Finish` 的请求/费用行。
 ///
-/// One transaction per batch, a stable cursor, and a scope frozen at startup.
-/// Whatever a batch cannot repair stays eligible for the next one, so recovery
-/// makes real progress without holding the write lock for the whole database.
+/// 调用者是 `stats::recover_collection`。输入 `limit` 限制本批候选数，`now_ms` 是
+/// 修复时写入的中断时间（epoch 毫秒）。函数在一个 `IMMEDIATE` 事务里选择
+/// `id > cursor_id && id <= as_of_id` 的候选，包括仍 open 的请求、pending 费用和需要
+/// 修正的旧版零费形态，逐行尝试 `repair_one`；无法立即修复的 id 会在推进游标前先写入
+/// durable backlog，随后 repair 和 backlog 一起提交。
+///
+/// 非空候选路径会先把本批修复和待重试 id 的 backlog 新增放入同一事务，计算下一游标但
+/// 暂不发布，只有 `commit` 成功后才写回 `scan.cursor_id`；失败时数据库修改回滚且内存
+/// 游标仍停在旧位置。空候选分支是例外：它先把本地游标设为 `as_of_id`，再提交没有
+/// 执行行级修复的事务（仍以 IMMEDIATE 开启，并非只读连接上的事务）；
+/// 若该提交失败，函数返回错误但传入的本地游标已经推进。返回
+/// `(repaired, remaining_id_distance)`：第一项包含已修复或已确认不存在的候选数；第二项
+/// 在有候选时只是 `as_of_id - last_examined_id` 的 id 距离，不是精确剩余行数，没有候选
+/// 时返回 0。
 pub fn scan_recovery_batch(
     writer: &mut Writer,
     scan: &mut RecoveryScan,
@@ -1886,23 +2073,29 @@ pub fn scan_recovery_batch(
     Ok((repaired, scan.as_of_id - last))
 }
 
-/// What one backlogged id needs next.
+/// 一个待恢复 request id 本次检查后的分类。
 #[derive(Debug, PartialEq, Eq)]
 pub enum RepairOutcome {
-    /// The request and its cost both have a terminal state.
+    /// 请求不再 `in_flight` 且费用不再 pending；可以从 backlog/内存 retry 集移除。
     Done,
-    /// No such request: the id is stale and may leave the backlog.
+    /// 没有对应请求行：该 id 已失效，可以从恢复队列移除。
     Missing,
-    /// Still repairable but not repaired; the id stays queued.
+    /// 请求或费用仍待收敛；调用者必须保留 id 等待下一轮。
     Retry,
 }
 
-/// Repairs one queued id: closes a request that can never receive its `Finish`,
-/// then settles its cost row from the snapshot the request was admitted with.
+/// 在调用者提供的事务中修复一个 request id。
 ///
-/// Unlike `settle_orphans`, this also handles a request that is *already*
-/// terminal while its cost is still `pending`, which is exactly the shape an
-/// earlier release left behind.
+/// 调用者包括启动扫描、内存 orphan 修复和 durable backlog 修复。`unclean=true` 只用于
+/// 冻结水位内的启动扫描：仍为 `in_flight` 的请求改写为 `interrupted`，原因标成
+/// `unclean_shutdown`；当前 run 中丢失 Finish 的 orphan 使用 `unclean=false`，原因标成
+/// `other`。随后函数从 Start 时保存的费用快照尝试结算，再检查请求和费用是否都离开
+/// open/pending 状态。
+///
+/// 与 `settle_orphans` 不同，本函数也处理“请求已终态但费用仍 pending”的旧数据形态。
+/// 它接收 `&Transaction`，不会自行 commit/rollback；单个 id 内部若某条 SQL 返回错误，
+/// 调用者通常记录并重试该 id，但同一外层事务先前为它写下的语句并不保证逐 id 自动回滚。
+/// 只有整个事务最终未提交时，数据库才会回滚全部未提交修改。
 fn repair_one(
     tx: &rusqlite::Transaction<'_>,
     request_id: &str,
@@ -1957,9 +2150,12 @@ fn repair_one(
     })
 }
 
-/// Repairs an explicit list of ids with the same classification the durable
-/// queue uses. Returns the repaired and stale counts plus the ids that still
-/// need another attempt, so the caller never has to guess from row counts.
+/// 在一个事务中修复调用者明确给出的 id 列表。
+///
+/// 调用者是 `recover_collection` 的内存 orphan 列表。输出 `(done, missing, retry)` 精确
+/// 对应本输入的分类，调用者据此保留 retry id、丢弃 stale id 并累计可见失败。`Missing`
+/// 不是“修复成功”，而是请求行根本不存在；`repair_one` 的错误会记录到 stderr 并归入
+/// retry，不会从列表静默消失。
 pub fn repair_ids(
     writer: &mut Writer,
     ids: &[String],
@@ -1989,9 +2185,15 @@ pub fn repair_ids(
     Ok((done, missing, retry))
 }
 
-/// Repairs at most `limit` queued ids. Returns how many finished, how many were
-/// stale, and how many are still queued, so the caller knows whether recovery is
-/// complete instead of assuming it.
+/// 从 durable backlog 取至多 `limit` 个 id 修复，并返回本次结果及提交后的剩余数量。
+///
+/// 调用者是 `recover_collection`。候选 id 先在事务外读取；由于唯一写连接由 writer
+/// 线程串行使用，本次调用期间不会由本进程另一个写者修改 backlog。随后一个
+/// `IMMEDIATE` 事务修复候选，只删除 `Done` 和 `Missing`，`Retry` 保留。
+///
+/// 返回 `(done, missing, remaining_count)`；`remaining_count` 在提交后重新 COUNT，是
+/// 精确 backlog 行数。若事务失败，删除与部分修复都不提交。函数内部对单个 id 的错误
+/// 采取“保留 id 供下次再试”，但这不保证该 id 在此前 SQL 上从未留下未提交修改。
 pub fn repair_backlog_batch(
     writer: &mut Writer,
     limit: i64,
@@ -2024,8 +2226,9 @@ pub fn repair_backlog_batch(
             Ok(RepairOutcome::Missing) => missing += 1,
             Ok(RepairOutcome::Retry) => retry.push(id.clone()),
             Err(failure) => {
-                // Leave the transaction untouched for this id and try later; a
-                // failed id must never be silently dropped from the queue.
+                // 当前函数没有 per-id savepoint；记录失败并把 id 放进 retry，避免从
+                // backlog 删除。外层事务最终成功时，先前同 id 的未提交部分修改仍可能
+                // 一起提交，因此这里只承诺“不移出队列”，不承诺逐 id 完整回滚。
                 eprintln!("statistics could not repair {id}: {}", failure.message);
                 retry.push(id.clone());
             }
@@ -2042,12 +2245,16 @@ pub fn repair_backlog_batch(
     Ok((done, missing, remaining))
 }
 
-/// Settles at most `limit` backlogged ids and removes the ones that landed./// Gives a cost row its terminal state when its request can no longer receive a
-/// `Finish` (a crash, or a dropped terminal event).
+/// 当请求已不可能再收到 `Finish` 时，为费用行尝试写入终态。
 ///
-/// The stored snapshot decides the price: the current configuration is never
-/// consulted. A zero snapshot is a confirmed zero; a manual price with no
-/// usable usage stays unknown rather than becoming a fake zero.
+/// 调用者是 `settle_orphans` 和 `repair_one`，因此运行在当前恢复事务中；函数不会自行
+/// commit/rollback。它读取 Start 时已经保存的价格快照及请求上的 usage 事实，不使用
+/// 当前价格配置。定价公式本身属于 `pricing` 模块，这里只负责生命周期和持久化边界：
+/// 明确的零价可以是已确认零；manual 价格但 usage 不可用时保持未知，不能伪装成零。
+///
+/// 返回 `true` 表示找到匹配费用行并完成了本函数的结算尝试；`false` 表示没有需要处理的
+/// 行，或旧版 `legacy_unknown` 明确无法推断。是否真正可离开 backlog 仍由 `repair_one`
+/// 再次查询请求 open 与费用 pending 状态决定。
 fn settle_abandoned_cost(
     tx: &rusqlite::Transaction<'_>,
     request_id: &str,
@@ -2183,6 +2390,18 @@ fn settle_abandoned_cost(
     Ok(true)
 }
 
+/// 把一条 `FinishRecord` 合并到已存在的请求行，并结算其费用行。
+///
+/// 调用者是 `apply_batch_once`，输入 `tx` 由外层批次持有，`now_ms` 是写入时的 epoch
+/// 毫秒。函数先只更新仍为 `in_flight` 的同一 request id；若没有更新（重复 Finish、
+/// Start 未落库或请求已终态），立即返回 no-op，因此重复事件不会重复累计费用。
+///
+/// 更新成功后读取 Start 时保存的 pending 价格快照，计算结算状态并在同一事务写费用。
+/// 任一数据库错误都返回给 `apply_batch_once`，该次整批事务不提交；所以同批 Start 与
+/// Finish 会一起回滚。若二者本来就在不同批次，先提交的 Start 仍会保留，之后由恢复流程
+/// 把无法完成的生命周期收敛为中断。费用正常来自 Start 写入的 pending 快照；若该行不在，
+/// `write_cost_maybe_correcting` 会在 request id 唯一约束下尝试兜底插入，重复 Finish 不会
+/// 再次走到这一步，因为上面的请求条件更新已经返回 0。
 fn finish_request(
     tx: &rusqlite::Transaction<'_>,
     request_id: &str,
