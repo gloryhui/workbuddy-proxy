@@ -9,7 +9,7 @@
 - native 入口 `proxy::native::prepare` 在完整 HTTP 请求中的位置；
 - 本地校验失败、上游失败、流结束和客户端取消分别落在哪个边界。
 
-服务启动和普通 Chat 直通路径见已有的 [服务核心源码流程](SERVICE_CORE.md)。本文只展开 native 请求转换；响应解析、SSE 增量转换和 replay 缓存淘汰属于另外的专题，导入/更新算法仍留待后续阅读。
+完整链路先读 [协议转换总览](PROTOCOL_CONVERSION.md)，服务启动和普通 Chat 直通路径见 [服务核心源码流程](SERVICE_CORE.md)。本文展开 native 请求转换；之后可继续阅读 [响应与流式解析](PROTOCOL_RESPONSE.md) 和 [工具状态回放](PROTOCOL_REPLAY.md)。
 
 ## 1. 先看数据流和所有权
 
@@ -28,9 +28,9 @@ proxy::relay_to
      -> output / streaming / sse
 ```
 
-`proxy::relay_to` 先读取客户端 JSON 的 `model`，用它在路由表中找出唯一 `Arc<proxy::Route>`。路由中有两项容易混淆的模型语义：
+`proxy::relay_to` 先读取客户端 JSON 的 `model`，结合路径上的路由作用域，在路由表中找出唯一 `Arc<proxy::Route>`。路由中有两项容易混淆的模型语义：
 
-- 客户端 `model` 是本地路由 alias，只用于选路；
+- 客户端 `model` 是选路标识，可以是 alias、已安装标识，或作用域允许的实际模型名；`Routes::resolve` 会检查归属与歧义；
 - `Route.connection.model` 是实际发给供应商的上游 model。
 
 `ChatRequest::parse` 仍要求请求中存在非空 `model`，但 `ChatRequest` 结构体不保存它。`proxy::native::prepare` 随后把 `Route.connection.model` 传给 `protocol::encode::encode`；不能把 native 请求体中的 `model` 解释成“客户端原样发给上游的 model”。
@@ -169,9 +169,9 @@ user:       上海天气怎么样？
 assistant:  content=null, tool_calls=[
               id=call-weather,
               name=weather,
-              arguments_text={"city":"上海"}
+              arguments_text="{\"city\":\"上海\"}"
             ]
-tool:       tool_call_id=call-weather, content={"temperature":18}
+tool:       tool_call_id=call-weather, content="{\"temperature\":18}"
 assistant:  上海当前 18 摄氏度。
 ```
 
@@ -440,4 +440,4 @@ proxy::native::tests::undelivered_replay_ticket_is_revoked_and_delivered_ticket_
 - Responses `stop`、Anthropic `json_object` 等无法无损映射的字段不会静默丢弃；
 - `prepare` 成功只表示生成并序列化了本地 native 请求，不保证上游接受、生成完成或
   客户端收到完整响应；
-- replay cache、响应解码、流式 SSE 差分模型和失败处理还需结合响应与回放专题阅读。
+- replay cache、响应解码、流式 SSE 差分模型和失败处理还需结合 [响应专题](PROTOCOL_RESPONSE.md) 与 [回放专题](PROTOCOL_REPLAY.md) 阅读。

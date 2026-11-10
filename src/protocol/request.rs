@@ -169,10 +169,11 @@ pub enum Role {
 
 /// assistant 发起的一次 function tool 调用。
 ///
-/// `arguments` 是已经通过严格 JSON 校验并确认是 object 的解析值；
-/// `arguments_text` 同时保存客户端原始参数文本。两者都要保留：native 编码通常需要
-/// JSON 对象，而 replay 和部分协议字段需要原始文本语义，不能从重新序列化结果反推
-/// 客户端实际发送的“原文”。这不表示原文会进入日志或统计事件。
+/// `arguments` 是已经通过严格 JSON 校验并确认是 object 的解析值。请求解析时，
+/// `arguments_text` 同时保留客户端参数原文；响应解码也复用这个结构，此时文本可能
+/// 由原生参数对象重新序列化生成。两者都要保留：部分 native 字段需要 JSON 对象，
+/// Chat arguments 等字段需要 JSON 字符串；重新序列化不会保留原来的空白表示。
+/// 参数内容不会作为日志字段输出。
 #[derive(Clone, Debug)]
 pub struct ToolCall {
     /// Chat 历史中的调用 ID；同一段历史内必须唯一，长度和字符规则在解析时检查。
@@ -181,7 +182,7 @@ pub struct ToolCall {
     pub name: String,
     /// 已解析、且已确认是 JSON object 的参数值。
     pub arguments: Value,
-    /// 客户端给出的参数 JSON 文本，用于保留实际发送表示。
+    /// 参数的 JSON 文本：请求解析保留客户端原文，响应转换按相应解码路径生成。
     pub arguments_text: String,
 }
 

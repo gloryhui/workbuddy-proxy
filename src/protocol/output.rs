@@ -65,7 +65,9 @@ pub struct Identity {
     pub id: String,
     /// Unix 时间戳，单位秒。
     pub created: i64,
-    /// 客户端展示的模型名；若上游终态提供了合法模型名，调用方会替换此值。
+    /// Chat chunk 使用的稳定模型名，初值为路由的上游模型。流式调用方只在首个
+    /// role chunk 前用已知的上游模型更新它；终态才出现的模型不会改写已发 chunk。
+    /// 非流式 `Output::json` 则直接优先使用 `Output.model`，无需修改此字段。
     pub model: String,
 }
 impl Identity {

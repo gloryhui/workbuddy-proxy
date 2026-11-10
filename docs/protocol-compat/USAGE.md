@@ -2,6 +2,8 @@
 
 WorkBuddy 始终调用本地 OpenAI Chat Completions 接口。供应商连接页的“上游协议”决定代理如何调用供应商，不能根据模型名称自动判断协议。原有供应商没有协议字段时继续按 `openai_chat` 处理。
 
+阅读实现时可从 [协议转换源码导读](../source-guide/PROTOCOL_CONVERSION.md) 开始：按请求校验与编码、JSON/SSE 响应转换、多轮工具回放三条主线，对照中文源码注释跟踪数据。
+
 | 选择 | API 地址填写示例 | 原生鉴权 | 模型发现 |
 | --- | --- | --- | --- |
 | OpenAI Chat Completions | `https://host/gateway/v1` | Bearer | 同前缀 `/models` |

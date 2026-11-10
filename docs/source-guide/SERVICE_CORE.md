@@ -170,7 +170,7 @@ proxy::action
 8. 根据 `/r/{id}` scope 与 model 解析唯一候选路由；
 9. 路由成功后调用 `StatsHandle::begin`；
 10. 检查 provider 是否已有上游 key；
-11. native 协议进入 `proxy_native::relay`；
+11. native 协议进入 `proxy::native::relay`；
 12. OpenAI Chat 路径按需推导 Go 会话 ID、注入 usage 请求、改写思考强度/alias，再调用 `Bridge::upstream`；
 13. 把上游状态和筛选后的响应 headers 返回给客户端；
 14. 响应 body future 同时持有 permit 和统计 guard。
@@ -208,11 +208,11 @@ proxy::action
 
 ### Native 协议路径
 
-Responses、Anthropic Messages 和 Gemini 进入 [proxy_native::relay](../../src/proxy_native.rs)：
+Responses、Anthropic Messages 和 Gemini 进入 [proxy::native::relay](../../src/proxy_native.rs)。`src/proxy_native.rs` 通过 `#[path]` 作为 `proxy::native` 模块编译，因此源码文件名与断点所用的 Rust 符号不同：
 
 ```text
 proxy::relay_to
-  -> proxy_native::relay
+  -> proxy::native::relay
      -> prepare    # Chat 请求 -> native 请求
      -> open       # 发上游 HTTP
      -> 非流式：读取 EOF -> parse -> replay -> 单个 Chat JSON
@@ -225,7 +225,7 @@ proxy::relay_to
 
 非流式响应必须在收到 upstream EOF、完整解析成功并通过 replay 校验后才生成 Chat JSON。replay `CacheTicket` 在状态刚 publish 时仍是 `delivered=false`；只有完整 body 首次准备交给 HTTP body stream 时才设为 true。尚未交付就被 drop 的 ticket 会撤销 cache 状态。`delivered=true` 仍只说明代理 body 层接收了该值，不证明客户端 socket 已确认收到。
 
-连接测试入口 [proxy_native::test](../../src/proxy_native.rs) 只等待首个确认事件，随后主动停止读取。因此一次成功的连接探测会把统计标记为主动 cancelled/client_drop；这表示探测按设计截断，不等同于上游连接失败。整个探测包在固定 timeout 内。
+连接测试入口 [proxy::native::test](../../src/proxy_native.rs) 只等待首个确认事件，随后主动停止读取。因此一次成功的连接探测会把统计标记为主动 cancelled/client_drop；这表示探测按设计截断，不等同于上游连接失败。整个探测包在固定 timeout 内。
 
 ## 5. 成功、失败、取消与“实际收到”的边界
 
@@ -391,7 +391,7 @@ server future / _control/stop / Ctrl-C
 | 管理保存后的路由更新 | `Bridge::command_inner` 的 `save/add/duplicate/delete` 分支 |
 | 一次 Chat 请求 | `proxy::relay_to`、`Bridge::upstream` |
 | Go 会话推导 | `Sessions::resolve` |
-| native 转换 | `proxy_native::prepare`、`proxy_native::relay`、`NativeStream::next` |
+| native 转换 | `proxy::native::prepare`、`proxy::native::relay`、`NativeStream::next` |
 | 统计 admission | `StatsHandle::begin`、`RequestGuard::begin` |
 | 终态和 Drop | `RequestGuard::terminal`、`RequestGuard::finish`、`RequestGuard::drop` |
 | 统计写入 | `stats::writer_thread`、`stats::recover_collection`、`stats::flush_and_stop` |
@@ -420,7 +420,7 @@ server future / _control/stop / Ctrl-C
 
 以下算法只在这里交代入口，不在本文展开：
 
-- 各上游协议的完整编码、SSE 状态机和 replay 数据格式，见 [协议支持文档](../protocol-compat/USAGE.md)；
+- 各上游协议的编码、SSE 状态机和 replay 数据格式，由 [协议转换源码专题](PROTOCOL_CONVERSION.md) 展开；具体支持范围见 [协议支持文档](../protocol-compat/USAGE.md)；
 - SQLite 查询、定价、迁移和完整恢复细节，见 [统计开发文档](../statistics/DEVELOPMENT.md)；
 - WorkBuddy 日志导入、配置同步、去重与更新恢复，分别从 `src/stats/workbuddy_import/`、`src/workbuddy.rs` 和 [自动更新文档](../AUTO-UPDATE.md) 继续；
 - GPUI 页面状态、任务调度和表格交互由界面专题文档覆盖。

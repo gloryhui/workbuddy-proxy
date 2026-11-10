@@ -23,8 +23,9 @@ use serde_json::{Map, Value, json};
 
 /// 一次上游响应经过质量校验后的 usage 快照。
 ///
-/// `Clone` 用于在流式 Decoder 中把当前累计状态交给非拥有型观察接口；它不是
-/// Java 式的通用深拷贝约定，具体复制边界由字段类型决定。
+/// 流式 `Common::reconcile` 克隆最终 Output 的 usage，分别保留当前观察快照与
+/// 最终结果；观察接口本身只借用 `&Usage`。`Clone` 的具体复制边界由字段类型
+/// 决定，不能把所有 Rust 类型的 clone 都套成同一种 Java 对象复制操作。
 #[derive(Clone, Debug, Default)]
 pub struct Usage {
     /// Chat 兼容 usage JSON，例如 `prompt_tokens`、`completion_tokens` 和
@@ -37,7 +38,7 @@ pub struct Usage {
     /// 仅 Anthropic 能证明“未缓存输入”时存在：input_tokens 本身不含缓存读写，
     /// 该值为未缓存的 token 数。其他协议为 `None`，不能自行套用此分解。
     pub disjoint_uncached: Option<i64>,
-    /// 上游存在 usage，但至少一个可解释的父值非法、越界或彼此矛盾。
+    /// 上游存在 usage，但计数字段或父子关系非法、越界或彼此矛盾。
     /// Invalid usage 不会中断本来有效的模型正文，只独立影响统计可信度。
     pub invalid: bool,
 }

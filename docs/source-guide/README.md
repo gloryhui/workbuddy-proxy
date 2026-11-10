@@ -1,6 +1,6 @@
 # 从 Java / Spring Boot 进入 WorkBuddy Proxy 源码
 
-这份导读面向会写 Java / Spring Boot、第一次接触 Rust 的开发者。本轮先讲服务与界面的核心骨架：应用怎样启动，配置怎样变成路由，界面操作怎样进入核心，一次请求怎样返回，以及统计怎样在旁路完成。阅读时把代码中的中文注释与本文对照；协议编解码、历史导入和自动更新的深层算法，留作后续专题。
+这份导读面向会写 Java / Spring Boot、第一次接触 Rust 的开发者。目前覆盖服务与界面的核心骨架，以及协议转换：应用怎样启动，配置怎样变成路由，界面操作怎样进入核心，一次请求怎样转换与返回，以及统计怎样在旁路完成。阅读时把代码中的中文注释与本文对照；历史导入和自动更新的深层算法，留作后续专题。
 
 ## 先建立项目地图
 
@@ -12,6 +12,7 @@
 | HTTP 服务 | [src/proxy.rs](../../src/proxy.rs) | Router / Controller / Service | `Bridge` 汇集共享状态，Axum 路由调用处理函数；依赖由代码显式构造 |
 | 配置与持久化 | [src/config.rs](../../src/config.rs) | 配置对象、DTO、持久化工具 | JSON 配置、内存配置和已生成的路由表各有更新时机 |
 | 协议转换边界 | [src/proxy_native.rs](../../src/proxy_native.rs) | 外部服务适配层 | Chat 直通与原生协议转换走不同路径，不能把所有响应都当透传 |
+| 协议语义与状态机 | [src/protocol/](../../src/protocol/) | 请求 DTO、协议适配器、流解析状态与缓存 | 严格校验 Chat 输入，按目标协议编码，归一输出；工具回放保存原生状态与公开 ID 的关联 |
 | 统计协调 | [src/stats/mod.rs](../../src/stats/mod.rs)、[event.rs](../../src/stats/event.rs) | 事件采集、后台写入、查询服务 | 转发持有请求守卫，统计通过队列与数据库读写线程协作 |
 | 桌面控制与托盘 | [src/frontend.rs](../../src/frontend.rs)、[platform.rs](../../src/platform.rs)、[gpui_host.rs](../../src/gpui_host.rs) | 启动器与平台桥接 | 常规桌面模式会复用或启动后台核心，再管理托盘和设置窗口 |
 | 设置界面 | [gpui/src/main.rs](../../gpui/src/main.rs)、[ui.rs](../../gpui/src/ui.rs) | 客户端入口、页面状态、事件处理 | 是另一份 Cargo 工程；GPUI 实体由界面上下文访问，管理操作经后台任务调用核心 |
@@ -39,10 +40,11 @@ flowchart LR
 1. 先读 [Rust 与 Java 对照](RUST_FOR_JAVA.md)。只需先理解所有权、借用、`Option`、`Result`、`Arc` 和异步任务，就能开始跟踪代码。
 2. 读 `src/main.rs` 的 `main → run`，把参数分支、实例锁、监听器、`Bridge`、网络线程和退出顺序画在纸上。
 3. 读 `src/config.rs` 的 `Config / Provider / Model / Connection`，分清持久化对象与运行时投影；再跟到 `Bridge::new` 和 `Bridge::routes`。
-4. 按 [服务核心流程](SERVICE_CORE.md) 跟踪 `relay_to`，分别进入 Chat 直通与 `proxy_native::relay`；第一遍不必钻进每一种协议的状态机。
+4. 按 [服务核心流程](SERVICE_CORE.md) 跟踪 `relay_to`，分别进入 Chat 直通与 `proxy::native::relay`；第一遍不必钻进每一种协议的状态机。
 5. 读 `gpui/src/main.rs → ui::Proxy::new`，再按 [界面核心流程](UI_CORE.md) 跟一次保存操作，直到核心响应被合并回界面状态。
 6. 读 `RequestGuard`、`Collector` 和 `StatsHandle` 的协作关系，再跟统计页的调度与过期回复过滤。
-7. 最后用下方的练习验证理解；遇到具体专题再进入现有协议、统计和更新文档。
+7. 需要理解协议细节时，进入 [协议转换总览](PROTOCOL_CONVERSION.md)，依次跟请求、响应与多轮工具回放。
+8. 最后用下方的练习验证理解；遇到具体专题再进入现有统计和更新文档。
 
 每到一个函数，先问六件事：谁调用它；输入是谁产生的；当前在哪个进程或线程；它修改什么状态；错误由谁处理；结果最后给谁使用。
 
@@ -119,13 +121,13 @@ cargo test --manifest-path gpui/Cargo.toml --locked external_save64_refreshes_cl
 6. 为什么旧查询回复不能覆盖新筛选结果？为什么切页不能随便取消已授权的写操作？
 7. 一次多步骤保存失败时，怎样判断哪些动作已经发生，哪些动作不应该自动重试？
 
-## 本轮范围与后续专题
+## 当前覆盖与后续专题
 
-本轮源码注释聚焦服务入口、配置、转发边界、会话、端口切换、统计协调/事件/采集，以及 GPUI 启动、主状态、任务、草稿与统计控制。不是每个子模块和平台分支都已写成教学材料。
+源码注释覆盖服务入口、配置、转发边界、会话、端口切换、统计协调/事件/采集，以及 GPUI 启动、主状态、任务、草稿与统计控制。协议专题进一步展开严格请求解析、三协议编码、JSON/SSE 响应归一、用量和工具回放。不是每个子模块和平台分支都已写成教学材料。
 
 后续可按需求继续深入：
 
-- [协议支持与拒绝范围](../protocol-compat/USAGE.md)：请求编码、输出归一、SSE 分帧、各协议状态机和回放绑定。
+- [协议转换源码专题](PROTOCOL_CONVERSION.md)：请求编码、输出归一、SSE 分帧、各协议状态机和回放绑定；具体支持范围对照 [使用说明](../protocol-compat/USAGE.md) 和 [契约](../protocol-compat/CONTRACTS.md)。
 - [统计实现入口](../statistics/DEVELOPMENT.md)：查询、定价、SQLite 迁移和故障恢复。
 - [WorkBuddy 用量导入](../workbuddy-import/README.md)：文件读取、归属、去重、检查点与 ACK。
 - [桌面应用](../DESKTOP.md)、[更新与恢复](../AUTO-UPDATE.md)：平台桥接、窗口生命周期、安装与更新。

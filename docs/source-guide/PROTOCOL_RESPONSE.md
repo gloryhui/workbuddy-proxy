@@ -20,7 +20,7 @@
 8. [proxy_native.rs](../../src/proxy_native.rs)：真实 body stream 驱动、最终请求校验、replay 发布和错误结束。
 9. [replay.rs](../../src/protocol/replay.rs)：工具调用所需的进程内不透明状态缓存。
 
-编码侧可另读 [request.rs](../../src/protocol/request.rs) 和 [encode.rs](../../src/protocol/encode.rs)，但本页重点在响应方向。
+完整链路见 [协议转换总览](PROTOCOL_CONVERSION.md)，编码侧见 [请求转换专题](PROTOCOL_REQUEST.md)，可以对照 [request.rs](../../src/protocol/request.rs) 和 [encode.rs](../../src/protocol/encode.rs) 阅读。
 
 ## 2. 六个不能混为一层的数据
 
@@ -264,7 +264,7 @@ Anthropic 和 Gemini 的流式 usage 是累计快照。`merge_cumulative` 用新
 
 非流式路径先检查 HTTP 状态和 content-type，再持续读取上游 body，把所有字节限制在 16 MiB 内，等 transport EOF 后调用 `output::parse_json`。严格 JSON、协议解码、final finish、请求工具约束和 replay 校验依次通过，才构造客户端响应。
 
-流式路径不等 body 到齐才开始发 delta；它先发增量，最后用适配器状态重建同一语义 `Output`。两条路径共用的不是 `Output::json`：非流式经 `Output::json` 构造完整 completion，流式通过 `Identity::chunk/finish_chunk/usage_chunk` 发增量；二者共用统一 Output 语义及 `output::decode`、usage normalize 和 finish 校验，但错误的时点不同。
+流式路径先发 delta，最后用适配器状态重建统一语义的 `Output`。非流式经 `Output::json` 构造完整 completion；流式通过 `Identity::chunk/finish_chunk/usage_chunk` 生成增量与控制帧。二者共用统一 Output 语义及 `output::decode`、usage normalize 和 finish 校验，错误可能发生在不同的交付阶段。
 
 `Output` 的主要字段：
 
@@ -277,6 +277,8 @@ Anthropic 和 Gemini 的流式 usage 是累计快照。`merge_cumulative` 用新
 | `usage` | 规范化 token 或 invalid/missing | 不决定正文 relay 成功 |
 | `replay` | 工具调用需要的 native opaque state | 无工具调用时为 None |
 | `model` | 上游 terminal 模型 | None 时回退到路由模型，不一定等于客户端 alias |
+
+非流式 JSON 的 `model` 优先取 `Output.model`。流式的 `Identity.model` 则在首个 role chunk 前，根据当时已知的上游模型更新一次，之后所有 chunk 保持一致；若模型只在较晚的事件或终态出现，它仍可供统计观察使用，但不会追溯修改已发送 chunk 的模型名。
 
 ## 13. pending replay 入口
 
@@ -300,6 +302,8 @@ Output
 `Pending` 绑定 route generation、对话前缀、assistant 工具调用和 opaque native turn。它不写 SQLite、不写日志，也不直接交给普通客户端。非流式或流式都必须先完成完整输出、请求约束和 Pending 校验，才能发布；失败、截断或尚未真正交给 HTTP body 的响应可以撤销这次发布。
 
 后续 Chat 请求通过相同对话前缀和 route 解析 replay，再由编码器还原成对应上游协议。普通客户端只看到标准 tool call id/arguments 与 tool result，不接触签名、加密 reasoning 或供应商原始 response ID。
+
+缓存的 TTL、整轮淘汰、活动请求持有的 `Arc`、历史摘要和交付票据边界，继续看 [工具回放专题](PROTOCOL_REPLAY.md)。
 
 ## 14. 上游原始统计观察与转换结果的区别
 

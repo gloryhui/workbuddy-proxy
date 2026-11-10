@@ -1,6 +1,6 @@
 //! 把已校验的统一 [`ChatRequest`] 编码为 native 上游请求 JSON。
 //!
-//! 上游调用方是 `proxy::native::prepare`。调用前，它已经把客户端选路 alias 解析成
+//! 上游调用方是 `proxy::native::prepare`。调用前，它已经把客户端 model 标识解析成
 //! `Route` 并完成模型能力检查；这里接收路由携带的真实上游 `model`、协议设置和由
 //! 进程内 replay cache 解析出的 opaque assistant 历史。这里只返回 `Value`；随后同
 //! 一个 `prepare` 函数用 `serde_json::to_writer` 和有界 `Limited` 把它序列化成
