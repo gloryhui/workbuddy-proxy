@@ -18,6 +18,22 @@
 //! Statistics can never fail a chat request: admission is non-blocking, every
 //! queue is bounded, and a database failure only surfaces through
 //! `stats_health`.
+//!
+//! 中文阅读顺序：
+//!
+//! 1. 核心进程由 `Bridge::new` 调用 `StatsHandle::start`，托盘 controller 只调用
+//!    `for_controller`，因此后者的统计始终 Disabled 且不打开 SQLite；
+//! 2. 请求通过 `StatsHandle::begin` 做非阻塞 admission，获得同时携带两个队列预约的
+//!    `RequestGuard`；数据库尚在迁移或 writer 正降级时，是否准入由 `Inner::accepting`
+//!    和健康状态决定；
+//! 3. writer 是单个 `stats-writer` 系统线程中的单一写连接，先处理控制队列，再取最多
+//!    `BATCH_EVENTS` 个事件；reader 由第一次查询懒启动，是另一条只读连接线程；
+//! 4. `StatsHandle::shutdown` 最多等待 `SHUTDOWN_FLUSH_BUDGET`，writer 关闭队列后
+//!    `is_stopped` 才为真；统计丢失会体现在 dropped/write_failures/health，而不是
+//!    把对应聊天请求改成失败。
+//!
+//! `Option::None` 在这些 DTO 和统计记录中通常表示未知、未观察到或未使用；
+//! `Some(0)`/数据库中的 0 才表示已经确认的零值。
 pub mod collector;
 pub mod dto;
 pub mod event;
@@ -99,6 +115,10 @@ pub fn restrict_permissions(path: &Path) {
 }
 
 /// Description of one routable request, captured while the route is valid.
+///
+/// 这是路由解析成功到统计 admission 之间的输入。字符串字段是当次请求的展示/分组
+/// 快照；`stream` 来自客户端 Chat body；`workbuddy_identity` 只有在两个允许的身份头
+/// 都严格通过校验时才为 `Some`，否则 `None` 表示没有可信关联，不能猜一个空 ID。
 #[derive(Clone, Debug)]
 pub struct RequestSpec {
     pub workbuddy_identity: Option<crate::stats::event::WorkbuddyIdentity>,
@@ -258,6 +278,11 @@ enum ReadJob {
     },
 }
 
+/// 一条懒启动查询线程的控制句柄。
+///
+/// `tx` 使用有界队列把 job 送入线程；job 内的 oneshot reply 由线程完成后返回。
+/// `last_used` 只在成功 `try_send` 后刷新，`reader_send` 用它判定 60 秒空闲或线程已结束
+/// 后重建。`Inner.reader` 的互斥锁保护这个 Option，而不是 SQLite 连接。
 struct ReaderHandle {
     tx: SyncSender<ReadJobEnvelope>,
     thread: JoinHandle<()>,
@@ -335,6 +360,10 @@ impl Inner {
 }
 
 /// Cheap, cloneable handle owned by the proxy bridge.
+///
+/// `Clone` 只克隆 `Arc<Inner>` 的所有权句柄，不复制队列、SQLite 连接或配置；各调用方
+/// 仍需通过 `Inner` 内的锁、原子量以及 mpsc sender 协作。核心与 controller 的差异只由
+/// 创建方式和 `enabled/state` 决定，句柄类型本身不拥有数据库连接。
 #[derive(Clone)]
 pub struct StatsHandle {
     inner: Arc<Inner>,
@@ -343,6 +372,12 @@ pub struct StatsHandle {
 impl StatsHandle {
     /// Starts the statistics subsystem. Migration and recovery run on the writer
     /// thread so network startup is never delayed.
+    ///
+    /// 输入是最新配置目录，输出是可立即由 `Bridge` 克隆的句柄。成功创建 `Inner` 并
+    /// 尝试启动 `stats-writer`；数据库迁移、恢复和连接初始化由该线程异步完成，因此
+    /// 返回时统计状态通常仍可能是 `Migrating`。导入合同校验失败会把状态置为 Disabled
+    /// 并关闭事件队列；writer 线程创建失败则把状态置为 Disabled，并拒绝后续 admission。
+    /// 该函数不打开聊天端口或 Tokio runtime。
     pub fn start(dir: PathBuf) -> Self {
         Self::start_with_import_root(dir, None)
     }
@@ -382,6 +417,10 @@ impl StatsHandle {
 
     /// A tray controller forwards management calls to the core. It must never
     /// open SQLite, start recovery or create its own statistics run.
+    ///
+    /// 输出对象与 core 的句柄接口相同，便于管理命令走同一层代码；它会立即禁用统计、
+    /// 关闭事件队列且不启动 writer/reader。这里创建的内存 `run_id` 只属于句柄对象，
+    /// 不会写入数据库。
     pub fn for_controller(dir: PathBuf) -> Self {
         let (inner, _) = Self::initialize(dir);
         inner.settings.write().unwrap().enabled = false;
@@ -447,6 +486,11 @@ impl StatsHandle {
     /// Flushes admitted events and stops the writer. Called after the network
     /// runtime is gone so open guards have already published their terminal
     /// events; waits at most four seconds.
+    ///
+    /// 调用顺序应由 `main::run` 保证：网络 worker 先结束，统计 guard 已由 runtime
+    /// teardown 释放，然后才进入这里。本函数尝试发送 `ControlKind::Shutdown`；控制队列
+    /// 满时不阻塞，而是直接关闭事件队列作为第二退出信号。最后只轮询队列关闭标志到
+    /// `SHUTDOWN_FLUSH_BUDGET` 截止，不在此处等待 SQLite 无限重试。
     pub fn shutdown(&self) {
         self.mark_closing();
         // The bounded control channel may be full, so shutdown must not depend
@@ -512,6 +556,12 @@ impl StatsHandle {
     }
 
     /// Admits one request. Returns `None` when statistics must be skipped.
+    ///
+    /// 输入 `spec` 应已完成认证和路由解析。成功会冻结当前价格快照并创建完整
+    /// `RequestMeta`；返回 `None` 可能来自统计禁用、仍处于 Migrating/Disabled、关闭中
+    /// 或队列没有两个配额。Ready 与 Degraded 都允许准入。`None` 不会阻止调用方
+    /// 继续代理，只会在可计数时增加 dropped。
+    /// 此函数不等待 writer 或 SQLite。
     pub fn begin(
         &self,
         spec: RequestSpec,
@@ -985,6 +1035,9 @@ impl StatsHandle {
     }
 
     fn reader_send(&self, envelope: ReadJobEnvelope) -> Result<(), Box<ReaderFailure>> {
+        // reader 是按需资源：线程已结束或超过 READER_IDLE 未成功接活时，在互斥锁内
+        // 替换为新线程。queue 满立即返回 busy，避免查询阻塞控制与聊天路径；成功
+        // try_send 只代表 job 入队，实际 SQLite 结果仍通过 envelope.reply 返回。
         let mut guard = self.inner.reader.lock().unwrap();
         let stale = guard.as_ref().is_some_and(|handle| {
             handle.thread.is_finished() || handle.last_used.elapsed() > READER_IDLE
@@ -1288,6 +1341,9 @@ fn spawn_reader(inner: Arc<Inner>) -> Result<ReaderHandle, String> {
 }
 
 fn reader_thread(inner: Arc<Inner>, path: PathBuf, rx: Receiver<ReadJobEnvelope>) {
+    // 单线程顺序处理查询；连接第一次收到 job 时尝试只读打开，打开失败只让当前请求
+    // 返回 unavailable，下一次 job 仍可重新尝试。RECV 超时或发送端全部关闭即退出，
+    // 因而空闲 reader 不会永久占住线程；正在执行的查询不受 60 秒空闲计时截断。
     let mut connection: Option<rusqlite::Connection> = None;
     let trace = std::env::var_os("WORKBUDDY_PROXY_QUERY_TIMING").as_deref()
         == Some(std::ffi::OsStr::new("1"));
@@ -1548,6 +1604,11 @@ fn writer_thread(
     control: Receiver<ControlMessage>,
     import_root: Option<workbuddy_import::reader::ReaderRoot>,
 ) {
+    // 启动阶段先尝试用本次 run_id 打开/迁移唯一写连接。数据库锁竞争会保持统计
+    // Migrating；每次最多等待 250 ms 接收控制消息，然后重试，期间控制消息仍可得到
+    // 明确错误。其他打开错误则进入 Disabled。连接就绪后，主循环每轮先尽量 drain
+    // 控制队列，再取一批事件；事件队列关闭或 shutdown 控制消息会汇合到
+    // `flush_and_stop`。
     let (mut writer, recovery) = loop {
         if inner.queue.is_closed() || inner.counters.closing.load(Ordering::Relaxed) {
             inner.queue.close();
@@ -2021,6 +2082,12 @@ enum RecoveryProgress {
 /// landed: the failure window is durable, the orphaned requests have a terminal
 /// state, and the durable backlog has been drained. A partially recovered
 /// collection stays `degraded` and is retried without needing new traffic.
+///
+/// 输入是 writer 当前持有的持久状态及内存中的恢复证据；输出只表示本次有界尝试
+/// `Complete`、仍有工作但未失败 `Progressing`，或发生失败需退避 `Failed`。一次调用
+/// 会处理启动扫描、degraded 窗口、孤儿终态和 durable backlog 各自的有界部分；只有全部
+/// 条件成立才回到 Ready。失败时不丢弃仍可重试的内存证据，并在无新流量时由空闲探针
+/// 继续调用。
 fn recover_collection(
     inner: &Arc<Inner>,
     writer: &mut store::Writer,
@@ -2220,6 +2287,10 @@ fn publish_facts(inner: &Arc<Inner>, stats: &store::DbStats) {
 }
 
 fn flush_and_stop(inner: &Arc<Inner>, writer: &mut store::Writer) {
+    // 这是 writer 线程的最终排水点。先关闭新统计准入，再在截止时间内取当前已入队
+    // 事件；写入结果只累计失败/丢失计数。随后尝试记录 counters、正常停止 run 和
+    // collection interval，并被动 WAL checkpoint。任一数据库步骤失败都不会重开服务，
+    // 最终仍关闭内存队列，让 manager 的 shutdown 等待可以结束。
     // Drain every event that was already admitted, then close the collection
     // interval and checkpoint. Chat traffic is unaffected: new events are
     // rejected once `accepting` is false.

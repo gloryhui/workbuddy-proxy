@@ -1,3 +1,12 @@
+//! 配置模型、磁盘位置和原子文件写入。
+//!
+//! `Config` 是代理路由与设置界面的共享磁盘契约；加载后的一份内存快照由
+//! `proxy::Bridge::config` 的 `Mutex` 保护，`Routes` 再从它构建不可变路由索引。
+//! 普通配置写入会先写同目录临时文件、`fsync`，再替换目标文件。这个保证是单文件级别
+//! 的，不是跨多个文件的数据库事务，也不保证目录项已经同步到持久介质。
+//!
+//! 上游是设置控制命令和 `config.json`；下游是路由、WorkBuddy 模型列表、目录发现和
+//! 统计定价。`Option::None` 通常表示“未显式配置”或“未知”，不能统一当作数值 0。
 use crate::capabilities::ModelCapabilities;
 use crate::upstream_config::{ProtocolSettings, UpstreamProtocol};
 use rand::RngCore;
@@ -8,25 +17,36 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// 新连接草稿使用的默认模型 ID，不保证每个供应商都支持。
 pub const DEFAULT_MODEL: &str = "deepseek-v4.1-flash";
 pub const DEFAULT_UPSTREAM: &str = "https://opencode.ai/zen/go/v1";
+/// 默认监听端口；实际值还可能被 `--port` 或端口热切换覆盖。
 pub const DEFAULT_PORT: u16 = 18080;
 
 pub const MAX_PROVIDERS: usize = 64;
 pub const MAX_MODELS: usize = 256;
+/// 持久化设置根对象。
+///
+/// `providers` 是当前版本的主存储；顶层没有 `providers`/`connections` 的旧 JSON
+/// 会先经过迁移。配置对象被克隆用于“构造下一版快照”，但 `Clone` 只表示 Rust
+/// 复制语义，不能据名称推断所有嵌套资源都会深复制。
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Config {
+    /// 客户端访问本地模型端点使用的 bearer key，不是控制管理 key。
     pub local_key: String,
     pub language: String,
     pub port: u16,
     pub autostart: bool,
+    /// 同一供应商共享地址、协议、设置和凭据，其下各模型分别形成路由。
     pub providers: Vec<Provider>,
+    /// WorkBuddy 已安装条目的审计/恢复快照，用于保留旧路由和回滚同步。
     pub installed: Vec<Installation>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Provider {
+    /// 供应商稳定标识；路由作用域和统计 provider_id 都引用它。
     pub id: String,
     pub name: String,
     pub upstream: String,
@@ -38,11 +58,15 @@ pub struct Provider {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Model {
+    /// 模型路由稳定标识，也是 `/r/{id}` 中的 id。
     pub id: String,
+    /// 持久化模型条目的内部兼容 alias。`workbuddy_connections` 另行生成
+    /// `Connection` 投影的可读 alias，不会用投影值重写这里的磁盘字段。
     pub alias: String,
     pub name: String,
     pub model: String,
     pub reasoning_effort: String,
+    /// `None` 表示没有逐模型覆盖；目录元数据仍可能提供自动能力。
     pub capabilities: Option<ModelCapabilities>,
 }
 impl Default for Provider {
@@ -82,18 +106,32 @@ impl Model {
         m
     }
     pub fn refresh_alias(&mut self) {
+        // 这是内部兼容别名，不代表所有 WorkBuddy 版本最终显示的稳定 ID。
         self.alias = format!("wbp-{}", self.id);
     }
 }
 impl Provider {
+    /// 尚未录入上游/凭据且没有模型时，草稿允许暂时通过部分字段校验。
     pub fn is_draft(&self) -> bool {
         self.upstream.is_empty() && self.api_key.is_empty() && self.models.is_empty()
     }
+    /// 用设置界面提交的模型行替换当前模型列表。
+    ///
+    /// 输入：`rows` 是有上限的 JSON 行；`effort` 是 `keep/default/none/low/high/max`
+    /// 之一。输出：成功时整体替换 `self.models`，失败时原列表不变。复用顺序是
+    /// route id、`(model, name)`、上游 model，因此改名时尽量保留稳定路由 id。
+    ///
+    /// 失败来源包括未知思考强度、模型超过上限、缺少 model、无效 capabilities 或
+    /// capabilities 校验失败。本函数不写磁盘；调用方还要校验整份 `Config` 后提交。
     pub fn set_model_rows(
         &mut self,
         rows: &[serde_json::Value],
         effort: &str,
     ) -> Result<(), String> {
+        // 行式输入主要来自新版设置窗口。优先按已有路由 id 复用模型，其次按
+        // `(model, name)`、最后按上游 model 复用，使编辑显示名时尽量保留稳定 id。
+        // 解析只写局部 `models`，全部成功后才覆盖 `self.models`；中途错误不提交
+        // 半份列表。
         if !matches!(effort, "keep" | "default" | "none" | "low" | "high" | "max") {
             return Err("Invalid thinking effort".into());
         }
@@ -170,6 +208,7 @@ impl Provider {
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Connection {
+    /// 路由级视图：由 provider 与 model 合并而来。
     pub id: String,
     pub alias: String,
     pub name: String,
@@ -180,12 +219,16 @@ pub struct Connection {
     pub protocol: UpstreamProtocol,
     pub protocol_settings: ProtocolSettings,
     pub reasoning_effort: String,
+    /// `None` 表示未知/未覆盖，不表示“所有能力都为 0”。
     pub capabilities: Option<ModelCapabilities>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Installation {
+    /// WorkBuddy 旧/当前模型条目 ID；恢复时用它定位要删除或恢复的行。
     pub id: String,
+    /// 安装前的完整 JSON 值；`None` 表示该条目原本不存在。
     pub previous: Option<serde_json::Value>,
+    /// 期望的安装结果，可用于把旧别名关联回稳定路由 id。
     #[serde(default)]
     pub expected: Option<serde_json::Value>,
 }
@@ -225,6 +268,8 @@ impl Connection {
     }
 }
 pub fn token() -> String {
+    // 192 位随机值，返回 48 个小写十六进制字符。部分调用点会按用途截断；
+    // 这不是密码哈希，也没有额外 KDF，随机性来自操作系统随机源。
     let mut bytes = [0u8; 24];
     rand::rng().fill_bytes(&mut bytes);
     bytes.iter().map(|b| format!("{b:02x}")).collect()
@@ -235,6 +280,7 @@ pub fn home() -> Result<PathBuf, String> {
         .ok_or("Cannot find user home directory".into())
 }
 pub fn directory() -> Result<PathBuf, String> {
+    // 环境变量优先，主要服务 `--config-dir`、测试隔离和打包后的控制器。
     if let Some(dir) = std::env::var_os("WORKBUDDY_PROXY_CONFIG_DIR") {
         return Ok(dir.into());
     }
@@ -270,6 +316,9 @@ fn atomic_write(
     path: &Path,
     write: impl FnOnce(&mut fs::File) -> Result<(), String>,
 ) -> Result<(), String> {
+    // 临时文件与目标文件同目录，避免跨文件系统 rename。Unix 以 0600 创建，
+    // 写入后 `sync_all`，再替换目标；失败时尽力删除本函数创建的临时文件。
+    // 单次目标替换之外没有跨文件事务或目录 fsync 保证。
     let tmp = path.with_extension(format!("tmp-{}", token()));
     let result = (|| {
         let mut opts = fs::OpenOptions::new();
@@ -346,6 +395,15 @@ impl Config {
             })
             .map(|m| m.id.clone())
     }
+    /// 计算向 WorkBuddy 投影的 `Connection` 列表及其可读 alias。
+    ///
+    /// 输入是当前 provider/model 快照和 `installed` 审计记录；输出是每个模型一份
+    /// `Connection`。这里的 alias 是投影值，不回写 `Provider.models[].alias`。当
+    /// `provider/model` 基名唯一时直接使用，冲突时追加由稳定 route id 得到的哈希
+    /// 后缀；已同步过的同基名后缀和已安装旧 ID 会被尝试保留。
+    ///
+    /// 失败发生在无法生成不冲突的 alias 时。本函数只做纯内存计算，不修改
+    /// WorkBuddy 文件；文件同步与回滚属于调用方。
     // Keep storage/legacy aliases intact; this ID is shared by WorkBuddy sync,
     // model discovery and routing. Reserve old aliases to avoid stealing routes.
     pub fn workbuddy_connections(&self) -> Result<Vec<Connection>, String> {
@@ -418,7 +476,17 @@ impl Config {
         }
         Ok(connections)
     }
+    /// 从配置目录读取当前格式，或迁移受支持的旧格式。
+    ///
+    /// 输入缺失时创建默认配置；已有文件限制为 2 MiB。输出是已校验的 `Config`。
+    /// 解析或校验失败会返回简短原因，并在覆盖 `config.json` 之前结束。旧格式成功时
+    /// 先复制 `config.pre-v0.3-*.bak`，缺少 `local_key` 时补齐，再原子写回新格式。
+    ///
+    /// 这是单文件加载/迁移流程，不是多个配置文件的联合事务。
     pub fn load(dir: &Path) -> Result<Self, String> {
+        // 加载分三步：解析旧格式、校验并按需补 `local_key`、最后只在确实迁移/补 key
+        // 时回写。旧格式先复制备份，再原子写新格式；解析或校验失败都发生在覆盖
+        // `config.json` 之前。
         let path = dir.join("config.json");
         if !path.exists() {
             let c = Self::default();
@@ -581,7 +649,13 @@ impl Config {
             })
             .collect()
     }
+    /// 校验数量上限、跨条目唯一性和每个连接的字段/协议约束。
+    ///
+    /// 成功返回 `Ok(())`；失败返回第一条被发现的问题。校验只读内存，不写磁盘。模型
+    /// 显示名只要求在同一供应商内唯一，provider id、model id 和 alias 则跨全局检查。
     pub fn validate(&self) -> Result<(), String> {
+        // 全局唯一性检查覆盖 supplier/model id 和 alias；兼容别名 `wbp-{id}` 也会
+        // 预留，避免新旧客户端用不同写法规避同名冲突。
         if self.providers.len() > MAX_PROVIDERS
             || self.providers.iter().map(|p| p.models.len()).sum::<usize>() > MAX_MODELS
         {
@@ -666,7 +740,13 @@ impl Connection {
     pub fn validate(&self) -> Result<(), String> {
         self.validate_fields(false)
     }
+    /// 校验一个 `Connection` 的结构字段。
+    ///
+    /// `draft=true` 只跳过最终上游 URL 的可用性检查，名称、id、alias、model、思考
+    /// 强度、API key 长度/控制字符和协议设置仍会检查。失败时不修改任何字段。
     fn validate_fields(&self, draft: bool) -> Result<(), String> {
+        // `draft` 只放宽 URL 等尚未填写完成的字段；标识、名称、思考强度和凭据的
+        // 基础结构仍会检查。
         self.protocol_settings.validate(self.protocol)?;
         if let Some(capabilities) = &self.capabilities {
             capabilities.validate()?;
@@ -715,10 +795,19 @@ impl Connection {
         self.upstream_endpoint(false)?;
         Ok(())
     }
+    /// 根据连接协议、上游 base、模型名和 stream 标志构造最终 URL。
+    ///
+    /// 失败来自协议设置校验、URL/base 规则或 Gemini 模型名编码。函数只计算 URL，
+    /// 不发起网络请求。
     pub fn upstream_endpoint(&self, stream: bool) -> Result<reqwest::Url, String> {
+        // 协议设置决定最终路径；Gemini 流式请求还会加上 `alt=sse`。
         self.protocol_settings
             .endpoint(self.protocol, &self.upstream, &self.model, stream)
     }
+    /// 返回用于展示/构建路由的上游端点字符串。
+    ///
+    /// native 和 Azure 使用协议感知的完整 URL；普通 OpenAI Chat 则去重后追加
+    /// `/chat/completions`。该展示结果不替代实际发送前的严格 URL 校验。
     pub fn endpoint(&self) -> String {
         if self.protocol.is_native() || self.protocol_settings.is_azure() {
             return self
@@ -735,6 +824,7 @@ impl Connection {
         )
     }
     pub fn is_go(&self) -> bool {
+        // 这里按实际 host/path 判断 OpenCode Go，而不是按模型名猜测。
         self.protocol == UpstreamProtocol::OpenaiChat
             && reqwest::Url::parse(&self.upstream).is_ok_and(|u| {
                 u.host_str() == Some("opencode.ai") && u.path().starts_with("/zen/go")

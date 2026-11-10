@@ -1,5 +1,11 @@
 //! Native HTTP boundary shared by relay and connection probes. The original
 //! Chat route stays in proxy.rs and never enters these conversion paths.
+//!
+//! 入口是 `proxy::relay_to`/`proxy::Bridge::test` 在目标协议为 Responses、
+//! Anthropic Messages 或 Gemini 时的调用。`prepare` 负责解析/编码请求，`open` 负责
+//! 上游 HTTP，`NativeStream` 把上游事件增量转换为 Chat 流。统计 guard 和 permit 由
+//! 调用方传入并沿响应流持有；本模块会读取并转换 Chat 请求，但不会把未被转换的
+//! 原始 Chat 响应字节直接透传。
 use super::*;
 use crate::protocol::{
     self,
@@ -22,6 +28,7 @@ type Error = protocol::Error;
 type Guard = Option<stats::event::RequestGuard>;
 type SourceStream = Pin<Box<dyn Stream<Item = Result<Bytes, reqwest::Error>> + Send>>;
 
+/// `Limited` 实现 `io::Write`，累计 `Vec<u8>` 并在超过 `BODY_LIMIT` 时拒绝继续写。
 struct Limited(Vec<u8>);
 impl Write for Limited {
     fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
@@ -36,10 +43,22 @@ impl Write for Limited {
     }
 }
 struct Prepared {
+    /// 已解析、已应用思考/能力约束并可用于 replay 的语义请求。
     request: ChatRequest,
+    /// 转换后的 native 上游 JSON，大小在 `BODY_LIMIT` 内。
     body: Bytes,
 }
+/// 把客户端 Chat 请求编码成目标 native 协议。
+///
+/// 输入是共享目录/replay cache、选定路由和已通过鉴权与大小限制的 Chat 请求 body。
+/// 输出同时保留供响应适配和 replay 使用的语义请求，以及不超过 `BODY_LIMIT` 的 native
+/// JSON。能力校验、思考强度和输出上限在编码前完成；失败返回结构化协议错误，调用方
+/// 负责把该错误映射为 HTTP 响应和统计终态。函数不访问网络。
 fn prepare(b: &Bridge, r: &Route, bytes: &[u8]) -> Result<Prepared, Error> {
+    // 阶段一：解析客户端 Chat 请求并应用路由上的思考强度。阶段二：从目录或显式
+    // capabilities 解析能力，在编码前拒绝不支持的图片、工具或思考设置。阶段三：
+    // 让 replay cache 根据历史 tool call 解析 opaque 上游状态，再编码成目标协议。
+    // 转换失败返回结构化 `protocol::Error`，原始 prompt 不进入统计队列。
     let mut request = ChatRequest::parse(bytes)?;
     match r.connection.reasoning_effort.as_str() {
         "default" => (),
@@ -138,12 +157,20 @@ fn prepare(b: &Bridge, r: &Route, bytes: &[u8]) -> Result<Prepared, Error> {
         body: serialized.0.into(),
     })
 }
+/// 通过所选 native 协议的认证方式和端点发送已编码请求。
+///
+/// 输入为路由、准备后的 body 和原客户端 headers；输出只表示收到了上游响应头，body
+/// 尚未读取或转换。连接/超时错误在这里归一为协议错误，调用方会把它们写为 HTTP
+/// 502-ish failure 和 `Outcome::Failed/ErrorKind::Connect`。本函数不提交统计终态。
 async fn open(
     b: &Bridge,
     r: &Route,
     p: &Prepared,
     headers: &HeaderMap,
 ) -> Result<reqwest::Response, Error> {
+    // native 请求强制 `Accept-Encoding: identity`，因为流式协议解析需要看到原始 JSON/
+    // SSE 字节；随后按协议选择认证 header。调用方的 `x-request-id` 只在 ASCII 且
+    // 不超过 128 字节时透传。
     let endpoint = r
         .destination
         .settings
@@ -254,6 +281,8 @@ fn failure(e: Error, headers: HeaderMap) -> Response<Body> {
     response
 }
 fn validate_headers(response: &reqwest::Response, stream: bool) -> Result<(), Error> {
+    // 压缩响应或不是所声明的 SSE/JSON content-type 时不能可靠解析，因此在这里拒绝，
+    // 不把无法验证的字节伪装成 Chat 结果。
     if Protocol::is_encoded(header_text(response.headers(), "content-encoding").as_deref()) {
         return Err(Error::upstream("unsupported_content_encoding"));
     }
@@ -294,6 +323,7 @@ fn observe(
 struct CacheTicket {
     bridge: Arc<Bridge>,
     id: String,
+    /// 只有在转换结果真正交给 HTTP body stream 后才置为 true。
     delivered: bool,
 }
 impl Drop for CacheTicket {
@@ -310,6 +340,9 @@ fn publish(
     pending: Option<replay::Pending>,
     out: &Output,
 ) -> Result<Option<CacheTicket>, Error> {
+    // 只有 adapter 已解析完整输出并生成后续 replay 状态时才走到这里。成功立即把状态
+    // commit 到进程内 cache，同时返回 delivered=false 的 ticket；真正交给 body stream
+    // 前若 ticket 被 drop，会按 id 撤销这次发布。返回 `None` 表示本响应无需 replay。
     let Some(pending) = pending else {
         return Ok(None);
     };
@@ -331,6 +364,17 @@ fn publish(
     }))
 }
 
+/// 转换一次原生协议代理请求并返回 Chat 兼容响应。
+///
+/// 调用来源是 `proxy::relay_to` 在统计 admission 和本地 key 检查之后识别到 native
+/// 协议的分支。输入包含原始 Chat 请求、上游路由、原请求 headers/query、并发准入许可
+/// `OwnedSemaphorePermit` 和可选 `RequestGuard`；输出可能是输入校验/转换/连接/HTTP/
+/// 协议失败信封，或成功转换后的 JSON/SSE body。成功响应把 permit 与 guard 交给
+/// body stream 持有。
+///
+/// 非流式路径要先读到上游 EOF、完成解析和 replay 校验，再构造响应；流式路径由
+/// `NativeStream::next` 增量产出。guard 可从显式失败、客户端 drop 或关闭路径提交终态；
+/// 上游 EOF 只说明转换输入结束，不能证明客户端 socket 已完整接收输出。
 pub(super) async fn relay(
     b: Arc<Bridge>,
     r: Arc<Route>,
@@ -340,6 +384,9 @@ pub(super) async fn relay(
     permit: tokio::sync::OwnedSemaphorePermit,
     mut guard: Guard,
 ) -> Response<Body> {
+    // `permit` 和 `guard` 的所有权随本函数进入响应 body future。显式 finalize、客户端
+    // drop、协议错误和上游 EOF 都汇入 RequestGuard 的终态规则；这里的 permit 只限制
+    // 本进程并发准入，不是对上游真实并发数的外部保证。
     if query.as_ref().is_some_and(|q| !q.is_empty()) {
         let e = Error::input("unsupported_query", "query");
         reject(&mut guard, &e, ErrorKind::Other);
@@ -412,6 +459,8 @@ pub(super) async fn relay(
             terminal_deadline: None,
             ticket: None,
         };
+        // `unfold` 每次只保留一份 `NativeStream` 状态。`DeltaCursor` 把超大 delta
+        // 切成小片，避免为了一个响应构建无界事件 VecDeque。
         let stream = stream::unfold(state, |mut state| async move {
             state.next().await.map(|item| (item, state))
         });
@@ -464,6 +513,10 @@ pub(super) async fn relay(
         }
     };
     let payload = Bytes::from(out.json(&identity).to_string());
+    // 非流式响应会先等上游 EOF、完整 JSON 解析和 replay 校验全部成功，才发布缓存。
+    // body stream 第一次被轮询、准备把完整 body 交给下一层时，ticket 才被标记
+    // delivered；在此之前 drop 会撤销尚未交付的 replay 状态。delivered 仍只描述
+    // “交给 HTTP body 层”，不证明客户端网络接收。
     let ticket = match publish(&b, cached, &out) {
         Ok(ticket) => ticket,
         Err(e) => {
@@ -539,6 +592,9 @@ impl DeltaCursor {
         }
     }
     fn next(&mut self) -> Option<serde_json::Value> {
+        // 文本字段和 tool arguments 都按 Unicode 字符边界截到 16 KiB 左右；每次只
+        // 返回一个 Chat delta。协议兼容性依赖这个“渐进切片”语义，而不是把完整
+        // snapshot 一次性发给客户端。
         if let Some((channel, text, offset)) = self.strings.front_mut() {
             let last = end(text, *offset);
             let value = json!({channel.as_str():&text[*offset..last]});
@@ -609,7 +665,16 @@ impl NativeStream {
         self.ticket = None;
         Some(Ok(event(&e.envelope())))
     }
+    /// Produces the next converted Chat stream item.
+    ///
+    /// `Some` 交付一个控制帧或增量 delta，`None` 表示转换流结束。正常结束要求上游
+    /// SSE/termination、adapter finalize 和 replay 发布依次成功；协议、超时或 transport
+    /// 错误会返回一条协议错误事件并显式结束 guard。本函数随 body stream 一起被轮询，
+    /// 因此客户端停止轮询并 drop 外层 body 时，默认取消路径由 `RequestGuard::Drop` 处理。
     async fn next(&mut self) -> Option<Result<Bytes, io::Error>> {
+        // 先发控制帧，再发可能被切片的 delta；最后才等待上游下一块。terminal marker
+        // 之后仍有短暂宽限期等待干净 EOF。只有 parser EOF 和 decoder.finish 都成功，
+        // `pending` 的 replay 才会发布；检测到错误时走 `fail`。
         loop {
             if let Some(control) = self.controls.pop_front() {
                 if control.as_ref() == b"data: [DONE]\n\n" {
@@ -701,6 +766,9 @@ impl NativeStream {
                 }
                 Some(Err(_)) => return self.fail(Error::upstream("upstream_stream_error")),
                 None => {
+                    // 这是上游传输结束点，不是客户端 socket 已确认收到的证明。转换后的
+                    // 事件会继续由 body stream 交给 HTTP server；客户端取消由外层
+                    // RequestGuard 的 Drop 另行分类。
                     if let Err(e) = self.parser.finish() {
                         return self.fail(e);
                     }
@@ -746,6 +814,9 @@ pub(super) async fn test(
     report: &mut crate::diagnostic::TestReport,
     started: Instant,
 ) -> Result<(), String> {
+    // 连接测试构造最小的流式 Chat 请求，只等待 adapter 确认首事件。确认后主动停止读取，
+    // 因而把统计记为 cancelled/client_drop，而测试本身返回成功；HTTP/协议错误仍返回
+    // Err。整个异步探测由 45 秒 timeout 包围，超时具有独立错误文案。
     report.url = r
         .destination
         .settings

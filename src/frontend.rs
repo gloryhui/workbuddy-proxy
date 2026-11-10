@@ -1,4 +1,14 @@
 //! Lightweight tray controller; settings are a separate on-demand process.
+//!
+//! `frontend.lock` 仲裁托盘 controller；GPUI 设置进程另有自己的 `gpui.lock` 界面实例
+//! 锁和 `gpui-wake.json` 唤醒路径，两者不是同一把“窗口锁”。controller 负责发现/升级
+//! 旧核心，并通过 `_control/*` 管理接口转发操作。真正服务模型请求的是它启动的
+//! `--headless` 子进程；这里的 `Bridge::for_controller` 不拥有统计 writer，也不创建
+//! 统计数据库。
+//!
+//! `frontend.lock` 仲裁托盘控制进程，`instance.lock` 由核心持有。`Remote` 保存到核心的
+//! 管理端口和随机管理 key；两者都只在同用户本地进程间使用。窗口 readiness 文件
+//! `frontend.json` 必须配合仍在运行的 `frontend.lock` 解释，单看文件可能是崩溃遗留。
 use crate::{Instance, config, platform, proxy::Bridge};
 use fs2::FileExt;
 use serde::Deserialize;
@@ -16,10 +26,16 @@ use std::{
 };
 
 pub struct Remote {
+    /// 核心监听端口；端口热切换成功后由 `execute` 更新。
     pub port: AtomicU16,
+    /// 当前核心实例管理 key，来自 `instance.json`，不是上游 API key。
     pub key: String,
 }
 impl Remote {
+    /// 向 core 的 `_control/action` 发送 JSON 命令并取回统一 `{message}` 信封。
+    ///
+    /// 对 `set_port`，成功消息本身是序列化后的 `port::Applied`；只有解析成功才更新
+    /// `Remote.port`。传输、HTTP 或解析失败都返回字符串错误，不在这里回滚 core。
     pub async fn execute(
         &self,
         client: &reqwest::Client,
@@ -56,7 +72,15 @@ impl Remote {
         }
     }
 }
+/// 启动常规图形入口，而不是直接启动 headless core。
+///
+/// 输入是配置目录和希望核心使用的端口。新进程不会收到 `--headless`，因此会再次进入
+/// 平台的 `frontend::run`，再复用或创建 core。成功只表示进程创建成功；失败来自当前
+/// 可执行文件路径或 `spawn`。核心是否可用不在这里判断。
 pub fn spawn(dir: &Path, port: u16) -> Result<(), String> {
+    // 这里没有传 `--headless`，所以会重新进入当前平台的常规图形入口；该路径再由
+    // `frontend::run` 复用或启动真正 headless core。`spawn` 成功只证明控制/窗口
+    // 进程创建成功，调用方仍需等待 `instance.json` 和管理 ping 才能判断核心可用。
     let mut cmd = Command::new(std::env::current_exe().map_err(|e| e.to_string())?);
     cmd.arg("--config-dir")
         .arg(dir)
@@ -249,7 +273,19 @@ pub fn closing() {
     }
 }
 
+/// 运行桌面托盘控制进程，并确保它有一个可用的 headless core。
+///
+/// 输入是配置目录、可选端口和自启动标志。调用链为：获取 `frontend.lock`、检查已有
+/// `instance.json` 的存活/版本/控制协议、必要时停止旧核心、复用或启动新核心，然后
+/// 构造不拥有统计 writer 的 controller `Bridge` 并进入 `platform::run()` 托盘循环。
+///
+/// 返回错误可能来自缺少 GPUI helper、旧核心不兼容/无法停止、核心启动失败或 controller
+/// runtime 初始化失败。等待核心使用固定 100 次轮询，但总 wall-clock 时间还包含每次
+/// 管理请求耗时，因此没有由循环常数直接推出的严格上限。
 pub fn run(dir: PathBuf, port: Option<u16>, autostart: bool) -> Result<(), String> {
+    // 桌面常规启动链是“托盘控制进程 -> 复用/启动 headless core -> 按需 GPUI 设置进程”。
+    // 这里先判定已有核心版本/控制协议兼容性，再决定复用、唤醒或停止重启。只有取得
+    // `frontend.lock` 的进程可以清理陈旧 `frontend.json`。
     if !crate::gpui_host::available() {
         return Err("Settings program is missing; reinstall WorkBuddy Proxy / 设置程序缺失，请重新安装 WorkBuddy Proxy".into());
     }
@@ -301,6 +337,10 @@ pub fn run(dir: PathBuf, port: Option<u16>, autostart: bool) -> Result<(), Strin
         detach(&mut cmd);
         child = Some(cmd.spawn().map_err(|e| e.to_string())?);
         let mut result = None;
+        // 固定为最多轮询 100 次、两次 sleep 相隔 50 ms；总 wall-clock 时间还包含
+        // `instance(...).filter(alive)` 中每次管理 ping 的阻塞时间，因此不能声称严格
+        // 5 秒上限。超时不等于核心一定未启动，这里也不盲目杀掉可能仍在初始化、尚未
+        // 发布 `instance.json` 的进程。
         for _ in 0..100 {
             std::thread::sleep(Duration::from_millis(50));
             if let Some(i) = instance(&dir).filter(alive) {
@@ -362,6 +402,9 @@ pub fn run(dir: PathBuf, port: Option<u16>, autostart: bool) -> Result<(), Strin
         })
         .map_err(|_| "Already initialized")?;
     platform::run();
+    // `platform::run()` 是托盘控制 host。单独关闭按需启动的 GPUI 设置窗口不会结束
+    // 这个循环，也不会停止正在服务模型的 core。显式 quit/stop 或版本替换流程才向
+    // core 发送停止；托盘 host 结束后这里关闭 controller runtime 并释放 frontend.lock。
     let _ = fs::remove_file(&ready_path);
     let _ = stop_tx.send(());
     let _ = worker.join();

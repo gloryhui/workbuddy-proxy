@@ -1,9 +1,17 @@
 //! Request lifecycle events, the bounded hand-off queue and the per-request
-//! guard that guarantees exactly one terminal event.
+//! guard that publishes at most one terminal event.
 //!
 //! Admission reserves two slots up front (`Start` and `Finish`) so a guard can
 //! always publish its terminal event from `Drop` without blocking, awaiting or
 //! spawning a background task.
+//!
+//! 上游是 `proxy::relay_to`、原生协议 `relay` 和连接测试；下游是单线程
+//! `stats-writer`。请求任务在 `proxy-io` Tokio runtime 上同步写入有界队列，
+//! writer 再批量落库。`RequestGuard` 同时保存该请求的计时、协议观察状态和队列预约，
+//! 因此它随响应 body stream 移动；客户端取消、网络 runtime 销毁都会触发其 `Drop`。
+//!
+//! 可选数值的 `None` 表示未知或未观察到；`Some(0)` 表示已经观察到一个合法的零值。
+//! “代理已经把上游声明的全部字节交给 HTTP body 层”仍不等于客户端 socket 已确认收完。
 use crate::stats::collector::{Collector, JsonVerdict, Protocol, UsageOutcome};
 use crate::stats::dto::{
     ErrorKind, InputBreakdown, Outcome, Source, UsageReason, UsageSource, UsageStatus,
@@ -82,6 +90,10 @@ pub struct RequestMeta {
 }
 
 /// Everything the writer needs to close a request row.
+///
+/// `*_at_ms` 是 Unix epoch 毫秒；`duration_ms`、`ttfb_ms` 和 `first_content_ms`
+/// 是基于进程内单调时钟测得的毫秒时长。可选的 token、状态、时延和模型字段为 `None`
+/// 时表示未观察到、未知或该项不适用；已经确认的数值零仍保留为 `Some(0)`。
 #[derive(Clone, Debug)]
 pub struct FinishRecord {
     pub ended_at_ms: i64,
@@ -108,6 +120,11 @@ pub struct FinishRecord {
 }
 
 #[derive(Clone, Debug)]
+/// 一条已准入请求的生命周期消息。
+///
+/// writer 通常先收到携带冻结 `RequestMeta` 的 `Start`，再收到用同一 `request_id`
+/// 关闭记录的 `Finish`。两者被拆分入队是为了让 admission 和终态都能非阻塞提交；数据库
+/// 侧负责把两条事件合成为请求记录，因此不能只根据内存中看到 `Start` 就断言已经落库。
 pub enum StatsEvent {
     Start(Box<RequestMeta>),
     Finish {
@@ -134,6 +151,11 @@ struct QueueState {
 }
 
 /// Bounded multi-producer/single-consumer queue with explicit slot reservation.
+///
+/// 每个 admission 先预约两个空位：一个立即写 `Start`，另一个留给之后的
+/// `Finish`。预约在准入阶段一次性计入容量，所以即使 writer 延迟处理，队列也能保证
+/// 已准入的 guard 最后无需等待即可提交终态。队列满时 reservation 立即失败，聊天请求
+/// 继续执行并把这次统计记为 dropped。
 #[derive(Debug)]
 pub struct EventQueue {
     state: Mutex<QueueState>,
@@ -151,6 +173,10 @@ impl EventQueue {
     }
 
     /// Non-blocking reservation of `slots` future events.
+    ///
+    /// 成功返回的 `Reservation` 持有 queue 的 `Arc` 和尚未使用的槽位数。
+    /// 这里是同步临界区，不等待 writer，也不创建数据库连接。失败只表示队列已关闭或
+    /// 已排队事件与已预约槽位之和放不下 `slots`；调用方据此跳过统计。
     pub fn reserve(self: &Arc<Self>, slots: usize) -> Option<Reservation> {
         let mut state = self.state.lock().unwrap();
         if state.closed || state.items.len() + state.reserved + slots > self.capacity {
@@ -180,6 +206,10 @@ impl EventQueue {
     }
 
     /// Waits up to `wait` for at least one event, then drains up to `max`.
+    ///
+    /// 返回值可能为空：既可能因等待超时，也可能因队列已关闭且没有剩余事件。
+    /// reservation 只占预算，不能作为事件被 `pop_batch` 取出；writer 只消费已经提交的
+    /// `StatsEvent`。
     pub fn pop_batch(&self, max: usize, wait: Duration) -> Vec<StatsEvent> {
         let mut state = self.state.lock().unwrap();
         if state.items.is_empty() && !state.closed {
@@ -223,6 +253,9 @@ impl EventQueue {
 }
 
 /// Reserved queue slots held by a guard.
+///
+/// `drop` 时释放仍未消费的预约。`RequestGuard` 正常提交 `Start` 后还剩一个槽位，
+/// 这个槽位专门保证终态能在 `Drop` 中发布。
 #[derive(Debug)]
 pub struct Reservation {
     queue: Arc<EventQueue>,
@@ -249,6 +282,12 @@ impl Drop for Reservation {
 }
 
 /// Terminal accounting for one admitted request.
+///
+/// `meta` 是准入时冻结的路由、模型、价格和时间点；后续配置或价格修改不会重算这次
+/// 请求。下面几个可选字段的 `None` 都有业务含义：`upstream_at`、`ttfb_ms`、
+/// `first_content_ms` 未被观察，`http_status`/`http_ok` 尚未取得上游状态，
+/// `expected_bytes` 没有可用的 `Content-Length`。`observed_bytes == 0` 则是已经累计到
+/// 零字节，与“未知”不同。
 #[derive(Debug)]
 pub struct RequestGuard {
     pub meta: RequestMeta,
@@ -262,6 +301,9 @@ pub struct RequestGuard {
     http_status: Option<i64>,
     http_ok: Option<bool>,
     /// `Content-Length` of the upstream body when the upstream declared one.
+    ///
+    /// `None` 表示头缺失或解析失败，不能假定 body 一定为空；`Some(0)` 才是上游明确
+    /// 声明了零长度。
     expected_bytes: Option<u64>,
     observed_bytes: u64,
     upstream_started: bool,
@@ -279,6 +321,11 @@ impl RequestGuard {
     ///
     /// Returns `None` when the queue is full; the caller counts one dropped
     /// request and continues serving the chat request unchanged.
+    ///
+    /// 输入中的 `meta` 必须来自已经成功的路由解析，`protocol` 可先为 `Unknown`，
+    /// 等上游 `Content-Type` 已知后再调用 `attach_collector`。成功会同时预约
+    /// `Start`/`Finish` 两个配额、发布 `Start` 并增加 pending；失败不会发布半个事件，
+    /// 也不会阻断实际代理请求。时间基准在成功准入时建立。
     pub fn begin(
         queue: &Arc<EventQueue>,
         counters: &Arc<Counters>,
@@ -333,7 +380,11 @@ impl RequestGuard {
         self.collector = Collector::new(protocol, encoded);
     }
 
-    /// Observes forwarded bytes; the caller still yields the same buffer.
+    /// Observes bytes that are about to be yielded toward the HTTP body layer.
+    ///
+    /// 本函数先累计字节、TTFB 和首个内容时间，再把同一 slice 交给 collector 做有界解析；
+    /// 不接管或替换响应 buffer；collector 可能保留有界解析副本。观察结果不能证明
+    /// 客户端 socket 已经收到这些字节。
     pub fn observe(&mut self, chunk: &[u8]) {
         self.observed_bytes = self.observed_bytes.saturating_add(chunk.len() as u64);
         if self.ttfb_ms.is_none() {
@@ -388,10 +439,12 @@ impl RequestGuard {
         }
     }
 
-    /// True when the upstream body was fully handed to the client.
+    /// True when every byte declared by `Content-Length` was observed and yielded
+    /// by this proxy stream.
     ///
     /// HTTP servers may release a known-length body stream without polling it
-    /// to `None`, so completion cannot rely on the stream alone.
+    /// to `None`, so completion cannot rely on the stream alone. This still does
+    /// not prove that the client socket acknowledged those bytes.
     pub fn body_fully_forwarded(&self) -> bool {
         self.expected_bytes
             .is_some_and(|expected| self.observed_bytes >= expected)
@@ -430,6 +483,10 @@ impl RequestGuard {
     }
 
     /// Publishes the terminal event exactly once.
+    ///
+    /// 首次调用会冻结 usage、耗时和状态，使用 admission 留下的第二个配额发布
+    /// `Finish`，并把 pending 减一。重复调用直接返回。这里只负责把事件放入内存队列；
+    /// 数据库写入由 writer 异步完成，写入失败也不会反向改变已经发送的聊天响应。
     pub fn finish(&mut self, outcome: Outcome, error_kind: Option<ErrorKind>) {
         if self.finished {
             return;
@@ -627,11 +684,14 @@ impl Drop for RequestGuard {
         if self.shared.closing.load(Ordering::Relaxed) {
             self.finish(Outcome::Interrupted, Some(ErrorKind::Shutdown));
         } else if self.body_fully_forwarded() {
-            // Every declared byte reached the client: the response completed
-            // even though the stream was released before polling `None`.
+            // Every declared byte was observed and yielded by the response stream:
+            // the response can be classified even if the stream was released
+            // before polling `None`. This is not client socket acknowledgement.
             let (outcome, kind) = self.terminal();
             self.finish(outcome, kind);
         } else {
+            // 没有完整长度证据且流未主动提交终态时，只能记录为客户端取消；不能把
+            // “上游某个 future 已结束”推断成客户端已收到完整响应。
             self.finish(Outcome::Cancelled, Some(ErrorKind::ClientDrop));
         }
     }

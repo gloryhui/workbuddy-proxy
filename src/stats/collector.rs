@@ -5,6 +5,11 @@
 //! parser state. Chat text, tool arguments and images are parsed for framing but
 //! immediately dropped; nothing but counters, model names and usage numbers can
 //! leave this module.
+//!
+//! 上游调用方是 `stats::event::RequestGuard::observe`，下游只产生
+//! `UsageOutcome`、首内容标记和响应模型名，再由 writer 写入 SQLite。collector 位于
+//! `proxy-io` 请求任务内，不拥有响应流、不创建线程，也不修改正在转发的字节。压缩响应
+//! 会被降级为 `Protocol::Unknown`，因为这里不猜测解码后的协议边界。
 use crate::stats::dto::{
     InputBreakdown, MAX_TOKEN_VALUE, MAX_TOTAL_TOKENS, UsageReason, UsageStatus,
 };
@@ -18,6 +23,11 @@ pub const MAX_PENDING_BYTES: usize = 128 * 1024;
 pub const MAX_JSON_BYTES: usize = 256 * 1024;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+/// 可识别的上游 body framing。
+///
+/// `Sse` 需要看到终止事件才算协议完整；`Json` 只保留有界副本，在 EOF 时解析一次；
+/// `Unknown` 不保存 body，也不猜测 usage。枚举值不是“成功/失败”终态，终态由
+/// `RequestGuard` 结合 HTTP 状态、transport EOF 和取消路径决定。
 pub enum Protocol {
     /// `text/event-stream`
     Sse,
@@ -114,6 +124,10 @@ fn differs<T: PartialEq>(left: Option<T>, right: Option<T>) -> bool {
 }
 
 /// Final usage answer handed to the writer thread.
+///
+/// `status` 表达数值完整度，`reason` 解释为何缺失或无效；`numbers` 中的每个 `None`
+/// 都表示该字段未知，不能用 0 填充推测值。`breakdown`/`uncached` 只在解析规则能
+/// 证明字段关系时给出，否则保持未知。
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct UsageOutcome {
     pub status: UsageStatus,
@@ -152,6 +166,7 @@ impl UsageOutcome {
 /// trustworthy parent pair.
 #[derive(Debug, Default)]
 pub struct UsageAccumulator {
+    /// 已知字段的累计快照；父用量字段冲突时清空，子字段冲突另行标记。
     candidate: Option<UsageNumbers>,
     /// The parent triple is missing, contradictory or conflicts across events.
     parent_invalid: bool,
@@ -187,6 +202,11 @@ fn read_int(value: &Value, keys: &[&str], max: i64) -> Result<Option<i64>, ()> {
 
 impl UsageAccumulator {
     /// Records one `usage` object seen in the response.
+    ///
+    /// 输入只应是一个已经解析成功、类型为对象的 `usage` JSON。函数只读取白名单字段，
+    /// 不累加重复快照：缺失字段可由后续事件补齐，父字段冲突会把整体标为无效。可选
+    /// 子字段冲突时保留先前值并标记异常，不使可信的 input/output 失效。状态保存在 accumulator，
+    /// 由 `finalize` 在 body 结束时转换；本函数无 I/O，也不直接写统计队列。
     pub fn observe(&mut self, usage: &Value) {
         let mut invalid_parent = false;
         let mut invalid_subfield = false;
@@ -436,6 +456,11 @@ fn inspect(value: &Value, usage: &mut UsageAccumulator, observation: &mut Observ
 }
 
 #[derive(Debug, Default)]
+/// 有界的 SSE framing parser。
+///
+/// `line`/`data` 是跨网络 chunk 保留的少量字节；`event_bytes` 表示当前事件已见大小。
+/// 发生超限后 `start_discarding` 会跳过错位数据直到下一个空行边界，避免把半截 JSON
+/// 当成后续事件，同时保持 `overflowed` 供 `finish` 报告解析限制。
 struct SseParser {
     line: Vec<u8>,
     data: Vec<u8>,
@@ -487,6 +512,10 @@ impl SseParser {
     }
 
     /// Feeds one network chunk; completed events are handed to `sink`.
+    ///
+    /// 支持跨 chunk 的 LF、CRLF 和 CR framing；`sink` 只会收到由同一事件的多条
+    /// `data:` 行拼接成的 payload。若当前事件过大，parser 进入丢弃模式，在本函数内
+    /// 不再分配与事件成比例的缓冲。
     fn feed_chunk(&mut self, bytes: &[u8], sink: &mut impl FnMut(&[u8])) {
         for &byte in bytes {
             if self.pending_cr {
@@ -556,6 +585,10 @@ fn is_error_envelope(value: &Value) -> bool {
 }
 
 /// Per-request response observer.
+///
+/// 每个已准入请求持有一个实例。`observe` 消费的是代理本来就要转发给客户端的字节；
+/// collector 不取得 stream 所有权，也不延迟 yield。成功、HTTP/JSON 错误、transport
+/// 中断和客户端取消可能发生在不同层，最终如何归类由 `RequestGuard` 决定。
 pub struct Collector {
     protocol: Protocol,
     parser: SseParser,
@@ -585,6 +618,10 @@ impl std::fmt::Debug for Collector {
 }
 
 impl Collector {
+    /// Creates a collector for the response framing known at this point.
+    ///
+    /// `encoded=true` 会把协议降为 `Unknown`，因为压缩 body 无法在这里按明文的 SSE/
+    /// JSON 边界解析；聊天响应仍按原字节转发，只是 usage 留给缺失原因。
     pub fn new(protocol: Protocol, encoded: bool) -> Self {
         let protocol = if encoded { Protocol::Unknown } else { protocol };
         Self {
@@ -657,6 +694,10 @@ impl Collector {
     }
 
     /// Observes forwarded bytes without keeping a copy of the chat content.
+    ///
+    /// SSE 只保留 parser 状态；JSON 最多保留 `MAX_JSON_BYTES` 的副本；Unknown 不保存
+    /// body。超限、malformed frame 等只影响统计结果，不在此处生成 HTTP 响应，也不会
+    /// 改变调用方接着 yield 的 chunk。
     pub fn observe(&mut self, chunk: &[u8]) {
         self.bytes_seen += chunk.len() as u64;
         match self.protocol {
@@ -722,6 +763,10 @@ impl Collector {
     }
 
     /// Called when the response body ends (EOF, error or cancellation).
+    ///
+    /// 该函数会结算尾部 SSE、解析非流式 JSON 并按 `fallback` 生成缺失原因。它只返回
+    /// usage 判定；调用方仍负责决定请求的 `Outcome`。若 body 只是被客户端取消，
+    /// collector 看到的最后状态不会自动改写成“成功”，也不会把缺失数值填成 0。
     pub fn finish(&mut self, fallback: UsageReason) -> UsageOutcome {
         match self.protocol {
             Protocol::Json => self.settle_json(),

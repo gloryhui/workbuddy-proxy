@@ -1,3 +1,15 @@
+//! HTTP 代理核心、路由快照和管理控制端点。
+//!
+//! 上游是客户端对 `/v1/models`、`/v1/chat/completions`、`/r/{id}/v1/*` 的请求，
+//! 以及本机设置进程对 `/_control/*` 的调用；下游是上游供应商 HTTP 服务和
+//! `stats::StatsHandle`。核心和托盘 controller 各自构造自己的 `Bridge`，`Arc<Bridge>`
+//! 只在该进程内共享；GPUI 是独立进程，经本机管理 HTTP 与状态文件协作，不共享这份
+//! Rust 内存。每类可变状态仍由自己的锁、原子量或有界资源约束。
+//!
+//! OpenAI Chat 请求保持原始响应字节的直通路径；Responses、Anthropic Messages 和
+//! Gemini 会进入 `proxy_native` 做协议转换。请求取消、上游 EOF、HTTP 错误和本地拒绝是
+//! 不同终态；统计 guard 的最终 `Drop` 负责兜底，不能把“向客户端交付了一个流对象”
+//! 当成客户端已经完整收到全部内容。
 use crate::{
     config::{Config, Connection, Provider},
     session::{Envelope, Sessions},
@@ -29,7 +41,14 @@ use tokio::sync::{Semaphore, oneshot};
 mod native;
 
 pub const BODY_LIMIT: usize = 8 * 1024 * 1024;
+/// 同时占用上游/本地处理槽位的最大请求数；聊天、目录发现和连接测试共享此上限。
 pub const MAX_CONCURRENT: usize = 4;
+
+/// 供应商级别的不可变连接参数。
+///
+/// 同一供应商的多个模型共享一个 `Arc<Destination>`，因此地址、凭据和协议设置不会在
+/// 每个模型上重复保存。`authorization`/`native_key` 是已经解析好的敏感 header 值，
+/// 不进入日志；`fingerprint` 用于判断配置是否真的改变了。
 struct Destination {
     endpoint: reqwest::Url,
     authorization: axum::http::HeaderValue,
@@ -42,13 +61,20 @@ struct Destination {
     fingerprint: [u8; 32],
     generation: [u8; 32],
 }
+/// 一个可独立选择和统计的路由。
 struct Route {
+    /// 对外暴露时已经抹掉上游凭据，只保留路由/模型语义。
     connection: Connection,
     destination: Arc<Destination>,
     provider_id: String,
     fingerprint: [u8; 32],
     generation: [u8; 32],
 }
+/// 运行时的路由索引，由 `Bridge.routes` 的 `Mutex` 保护。
+///
+/// `ids` 支持 `/r/{id}` 的稳定作用域；`aliases` 支持 WorkBuddy 的历史/当前显示 ID；
+/// `models` 保留同一上游 model 对应多条路由的歧义信息。构建新路由时先在所有模型上
+/// 建立索引，再用 `workbuddy_connections` 和安装记录补旧别名。
 #[derive(Default)]
 struct Routes {
     ids: std::collections::HashMap<String, Arc<Route>>,
@@ -59,6 +85,14 @@ impl Routes {
     fn new(cfg: &Config) -> Result<Self, String> {
         Self::rebuild(cfg, None)
     }
+    /// 从完整配置构建新的不可变路由索引。
+    ///
+    /// 输入是当前配置和可选旧索引；输出成功后不修改 `cfg`。未变化的供应商 destination
+    /// generation 和未变化的模型 route generation 会从旧索引沿用，从而让 replay/cache
+    /// 绑定实际生效参数。失败来自无效 API key/URL、序列化 fingerprint 失败、WorkBuddy
+    /// 投影 alias 无法唯一生成，或旧安装 ID 与另一条路由冲突。
+    ///
+    /// 新索引在局部对象中完整构造，成功后才由调用方替换 `Bridge.routes`。
     fn rebuild(cfg: &Config, previous: Option<&Routes>) -> Result<Self, String> {
         let mut routes = Self::default();
         for p in &cfg.providers {
@@ -180,7 +214,16 @@ impl Routes {
         }
         Ok(routes)
     }
+    /// 把请求中的路径作用域和 model 字符串解析成唯一路由。
+    ///
+    /// `scope` 来自 `/r/{id}`，可能是稳定 model id 或 provider id；`None` 表示
+    /// `/v1/chat/completions` 的全局作用域。输出是共享 `Arc<Route>`。稳定 model id
+    /// 作用域要求 model 属于该连接；全局裸 model 存在多个候选时返回歧义错误。未知
+    /// 作用域、未知 model 和属于其他连接的 model 都返回路由错误，本函数不修改索引。
     fn resolve(&self, scope: Option<&str>, model: &str) -> Result<Arc<Route>, String> {
+        // `scope` 是 `/r/{id}` 或供应商作用域。模型字段必须与路由绑定的 alias、上游
+        // model 或旧 `wbp-id` 写法一致；全局 alias/裸 model 若存在多条候选则拒绝，
+        // 不能按 HashMap 插入顺序“碰巧”选中一个。
         if let Some(id) = scope
             && let Some(r) = self.ids.get(id)
         {
@@ -230,6 +273,15 @@ impl Routes {
         Ok(first.clone())
     }
 }
+/// 核心共享状态和资源工厂。
+///
+/// 字段所有权说明：
+/// - `config`/`routes` 是内存快照，修改配置时先构造 `next`，校验成功后再分别替换；
+/// - `catalog`、`sessions` 和 `native_replay` 是进程内缓存，不持久化；
+/// - `permits` 是并发准入许可；聊天 permit 会跟随响应流直到流被 drop；
+/// - `stats` 是可克隆的 `Arc<Inner>` 句柄，真正数据库连接属于统计线程，不在 `Bridge`
+///   内；
+/// - `stop`/`port_changes` 的 sender 由核心持有，receiver 分别在网络线程/listener 手中。
 pub struct Bridge {
     pub config: Mutex<Config>,
     routes: Mutex<Routes>,
@@ -260,6 +312,8 @@ pub struct Bridge {
 }
 impl Bridge {
     pub fn new(config: Config, dir: PathBuf) -> Result<Self, String> {
+        // 常规核心拥有统计 writer；桌面托盘控制器必须用 `for_controller`，否则会
+        // 打开同一个数据库并制造第二套 run/recovery 生命周期。
         Self::build(config, dir, true)
     }
 
@@ -268,7 +322,15 @@ impl Bridge {
         Self::build(config, dir, false)
     }
 
+    /// 构造 HTTP client、初始路由、统计句柄和其余进程内状态。
+    ///
+    /// `owns_statistics=true` 会启动统计 writer；托盘 controller 必须传 `false`，只建立
+    /// 不创建数据库的统计句柄。`Result` 失败只来自 HTTP client 或初始路由构建。
+    /// 该函数本身不绑定端口，也不进入 Tokio runtime；调用方随后设置实际 port 和
+    /// `port_changes` sender。
     fn build(config: Config, dir: PathBuf, owns_statistics: bool) -> Result<Self, String> {
+        // `reqwest::Client` 通常通过内部共享连接池复用；这里不把它当作数据库事务。
+        // redirect 关闭、连接/读取超时和连接池参数都只约束 HTTP 传输层。
         let client = reqwest::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
             .connect_timeout(Duration::from_secs(15))
@@ -391,6 +453,12 @@ impl Bridge {
             .route("/_control/stop", post(stop))
             .with_state(self)
     }
+    /// 把一次 Chat 请求发送到路由对应的上游。
+    ///
+    /// 输入是路由、客户端 headers、已重写 body、Go 会话 ID 和 query。输出是尚未读取
+    /// body 的上游 `reqwest::Response`。provider 凭据在这里覆盖客户端认证头；
+    /// redirect 已在 client 层关闭。网络/超时错误原样交给调用方分类，本函数不直接
+    /// 生成 HTTP 响应，也不提交统计终态。
     async fn upstream(
         &self,
         r: &Route,
@@ -399,6 +467,9 @@ impl Bridge {
         session: &str,
         query: Option<&str>,
     ) -> Result<reqwest::Response, reqwest::Error> {
+        // 这一步是原始 Chat 路径向上游发起请求。认证 header 由本地 route 的 provider
+        // 凭据覆盖；客户端传来的 local Authorization/Host 已在 `forward_headers` 中剔除。
+        // `session` 只在 OpenCode Go 上作为兼容头添加。
         let mut endpoint = r.destination.endpoint.clone();
         endpoint.set_query(query);
         let mut req = self
@@ -505,6 +576,8 @@ impl Bridge {
             .collect()
     }
     pub fn warm_metadata(&self) {
+        // 只复制必要的 Client/catalog/targets 到新任务；`Bridge` 不随后台目录刷新
+        // future 被无限期借用。任务失败通过 catalog 自身状态体现，不阻塞聊天请求。
         let catalog = self.catalog.clone();
         let client = self.client.clone();
         let targets = self.metadata_targets();
@@ -514,6 +587,8 @@ impl Bridge {
     }
 
     pub async fn sync_prices(&self, force: bool) -> Result<stats::dto::PriceSyncDto, String> {
+        // 同一时刻只允许一个价格同步任务；锁竞争立即返回 busy，而不是排队等待。
+        // 数据库 ready 之前最多等待约 10 秒，避免启动迁移和首次目录同步互相踩踏。
         use sha2::{Digest, Sha256};
         let mut attempt = self.price_sync.try_lock().map_err(|_| {
             stats::dto::error(stats::dto::ERR_BUSY, "price update is already running")
@@ -579,6 +654,9 @@ impl Bridge {
         .await;
     }
     pub async fn test(&self, id: &str) -> Result<String, String> {
+        // 连接测试使用 `Source::ConnectionTest` 和独立的临时 probe。它读上游流直到
+        // 第一个可用事件，然后主动停止；统计上标记为 cancelled/client_drop，并不把
+        // 这种探测截断当作上游连接失败。
         let c = self.config.lock().unwrap().connection(id)?;
         let mut report = crate::diagnostic::TestReport::from_connection(&c);
         let started = std::time::Instant::now();
@@ -724,6 +802,7 @@ impl Bridge {
 
     /// Publishes the provider list used by the statistics filter options.
     pub fn refresh_stats_providers(&self) {
+        // 统计筛选只需要 provider id/name 的小型只读快照；配置写入成功后调用。
         let cfg = self.config.lock().unwrap();
         self.stats.set_configured_providers(
             cfg.providers
@@ -802,7 +881,8 @@ pub fn authorized(headers: &HeaderMap, key: &str) -> bool {
         .and_then(|v| v.to_str().ok())
         .and_then(|v| v.strip_prefix("Bearer "))
         .unwrap_or("");
-    // Compare fixed-size digests to avoid content-dependent token comparison.
+    // 两边先各自生成 32 字节摘要，再遍历全部摘要字节，不因首个不同字节提前返回。
+    // 哈希输入的长度仍可不同；这不构成整个认证流程严格恒时的保证。
     use sha2::{Digest, Sha256};
     let a = Sha256::digest(value.as_bytes());
     let b = Sha256::digest(key.as_bytes());
@@ -871,7 +951,23 @@ async fn relay_connection(
 ) -> Response<Body> {
     relay_to(a, request, Some(id)).await
 }
+/// 处理一次 `/v1/chat/completions` 或 `/r/{id}/v1/chat/completions` 请求。
+///
+/// 输入是共享 `Bridge`、Axum request 和可选路由 scope；输出是本地拒绝、上游状态/
+/// headers 加响应 body，或 native 转换结果。认证、permit、更新门禁、30 秒输入读取、
+/// 8 MiB body、model 解析和路由解析都在统计 admission 之前，失败不会写统计行。
+///
+/// admission 成功后，缺失 provider key、重写失败、连接失败、上游 HTTP/流错误分别映射
+/// 为相应 `Outcome/ErrorKind`。响应流把 permit 和 `RequestGuard` 一起持有；客户端提前
+/// drop 时由 guard 兜底，完整上游 EOF 与“客户端已物理收到”仍是两个不同观察点。
 async fn relay_to(a: Arc<Bridge>, request: Request<Body>, route: Option<String>) -> Response<Body> {
+    // 相位明确分开，便于理解失败边界：
+    //   1. Host/origin 与本地 key；
+    //   2. 并发 permit、更新维护门禁、限时读取 body、解析 model；
+    //   3. 路由解析后统计 admission；
+    //   4. Chat 直通或 native 转换；
+    //   5. 把 permit/guard 放进响应流，直到完成或取消。
+    // 前三阶段在 admission 之前被拒绝时不会写统计行；这是有意的事件边界。
     let (parts, body) = request.into_parts();
     if !local(&parts.headers, a.port.load(Ordering::Relaxed)) {
         return fail(StatusCode::FORBIDDEN, "Invalid host or origin");
@@ -1112,6 +1208,8 @@ async fn ping(State(a): State<Arc<Bridge>>, headers: HeaderMap) -> Response<Body
     Response::new(Body::from("workbuddy-proxy"))
 }
 async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Response<Body> {
+    // 管理端点只接受本机 Host/origin 和管理 key；请求体还限制为 128 KiB。
+    // 具体命令在 `Bridge::command` 中分派，成功/失败统一转成 `{message}` 供 UI 显示。
     let (parts, body) = request.into_parts();
     if !local(&parts.headers, a.port.load(Ordering::Relaxed))
         || !authorized(&parts.headers, &a.management_key)
@@ -1139,6 +1237,8 @@ async fn action(State(a): State<Arc<Bridge>>, request: Request<Body>) -> Respons
 }
 impl Bridge {
     pub async fn command(&self, p: &serde_json::Value) -> Result<String, String> {
+        // `stats_*` 是“静默命令”：它们的结果属于统计界面自身，不应污染代理活动日志，
+        // 也不应触发普通配置重新加载。价格更新是特例，完成后仍返回 catalog 状态。
         if p["command"] == "stats_prices_update" {
             let status = self.sync_prices(true).await?;
             return Ok(json!({"api_version": stats::dto::API_VERSION,
@@ -1182,6 +1282,8 @@ impl Bridge {
             None
         };
         let result = self.command_inner(p).await;
+        // 保存/新增/删除成功后才刷新派生快照；失败时保留旧的 routes、配置状态和
+        // 统计筛选，避免 UI 以为一次未提交的编辑已经生效。
         if result.is_ok() && p["command"] == "save" {
             self.warm_metadata();
         }
@@ -1257,6 +1359,9 @@ impl Bridge {
                 Ok("Recorded".into())
             }
             "set_port" => {
+                // sender 是 Bridge 持有的 clone，receiver 在网络线程的
+                // SwitchingListener 内。send 成功只表示请求入队；真正的文件提交和新
+                // listener 生效以 oneshot 结果为准。
                 let port = p["port"]
                     .as_u64()
                     .and_then(|n| u16::try_from(n).ok())
@@ -1340,6 +1445,8 @@ impl Bridge {
                 Ok("Update dismissed / 更新提示已关闭".into())
             }
             "snapshot" => {
+                // 快照同时读配置、日志和状态；锁获取顺序由各字段独立约束，
+                // 这里只序列化展示数据，不能把它当成一个跨越所有状态的一致性事务。
                 let cfg = self.config.lock().unwrap();
                 let logs = self.logs.lock().unwrap();
                 Ok(json!({"url":self.address(),"requests":self.calls.load(Ordering::Relaxed),
@@ -1399,6 +1506,8 @@ impl Bridge {
                 Ok(json!({"model":model,"upstream":upstream,"protocol":protocol,"protocol_settings":settings,"metadata":resolved}).to_string())
             }
             "autostart" => {
+                // 顺序是先写配置，再让平台设置开机启动；平台失败会尝试把配置写回。
+                // 如果回滚本身失败，错误文本会同时保留这两个失败，而不是伪装成成功。
                 let enabled = p["enabled"]
                     .as_bool()
                     .ok_or("Invalid startup selection / 开机启动选项无效")?;
@@ -1438,6 +1547,9 @@ impl Bridge {
                 Ok("Language saved".into())
             }
             "save" | "add" | "duplicate" | "delete" => {
+                // 所有编辑都在 clone 上完成。只有 `next.validate()` 和
+                // `Routes::rebuild` 都成功后才写 config、替换内存 routes 与 config；
+                // 某个阶段失败不会把半成品暴露给随后请求。
                 let mut cfg = self.config.lock().unwrap();
                 let mut next = cfg.clone();
                 match command {
@@ -1662,6 +1774,15 @@ fn apply_reasoning(body: bytes::Bytes, effort: &str) -> Result<bytes::Bytes, Str
 
 // Borrow messages/tools unchanged. Alias, thinking and usage overrides share one
 // serialization and one bounded output allocation, even with a large prompt.
+/// 按路由需要重写 Chat JSON 请求。
+///
+/// 输入是原始 body、可选的实际上游 model、思考强度和是否请求 usage。没有任何改写时
+/// 直接返回同一个 `Bytes`；只替换 alias 时只替换 `model` 原值并保留其余原始字节。
+/// 其他组合把顶层字段解析为 `BTreeMap<String, RawValue>`，保留下层原始值后重新序列化。
+///
+/// 输出还包含 `injection_failed`：已有 `stream_options` 不是对象时保留原值并设置该
+/// 标志，而不是把原本可用的请求改成 400。无效 JSON、无效 stream_options 对象等返回
+/// 错误；本函数不发起网络请求，也不修改统计 guard。
 fn rewrite_request(
     body: bytes::Bytes,
     model: Option<&str>,
