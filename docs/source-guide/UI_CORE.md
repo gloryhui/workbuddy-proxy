@@ -512,3 +512,5 @@ cargo test --manifest-path gpui/Cargo.toml --locked ui_contract_tests
 10. 写入的是设置进程自己的草稿/DTO，还是 Core 已保存配置和 SQLite？
 
 这十个问题能覆盖本导读涉及的主要所有权、线程、失败和过期响应边界。
+
+更新弹窗是另一条跨进程链路：普通设置界面发命令和轮询，Core 下载准备，独立 helper 在原进程退出后安装，独立只读窗口显示结果。按 [更新与恢复源码专题](UPDATE_RECOVERY.md) 继续，重点区分关闭弹窗、取消下载、稍后安装与恢复确认。

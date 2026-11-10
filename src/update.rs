@@ -1,4 +1,9 @@
-//! Fixed public Release source. Cache only successful, validated stable tags.
+//! 桌面端检查 GitHub 正式 Release 的入口；仅写检查缓存，不下载安装包。
+//!
+//! 本模块只回答“最新正式版本是什么、当前平台是否有可在线安装的 asset、网页链接
+//! 是什么”，不下载安装包。真正的下载、SHA-256 校验、暂存和安装分别由
+//! `crate::updater::Updater` 的 `start`/`apply` 命令处理。这个分层让“检查更新”
+//! 失败时不会触碰 updater 的下载会话或安装状态。
 use futures_util::StreamExt;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -9,7 +14,9 @@ const API: &str = "https://api.github.com/repos/gloryhui/workbuddy-proxy/release
 const PAGE: &str = "https://github.com/gloryhui/workbuddy-proxy/releases/tag/";
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Release {
+    /// 形如 `v1.2.3` 的纯数字三段版本；draft/prerelease 已在解析时排除。
     pub tag_name: String,
+    /// 以下说明字段只用于界面展示，缺失时由 `serde(default)` 变成空值。
     #[serde(default)]
     pub name: String,
     #[serde(default)]
@@ -21,12 +28,16 @@ pub struct Release {
 }
 #[derive(Serialize, Deserialize)]
 struct Cache {
+    /// Unix epoch 秒；只复用不在未来且年龄严格小于 24 小时的缓存。
     checked_at: u64,
+    /// 旧格式缓存可能没有完整 release，但仍保留已校验的 tag 用作兼容读取。
     tag: String,
     #[serde(default)]
     release: Option<Release>,
 }
 fn version(tag: &str) -> Option<[u32; 3]> {
+    // 这里接受可选的 `v` 前缀，但只接受恰好三段十进制 `u32`。因此预发布后缀、
+    // 路径片段和溢出数字都返回 None；它不是完整的 SemVer 解析器。
     if tag.len() > 32 {
         return None;
     }
@@ -42,6 +53,8 @@ fn version(tag: &str) -> Option<[u32; 3]> {
     parts.next().is_none().then_some(result)
 }
 fn result(tag: &str, current: &str, cached: bool) -> Result<String, String> {
+    // 比较按三段数字而不是字符串字典序，避免 `0.10.0` 被误判为小于 `0.9.9`。
+    // 返回 JSON 是给管理命令/UI 的快照，不是 updater 已经接受下载的证据。
     let available = version(tag).ok_or("Invalid release version")?
         > version(current).ok_or("Invalid current version")?;
     Ok(serde_json::json!({"tag":tag,"current":current,"available":available,"url":format!("{PAGE}{tag}"),"cached":cached}).to_string())
@@ -53,6 +66,9 @@ fn now() -> u64 {
         .as_secs()
 }
 fn cached(path: &Path) -> Option<Cache> {
+    // 缓存先限制文件大小，再完整 JSON 反序列化；过期、未来时间或非法 tag 都当作
+    // 未命中。`force=true` 会绕过这里。磁盘上的普通文件不是签名凭证，若用户修改
+    // 了缓存，本函数只能保证结构、年龄和版本格式，不能证明内容必来自 GitHub。
     if std::fs::metadata(path).ok()?.len() > 128 * 1024 {
         return None;
     }
@@ -63,6 +79,11 @@ fn cached(path: &Path) -> Option<Cache> {
     Some(value)
 }
 async fn network(client: &reqwest::Client, api: &str) -> Result<Release, String> {
+    // 请求固定 GitHub API 地址，并明确带上 API accept/version 与 User-Agent；
+    // 不附加 Authorization 头。响应正文边流式读取边限制为 128 KiB，避免把无界
+    // 响应先完整放进内存。只有 `draft=false`、`prerelease=false` 和合法三段版本
+    // 才形成 Release；这里不检查安装包 asset，asset 可用性由
+    // `updater::availability` 基于同一次响应继续验证。
     let response = client
         .get(api)
         .header("Accept", "application/vnd.github+json")
@@ -102,6 +123,14 @@ async fn network(client: &reqwest::Client, api: &str) -> Result<Release, String>
     Ok(release)
 }
 pub async fn check(client: &reqwest::Client, dir: &Path, force: bool) -> Result<String, String> {
+    // 主流程分为两个互斥来源：
+    //
+    // 1. 非 force 且 24 小时缓存命中：不再访问网络，可能只还原旧缓存里的 tag；
+    // 2. 其余情况：调用 `network`，成功后才尽力写回缓存，写缓存失败不会把已成功
+    //    的网络检查改成失败。
+    //
+    // 随后把运行版本、网页 URL、平台和 `availability` 结果附加到响应。UI 当前发送
+    // `force=true`，所以正常点击“检查更新”会绕过缓存；本函数仍不下载 asset。
     let path = dir.join("update-cache.json");
     let (release, from_cache) = if !force && let Some(cache) = cached(&path) {
         (

@@ -424,5 +424,6 @@ server future / _control/stop / Ctrl-C
 
 - 各上游协议的编码、SSE 状态机和 replay 数据格式，由 [协议转换源码专题](PROTOCOL_CONVERSION.md) 展开；具体支持范围见 [协议支持文档](../protocol-compat/USAGE.md)；
 - SQLite 迁移、事务及故障恢复见 [统计持久化导读](STATS_PERSISTENCE.md)；token、价格快照与金额见 [用量与费用导读](STATS_USAGE_PRICING.md)；查询从 [统计开发文档](../statistics/DEVELOPMENT.md) 继续；
-- WorkBuddy 日志导入、配置同步、去重与更新恢复，分别从 `src/stats/workbuddy_import/`、`src/workbuddy.rs` 和 [自动更新文档](../AUTO-UPDATE.md) 继续；
+- WorkBuddy 历史读取、当前分类、去重与 ACK 见 [历史导入导读](WORKBUDDY_IMPORT.md)；配置同步入口为 `src/workbuddy.rs`，其中历史观测与不确定区间也在导入专题展开；
+- 更新下载、请求排空、跨进程安装与失败恢复见 [更新与恢复导读](UPDATE_RECOVERY.md)，实际操作见 [自动更新文档](../AUTO-UPDATE.md)；
 - GPUI 页面状态、任务调度和表格交互由界面专题文档覆盖。

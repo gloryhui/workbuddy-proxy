@@ -13,7 +13,7 @@
 
 ## 开发与设计
 
-- [Java / Spring Boot 开发者源码导读](source-guide/README.md)：Rust 基础对照、服务核心、GPUI 界面核心、协议转换、统计持久化、用量定价、查询展示与历史导入。
+- [Java / Spring Boot 开发者源码导读](source-guide/README.md)：Rust 基础对照、服务核心、GPUI 界面核心、协议转换、统计持久化、用量定价、查询展示、历史导入与更新恢复。
 - [按风险验证的开发规范](CODEX_FAST_WORKFLOW.md)
 - [Figma 设计交付契约](studio_v2/DESIGN_SPEC.md)、[画板与 Rust 映射](studio_v2/figma_node_map.md)
 - [统计实现入口](statistics/DEVELOPMENT.md)

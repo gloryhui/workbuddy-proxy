@@ -1,5 +1,23 @@
 //! The copied helper outlives the running app and waits for all profile locks.
-//! No shell interpolation, elevated privileges, or user-data deletion is used.
+//! No shell interpolation or elevated privileges are used; recovery never
+//! clears the profile directory wholesale.
+//!
+//! 中文导览：本模块实现一次更新的准备、独立 helper 进程、停机、冷备份、程序替换、
+//! 新版本健康确认以及失败恢复。更新开始时，当前 app 进程先创建并校验暂存目录，把计划、
+//! 新包、helper 可执行文件和进度 UI 放进本次 session；随后启动同一个可执行文件附加
+//! `--apply-update` 参数，让它作为短生命周期 helper 进程继续工作。helper 进程内不运行
+//! 代理 HTTP 服务；替换完成并释放 profile 锁后由 helper 另行拉起应用。helper 不从父进程
+//! 内存继承安装状态，而是重新读取磁盘上的 `plan.json`。
+//!
+//! Java/Spring 读者可以把它理解为“显式序列化的后台安装 Job”，但这里没有 Spring 容器、
+//! 自动注入、消息队列或隐式事务。`Plan` 是跨进程 DTO；普通 JSON、标记文件、日志和独占
+//! 文件锁就是进程间协议。helper 与 app 是两个操作系统进程，Rust 的借用、`move` 闭包和
+//! 内存所有权都只在一个进程内有效，无法替另一个进程保证路径可信，所以 helper 必须重新
+//! 规范化路径、核对 token、重新计算包摘要并检查 bundle。
+//!
+//! 所有外部命令都通过 `Command` 的独立参数传递，没有拼接 shell 字符串；流程不申请管理员
+//! 权限，也不删除旧 profile。程序替换和数据库备份都不是跨 macOS/Windows 的原子事务，
+//! 因此失败标记、旧程序备份、profile 备份和健康检查共同构成恢复边界。
 use super::{
     dto::{Phase, Progress},
     version,
@@ -18,6 +36,7 @@ const APP_ID: &str = "io.github.gloryhui.workbuddy-proxy";
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum Target {
+    // mac 路径指向当前 `.app` bundle；Windows 路径指向安装目录，而不是单个 exe。
     Mac(PathBuf),
     Windows(PathBuf),
 }
@@ -31,6 +50,19 @@ impl Target {
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Plan {
+    // 这些字段会由准备进程序列化到 `session/plan.json`，再由 helper 反序列化。
+    // JSON 只保存路径、版本和摘要等值，不保存 File、锁句柄、进程句柄或 Rust 引用；
+    // 因而 helper 能独立读取，但对路径安全、包内容和当前磁盘状态的信任必须重新建立。
+    // `target`：要替换的已安装 app bundle 或 Windows 安装目录。
+    // `staged`：已校验的新 `.app`，或 Windows 下载的安装器 exe。
+    // `backup`：旧程序备份位置；mac 在替换时把原 bundle 移到这里，Windows 在 prepare
+    // 阶段先复制原安装目录。
+    // `stage_root`：与安装目标同一父目录的临时替换区，保证 mac rename 不跨文件系统。
+    // `session`：config/updates/48 位 token 下的本次下载、日志、握手和计划目录。
+    // `config_dir`：本次运行使用的配置目录；它必须位于安装目标之外，备份和恢复都围绕此目录。
+    // `tag`、`package`、`package_size`、`package_digest`：期望版本和已下载制品身份；
+    // digest 是内容摘要，不是数字签名。
+    // `data_backup`：本次 session 中的冷 profile 备份，包含业务配置文件及 SQLite 数据库。
     target: Target,
     staged: PathBuf,
     backup: PathBuf,
@@ -73,6 +105,9 @@ fn plist(bundle: &Path, key: &str) -> Result<String, String> {
 }
 
 fn validate_bundle(bundle: &Path, tag: Option<&str>) -> Result<(), String> {
+    // mac bundle 先拒绝根路径为符号链接，再核对固定 bundle id。核心 app、设置 app、
+    // 设置程序可执行文件及其 plist 都必须 canonicalize 后仍是原路径，防止更新包通过
+    // 符号链接把后续校验或复制引向安装目录之外。缺失主程序或设置程序会直接失败。
     if fs::symlink_metadata(bundle)
         .map_err(|e| e.to_string())?
         .file_type()
@@ -104,6 +139,10 @@ fn validate_bundle(bundle: &Path, tag: Option<&str>) -> Result<(), String> {
         return Err("Installer is missing application executables / 安装包缺少程序文件".into());
     }
     if let Some(tag) = tag {
+        // 下载包要求版本 tag（去掉前导 v）同时匹配两个 bundle 的 CFBundleVersion；
+        // 随后分别校验主 app 和设置 app 的 codesign，再执行新核心的 --version 核对。
+        // codesign 检查代码签名及 bundle 完整性，不等于 Apple 公证；这里没有
+        // notarization/stapling 检查。SHA-256 只核对包与发布清单的一致性，不是独立签名。
         let expected = tag.strip_prefix('v').unwrap_or(tag);
         if plist(bundle, "CFBundleVersion")? != expected
             || plist(&settings, "CFBundleVersion")? != expected
@@ -200,6 +239,10 @@ pub fn prepare(
     package: VerifiedPackage<'_>,
     target: Target,
 ) -> Result<Plan, String> {
+    // 调用方已经在下载阶段核对过 `VerifiedPackage` 的字节数和 SHA-256；本函数继续做
+    // 安装级校验。首先规范化 profile，并拒绝把它放进待替换 app/目录内部，否则替换可能
+    // 连带覆盖用户数据。stage_root 使用 48 位随机 session token 命名，`create_dir`
+    // 不覆盖既有目录，同时提前证明安装父目录可写，使用户确认安装前就能发现权限问题。
     let config_dir = fs::canonicalize(config_dir).map_err(|e| e.to_string())?;
     if config_dir.starts_with(target.path()) {
         return Err("Configuration must be outside the installation directory / 配置目录必须位于安装目录之外".into());
@@ -230,9 +273,16 @@ pub fn prepare(
         package_digest: package.digest.to_owned(),
         data_backup: session.join("profile-backup"),
     };
+    // 这个闭包把所有可能失败的准备步骤集中起来；只要任一步返回 Err，下层 helper 或 UI
+    // 尚未启动，函数会尝试删除本次 stage_root。失败清理不会删除 profile、下载 session 或用户
+    // 备份。Rust 闭包借用 `plan` 并在返回 Result 后结束，不跨进程传递内存引用。
     let result = (|| {
         match &plan.target {
             Target::Mac(_) => {
+                // DMG 只读、不自动打开，并挂载到本次 session 的专用 mount 目录。
+                // 先把 DMG 内 app 校验一次，再用 ditto 复制到 stage_root/new.app，
+                // 最后再次校验暂存副本；这样磁盘上的最终替换源不依赖稍后的挂载状态。
+                // detach 无论 copy 闭包成功与否都会先执行，再传播 copy 的原始错误。
                 let mount = session.join("mount");
                 fs::create_dir(&mount).map_err(|e| e.to_string())?;
                 checked(
@@ -265,9 +315,14 @@ pub fn prepare(
                 detached?;
             }
             Target::Windows(path) => {
+                // Windows 安装器会就地改写目标目录，所以 prepare 阶段先复制完整旧目录。
+                // 此复制发生在任何 profile 锁或更新维护标记之前，只准备程序回滚副本，
+                // 不是业务数据冷备份。
                 copy_tree(path, &plan.backup)?;
             }
         }
+        // helper 和进度 UI 都复制到本次 session，避免启动后继续依赖正在被关闭的旧 app。
+        // plan.json 是跨进程序列化边界；等到写完它，prepare 才返回 Ready Plan。
         let helper = session.join(if cfg!(windows) {
             "update-helper.exe"
         } else {
@@ -300,6 +355,9 @@ pub fn prepare(
 }
 
 pub fn launch_helper(plan: &Plan) -> Result<(), String> {
+    // 父 app 只负责启动 helper，并通过文件完成最小就绪握手。helper 的标准输出/错误写入
+    // install.log；Unix 放入独立进程组，Windows 使用无窗口标志，避免关闭主窗口时连带终止。
+    // `launch_helper` 成功只表示 helper 已创建 `helper-ready`，不表示程序已替换或更新成功。
     let helper = plan.session.join(if cfg!(windows) {
         "update-helper.exe"
     } else {
@@ -325,6 +383,9 @@ pub fn launch_helper(plan: &Plan) -> Result<(), String> {
         command.process_group(0);
     }
     let mut child = command.spawn().map_err(|e| e.to_string())?;
+    // run_helper 只有在 Plan 路径、token、安装包摘要、bundle、helper 独占锁等前置校验
+    // 都通过后才写 helper-ready。10 秒内进程提前退出或文件未出现都会返回错误；超时路径
+    // 会尽力 kill/wait，避免留下失控准备进程。此时尚未替换程序。
     let deadline = Instant::now() + Duration::from_secs(10);
     while Instant::now() < deadline {
         if plan.session.join("helper-ready").is_file() {
@@ -348,6 +409,14 @@ fn wait_for_exit_inner(
     timeout: Duration,
     abort: Option<&Path>,
 ) -> Result<Vec<File>, String> {
+    // 三个 profile 锁分别覆盖实例、前端和 GPUI 三个应用角色；它们的用途是确认更新期间
+    // 没有这些进程继续使用 profile，并使替换、冷备份和回滚获得静止时段。每次尝试按固定
+    // 顺序打开 instance/frontend/gpui，任一独占锁失败就释放本轮已取得的锁并重试。只有三把
+    // 全部取得才把 File 向量返回；调用方通过持有这个 Vec 延续锁。它不同于
+    // `update-helper.lock`：profile 锁保护 app 退出，helper 锁防止两个更新 helper 并发。
+    //
+    // abort 在每个轮询开始前检查，因此父进程在 helper 进入替换阶段的等待窗口内仍可中止。
+    // 超时或 abort 只会报错，不会在这里删除或替换程序。
     let started = Instant::now();
     loop {
         if abort.is_some_and(Path::exists) {
@@ -378,6 +447,9 @@ fn wait_for_exit_inner(
 }
 
 fn start_app(plan: &Plan) -> Result<(), String> {
+    // 启动的新/旧 app 都显式接收同一个 config_dir，并以 detached/无窗口方式运行。
+    // spawn 成功只代表操作系统创建了进程，不能证明版本正确或服务可用；健康状态必须由
+    // healthy 再确认。
     let mut command = match &plan.target {
         Target::Mac(app) => Command::new(app.join("Contents/MacOS/workbuddy-proxy")),
         Target::Windows(dir) => Command::new(dir.join("workbuddy-proxy.exe")),
@@ -403,6 +475,13 @@ fn start_app(plan: &Plan) -> Result<(), String> {
 }
 
 fn healthy(plan: &Plan, expected: &str) -> Result<(), String> {
+    // 健康检查使用 45 秒总预算，每轮请求超时均为 1 秒。先读取本次 profile 的
+    // instance.json，限定端口范围并用 `as_str` 取管理密钥，没有额外的密钥格式校验；
+    // 随后连续验证三项：GET /health 的 app/ready/
+    // version 均正确；用 Bearer token 调用 stats_health；其 message 字符串再次解析后
+    // state 必须为 ready。任何一项缺失都继续重试，直到截止时间。
+    // 只有这三个条件同时满足，调用方才 clear_maintenance。这里确认运行版本和服务就绪，
+    // 不复验公证状态，也不把 HTTP 200 单独当成成功。
     let runtime = tokio::runtime::Builder::new_current_thread()
         .enable_all()
         .build()
@@ -452,6 +531,9 @@ fn healthy(plan: &Plan, expected: &str) -> Result<(), String> {
 }
 
 pub fn stop_current(plan: &Plan) -> Result<(), String> {
+    // 先从 instance.json 取当前代理端口与管理密钥，调用带鉴权的 `_control/stop`，
+    // 再写 GPUI 的退出提示文件。HTTP 调用只表达停止请求；真正能否安全替换仍由随后
+    // 三把 profile 独占锁确认。
     (|| {
         let data: serde_json::Value = serde_json::from_slice(
             &fs::read(plan.config_dir.join("instance.json")).map_err(|e| e.to_string())?,
@@ -490,6 +572,10 @@ pub fn stop_current(plan: &Plan) -> Result<(), String> {
 fn replace(plan: &Plan) -> Result<(), String> {
     match &plan.target {
         Target::Mac(target) => {
+            // mac 先用 rename 把旧 bundle 移到 backup，再把已校验 staged 移到原位置。
+            // 第二次 rename 失败时会立即尝试把 backup 移回；两步都是目录重命名，但不构成
+            // 跨进程事务，最终是否需要 run_helper 的恢复分支由 backup 是否仍存在和
+            // replaced 状态共同判断。
             fs::rename(target, &plan.backup).map_err(|e| e.to_string())?;
             if let Err(error) = fs::rename(&plan.staged, target) {
                 fs::rename(&plan.backup, target).map_err(|rollback| {
@@ -500,6 +586,9 @@ fn replace(plan: &Plan) -> Result<(), String> {
             Ok(())
         }
         Target::Windows(target) => {
+            // Windows 运行同步安装器并等待其退出；安装器返回非零即让本函数失败。
+            // 此时目标目录可能已被部分改写，所以 run_helper 在调用 replace 前就把
+            // Windows 视为“可能已替换”，失败后继续用 prepare 阶段的程序备份回滚。
             let status = Command::new(&plan.staged)
                 .args([
                     "/VERYSILENT",
@@ -522,6 +611,10 @@ fn replace(plan: &Plan) -> Result<(), String> {
 }
 
 fn rollback(plan: &Plan) -> Result<(), String> {
+    // 回滚必须有完整旧程序备份。Windows 把 backup 树复制回安装目录；mac 先把当前
+    // 失败版本移到 stage_root/failed，再把 backup 重命名回原 target。后者避免直接覆盖
+    // 仍存在的目录，也保留失败程序供诊断。回滚只恢复程序目录，profile 由
+    // restore_profile 单独处理。
     let target = plan.target.path();
     if !plan.backup.is_dir() {
         return Err("No rollback copy is available / 没有可用的旧版备份".into());
@@ -536,6 +629,11 @@ fn rollback(plan: &Plan) -> Result<(), String> {
 }
 
 pub fn run_helper(path: &Path) -> Result<(), String> {
+    // 本函数是 main 收到 `--apply-update` 后的短生命周期 helper 入口。它读取并重新验证
+    // 已序列化的 Plan，不信任父进程仍存活，也不假设父进程内存中的校验结果仍然有效。
+    // 注意返回类型有两层含义：前置校验/读取失败直接返回 Err；进入安装状态机后的业务失败
+    // 通常先写 Failed 或 RecoveryFailed 结果文件，最后仍可返回 Ok(())。后者表示 helper
+    // 已把失败和恢复结论落盘，绝不代表更新成功。UI、监控方必须读取 phase。
     let bytes = fs::read(path).map_err(|e| e.to_string())?;
     if bytes.len() > 65536 {
         return Err("Update plan too large".into());
@@ -556,6 +654,10 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
         return Err("Invalid update installation plan".into());
     }
     validate_paths(&plan, path)?;
+    // helper 先取得独立 `update-helper.lock`，并在本进程余下生命周期持有它。这把锁阻止
+    // 第二个 helper 同时处理更新，和等待 app 退出的 instance/frontend/gpui 三把 profile
+    // 锁职责不同。随后重新核对包路径、大小、SHA-256、mac 新旧 bundle，以及 Windows
+    // staged 安装器边界；任一项变化都在写 helper-ready 前失败。
     let helper_lock = fs::OpenOptions::new()
         .create(true)
         .truncate(false)
@@ -611,6 +713,10 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
             }
         }
     }
+    // helper-ready 是父进程等待的就绪信号；它只覆盖“计划与制品已验证、helper 已持锁”，
+    // 不覆盖安装结果。接着写 Installing 进度，并建立只在当前闭包内推导的三种状态：
+    // `replaced` 表示可能需要回滚程序；`exited` 表示已取得三把 profile 锁；
+    // `maintenance_owned` 表示本 helper 成功创建并持有了 update-maintenance 标记。
     fs::write(plan.session.join("helper-ready"), b"ready").map_err(|e| e.to_string())?;
     write_progress(
         &plan,
@@ -624,6 +730,9 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
     let mut maintenance_owned = false;
     let result = (|| {
         let abort = plan.session.join("abort");
+        // 三把 profile 锁必须全部持有后才进入维护态和冷备份阶段。marker 内容写本次
+        // session 文件名（48 位 token），既标记“更新尚未完成”，也证明 marker 的 owner；
+        // clear_maintenance 会核对同一 token，防止误删另一个 helper 的标记。
         let locks = wait_for_exit_inner(&plan.config_dir, Duration::from_secs(60), Some(&abort))?;
         exited = true;
         let mut marker = fs::OpenOptions::new()
@@ -667,6 +776,9 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
             }
             let _ = cmd.spawn();
         }
+        // 此时 app 已退出且三把锁仍全部持有，backup_profile 才复制配置、SQLite DB、
+        // WAL 和 SHM 等文件，形成一致的冷备份。备份成功后执行程序替换；替换窗口结束
+        // 前锁不会被释放，新 app 也尚未启动。
         backup_profile(&plan)?;
         write_progress(
             &plan,
@@ -680,10 +792,16 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
         )?;
         replaced = matches!(plan.target, Target::Windows(_));
         if let Err(error) = replace(&plan) {
+            // mac 的 replace 已尝试即时 rename 回滚；若 backup 仍在磁盘上，说明状态仍
+            // 足以让外层恢复分支再尝试。Windows 无论安装器返回什么都在前面先标为
+            // replaced，因为失败安装器可能已经部分改写目标目录。
             replaced = replaced || plan.backup.is_dir();
             return Err(error);
         }
         replaced = true;
+        // 新程序替换完成后必须释放等待 app 退出的三把 profile 锁，否则新 app 无法启动。
+        // helper 锁仍然持有。启动后只有版本 /health 和鉴权 stats_health 全部 ready，
+        // clear_maintenance 才会删除维护标记；健康失败会进入下方回滚分支。
         drop(locks);
         start_app(&plan)?;
         healthy(&plan, plan.tag.strip_prefix('v').unwrap_or(&plan.tag))?;
@@ -698,11 +816,15 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
                 None,
                 Some(plan.data_backup.display().to_string()),
             )?;
-            // Keep both application and data backups for explicit recovery.
+            // 成功路径保留程序 backup 和 profile data_backup，供用户显式恢复/诊断。
+            // helper 返回 Ok 表示已经写完 Complete 结果，不表示备份已被自动删除。
         }
         Err(error) => {
             let mut recovery_error = None;
             if replaced {
+                // 只要程序“可能已替换”，就先请求停止新版，再重新取得三把 profile 锁，
+                // 回滚程序并恢复冷 profile。这里的两个 Err 用 and_then 串联：程序回滚
+                // 没成功就不会继续把 profile 当成已恢复。locks 在恢复完成后才释放。
                 let _ = stop_current(&plan);
                 let restored =
                     wait_for_exit(&plan.config_dir, Duration::from_secs(30)).and_then(|locks| {
@@ -719,10 +841,14 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
                 && let Err(failure) =
                     start_app(&plan).and_then(|()| healthy(&plan, env!("CARGO_PKG_VERSION")))
             {
+                // 未替换程序，或程序/profile 已成功回滚时，还要启动旧版并确认当前编译版本、
+                // 健康接口和鉴权统计接口都 ready。仅 spawn 成功不算恢复成功。
                 recovery_error = Some(failure);
             }
             if exited && recovery_error.is_none() {
                 if maintenance_owned {
+                    // 旧版已恢复健康后才清除 marker；marker 内容不匹配或删除失败会让本次
+                    // 结果升级为 RecoveryFailed，而不是掩盖成普通 Failed。
                     if let Err(error) = clear_maintenance(&plan) {
                         recovery_error = Some(error);
                     }
@@ -732,16 +858,19 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
                 }
             }
             let (phase, message) = match recovery_error {
+                // 回滚或启动旧版失败：终端状态是 RecoveryFailed，需要人工核对。
                 Some(failure) => (
                     Phase::RecoveryFailed,
                     format!("{error}; recovery failed / 自动恢复未完成：{failure}"),
                 ),
+                // 旧版与代理已确认恢复：安装失败，但当前程序仍可用。
                 None if exited => (
                     Phase::Failed,
                     format!(
                         "{error}; previous version and service verified / 已确认旧版本和代理恢复运行"
                     ),
                 ),
+                // 尚未取得 profile 锁、未替换任何 app 文件：普通失败。
                 None => (
                     Phase::Failed,
                     format!("{error}; no application files replaced / 未替换程序文件"),
@@ -756,10 +885,15 @@ pub fn run_helper(path: &Path) -> Result<(), String> {
             )?;
         }
     }
+    // 走到这里可能是 Complete、Failed 或 RecoveryFailed。后两种业务失败已经写入结果
+    // 文件并尽力恢复；Complete 也只有在结果文件成功写入后才继续。因此返回 Ok(()) 只表示
+    // helper 完成状态机并成功写出终态，不能当作“更新成功”；前置校验或结果写入错误仍会 Err。
     Ok(())
 }
 
 fn clear_maintenance(plan: &Plan) -> Result<(), String> {
+    // maintenance 文件不是普通布尔开关：其内容必须等于本次 session 名，且路径不能是
+    // 符号链接。只有 owner 仍匹配时才删除，避免一个迟到的 helper 清掉后来更新的标记。
     let path = plan.config_dir.join("update-maintenance");
     let expected = plan
         .session
@@ -810,7 +944,11 @@ fn write_progress(
 }
 
 fn backup_profile(plan: &Plan) -> Result<(), String> {
-    // All three application locks are held; copy SQLite DB + WAL together.
+    // 调用时三把 profile 锁全部由 run_helper 持有，app 已退出；因此普通文件、SQLite
+    // 主库和 WAL/SHM 是按静止快照一起复制。备份目录新建且拒绝覆盖，复制树拒绝符号链接。
+    // 不属于业务 profile 的更新 session、锁文件、实例/GPUI 临时信号和 marker 被排除。
+    // 若存在主数据库，再对备份副本做 `PRAGMA quick_check(1)`；这是 cold backup 的一致
+    // 性检查，不是完整数据库迁移验证，也不声称 SQLite 层面的全局原子备份。
     fs::create_dir(&plan.data_backup).map_err(|e| e.to_string())?;
     crate::config::make_private_dir(&plan.data_backup)?;
     for entry in fs::read_dir(&plan.config_dir).map_err(|e| e.to_string())? {
@@ -859,6 +997,10 @@ fn backup_profile(plan: &Plan) -> Result<(), String> {
     Ok(())
 }
 fn restore_profile(plan: &Plan) -> Result<(), String> {
+    // 恢复前确认本次 data_backup 存在。若当前目录有 SQLite WAL/SHM、但备份中没有对应
+    // sidecar，先删除当前 sidecar；随后把备份树复制回 profile。这个操作是“用备份覆盖
+    // 同名文件”，不是镜像同步：当前目录中备份未包含的普通业务文件不会被递归删除。
+    // 因而回滚关注恢复已备份状态，而不会把 profile 当成可整体清空的临时目录。
     if !plan.data_backup.is_dir() {
         return Err("Profile backup is unavailable / 配置备份不可用".into());
     }
@@ -882,7 +1024,8 @@ pub fn discard(plan: &Plan) -> Result<(), String> {
     // Only a stage created by prepare(), adjacent to this specific app.
     validate_paths(plan, &plan.session.join("plan.json"))?;
     fs::remove_dir_all(&plan.stage_root).map_err(|e| e.to_string())?;
-    // The verified download/helper and data backup remain for diagnosis.
+    // 只删除由本次 prepare 精确创建的 stage_root；已验证下载、helper、日志和
+    // profile data_backup 位于 session，继续保留供诊断或显式恢复。
     Ok(())
 }
 

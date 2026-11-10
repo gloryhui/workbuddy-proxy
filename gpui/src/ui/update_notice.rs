@@ -1,4 +1,8 @@
-//! Native update dialog; all network, verification and installation work belongs to Core.
+//! 原生更新弹窗及其 Core 命令投影。
+//!
+//! GPUI 只负责展示检查结果、发送 `check_update`/`update_start`/`update_apply`/
+//! `update_cancel` 等命令，并轮询 `update_status`。网络、SHA-256、暂存、等待活动
+//! 请求和 helper 启动都属于 Core；关闭弹窗不等于取消 Core 中正在运行的下载。
 use super::*;
 use crate::update_dto::{Phase, Progress};
 use gpui_kit::component::Disableable;
@@ -14,6 +18,8 @@ fn accessible_label(value: impl Into<SharedString>) -> Stateful<Div> {
 
 #[derive(Clone, Debug, PartialEq)]
 struct UpdateInfo {
+    /// 检查接口的展示快照。`available` 与 `online_supported` 分开：发现新版本不代表
+    /// 当前平台一定能自动在线安装。
     available: bool,
     tag: String,
     current: String,
@@ -25,6 +31,7 @@ struct UpdateInfo {
     online_error: Option<String>,
 }
 fn valid_version(value: &str) -> bool {
+    // UI 只渲染 Core 返回的保守三段数字版本；非法 tag 不作为可拼接的网页路径使用。
     let parts: Vec<_> = value
         .strip_prefix('v')
         .unwrap_or(value)
@@ -37,6 +44,9 @@ fn valid_version(value: &str) -> bool {
         })
 }
 fn parse_result(text: &str) -> Result<UpdateInfo, ()> {
+    // 先把字符串解析成动态 JSON 树 Value，再逐字段检查并组装 UpdateInfo。展示字段缺失/`null`
+    // 可降级为空字符串，但 available、tag、current 必须有正确类型；旧结果若没有
+    // online_supported，则按 `false` 处理，避免把未知能力当成可在线安装。
     let value: Value = serde_json::from_str(text).map_err(|_| ())?;
     let label = |name: &str| {
         value[name]
@@ -70,11 +80,13 @@ fn parse_result(text: &str) -> Result<UpdateInfo, ()> {
 }
 
 pub(super) struct State {
+    /// `open` 只控制弹窗显示；下载/安装状态仍由 `progress` 和 Core 持有。
     pub(super) open: bool,
     checking: bool,
     info: Option<UpdateInfo>,
     error: Option<String>,
     progress: Progress,
+    /// 单次 status 请求在途时置 true，避免 UI 每秒叠加多个查询。
     polling: bool,
     last_poll: Instant,
     first_status: bool,
@@ -98,6 +110,8 @@ impl State {
         }
     }
     fn locked(&self) -> bool {
+        // 这里只锁住 Installing 的界面交互；Downloading/Ready 等阶段允许关闭弹窗，
+        // 不等于向后端发送取消命令。
         self.progress.phase == Phase::Installing
     }
 }
@@ -118,6 +132,8 @@ impl Proxy {
         self.start_update_check(cx);
     }
     fn start_update_check(&mut self, cx: &mut Context<Self>) {
+        // 每次用户主动检查先尝试 ACK 普通旧结果，再发送 `force=true` 的检查命令。
+        // checking/info/progress 在这里先清空，后续只由命令回调重新填充。
         self.update_notice.scroll.set_offset(point(px(0.), px(0.)));
         self.update_notice.checking = true;
         self.update_notice.error = None;
@@ -140,6 +156,8 @@ impl Proxy {
         result: Result<String, String>,
         cx: &mut Context<Self>,
     ) {
+        // 这是 check_update 命令的最终回包：成功时还要通过 GPUI 自己的边界解析，
+        // 失败或格式异常只更新错误展示，不启动下载。
         self.update_notice.scroll.set_offset(point(px(0.), px(0.)));
         self.update_notice.checking = false;
         match result {
@@ -160,6 +178,10 @@ impl Proxy {
         cx.notify();
     }
     pub(super) fn poll_update(&mut self, _cx: &mut Context<Self>) {
+        // `ui.rs` 的周期 pump 会调用本函数。距上次发起至少 500ms、当前没有 status
+        // 请求在途，并且首次启动/弹窗打开/进度 busy 时，才用 try_send 投递一次
+        // update_status。队列满时 try_send 失败，不会阻塞 UI；Ready 的 busy() 为真，
+        // 因此仍会继续轮询。
         if !self.update_notice.polling
             && self.update_notice.last_poll.elapsed() >= Duration::from_millis(500)
             && (self.update_notice.first_status
@@ -183,6 +205,9 @@ impl Proxy {
         result: Result<String, String>,
         cx: &mut Context<Self>,
     ) {
+        // 成功解析的 Progress 才是 Core 状态快照。首个成功状态若是 Complete/Failed/
+        // RecoveryFailed 且没有其他模态对话框，弹窗会主动打开，以便展示上次 helper 结果。
+        // status 命令失败或 JSON 无效时只结束本次 polling，不把旧快照改成成功。
         self.update_notice.polling = false;
         let Ok(text) = result else {
             return;
@@ -214,6 +239,9 @@ impl Proxy {
         result: Result<String, String>,
         cx: &mut Context<Self>,
     ) {
+        // update_start/update_apply 的返回值只是命令处理时的阶段快照；线程随后仍可
+        // 推进到下一阶段。例如 apply 返回 Waiting，后续 status 才会变成 Installing。
+        // 这里清掉的是 GPUI 的短命令 busy 标志，不表示 Core 下载或安装已经结束。
         self.busy = false;
         match result {
             Ok(text) => match serde_json::from_str::<Progress>(&text) {
@@ -234,6 +262,12 @@ impl Proxy {
         cx.notify();
     }
     pub(super) fn close_update_notice(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        // Installing 不允许关闭；其他阶段只把 `open` 置 false。若 Core 仍 busy 或正在
+        // check，不发送 update_ack，下载/准备会继续并由后台轮询。非 busy 时这里只
+        // try_send ACK 并把本地快照重置为默认值，不等待 ACK 结果。
+        //
+        // Core 对未解决 maintenance marker 的 RecoveryFailed ACK 会保留 phase；
+        // GPUI 的本地重置不会删除那个后端/文件状态，也不是维护警告的清除确认。
         if self.update_notice.locked() {
             return;
         }
@@ -283,6 +317,9 @@ impl Proxy {
         }
     }
     fn update_cancel(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        // Download/Verify/Prepare/Wait 只发协作取消命令。Waiting 时先关闭弹窗，
+        // 因为 plan 会保留并在后台取消完成后回到 Ready。Ready 的“稍后安装”走普通
+        // 关闭路径；Installing 的关闭按钮/取消按钮在此之前已被禁用。
         if matches!(
             self.update_notice.progress.phase,
             Phase::Downloading | Phase::Verifying | Phase::Preparing | Phase::Waiting
