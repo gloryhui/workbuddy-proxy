@@ -6,6 +6,8 @@ Core 独占 SQLite 写入；GPUI 通过本地鉴权管理协议操作统计，�
 
 首次阅读 Rust 的 Java / Spring Boot 开发者，可先按 [统计持久化导读](../source-guide/STATS_PERSISTENCE.md) 跟一遍请求守卫、双槽队列、写入事务、迁移和故障恢复，再进入下表中的具体模块。
 
+用量合并、缓存拆分、价格快照和整数金额见 [用量与费用源码导读](../source-guide/STATS_USAGE_PRICING.md)。
+
 | 关注点 | 当前源码 |
 | --- | --- |
 | Core 统计协调、生命周期与管理入口 | [src/stats/mod.rs](../../src/stats/mod.rs) |

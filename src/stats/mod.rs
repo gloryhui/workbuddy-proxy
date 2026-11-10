@@ -1288,7 +1288,10 @@ fn price_identifier(payload: &serde_json::Value) -> Result<Option<String>, Strin
     Ok(canonical.or(alias))
 }
 
-/// A missing or blank rate means the explicit zero default.
+/// 管理保存请求中，缺失或空白的单价按配置值 0 处理。
+///
+/// 这是已配置价格的某一项为零，不会把整条价格标记成 `price_source=default_zero`。
+/// 后者只在请求找不到当前价格时由 `snapshot_for` 构造；两者的结算分支不同。
 fn rate_or_zero(value: Option<String>) -> String {
     match value {
         Some(text) if !text.trim().is_empty() => text,
@@ -1296,6 +1299,12 @@ fn rate_or_zero(value: Option<String>) -> String {
     }
 }
 
+/// 把管理 API 的 JSON 输入转换为 writer 能消费的保存 DTO。
+///
+/// 前端 `PriceDraft::submit` 已将人类单价转换成 nano 整数字符串，这里不再乘 10^9。
+/// 本层校验 ID、字段类型和创建版本；`store::save_price_rule` 再校验金额范围、币种和
+/// 模式并用 revision 条件更新。可类比 Controller 入参适配 + Service/Repository 校验，
+/// 但没有自动 DTO 注解或隐式事务。
 fn parse_price_save(payload: &serde_json::Value) -> Result<PriceSaveRequest, String> {
     let field = |key: &str| -> Result<String, String> {
         payload
@@ -2617,6 +2626,8 @@ fn handle_control(
             let outcome = store::delete_price_rule(writer, &price_id, expected_revision);
             match outcome {
                 Ok(()) => {
+                    // 数据库删除并成功重载 writer.prices 后才发布给请求线程。
+                    // 历史/在途请求持有独立快照，删除当前价不会把它们改成默认零价。
                     *inner.prices.write().unwrap() = writer.prices.clone();
                     Ok("{}".to_owned())
                 }
@@ -2626,8 +2637,9 @@ fn handle_control(
         ControlKind::PriceSave(request) => {
             let rule = match store::save_price_rule(writer, &request, now_ms()) {
                 Ok(rule) => {
-                    // Publish after the commit so new requests pick the new price
-                    // while history keeps its snapshot.
+                    // store 已提交并成功读取结果、重建价格缓存，才在这里替换共享投影。
+                    // commit 后的读取仍可能失败：Err 不是“数据库必然没变化”的保证。
+                    // 新请求按发布顺序取得快照，历史与在途请求仍使用原快照。
                     *inner.prices.write().unwrap() = writer.prices.clone();
                     rule
                 }

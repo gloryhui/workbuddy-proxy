@@ -4,6 +4,11 @@
 //! with `#[path = "../../src/stats/dto.rs"]` without linking SQLite, chrono-tz or
 //! any other core-only dependency. SQL, timezone resolution and pricing live in
 //! the sibling modules of `crate::stats`.
+//!
+//! `#[path]` 只是让 Core 与 GPUI 设置进程在各自编译时包含同一份源码，保证 DTO 字段和
+//! wire 枚举一致；它不表示两个操作系统进程共享内存或数据库连接。实际数据仍经命令 JSON、
+//! SQLite 行或各自的内存对象传递。对 Java 读者，这些 DTO 类似使用 Jackson 映射的接口
+//! record，但这里没有 Spring 容器、依赖注入或对象托管，只有显式构造与 Serde 序列化。
 use serde::{Deserialize, Serialize};
 
 /// Fixed error codes for the import management commands.
@@ -62,18 +67,25 @@ pub const ERR_RESULT_TOO_LARGE: &str = "stats_result_too_large";
 pub const ERR_QUERY_TOO_LARGE: &str = "stats_query_too_large";
 pub const ERR_UNSUPPORTED_SCHEMA: &str = "stats_unsupported_schema";
 
-/// Formats a nano amount as a decimal currency string with at least four
-/// decimals, or `<0.0001` when the value is smaller than the display precision.
+/// 把 `i64` nano 金额格式化成界面金额字符串。
+///
+/// 输入单位是 `1 / 1_000_000_000` 货币单位。该便捷函数先转成十进制字符串并交给
+/// [`format_amount_text`]；0 显示 `"0"`，整数省略小数，非整数至少保留 4 位、去掉多余尾零，
+/// 正的极小非零值显示 `"<0.0001"`。它只格式化，不做币种换算或四舍五入到数据库金额。
 #[allow(dead_code)] // Shared with the native settings UI.
 pub fn format_amount(nanos: i64) -> String {
     format_amount_text(&nanos.to_string())
 }
 
-/// Formats a decimal nano amount of any size.
+/// 格式化任意大小的十进制 nano 金额字符串。
 ///
-/// The API sends amounts as decimal strings because a total can exceed `i64`;
-/// parsing them into `i64` and falling back to 0 turned a real amount into
-/// "unknown" on the page. `i128` covers every value the contract allows.
+/// 统计 API 用字符串传金额，因为跨行汇总可能超过 `i64`；本函数用 `i128` 解析，避免退回
+/// `i64` 失败后把真实金额显示成 0/未知。接受的文本是可选负号加 ASCII 数字，不接受小数点
+/// 或指数等字符；非法输入显示 `"—"`。
+///
+/// 展示精度固定四位起步：0 仍显示 `"0"`，正的 `1..99999` nano 显示 `"<0.0001"`，对应负值
+/// 显示 `">-0.0001"`；非整数在去掉多余尾零后仍至少保留四位小数，整额才省略小数部分。
+/// 这里的阈值是 UI 展示策略，不改变持久化的 nano 整数。
 pub fn format_amount_text(text: &str) -> String {
     let text = text.trim();
     let (negative, digits) = match text.strip_prefix('-') {
@@ -114,9 +126,16 @@ pub fn format_amount_text(text: &str) -> String {
     }
 }
 
-/// Parses a human amount per million tokens (`"2"`, `"0.2"`) into the integer
-/// nano units the API stores. The settings form calls this exactly once on
-/// submit; the value never round-trips through `f64`.
+/// 把设置页输入的“每百万 token 的人类金额”解析成 API 的 nano 整数费率。
+///
+/// 例如 `"2"` 转为 `2_000_000_000`，`"0.2"` 转为 `200_000_000`。函数先去掉首尾空白，
+/// 只接受普通十进制数字（可省略整数或小数一侧），最多 9 位小数；负值、指数、科学计数法、
+/// 其他符号和溢出都返回稳定的英文错误文本。转换使用 `checked_mul`/`checked_add`，不经过
+/// `f64`。
+///
+/// 设置表单只在提交时调用一次，结果直接作为 `*_rate_nanos` 请求字段；Core 随后用
+/// `pricing::parse_rate` 校验它已是无符号整数字符串。货币语义由同一请求的 `currency`
+/// 决定，函数本身不附加币种。
 #[allow(dead_code)] // Shared with the native settings UI.
 pub fn parse_human_amount(text: &str) -> Result<i64, String> {
     let text = text.trim();
@@ -228,72 +247,137 @@ stats_enum!(ErrorKind {
     Other => "other",
 });
 
+/// 一次请求最终 usage 数值的完整程度。
+///
+/// 这个枚举决定 Token 聚合是否可计入总量，也决定普通价格规则能否结算费用；它描述数值事实，
+/// 不是 HTTP 成功状态。Rust 的枚举变体像 Java enum，但 `match` 在编译期还能提示未处理分支。
 stats_enum!(UsageStatus {
+    /// input/output 等结算所需核心字段均已确认；全零的确认值也属于 Complete。
     Complete => "complete",
+    /// 只读取到部分 usage 字段；未出现的字段仍是 `None`，不能补 0。
     Partial => "partial",
+    /// 上游调用结束但没有获得可用 usage。
     Missing => "missing",
+    /// 收到了 usage，但负值、超界、互相矛盾或格式无效，整组数值不可信。
     Invalid => "invalid",
+    /// 请求本地拒绝或证明未发送上游，Token usage 不适用；费用另按 not_applicable 结算。
     NotApplicable => "not_applicable",
 });
 
+/// usage 缺失或无效时的稳定原因标签，供查询筛选和诊断显示。
+///
+/// `None` 通常表示 usage 完整或没有额外失败原因；具体原因应与 [`UsageStatus`] 一起读，
+/// 不能仅凭 reason 重算 Token。
 stats_enum!(UsageReason {
+    /// 上游正常结束，但没有提供 usage 对象。
     NoUsage => "no_usage",
+    /// 客户端提前断开，后续 usage 可能不会再到达。
     ClientDrop => "client_drop",
+    /// 流式传输/上游流处理失败。
     StreamError => "stream_error",
+    /// 协议内容可读但 usage 结构或字段解析失败。
     ParseError => "parse_error",
+    /// 单个 SSE/JSON 事件超过解析边界。
     EventTooLarge => "event_too_large",
+    /// 非流式或聚合响应体超过边界。
     BodyTooLarge => "body_too_large",
+    /// usage 使用了不受支持的编码或压缩表示。
     UnsupportedEncoding => "unsupported_encoding",
+    /// 数值为负、非整数或超过允许范围。
     InvalidNumbers => "invalid_numbers",
+    /// 同组字段之间不满足协议的一致性约束。
     Inconsistent => "inconsistent",
+    /// 多个 usage 观察给出互相冲突的值。
     ConflictingUsage => "conflicting_usage",
+    /// 请求被归为 Interrupted 且用量不完整时使用，也用于非正常关闭恢复；不只表示进程关闭。
     UncleanShutdown => "unclean_shutdown",
+    /// 请求被证明未发送到上游，因此没有上游 usage。
     NotSent => "not_sent",
 });
 
+/// usage 数字的实际证据来源。
 stats_enum!(UsageSource {
+    /// 没有可归属的 usage 来源；常用于 Missing、Invalid、NotApplicable。
     None => "none",
+    /// 由代理的协议解析/usage collector 从上游响应观察得到。
     Upstream => "upstream",
+    /// 由 WorkBuddy JSONL 导入器读取历史记录得到。
     WorkbuddyJsonl => "workbuddy_jsonl",
 });
 
+/// 输入字段之间可被证明的组成关系。
 stats_enum!(InputBreakdown {
+    /// input 的组成关系未知；这不保证 input 总量或其他 token 字段已经已知。
     Unknown => "unknown",
+    /// `cache_read` 是 `input_tokens` 的已观察子集；不证明 cache write 也包含在内。
     ReadSubset => "read_subset",
+    /// read、write、uncached 是分别已知的互斥输入部分，可按各自费率计算。
     Disjoint => "disjoint",
 });
 
+/// 是否主动修改上游请求来索取 usage。
+///
+/// 默认是 `Request`（数据库升级也以它为新默认）。`Observe` 只是不主动索取 usage，仍会
+/// 经历现有的代理模型/参数重写；直通不代表请求字段全部逐字不变。Java 类比上，这是显式
+/// 配置值，不是由 Spring 根据环境自动切换的开关。
 stats_enum!(#[derive(Default)] UsageMode {
+    /// 只观察上游本来提供的 usage，不主动索取；直通仍不表示请求字段绝对原样不变。
     Observe => "observe",
+    /// 默认值：在协议支持时尝试注入 usage 请求（例如 stream `include_usage`），但不保证
+    /// 上游一定返回完整结构；字段名保留 wire 文本 `request`。
     #[default]
     Request => "request",
 });
 
+/// 请求准入时价格快照的来源类别。
+///
+/// 这是持久化/wire 分类，不一定说明是谁创建了规则。尤其 `"manual"` 同时用于人工编辑和
+/// models.dev 目录自动导入的 `stats_model_prices` 行，不能显示成“人工录入”。
 stats_enum!(PriceSource {
+    /// 来自 `stats_model_prices` 的当前规则，包括人工编辑和目录导入。
     Manual => "manual",
+    /// 当前发布缓存没有匹配规则，系统按默认币种采用的政策性零价。
     DefaultZero => "default_zero",
+    /// 旧数据库迁移时无法还原来源的兼容标记；不能据此重新定价。
     LegacyUnknown => "legacy_unknown",
 });
 
+/// 单次请求费用结算结果的业务状态。
 stats_enum!(CostStatus {
+    /// 普通价格规则加完整 usage 后得到确定金额。
     Priced => "priced",
+    /// 没有匹配规则，按明确配置的默认零价得到确定 0。
     DefaultZero => "default_zero",
+    /// 存在已开始的上游调用但没有可应用规则；历史/导入记录可保留此状态，金额未知。
     Unpriced => "unpriced",
+    /// 旧数据无法确认原始价格，金额来源不可恢复。
     LegacyUnknown => "legacy_unknown",
+    /// Start 已建立费用快照但 Finish 尚未完成。
     Pending => "pending",
+    /// usage 非 Complete，普通规则不能计算金额；不能把差额补 0。
     UsageIncomplete => "usage_incomplete",
+    /// read discount/disjoint 缺少证明输入分解所需的 token 或费率。
     UnsupportedBreakdown => "unsupported_breakdown",
+    /// 请求证明未进入上游，费用确定为 0。
     NotApplicable => "not_applicable",
+    /// 合法大整数相乘或汇总超出 `i64`，金额保持未知。
     Overflow => "overflow",
 });
 
+/// 普通价格规则如何解释 input token 与 cache 字段。
 stats_enum!(InputMode {
+    /// input 费率覆盖全部 input token；cache 分项不另计。
     Flat => "flat",
+    /// `input_tokens` 包含 cache read；非缓存部分与 cache read 分别按 input/cache 费率计。
     ReadDiscount => "read_discount",
+    /// read、write、uncached 是互斥部分，分别使用 cache read/cache write/input 费率。
     Disjoint => "disjoint",
 });
 
-/// Currencies keep their uppercase ISO-style wire form.
+/// 当前支持计价的币种；wire 形式固定为大写三字母码。
+///
+/// 不同币种在汇总时保持分桶，系统不做汇率换算。Java 读者可把它看作只有两个合法值的强类型
+/// money code；Serde 的 rename 定义实际 JSON 字符串。
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum Currency {
     #[serde(rename = "USD")]
@@ -621,11 +705,16 @@ impl PendingCursor {
     }
 }
 
-/// One currency subtotal. Amounts are decimal-encoded nano units.
+/// 一个币种下的费用小计。
+///
+/// 不同币种不会被相加或换算，因此同一汇总里可能有多条 `CostTotalDto`。
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CostTotalDto {
+    /// 该小计的币种；金额只与同币种值相加。
     pub currency: Currency,
+    /// 十进制字符串编码的 nano 货币单位总量；字符串可承载超过 `i64` 的汇总值。
     pub total_cost_nanos: String,
+    /// 被计入该金额的已定价请求数，不是查询范围内全部请求数。
     pub priced_request_count: i64,
 }
 
@@ -737,30 +826,52 @@ pub struct DashboardDto {
     pub warnings: Vec<WarningDto>,
 }
 
-/// Cost of one request as settled at finish time or by a later reprice.
+/// 单条请求在 Finish 或恢复收敛时形成的费用结果。
+///
+/// 金额来自 Start 冻结的价格快照，不是查询时临时 join 当前价格。`None` 必须和状态一起
+/// 解释：已确定状态有金额，`UsageIncomplete`/`UnsupportedBreakdown`/`Overflow` 等未知
+/// 状态不伪造 0。
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CostDto {
+    /// 费用是否已确定、为何未知以及是否属于默认零价。
     pub status: CostStatus,
+    /// 费用币种；旧记录或无法识别的费用可能没有币种。
     pub currency: Option<Currency>,
+    /// nano 货币单位金额的十进制字符串；未知为 `None`，确认零时可为 `"0"`。
     pub total_cost_nanos: Option<String>,
-    /// Traceability only: the price configuration this request copied. It is
-    /// never joined to compute an amount, so it keeps working after the
-    /// configuration is edited or deleted.
+    /// 仅供追踪的取价配置 id。
+    ///
+    /// 费用计算不会 join 当前配置，因此编辑或删除规则后历史值仍可解释；默认零价没有来源
+    /// 规则，字段可为 `None`。
     pub source_price_id: Option<String>,
+    /// 费用公式/快照结构版本，用于解释历史记录，不是价格行 revision。
     pub pricing_version: Option<i64>,
 }
 
-/// The unit prices one request was admitted with, as stored on its own row.
+/// 请求 Start 时写入自身费用行的单价快照。
+///
+/// 所有费率都是 nano 货币单位/1,000,000 token 的十进制字符串。它是历史事实，不指向当前
+/// 价格列表；`price_source=manual` 同时包含人工编辑和目录导入，不能当作“人工来源”信号。
+/// 字段 `None` 多见于旧记录或来源无法还原的数据。
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PriceSnapshotDto {
+    /// 快照来源类别；`manual` 是存储分类，不保证由人工创建。
     pub price_source: PriceSource,
+    /// 该请求准入取价的 epoch 毫秒。
     pub price_snapshot_at_ms: Option<i64>,
+    /// 输入计价方式；`None` 表示旧/不完整快照无法确认。
     pub input_mode: Option<InputMode>,
+    /// 普通输入费率，单位 nano 货币单位/1,000,000 token。
     pub input_rate_nanos: Option<String>,
+    /// 输出费率，单位 nano 货币单位/1,000,000 token。
     pub output_rate_nanos: Option<String>,
+    /// cache read 费率；`Some("0")` 是确认零价，`None` 是未知。
     pub cache_read_rate_nanos: Option<String>,
+    /// cache write 费率；`Some("0")` 是确认零价，`None` 是未知。
     pub cache_write_rate_nanos: Option<String>,
+    /// 快照复制的来源价格 id，仅用于追踪当时配置。
     pub source_price_id: Option<String>,
+    /// 取价时来源价格行的 revision；默认零价或旧记录可为 `None`。
     pub source_price_revision: Option<i64>,
 }
 
@@ -853,17 +964,27 @@ pub struct PriceRuleDto {
     /// Transitional alias of `price_id`, kept so older callers keep working.
     /// Both fields always carry the same value.
     pub rule_id: String,
+    /// 配置中的 provider id，与 `upstream_model` 一起构成不可重复的当前价格键。
     pub provider_id: String,
+    /// 上游模型名；编辑现有规则时该键不可改变。
     pub upstream_model: String,
+    /// 该规则使用的币种；不同币种费用不合并。
     pub currency: Currency,
+    /// 普通 input 费率，整数 nano 货币单位/1,000,000 token 的字符串。
     pub input_rate_nanos: String,
+    /// 普通 output 费率，单位同 `input_rate_nanos`。
     pub output_rate_nanos: String,
+    /// cache read 费率；当前读取路径会给出字符串，`None` 保留旧 wire 兼容。
     pub cache_read_rate_nanos: Option<String>,
+    /// cache write 费率；当前读取路径会给出字符串，`None` 保留旧 wire 兼容。
     pub cache_write_rate_nanos: Option<String>,
+    /// input token 的计价方式。
     pub input_mode: InputMode,
+    /// 设置列表显示标签；可能来自人工填写或 models.dev 自动目录。
     pub label: String,
+    /// 当前规则创建时间的 epoch 毫秒。
     pub created_at_ms: i64,
-    /// Optimistic-concurrency token for the editable current price.
+    /// 当前价格行乐观并发令牌；保存/删除必须带回读取时的值，每次编辑递增。
     pub revision: i64,
     /// Kept for wire compatibility; v2 prices are never "in use".
     pub referenced: bool,
@@ -885,16 +1006,34 @@ pub struct RequestDetailDto {
     pub price_snapshot: Option<PriceSnapshotDto>,
 }
 
+/// 单次请求费用的分项与总额，来自该请求自身快照的结算。
+///
+/// 金额均为 nano 货币单位字符串。对于 UsageIncomplete、UnsupportedBreakdown 或 Overflow，
+/// 各分项和 total 保持 `None`；对于确认的零价，分项和 total 可以是 `Some("0")`。不能把
+/// `None` 当 0 参与统计。
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CostPartsDto {
+    /// 这组分项对应的费用状态。
     pub status: CostStatus,
+    /// 结算币种；通常来自请求快照，`not_applicable` 也可以有币种。只有旧记录或整组费用
+    /// 不可得时才可能为 `None`。
     pub currency: Option<Currency>,
+    /// 输入侧费用：`flat` 包含全部 input；`read_discount` 只含非缓存输入；
+    /// `disjoint` 含显式的 uncached 部分。
     pub input_cost_nanos: Option<String>,
+    /// 输出 token 费用。
     pub output_cost_nanos: Option<String>,
+    /// cache read 费用；模式不单独收费时通常是确认的 `Some("0")`，只有整组费用不可得或
+    /// 旧记录无法还原时才为 `None`。
     pub cache_read_cost_nanos: Option<String>,
+    /// cache write 费用；模式不单独收费时通常是确认的 `Some("0")`，只有整组费用不可得或
+    /// 旧记录无法还原时才为 `None`。
     pub cache_write_cost_nanos: Option<String>,
+    /// 各分项费用之和；未知时保持 `None`，确认零时可显示 `"0"`。
     pub total_cost_nanos: Option<String>,
+    /// 本次结算计算完成的 epoch 毫秒。
     pub calculated_at_ms: i64,
+    /// 费用公式/快照结构版本，用于解释历史分项。
     pub pricing_version: i64,
 }
 
@@ -1027,11 +1166,18 @@ pub struct PriceListDto {
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct PriceSyncDto {
+    /// 最近一次成功下载并提交目录的本地 `YYYY-MM-DD`；仅补齐同日缓存时不会推进。
     pub last_success_day: Option<String>,
+    /// store 收到调用者传入 `now` 的目录导入写入时间，epoch 毫秒；不直接等同网络下载
+    /// 完成时刻，也不是当前价格规则更新时间。仅补齐同日缓存时该字段不会改写。
     pub updated_at_ms: Option<i64>,
+    /// 最近一次下载实际插入或覆盖的价格行数。
     pub updated_count: i64,
+    /// 最近一次下载遍历目标中未找到唯一可信目录价格的键数。
     pub unmatched_count: i64,
+    /// 下载目录中通过解析的有效条目总数。
     pub catalog_count: i64,
+    /// 生成状态时的目标列表键，用于判断同日是否只需补齐新增 provider/model。
     pub targets_key: String,
 }
 

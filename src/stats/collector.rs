@@ -65,18 +65,29 @@ impl Protocol {
     }
 }
 
-/// Validated usage numbers for one request.
+/// 一个响应中已经通过类型和范围校验的 token 用量。
+///
+/// 所有字段的单位都是 token。`None` 表示当前没有得到可信值，不能当作 0；`Some(0)`
+/// 表示上游或推导逻辑确认该字段为零。这里保存的是上游发来的用量快照或由已知父字段推导
+/// 出的值，不是 collector 根据响应正文长度估算的 token 数。
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct UsageNumbers {
+    /// 输入（prompt）token 总数，包含缓存读取、缓存写入等输入明细。
     pub input: Option<i64>,
+    /// 输出（completion）token 总数，包含 reasoning 等输出明细。
     pub output: Option<i64>,
+    /// 上游给出的总 token 数；缺失且 input/output 都可信时可由两者相加得到。
     pub total: Option<i64>,
+    /// 输入中命中缓存读取的 token 数，是 `input` 的子集。
     pub cache_read: Option<i64>,
+    /// 输入中写入缓存的 token 数，也是 `input` 的子集。
     pub cache_write: Option<i64>,
+    /// 输出中用于推理的 token 数，是 `output` 的子集，不重复计入 `total`。
     pub reasoning: Option<i64>,
 }
 
 impl UsageNumbers {
+    /// 判断两个事件的全部六个 `Option` 字段是否逐一相同；字段不要求都已知。
     fn same_as(&self, other: &Self) -> bool {
         self.input == other.input
             && self.output == other.output
@@ -157,25 +168,36 @@ impl UsageOutcome {
     }
 }
 
-/// Incrementally merges upstream usage snapshots.
+/// 增量合并上游在不同事件中发送的 usage 快照。
 ///
-/// Only missing fields may be filled in. A parent field (`prompt_tokens`,
-/// `completion_tokens`, `total_tokens`) that two events disagree about
-/// invalidates the whole usage, while a conflicting or unparsable *sub-field*
-/// (cache/reasoning details) is dropped on its own and never discards a
-/// trustworthy parent pair.
+/// 这些事件表示同一请求的累计快照或互补片段，不是需要逐项相加的增量。合并时只补
+/// 当前未知的字段：重复快照忽略；父字段 `prompt_tokens`、`completion_tokens`、
+/// `total_tokens` 一旦出现两个不同的可信值，就丢弃整次用量并永久标记无效。缓存和
+/// reasoning 明细属于子字段：新事件中的子字段无法解析时只忽略该值；两个事件都已知
+/// 同一子字段却不同，则保留先到值并标记 `subfield_invalid`，不会因此单独推翻可信的
+/// input/output。
+///
+/// Java 读者可以把它理解为一个仅在当前响应内使用的可变累积器对象；Rust 中它由
+/// 每个 `Collector` 按值持有，不需要共享实例，也没有跨请求状态。
 #[derive(Debug, Default)]
 pub struct UsageAccumulator {
-    /// 已知字段的累计快照；父用量字段冲突时清空，子字段冲突另行标记。
+    /// 已知字段的合并快照。父字段冲突后会被清空，因此 `is_some()` 不能表示
+    /// “曾经见过 usage”，只能表示当前仍有一组可继续合并的候选值。
     candidate: Option<UsageNumbers>,
-    /// The parent triple is missing, contradictory or conflicts across events.
+    /// 粘滞标志：父字段三元组自相矛盾，或不同事件给出了冲突的父字段。
+    /// 置位后后续事件不能恢复该请求的 usage；`finalize` 会优先返回 Invalid。
     parent_invalid: bool,
-    /// An optional sub-field was rejected; the parent stays complete.
+    /// 粘滞标志：至少一个缓存/reasoning 子字段无法解析或与先到值冲突。
+    /// 父字段仍可保持 Complete/Partial，最终通过 reason 报告明细异常。
     subfield_invalid: bool,
 }
 
-/// Reads one integer field. Returns `Err(())` for values that are present but
-/// cannot be trusted (negative, fractional, string, exponential, too large).
+/// 按 `keys` 指定的对象路径读取一个非负整数 token 字段。
+///
+/// 返回 `Ok(None)` 只表示字段不存在或显式为 `null`；返回 `Err(())` 表示字段存在但
+/// 不可信，包括负数、小数、字符串、布尔值、指数形式的 JSON number，或超过 `max`
+/// 的值。函数借用瞬态 `serde_json::Value`，只复制验证后的 `i64`，不会把正文 JSON
+/// 保存到 accumulator。
 fn read_int(value: &Value, keys: &[&str], max: i64) -> Result<Option<i64>, ()> {
     let mut current = value;
     for key in keys {
@@ -201,12 +223,21 @@ fn read_int(value: &Value, keys: &[&str], max: i64) -> Result<Option<i64>, ()> {
 }
 
 impl UsageAccumulator {
-    /// Records one `usage` object seen in the response.
+    /// 吸收一个从响应事件中识别到的 `usage` JSON 对象。
     ///
-    /// 输入只应是一个已经解析成功、类型为对象的 `usage` JSON。函数只读取白名单字段，
-    /// 不累加重复快照：缺失字段可由后续事件补齐，父字段冲突会把整体标为无效。可选
-    /// 子字段冲突时保留先前值并标记异常，不使可信的 input/output 失效。状态保存在 accumulator，
-    /// 由 `finalize` 在 body 结束时转换；本函数无 I/O，也不直接写统计队列。
+    /// 调用来源是 `inspect`：SSE 每解析出一个完整 data 事件，或非流式 JSON body 在
+    /// EOF 解析成功时，都可能调用这里。输入只是 `&Value` 借用，本函数不拥有响应或
+    /// JSON，也不产生返回值；它按以下顺序修改当前 accumulator：
+    ///
+    /// 1. 校验 input/output/total 三个父字段，并拒绝单事件内部 `total != input + output`
+    ///    的矛盾；total 缺失时可由两个已知父字段推导。
+    /// 2. 校验缓存写入、缓存读取和 reasoning 子字段；超过父字段的值会被丢弃，当前
+    ///    实现不会仅因这种“上界过滤”设置 `subfield_invalid`。
+    /// 3. 父字段非法时清空候选并留下粘滞 Invalid；否则忽略完全相同快照、拒绝冲突的
+    ///    父字段，并用新事件补齐仍然未知的字段。
+    ///
+    /// 这是一次同步内存更新，不跨 `await`，也没有 I/O。失败通过最终状态表达，不返回
+    /// `Result`；一旦父字段冲突，本请求没有“恢复为之前快照”的路径。
     pub fn observe(&mut self, usage: &Value) {
         let mut invalid_parent = false;
         let mut invalid_subfield = false;
@@ -322,11 +353,27 @@ impl UsageAccumulator {
         }
     }
 
+    /// 当前 `candidate` 是否仍是 `Some`；它不判断这组 usage 最终是否有效。
+    ///
+    /// 父字段冲突发生时会清空候选，因此该次调用后可能返回 `false`。但 `observe` 没有
+    /// 在入口检查粘滞的 `parent_invalid`，后续正常事件仍可能重新填入 `candidate`，使
+    /// 此函数再次返回 `true`；最终仍由 `finalize` 优先依据 `parent_invalid` 返回
+    /// Invalid。`Collector::finish` 只用它判断当前是否留有候选，不能把它解释为
+    /// “从未见过 usage”“usage 有效”或“父字段冲突后永远为 false”。
     pub fn saw_usage(&self) -> bool {
         self.candidate.is_some()
     }
 
-    /// Resolves the accumulated state into a final answer.
+    /// 在响应 body 结束时把累积状态转换成可入统计队列的最终判定。
+    ///
+    /// 优先级固定为：父字段冲突 -> Invalid；没有候选 -> Missing；input/output 都
+    /// 已知 -> Complete；否则 Partial。父字段 Invalid 时所有数值均为 `None`，避免
+    /// 把相互矛盾的值写入 SQLite。`fallback_reason` 只用于“从未形成候选”的 Missing，
+    /// 不会覆盖 Partial 的 `NoUsage`/`InvalidNumbers`，也不会把 `None` 改成零。
+    ///
+    /// 本函数只克隆少量整数字段用于构造输出，不做 I/O，不改 accumulator。当前
+    /// OpenAI Chat 风格解析能证明 cached tokens 是 input 的子集，但证明不了缓存读/写
+    /// 与未缓存输入互斥，因此这里最多标成 `ReadSubset`，`uncached` 始终为 `None`。
     pub fn finalize(&self, fallback_reason: UsageReason) -> UsageOutcome {
         if self.parent_invalid {
             return UsageOutcome {
@@ -642,12 +689,11 @@ impl Collector {
         }
     }
 
-    /// True when the response ended the way its protocol requires.
+    /// 解析有界的非流式 JSON 副本一次，并记住 body 判定。
     ///
-    /// A non-streaming body is complete once EOF arrives; an unknown content
-    /// type is judged at the transport level, while usage stays missing.
-    /// Parses the bounded non-streaming copy exactly once and remembers the
-    /// verdict. Safe to call from `terminal`, `finish` and `Drop`.
+    /// 可由终态处理、`finish` 或 `Drop` 路径重复调用；`json_settled` 保证真正的解析
+    /// 和 `usage.observe` 最多发生一次。空副本不额外标成 malformed，非空但 JSON
+    /// 解析失败会设置 `parse_error`；`error` 成员存在且值不是 `null` 时设置协议错误。
     pub fn settle_json(&mut self) {
         if self.json_settled {
             return;
@@ -681,6 +727,11 @@ impl Collector {
         self.json_verdict
     }
 
+    /// 响应是否已满足其 framing 的完整结束条件。
+    ///
+    /// SSE 必须看到 `[DONE]` 且没有协议错误。JSON 和 Unknown 的结束由 transport
+    /// 负责，因此这里对两者直接返回 `true`，本函数本身不证明已经读到 EOF。此标志只
+    /// 描述 collector 能看到的 framing 条件，不等于请求业务成功，也不保证 usage 完整。
     pub fn stream_complete(&self) -> bool {
         match self.protocol {
             Protocol::Sse => self.done && !self.protocol_error,

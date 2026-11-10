@@ -50,12 +50,12 @@ flat/read_discount/disjoint沿用原计算公式，每项独立half-up到纳单�
 - 有价格记录但某个单价输入留空：该项保存0；不能以NULL混淆默认0。
 - 明确未发上游：金额0、status=not_applicable；Token保持原有不适用语义。
 - 有手动价格，已知用量能够计算：status=priced，金额落库。
-- 有手动非零价格但缺必需Token/缓存拆分：金额仍未知、status=usage_incomplete/unsupported_breakdown，不能把“缺用量”误当“缺价格”。若所需各项单价均0可直接落0。
+- 有已配置价格但缺必需Token/缓存拆分：金额仍未知、status=usage_incomplete/unsupported_breakdown，不能把“缺用量”误当“缺价格”。当前 `pricing::settle` 即使收到全0单价，仍检查完整用量和模式所需拆分；只有外层 `price_source=default_zero` 分支会在缺用量时直接给默认零金额。
 - 默认币种由stats_settings.default_currency提供（初始CNY，可设置USD）。缺价调用复制当时默认币种；以后改默认币种不改变历史。
 
 ## 4. Rust接入
 
-writer加载/维护当前价格缓存，提供按provider/model查找的不可变快照。只缓存已配置路由需要的价格，复用现有有限路由规模；不能让热路径同步查SQLite或复制全价格表。
+writer加载/维护当前价格缓存，提供按provider/model查找的不可变快照。当前 `load_price_cache` 读取全部当前价格记录；请求热路径只复制匹配键的小型快照，不同步查SQLite，也不复制全价格表。
 
 配置变更在SQLite事务提交成功后发布新缓存。Start接纳时从已发布缓存复制小型`PriceSnapshot`进RequestGuard和Start事件：
 
@@ -73,7 +73,7 @@ writer在Start事务创建费用快照行，status=pending，金额暂空；Fini
 
 Finish更新条件必须保证终态只结算一次；重复事件不能覆盖已结算快照/金额。查询dashboard、series、breakdown只聚合usage_costs中的已存金额；详情直接返回明细中的单价快照。
 
-价格保存/删除失败不发布缓存，不反馈成功；并发调价以事务提交和缓存发布顺序为边界。进行中请求、普通转发、连接测试均用相同快照机制。
+价格保存/删除在数据库提交并成功重建缓存后，才向请求路径发布新缓存；提交后读取或重建缓存仍可能失败，因此错误回复不能一概证明数据库未改变。并发调价以事务提交和缓存发布顺序为边界。进行中请求、普通转发、连接测试均用相同快照机制。
 
 ## 5. 价格界面和接口
 

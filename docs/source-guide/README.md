@@ -1,6 +1,6 @@
 # 从 Java / Spring Boot 进入 WorkBuddy Proxy 源码
 
-这份导读面向会写 Java / Spring Boot、第一次接触 Rust 的开发者。目前覆盖服务与界面的核心骨架、协议转换和统计持久化：应用怎样启动，配置怎样变成路由，界面操作怎样进入核心，一次请求怎样转换与返回，以及统计怎样在旁路入队、落库和恢复。阅读时把代码中的中文注释与本文对照；定价、查询聚合、历史导入和自动更新的深层算法，留作后续专题。
+这份导读面向会写 Java / Spring Boot、第一次接触 Rust 的开发者。目前覆盖服务与界面的核心骨架、协议转换、统计持久化及用量定价：应用怎样启动，配置怎样变成路由，界面操作怎样进入核心，一次请求怎样转换与返回，以及统计怎样在旁路入队、计费、落库和恢复。阅读时把代码中的中文注释与本文对照；查询聚合、历史导入和自动更新的深层算法，留作后续专题。
 
 ## 先建立项目地图
 
@@ -42,7 +42,7 @@ flowchart LR
 3. 读 `src/config.rs` 的 `Config / Provider / Model / Connection`，分清持久化对象与运行时投影；再跟到 `Bridge::new` 和 `Bridge::routes`。
 4. 按 [服务核心流程](SERVICE_CORE.md) 跟踪 `relay_to`，分别进入 Chat 直通与 `proxy::native::relay`；第一遍不必钻进每一种协议的状态机。
 5. 读 `gpui/src/main.rs → ui::Proxy::new`，再按 [界面核心流程](UI_CORE.md) 跟一次保存操作，直到核心响应被合并回界面状态。
-6. 按 [统计持久化导读](STATS_PERSISTENCE.md) 读 `RequestGuard → EventQueue → stats-writer → SQLite`，分清终态发布、事务提交和故障修复，再跟统计页的调度与过期回复过滤。
+6. 按 [统计持久化导读](STATS_PERSISTENCE.md) 读 `RequestGuard → EventQueue → stats-writer → SQLite`，分清终态发布、事务提交和故障修复，再按 [用量与费用导读](STATS_USAGE_PRICING.md) 理解 token、单价快照和金额，最后跟统计页的调度与过期回复过滤。
 7. 需要理解协议细节时，进入 [协议转换总览](PROTOCOL_CONVERSION.md)，依次跟请求、响应与多轮工具回放。
 8. 最后用下方的练习验证理解；遇到具体专题再进入现有统计和更新文档。
 
@@ -128,7 +128,8 @@ cargo test --manifest-path gpui/Cargo.toml --locked external_save64_refreshes_cl
 后续可按需求继续深入：
 
 - [协议转换源码专题](PROTOCOL_CONVERSION.md)：请求编码、输出归一、SSE 分帧、各协议状态机和回放绑定；具体支持范围对照 [使用说明](../protocol-compat/USAGE.md) 和 [契约](../protocol-compat/CONTRACTS.md)。
-- [统计持久化源码专题](STATS_PERSISTENCE.md)：双槽预约、请求守卫、SQLite 事务、迁移、故障修复和关闭边界；查询与定价继续从 [统计实现入口](../statistics/DEVELOPMENT.md) 阅读。
+- [统计持久化源码专题](STATS_PERSISTENCE.md)：双槽预约、请求守卫、SQLite 事务、迁移、故障修复和关闭边界。
+- [用量与费用源码专题](STATS_USAGE_PRICING.md)：累计 usage、输入拆分、价格匹配与快照、整数金额及结算状态；查询继续从 [统计实现入口](../statistics/DEVELOPMENT.md) 阅读。
 - [WorkBuddy 用量导入](../workbuddy-import/README.md)：文件读取、归属、去重、检查点与 ACK。
 - [桌面应用](../DESKTOP.md)、[更新与恢复](../AUTO-UPDATE.md)：平台桥接、窗口生命周期、安装与更新。
 

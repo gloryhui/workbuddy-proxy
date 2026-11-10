@@ -1409,28 +1409,62 @@ fn load_provider_modes(
     Ok(modes)
 }
 
-/// Finds the single price rule covering `started_at_ms`, or `None` (unpriced).
-/// Immutable copy of the unit prices one request is admitted with.
+/// 请求准入时冻结的一组单价，不是带时间范围的历史价格规则。
 ///
-/// Copied from the published cache when the guard is created, written into the
-/// request's own cost row at `Start`, and used at `Finish`. Editing or deleting
-/// the price configuration later never changes it.
+/// 生产调用者是 `StatsHandle::begin`：请求先通过启用/关闭检查，`snapshot_for` 从进程内
+/// 发布缓存按 `(provider_id, upstream_model)` 精确复制本结构并写入 `RequestMeta`，之后
+/// `RequestGuard::begin` 才原子预约两个队列容量。预约失败时元数据随本次调用丢弃，也不会
+/// 产生 Start 行；预约成功后 `apply_batch_once` 在处理 Start 时把同一份价格写入
+/// `usage_costs` 的 pending 行，`finish_request` 再使用这条请求自己的快照结算。之后编辑
+/// 或删除当前价格不会回到这条请求上。这个文件中的价格操作运行在 Core 的 stats-writer
+/// 线程；准入只读共享缓存，不查 SQLite。
+///
+/// 费率单位统一是“每 1,000,000 token 的 nano 货币单位”，例如
+/// `2_000_000_000` 表示 USD/CNY 2/M token。`currency` 只允许 `USD` 或 `CNY`，
+/// `input_mode` 为 `flat`、`read_discount` 或 `disjoint`。`price_snapshot_at_ms` 是
+/// 本请求取价的 epoch 毫秒，不是价格规则最后编辑时间；`snapshot_for` 会用本次准入时间
+/// 覆盖从规则行读出的旧更新时间。
+///
+/// `Clone` 会复制本结构，包括 `Option<String>` 中拥有的 price id；这不是 Spring 自动
+/// 注入，也不是锁对象克隆。`None` 在 id/revision 上表示快照来自“没有匹配规则”的零价格
+/// 默认值，而不是一条可编辑规则。
 #[derive(Clone, Debug, PartialEq)]
 pub struct PriceSnapshot {
+    /// 取价时 `stats_model_prices.price_id` 的追踪副本。
+    ///
+    /// 仅用于把历史费用关联回当时的配置；费用查询不会 join 当前价格表，所以该配置删除后
+    /// 历史行仍可解释。显式零默认快照没有来源规则，因此为 `None`。
     pub source_price_id: Option<String>,
+    /// 取价时来源价格行的乐观并发 revision；显式零默认快照为 `None`。
     pub source_price_revision: Option<i64>,
+    /// 持久化来源类别：普通价格表快照写 `"manual"`，未命中时写 `"default_zero"`。
+    ///
+    /// `"manual"` 是既有 wire/schema 值，覆盖人工编辑和目录自动导入的价格；不能据此判断
+    /// 价格由谁输入。`"default_zero"` 才表示当前发布缓存没有该 provider/model 的规则。
     pub price_source: &'static str,
+    /// 该快照使用的计价币种：`USD` 或 `CNY`；不在此处做汇率换算。
     pub currency: &'static str,
+    /// 输入 token 的计价方式：`flat`、`read_discount` 或 `disjoint`。
     pub input_mode: &'static str,
+    /// 普通输入费率，单位 nano 货币单位/1,000,000 token。
     pub input_rate_nanos: i64,
+    /// 输出费率，单位 nano 货币单位/1,000,000 token。
     pub output_rate_nanos: i64,
+    /// cache read 费率，单位 nano 货币单位/1,000,000 token；0 也是显式已配置的零价。
     pub cache_read_rate_nanos: i64,
+    /// cache write 费率，单位 nano 货币单位/1,000,000 token；0 也是显式已配置的零价。
     pub cache_write_rate_nanos: i64,
+    /// 本请求准入取价时的 epoch 毫秒。
     pub price_snapshot_at_ms: i64,
 }
 
 impl PriceSnapshot {
-    /// The explicit zero default used when no price is configured.
+    /// 发布缓存没有匹配 `(provider_id, upstream_model)` 时采用的政策性零价快照。
+    ///
+    /// `now_ms` 是本请求准入时间，写入 `price_snapshot_at_ms`。该类别走独立的结算分支：
+    /// 上游从未开始时记为 `not_applicable`，已开始但没有完整 usage 时也会按明确配置的
+    /// 默认零价记 `default_zero`。它与价格表中“所有费率恰好配置为 0”的 `manual` 快照
+    /// 不同；后者仍要求 Complete usage 后才按普通规则计算为 0。
     pub fn default_zero(currency: &'static str, now_ms: i64) -> Self {
         Self {
             source_price_id: None,
@@ -1447,14 +1481,25 @@ impl PriceSnapshot {
     }
 }
 
-/// Published price cache: the hot path copies a snapshot from here and never
-/// queries SQLite.
+/// 请求路径共享的“已发布价格”句柄，由 `Arc<RwLock<PublishedPrices>>` 组成。
+///
+/// `Arc` 让 Core 请求准入与控制循环持有同一对象的引用；`RwLock` 让准入短暂取得读锁后
+/// 克隆一个 `PriceSnapshot`，控制循环在完整 reload 后用写锁替换整张发布表。生产准入再次
+/// 依赖该缓存而不访问 SQLite。它不等同于 Spring 单例 Bean，也没有跨进程共享含义；
+/// `clone` 这里只增加引用计数。
 pub type PriceCache = Arc<std::sync::RwLock<PublishedPrices>>;
 
-/// The committed current prices, replaced after every successful edit.
+/// 当前价格表的一份可发布内存投影，按 provider id 与上游模型精确索引。
+///
+/// 该结构由 `load_price_cache` 从全部 `stats_model_prices` 行重建。保存、删除或目录导入
+/// 的功能函数先提交 SQLite，再 reload；外层 stats 控制循环在功能函数及其返回查询都成功后
+/// 才把新副本发布到 [`PriceCache`]。因此这是“最近一次成功加载并发布的副本”，不是与
+/// SQLite 联合原子的保证。
 #[derive(Clone, Debug)]
 pub struct PublishedPrices {
+    /// 精确匹配键是 `(provider_id, upstream_model)`；路由别名不会在此层二次解析。
     entries: std::collections::HashMap<(String, String), PriceSnapshot>,
+    /// 当前设置中的默认币种，仅用于没有匹配价格时构造 `default_zero` 快照。
     pub default_currency: &'static str,
 }
 
@@ -1470,7 +1515,9 @@ impl Default for PublishedPrices {
 }
 
 impl PublishedPrices {
-    /// Looks up the snapshot admitted for this provider and model.
+    /// 按 `(provider_id, upstream_model)` 查找当前价格；不做模糊模型匹配或时间匹配。
+    ///
+    /// 返回的是发布表内借用的快照，调用方 `snapshot_for` 会立即克隆并释放读锁。
     pub fn get(&self, provider_id: &str, upstream_model: &str) -> Option<&PriceSnapshot> {
         self.entries
             .get(&(provider_id.to_owned(), upstream_model.to_owned()))
@@ -1491,8 +1538,27 @@ pub fn price_catalog_status(conn: &Connection) -> Result<crate::stats::dto::Pric
     ).optional()?.unwrap_or_default())
 }
 
-/// Fresh downloads replace matching local prices, including manual edits.
-/// Reusing today's catalogue after route changes only initializes missing keys.
+/// 把 models.dev 价格目录映射到配置中的 provider/model，更新当前价格表。
+///
+/// 正常调用链是 `Bridge::sync_prices` 决定是否联网，再把命令交给
+/// `stats` 控制循环；控制循环在 `stats-writer` 线程调用本函数。
+///
+/// - `fresh = Some(prices)` 表示刚刚下载到新目录：本轮可覆盖匹配键的现有价格，包括此前
+///   人工编辑或目录导入的规则；还会把数据库中已存在、但当前路由列表已不包含的模型加入
+///   匹配目标，以便继续刷新这些可编辑规则。
+/// - `fresh = None` 表示复用数据库内同日目录缓存（例如路由列表变化后补齐新增模型）：
+///   只插入尚不存在的键，不覆盖已有价格；现有规则即使本轮没有匹配项也不会被删除。
+///
+/// `targets` 来自配置中的 provider id、upstream endpoint 和 model；`day` 是目录下载完成
+/// 后的本地 `YYYY-MM-DD`，`targets_key` 是目标列表的哈希摘要，`now` 是 epoch 毫秒。
+/// 价格目录中的候选匹配与费率选择由 `price_catalog::Prices::find` 完成；本函数只消费它
+/// 返回的 USD 费率。`updated`/`unmatched` 是本轮目录状态计数，不是删除数。
+///
+/// 价格行和 `stats_price_catalog` 元数据在同一个 SQLite 事务内写入。提交成功后会重新
+/// 加载整张发布缓存并读取同步状态，但这两步不在该事务内：如果后者失败，函数仍可能向
+/// 调用者返回 `Err`，而价格事务已经提交，且共享发布缓存可能暂时保留旧值。只有本函数及
+/// 其返回状态都成功时，外层控制循环才会发布 `writer.prices`；这不构成数据库与内存的
+/// 联合原子保证。
 pub fn import_price_catalog(
     writer: &mut Writer,
     fresh: Option<crate::price_catalog::Prices>,
@@ -1527,8 +1593,8 @@ pub fn import_price_catalog(
         .values()
         .map(|target| (target.provider_id.clone(), target.upstream.clone()))
         .collect();
-    // Prices for models removed from the route list are still editable and
-    // participate in the next explicit/daily refresh by their exact model ID.
+    // 已有价格行即使已从路由列表移除，仍保留其可编辑规则；下载新目录时按数据库中的
+    // 精确 provider/model 键继续匹配。这里不会删除不在 targets 中的旧价格。
     if overwrite {
         let mut statement = writer
             .conn
@@ -1595,11 +1661,26 @@ pub fn import_price_catalog(
         )?;
     }
     tx.commit()?;
+    // reload 在 commit 之后。这里失败不会撤销上面的价格更新，只会令调用者收到 Err，
+    // 并把发布缓存的替换推迟到后续一次成功 reload 或重启。
     writer.prices = load_price_cache(&writer.conn)?;
     price_catalog_status(&writer.conn)
 }
 
-/// Loads the current prices into a publishable cache.
+/// 从 SQLite 重建一份可发布价格快照；不会自行替换 [`PriceCache`]。
+///
+/// 调用者包括 `Writer::open` 以及保存、删除、目录导入后的控制循环。函数先读取设置中的
+/// 默认币种，再查询 **全部** `stats_model_prices` 行，既不按当前路由过滤，也不按请求时间
+/// 选择历史规则。每行投影成一个 `PriceSnapshot`，键为 `(provider_id, upstream_model)`。
+///
+/// 行内币种和 input mode 会防御性解析为支持值，未知值分别回退 `USD` 和 `flat`。持久化行
+/// 的 `price_source` 在这里固定标成 `"manual"`；该类别同时覆盖人工编辑和目录自动导入，
+/// 不是“人工输入”的证明。`price_snapshot_at_ms` 此阶段暂为价格行 `updated_at_ms`，真正
+/// 请求采用该规则时会被 `snapshot_for` 改为本次准入时间。
+///
+/// 返回的 `PublishedPrices` 是独立内存值。生产调用者通常把它赋给 `writer.prices`；控制
+/// 循环随后再把 writer 中的副本发布给请求线程。本函数返回 `Err` 只说明本次读取失败，
+/// 不能据此推断此前某个价格事务是否提交。
 pub fn load_price_cache(conn: &Connection) -> Result<PublishedPrices, DbError> {
     let default_currency = currency_static(&conn.query_row(
         "SELECT default_currency FROM stats_settings WHERE singleton=1",
@@ -1639,8 +1720,16 @@ pub fn load_price_cache(conn: &Connection) -> Result<PublishedPrices, DbError> {
     })
 }
 
-/// Looks a snapshot up in the published cache, falling back to the explicit
-/// zero default. Never touches SQLite.
+/// 为一次即将准入的请求冻结价格；只读 [`PriceCache`]，绝不查询 SQLite。
+///
+/// `provider_id` 和 `upstream_model` 来自已经完成认证与路由解析的 `RequestSpec`，
+/// `now_ms` 是 `StatsHandle::begin` 取得的请求开始 epoch 毫秒。函数按两个键精确查找；
+/// 命中时克隆规则行再覆盖 `price_snapshot_at_ms = now_ms`，所以同一规则服务多个请求时，
+/// 每个请求仍保留各自取价时间。未命中时用当前 `default_currency` 构造 `default_zero`。
+///
+/// 返回拥有所有权的 `PriceSnapshot`，读锁在返回前释放；后续 Start/Finish 不依赖当前价格
+/// 配置。这里的 `clone` 不是跨进程复制，也不代表整个应用状态被克隆；它复制该请求需要的
+/// 小结构及其中拥有的字符串。
 pub fn snapshot_for(
     cache: &PriceCache,
     provider_id: &str,
@@ -1652,8 +1741,7 @@ pub fn snapshot_for(
         .get(provider_id, upstream_model)
         .cloned()
         .unwrap_or_else(|| PriceSnapshot::default_zero(published.default_currency, now_ms));
-    // The stamp records when *this request* took the price, not when the price
-    // was last edited: the same configuration serves many admission times.
+    // 时间戳记录本请求取价，而不是规则最后编辑；同一配置可服务许多准入时刻。
     snapshot.price_snapshot_at_ms = now_ms;
     snapshot
 }
@@ -1731,8 +1819,25 @@ pub fn list_price_rules(
     Ok((out, next))
 }
 
-/// Inserts or updates one current price. Editing or deleting a price is always
-/// allowed: recorded history keeps its own snapshot.
+/// 新建或按乐观并发 revision 编辑一条当前价格。
+///
+/// 入口由 stats 控制循环的 `PriceSave` 分支调用，输入来自设置界面的保存命令。到达本函数
+/// 前，设置表单已把人类金额转换成 nano 整数字符串，管理 API 的 `parse_price_save` 再做字段归一；缺失或空白
+/// 的 input/output/cache 费率字段会成为 `"0"`。因此本函数看到的是已归一 DTO：普通
+/// input/output 仍会做非空、范围等防御校验，缺失字段的“默认零”语义由管理层建立，而不是
+/// 在本函数内再次把 `None` 猜成 0。单位均为 nano 货币单位/1,000,000 token。
+///
+/// `rule_id = None` 是新建流程，生成新 id；若同一 `(provider_id, upstream_model)` 已存在，
+/// 普通新建的 revision 条件不会匹配，返回 `stats_revision_conflict`，调用方应重新读取后
+/// 走编辑。`rule_id = Some` 是编辑：provider/model 不可改变，SQL 以
+/// `price_id + expected_revision` 条件更新并使 revision 加一；id 不存在返回 not found，
+/// revision 不一致返回冲突。这与 Spring 中显式 CAS/乐观锁更新相似，但 revision 来自 DTO
+/// 请求参数，不是框架自动管理。
+///
+/// 校验、写入和 revision 检查在同一个 `IMMEDIATE` 事务内。提交后会单独读取返回 DTO 并
+/// reload 整张价格缓存；任一后续步骤失败都可能返回 `Err`，但事务已经提交，因此这里没有
+/// “Err 必然回滚”或数据库/内存联合原子保证。reload 成功时本函数更新 `writer.prices`；
+/// 外层控制分支随后才发布给请求线程。历史请求仍使用自己在 Start 时冻结的快照。
 pub fn save_price_rule(
     writer: &mut Writer,
     request: &crate::stats::PriceSaveRequest,
@@ -1765,14 +1870,13 @@ pub fn save_price_rule(
             "provider and model are required",
         )));
     }
-    // A blank box means the explicit zero default, so a zero cache rate is a
-    // valid configuration (for example free cache reads) and must be accepted.
+    // 空输入框在本 API 中表示显式 0，而不是未知；所以 0 是合法 cache 费率，
+    // 例如明确配置免费的 cache read/write。
     let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
     let price_id = match &request.rule_id {
         Some(price_id) => {
-            // The provider+model pair identifies the price, so a save that
-            // silently ignored a changed pair would look like an edit while the
-            // list kept the old key. Refuse it instead.
+            // provider/model 是价格身份的键；编辑时若静默忽略改键，列表仍显示旧键而
+            // 用户会误以为改键成功，因此明确拒绝。
             let current: Option<(String, String)> = tx
                 .query_row(
                     "SELECT provider_id, upstream_model FROM stats_model_prices WHERE price_id=?1",
@@ -1808,8 +1912,8 @@ pub fn save_price_rule(
                 },
             )?;
             if changed != 1 {
-                // Telling "no such price" apart from "stale revision" keeps an
-                // unknown id from silently turning an edit into a new row.
+                // 区分“id 已不存在”和“读到的 revision 已过期”，避免未知 id 被误当
+                // 新行插入，也帮助 UI 选择重新加载还是提示并发修改。
                 let exists: Option<i64> = tx
                     .query_row(
                         "SELECT revision FROM stats_model_prices WHERE price_id=?1",
@@ -1865,16 +1969,15 @@ pub fn save_price_rule(
                     ":expected_revision": request.expected_revision.unwrap_or(0),
                 },
             )?;
-            // A conflict whose `WHERE` did not match changed no row: reporting
-            // success there made the caller believe an edit landed when the
-            // database still held the old price.
+            // 普通新建若撞到已有 provider/model，upsert 的 revision WHERE 不匹配会更新
+            // 0 行。必须把冲突返回给调用方，不能把数据库仍保留的旧价格报成创建成功。
             if changed == 0 {
                 return Err(DbError::refused(error(
                     ERR_REVISION_CONFLICT,
                     "a price already exists for this provider and model; edit it instead",
                 )));
             }
-            // The upsert may have kept the original id.
+            // upsert 可能保留原有 price_id，因此重新查询实际键而不是假定新生成的 id。
             tx.query_row(
                 "SELECT price_id FROM stats_model_prices WHERE provider_id=?1 AND upstream_model=?2",
                 rusqlite::params![request.provider_id, request.upstream_model],
@@ -1883,16 +1986,24 @@ pub fn save_price_rule(
         }
     };
     tx.commit()?;
+    // 以下读取和 reload 都发生在 commit 之后。此时即使函数返回 Err，SQLite 中的
+    // 新价格也可能已经生效；不能用 Err 推断事务未提交。
     let dto = price_rule_dto(conn, &price_id)?
         .ok_or_else(|| DbError::refused(error(ERR_UNAVAILABLE, "price was not stored")))?;
-    // Publish only after the transaction is durable: a failed save must not
-    // change what new requests use.
+    // 只有 reload 成功才替换 writer 的内存副本；发布到共享 PriceCache 还由外层控制
+    // 分支完成。若本步失败，数据库已提交而共享缓存可能暂时仍是旧值。
     writer.prices = load_price_cache(conn)?;
     Ok(dto)
 }
 
-/// Deletes one current price. Recorded history is untouched: it keeps its own
-/// snapshot and never references this row.
+/// 按 `price_id + expected_revision` 删除一条当前价格。
+///
+/// 调用者是 stats 控制循环的 `PriceDelete` 分支；`expected_revision` 来自设置界面最近一次
+/// 读取的 DTO，用来防止另一轮编辑先发生后被旧页面覆盖。删除只影响后续请求取价；历史费用
+/// 行保留自己的价格快照和可追踪的 `source_price_id`，不依赖该行继续存在。
+///
+/// 删除与 revision 条件在同一事务内。commit 之后的缓存 reload 或后续发布仍可能失败，
+/// 所以函数返回 `Err` 不等于删除一定未发生；只有完整成功路径才会让新请求立即看到新缓存。
 pub fn delete_price_rule(
     writer: &mut Writer,
     price_id: &str,
@@ -1911,8 +2022,8 @@ pub fn delete_price_rule(
         )));
     }
     tx.commit()?;
-    // Recorded history keeps its own snapshot, so deleting a price only changes
-    // what *new* requests will use.
+    // 历史费用保留自己的快照，删除仅用于改变之后的准入取价。reload 在 commit 后，
+    // 因而失败时数据库删除可能已经生效，共享缓存则可能保持旧值。
     writer.prices = load_price_cache(conn)?;
     Ok(())
 }
@@ -2392,16 +2503,24 @@ fn settle_abandoned_cost(
 
 /// 把一条 `FinishRecord` 合并到已存在的请求行，并结算其费用行。
 ///
-/// 调用者是 `apply_batch_once`，输入 `tx` 由外层批次持有，`now_ms` 是写入时的 epoch
-/// 毫秒。函数先只更新仍为 `in_flight` 的同一 request id；若没有更新（重复 Finish、
-/// Start 未落库或请求已终态），立即返回 no-op，因此重复事件不会重复累计费用。
+/// 调用者是 `apply_batch_once`；`tx` 由该写入路径持有，`request_id` 来自 Finish 事件，
+/// `finish` 来自请求 guard 形成的终态记录，`now_ms` 是写入时的 epoch 毫秒。函数先用
+/// `outcome='in_flight'` 条件更新请求；重复 Finish、Start 未落库或请求已终态时更新 0 行，
+/// 立即 no-op，因此不会覆盖已经结算的快照/金额或再次累计费用。
 ///
-/// 更新成功后读取 Start 时保存的 pending 价格快照，计算结算状态并在同一事务写费用。
-/// 任一数据库错误都返回给 `apply_batch_once`，该次整批事务不提交；所以同批 Start 与
-/// Finish 会一起回滚。若二者本来就在不同批次，先提交的 Start 仍会保留，之后由恢复流程
-/// 把无法完成的生命周期收敛为中断。费用正常来自 Start 写入的 pending 快照；若该行不在，
-/// `write_cost_maybe_correcting` 会在 request id 唯一约束下尝试兜底插入，重复 Finish 不会
-/// 再次走到这一步，因为上面的请求条件更新已经返回 0。
+/// 更新成功后会读取 Start 写入的费用 pending 行，取其中的价格快照。该查询是完成流程的
+/// 前提：目标行缺失会返回 SQLite 错误，本函数不会在这里另行插入费用行。随后：
+///
+/// - `price_source='default_zero'` 是“没有匹配到当前价格”的政策性零价，不要求 Complete
+///   usage。上游从未开始时写 `NotApplicable/0`，已开始时写 `DefaultZero/0`。
+/// - 其他来源目前都写作 `'manual'`，包括人工编辑和目录自动导入。它们交给
+///   `pricing::settle`；即使规则中所有费率均为 0，也必须先有 `UsageStatus::Complete`，
+///   否则写 `UsageIncomplete`，不会像 `default_zero` 一样绕过 usage 完整性。
+///
+/// 金额未知或分解不受支持时，`parts` 为 `None`，数据库金额列为 NULL；这里不把未知伪造为
+/// 0。本函数不拥有事务提交权：数据库错误向上返回，由调用者的整批事务或逐事件隔离路径
+/// 决定回滚当前事务。若同批 Start/Finish 位于同一事务，它们会一起回滚；若 Start 已在先前
+/// 事务提交，则它会保留，并由后续恢复流程处理未完成生命周期。
 fn finish_request(
     tx: &rusqlite::Transaction<'_>,
     request_id: &str,
@@ -2445,12 +2564,11 @@ fn finish_request(
         },
     )?;
     if updated != 1 {
-        // A duplicate `Finish` (or a missing `Start`) must not double count and
-        // must never overwrite an already settled snapshot or amount.
+        // 重复 Finish、缺失 Start 或已有终态必须是 no-op，不能覆盖已结算快照/金额。
         return Ok(());
     }
-    // The snapshot written at `Start` is the only price source here: the current
-    // configuration may have been edited or deleted since.
+    // Start 写入的 pending 快照是唯一取价来源；当前配置可能已经编辑或删除。
+    // query_row 不是 optional：pending 行缺失会报错，而不是在这里兜底创建费用行。
     let snapshot = tx.query_row(
         "SELECT price_source, currency, input_mode, input_rate_nanos, output_rate_nanos,
                 cache_read_rate_nanos, cache_write_rate_nanos
@@ -2484,8 +2602,8 @@ fn finish_request(
         uncached: finish.input_uncached_tokens,
     };
     let (status, parts) = if price_source == "default_zero" {
-        // An explicit zero price is a confirmed zero amount, even when the usage
-        // never arrived: nothing is being hidden by recording 0 here.
+        // 这是“没有匹配规则”的政策性零价，不依赖 usage Complete。上游未开始与已开始
+        // 分别表达为 not_applicable 和 default_zero；它不是价格表里全 0 的 manual 规则。
         if !finish.upstream_started {
             (CostStatus::NotApplicable, Some(CostParts::zero()))
         } else {
@@ -2507,8 +2625,8 @@ fn finish_request(
             cache_write_rate_nanos: write_rate,
         };
         let settlement = pricing::settle(Some(&rule), &usage, finish.upstream_started);
-        // `settle` returns no parts for the statuses whose amount is genuinely
-        // unknown; those must stay NULL rather than become a fake zero.
+        // 普通价格规则（含全 0 的 manual 规则）由 settle 要求 Complete usage；
+        // 未知或无法支持的分解返回 None，金额必须保持 NULL，不能变成假 0。
         (settlement.status, settlement.parts)
     };
     write_cost(tx, request_id, status, parts, now_ms)

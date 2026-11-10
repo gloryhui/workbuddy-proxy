@@ -423,6 +423,6 @@ server future / _control/stop / Ctrl-C
 以下算法只在这里交代入口，不在本文展开：
 
 - 各上游协议的编码、SSE 状态机和 replay 数据格式，由 [协议转换源码专题](PROTOCOL_CONVERSION.md) 展开；具体支持范围见 [协议支持文档](../protocol-compat/USAGE.md)；
-- SQLite 迁移、事务及故障恢复见 [统计持久化导读](STATS_PERSISTENCE.md)；查询和定价从 [统计开发文档](../statistics/DEVELOPMENT.md) 继续；
+- SQLite 迁移、事务及故障恢复见 [统计持久化导读](STATS_PERSISTENCE.md)；token、价格快照与金额见 [用量与费用导读](STATS_USAGE_PRICING.md)；查询从 [统计开发文档](../statistics/DEVELOPMENT.md) 继续；
 - WorkBuddy 日志导入、配置同步、去重与更新恢复，分别从 `src/stats/workbuddy_import/`、`src/workbuddy.rs` 和 [自动更新文档](../AUTO-UPDATE.md) 继续；
 - GPUI 页面状态、任务调度和表格交互由界面专题文档覆盖。
