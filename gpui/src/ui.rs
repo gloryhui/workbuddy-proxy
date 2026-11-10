@@ -1,3 +1,11 @@
+//! 设置窗口的主页面状态与事件协调器。
+//!
+//! 上游入口是 `main.rs` 的窗口创建闭包和 GPUI 输入/快捷键；下游包括共享的
+//! `backend::Backend`（供应商与配置命令）、内嵌的 `Statistics` Entity（统计
+//! 页面）、配置/草稿文件以及帮助、更新等子流程。`Proxy` 和它持有的输入
+//! Entity、表格 Entity 都归 GPUI UI 上下文所有；网络 I/O 在后台 worker，
+//! 完成后由定时 `tick` 回到 UI 线程合并并调用 `cx.notify()` 重绘。
+
 mod autostart_notice;
 mod language_menu;
 mod log_scroll;
@@ -184,30 +192,51 @@ fn preset_choices(zh: bool) -> provider_choices::MenuChoices {
     )
 }
 pub struct Proxy {
+    /// 当前实例目录。后台 HTTP worker、草稿文件和 wake/stop 标记共享的是
+    /// 这个路径，而不是共享内存中的 Config。
     dir: PathBuf,
+    /// 顶层页面。`match` 是穷尽枚举分支；界面只会在 Providers/Statistics
+    /// 两种布局中选择，不存在字符串页面名带来的未知分支。
     page: Page,
     providers_expanded: bool,
+    /// 统计页是独立 GPUI Entity；`clone()` 得到的仍是同一实体句柄，不会
+    /// 复制 dashboard、分页游标或后台 scheduler。
     statistics: Entity<Statistics>,
+    /// 最近一次可信任的已保存配置快照，用于和 Core 回读配置及干净草稿对比。
     cfg: Config,
+    /// 当前窗口的供应商草稿和创建流程记录；用户输入先进入这里，保存成功
+    /// 才通过回复合并回 `cfg`。
     drafts: Drafts,
+    /// 正在编辑的供应商 ID 集合，外部配置轮询不能覆盖这些表单。
     provider_edits: provider_edit::ProviderEdits,
     /// Completion context is only known for successful creations in this window.
     /// Existing saved rows must not acquire an extra completion badge.
     saved_creations: BTreeMap<String, provider_new::CreationKind>,
+    /// 当前窗口内显式连接测试的收据。它不是持续健康探测，输入变化会使旧
+    /// 收据失效。
     connections: crate::provider_connection::Connections,
     provider_profile_focus: FocusHandle,
+    /// 有界 Job/Reply channel 的 UI 端。`Proxy` 只在 `try_send/try_recv`
+    /// 处与它交互；真正的管理 HTTP 在 `settings-control` 线程执行。
     backend: Backend,
     zh: bool,
+    /// 一个普通设置 Job 从入队到 Reply 被消费期间为 true，用来禁用会与
+    /// 当前命令竞争的按钮并防止重复提交。
     busy: bool,
+    /// 每 2 秒只允许一个 background `poll`；它与 `busy` 分开，因为 poll
+    /// 不应禁用整个编辑表单。
     polling: bool,
     /// Last real core health observed by `tick`'s poll loop; the window skeleton
     /// reports this instead of a hardcoded "running" label (difference D13).
     core_state: CoreState,
+    /// 自动模型信息读取的单飞（single-flight）标记；只有空闲时才发起下一批。
     metadata_polling: bool,
     metadata_context: Value,
     last_metadata: Instant,
     status: String,
     error: bool,
+    /// 输入控件自身也是 GPUI Entity。`read(cx)` 借用当前值，`update(cx, ..)`
+    /// 才进入该控件的 Context 修改并产生事件；这些不是 Spring 注入的字段。
     name: Entity<InputState>,
     key: Entity<InputState>,
     url: Entity<InputState>,
@@ -230,6 +259,8 @@ pub struct Proxy {
     summary: String,
     proxy_address: String,
     proxy_counts: [u64; 3],
+    /// 当前供应商表单的模型行副本。编辑、选择和删除先修改这里，再由
+    /// `capture` 投影为 `Draft`；它不等同于 Core 路由表。
     models: Vec<Value>,
     effort: String,
     selection: Selection,
@@ -279,8 +310,12 @@ pub struct Proxy {
     autostart_notice: autostart_notice::State,
     update_notice: update_notice::State,
     wake: String,
+    /// 最近一次 poll 发起时刻，用于 2 秒节流；不是 Reply 到达时刻。
     last_poll: Instant,
+    /// 上次持久化的草稿摘要，避免每个 250ms tick 都重写未变化的文件。
     last_dirty: String,
+    /// 定时任务句柄由 Entity 持有。任务每秒轮询四次，但只有真实 Reply、
+    /// 轮询截止或草稿变化等路径才产生可见更新。
     _timer: Task<()>,
 }
 fn input(
@@ -650,6 +685,20 @@ impl Proxy {
     pub(crate) fn t(&self, zh: &'static str, en: &'static str) -> &'static str {
         if self.zh { zh } else { en }
     }
+    /// 构造主设置页及其子 Entity。
+    ///
+    /// 调用方是 `main.rs` 的 `open_window` 闭包；本函数运行在 GPUI UI 线程，
+    /// 收到启动时读取的 `cfg` 和实例目录。执行顺序可概括为：
+    ///
+    /// 1. 载入按配置指纹校验的供应商草稿，创建普通设置 worker 与统计 Entity；
+    /// 2. 通过 `cx.new` 创建输入框、选择器、模型表和模型选择器等子 Entity；
+    /// 3. 用弱引用连接父页面与子 Entity，订阅输入/选择事件并装载当前表单；
+    /// 4. 建立每 250ms 的 UI tick，刷新配置快照、排空后台 Reply、执行节流轮询；
+    /// 5. 注册窗口关闭时的草稿持久化和窗口 PID 状态文件。
+    ///
+    /// 各 `subscribe/observe` 回调只登记到 GPUI runtime，回调真正执行时仍在
+    /// UI 上下文。`move` 闭包取得其所用值的所有权；`WeakEntity::update`
+    /// 在目标 Entity 已释放时返回错误，从而避免子组件让父页面永久不可回收。
     pub fn new(dir: PathBuf, cfg: Config, window: &mut Window, cx: &mut Context<Self>) -> Self {
         let zh = cfg.language == "zh"
             || (cfg.language == "auto"
@@ -673,6 +722,8 @@ impl Proxy {
             window,
             cx,
         );
+        // 当前 Proxy 持有普通设置队列，子 Entity Statistics 持有统计队列。
+        // 两个 worker 独立接收任务；释放 UI 发送端不会强制中止已执行的 HTTP。
         let backend = Backend::new(dir.clone());
         let statistics = cx.new(|cx| Statistics::new(dir.clone(), zh, window, cx));
         let name = input(
@@ -766,6 +817,9 @@ impl Proxy {
         let focus = cx.focus_handle();
         let table_focus = cx.focus_handle().tab_stop(true);
         let modal_focus = cx.focus_handle();
+        // 表格与候选列表必须观察父页面，但父页面又持有它们。保存
+        // `WeakEntity<Proxy>` 可以避免这条反向边形成所有权环；需要读取父状态
+        // 时显式 `update`，失败表示窗口/页面已经销毁。
         let picker_owner = cx.entity();
         let owner = picker_owner.downgrade();
         let picker_list = cx.new(|cx| {
@@ -802,6 +856,9 @@ impl Proxy {
         // private single-selection focus stays usable by pointer, but is not a
         // second Tab stop. FocusHandle clones share this registered setting.
         model_table.read(cx).focus_handle(cx).tab_stop(false);
+        // `spawn_in` 创建与当前窗口/Context 关联的异步任务。`move` 把 UI
+        // task handle 等值移入协程；后台定时器只负责等待，`update_in` 才把
+        // 控制权切回 UI 并调用 `tick`。这不是在 HTTP 请求线程中操作界面。
         let timer = cx.spawn_in(window, async move |this, cx| {
             loop {
                 cx.background_executor()
@@ -909,6 +966,10 @@ impl Proxy {
             last_dirty: String::new(),
             _timer: timer,
         };
+        // `subscribe_in` 观察子 Entity 在指定窗口内发出的事件。闭包中的
+        // `this` 是父页面状态的可变引用，`cx` 是它的 Context；修改后调用 `cx.notify()`，
+        // GPUI 才会把该 Entity 标记为需要重绘。没有 Spring EventListener 的
+        // 自动代理或事务边界。
         cx.subscribe_in(
             &this.protocol_select,
             window,
@@ -1047,6 +1108,8 @@ impl Proxy {
         .detach();
         let weak = cx.entity().downgrade();
         window.on_window_should_close(cx, move |_, cx| {
+            // 关闭前把可见输入投影到草稿并持久化。弱引用 update 失败时不会
+            // 阻止窗口关闭；成功路径也只写设置进程自己的草稿文件。
             let _ = weak.update(cx, |this, cx| {
                 this.capture(cx);
                 let _ = this.drafts.persist(&this.dir);
@@ -1129,6 +1192,12 @@ impl Proxy {
     fn selected(&self) -> String {
         self.drafts.selected.clone()
     }
+    /// 把当前输入 Entity 和模型列表投影成当前供应商 `Draft`。
+    ///
+    /// 这是单向的状态收集：输入框值、协议设置、统一 effort 和 `models` 行
+    /// 写入 `Drafts.providers`，不会保存 Config 或发送 HTTP。过程若使可见字段
+    /// 变化，会同步 `Connections.observe`，使旧测试收据失效；真正磁盘持久化
+    /// 仍由 tick/关闭窗口等调用方决定。
     fn capture(&mut self, cx: &App) {
         if self.drafts.selected.is_empty() {
             return;
@@ -1158,6 +1227,11 @@ impl Proxy {
         }
         self.drafts.providers.insert(id, draft);
     }
+    /// 从当前 `Draft` 重建表单输入。
+    ///
+    /// 切换供应商、成功保存以及可信外部刷新都可调用它。这里会重置模型选择，
+    /// 并通过 `Entity::update` 把值写入 GPUI 输入控件；选择器事件订阅不会把它
+    /// 当作一次 Core 写入，真正的保存仍需用户/动作再次提交。
     fn load_form(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if !self.drafts.providers.contains_key(&self.drafts.selected) {
             self.drafts.selected = self
@@ -1196,6 +1270,12 @@ impl Proxy {
         self.selection = Selection::default();
         cx.notify();
     }
+    /// 把一批已构造的管理步骤交给普通设置 worker。
+    ///
+    /// `try_send` 在 UI 线程执行；成功只表示已经进入有界 channel，不表示
+    /// Core 已执行。随后 `busy=true` 禁用竞争操作，真正结果由 `tick` 读取
+    /// `Reply`。队列满或 worker channel 已断开时不会阻塞界面，也不会把
+    /// 当前操作当成成功；调用方仍可在稍后重新提交。
     fn send(&mut self, tag: &str, steps: Vec<Value>, cx: &mut Context<Self>) {
         if self.busy {
             return;
@@ -1218,6 +1298,11 @@ impl Proxy {
         }
         cx.notify();
     }
+    /// 从当前输入和已选供应商构造 Save 步骤。
+    ///
+    /// `capture` 先把所有可见字段及模型行投影到 `Draft`。普通已保存供应商
+    /// 产生一条 `save`；本地 pending 创建则改为 `ui_create_provider` 请求，
+    /// 由后台负责创建、真实 ID 绑定和最终保存。这里不读取 Core，也不入队。
     fn save_steps(&mut self, cx: &App) -> Vec<Value> {
         self.capture(cx);
         self.drafts
@@ -1237,6 +1322,8 @@ impl Proxy {
             })
             .unwrap_or_default()
     }
+    /// 快捷键/按钮保存入口。模态编辑期间直接返回，避免把半编辑模型行或
+    /// 对话框里尚未确认的值误写入草稿。
     fn save(&mut self, _: &Save, _: &mut Window, cx: &mut Context<Self>) {
         if self.picker.is_some()
             || self.editing.is_some()
@@ -1255,6 +1342,14 @@ impl Proxy {
             self.send("save", steps, cx);
         }
     }
+    /// 显式连接测试入口。
+    ///
+    /// Test 会先保存当前草稿，再执行 `test`，因为 Core 的连接测试针对可解析
+    /// 的保存配置。只要调用前不忙且当前草稿存在，UI 就在 `send` 后登记一次
+    /// `Connections` Test Attempt，登记本身不取决于队列是否接收。入队成功时
+    /// `busy=true` 并等待 Reply；入队失败时 `busy` 仍为 false，随后以
+    /// `feedback=None` 调用 `finish` 收敛为 Incomplete。Receipt 由 `finish`
+    /// 生成，因此队列拒绝不会被当作连接成功或连接失败。
     fn test(&mut self, cx: &mut Context<Self>) {
         let mut steps = self.save_steps(cx);
         let was_busy = self.busy;
@@ -1391,6 +1486,13 @@ impl Proxy {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
+        // 本函数由 `Proxy::tick` 在两类边界调用：Reply 成功/配置已提交/供应商
+        // 已保存后的成功门禁，或创建流程即使报错也返回了可核对配置时的
+        // `creation_pending` 路径。普通失败保存不会走到这里，因而按 Ctrl/Cmd+S
+        // 失败后当前草稿和编辑基线都会保留。不同 tag 还会决定：
+        // - 哪些供应商行可从 `cfg` 重建为干净草稿；
+        // - 是否清空搜索并选中新建/复制行；
+        // - 是否保留模型多选、连接收据和删除反馈。
         if tag == "delete" {
             let selected = self.selected();
             let survivor = cfg
@@ -1491,6 +1593,10 @@ impl Proxy {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
+        // 外部配置轮询也必须有可信边界：`matches_core` 校验同一实例、计数和
+        // loopback 地址，`refresh_drafts` 再保留正在编辑/有未保存值/属于创建
+        // 流程的 Draft。这里只读合并，不发送补偿保存；随后重设 `cfg` 并按需
+        // 重新装载当前表单，最后 persist 新草稿基线。
         if !crate::config_refresh::matches_core(&self.cfg, &cfg, snapshot) {
             return;
         }
@@ -1521,6 +1627,8 @@ impl Proxy {
         cx.notify();
     }
     fn snapshot(&mut self, v: Value, window: &mut Window, cx: &mut Context<Self>) {
+        // snapshot 是 Core 已生成值的只读投影：地址、计数、autostart、日志和
+        // 摘要在这里更新。日志滚动位置会单独保留；数据不变时不会强制重绘。
         self.proxy_address = v["url"].as_str().unwrap_or("").to_owned();
         self.proxy_counts =
             ["providers", "models", "requests"].map(|key| v[key].as_u64().unwrap_or(0));
@@ -1629,6 +1737,16 @@ impl Proxy {
         }
     }
     fn tick(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        // 每个 tick 按“生命周期与统计副作用 → 后台 Reply → UI 轮询/持久化”
+        // 分区阅读：
+        //
+        // 1. 检查 stop/instance 标记，处理设置窗口再次打开和统计维护轮询；
+        // 2. 非阻塞排空 `Backend.replies`，按 tag 合并配置、草稿和错误；
+        // 3. 以节流方式发起一次启动地址检查、2 秒 poll 和自动 metadata；
+        // 4. 把当前表单投影到 Draft，只有摘要变化时才写草稿文件。
+        //
+        // 整个函数在 UI 线程运行；后台任务不会与这里同时修改 Proxy 字段。
+        // 所有 `try_send/try_recv` 都有界且非阻塞，避免某个 Core 调用卡住重绘。
         self.poll_update(cx);
         if self.dir.join("gpui-stop.json").exists() || !self.dir.join("instance.json").exists() {
             self.capture(cx);
@@ -1647,6 +1765,9 @@ impl Proxy {
             window.activate_window();
             cx.activate(true);
         }
+        // 后台 Reply 用 `try_recv` 排空；没有结果时立即继续执行其余节流
+        // 轮询和草稿持久化。下面的 `match`/tag 分支只负责把已完成结果投影到
+        // Entity，不会在这里等待网络或重启子进程。
         while let Ok(mut reply) = self.backend.replies.try_recv() {
             if reply.tag == "update_status" {
                 self.finish_update_status(reply.result, cx);
@@ -1696,6 +1817,8 @@ impl Proxy {
             }
             if reply.tag == "metadata" {
                 self.metadata_polling = false;
+                // 自动 metadata 可能晚于用户修改。只有请求上下文、当前模型和
+                // 协议仍完全相同，且编辑器仍存在时才应用返回的能力信息。
                 if self.editing.is_some()
                     && self.model_options.automatic
                     && let Ok(message) = &reply.result
@@ -1734,6 +1857,8 @@ impl Proxy {
                         (reply.config.take(), reply.snapshot.as_ref())
                     && serde_json::to_value(&cfg).ok() != serde_json::to_value(&self.cfg).ok()
                 {
+                    // 仅当配置有变化且 snapshot 通过 `matches_core` 验证时，
+                    // `reconcile_live_config` 才会保留仍存在的脏草稿并更新干净行。
                     self.reconcile_live_config(cfg, snapshot, window, cx);
                 }
                 // D13: the skeleton reads the relay state from this very poll
@@ -1754,6 +1879,9 @@ impl Proxy {
                     cx.notify();
                 }
             } else {
+                // 普通配置动作到此结束一个 busy 周期。先展示结果/错误，再根据
+                // 成功、已提交或创建流程返回的事实决定是否合并 config；过期
+                // Test 仍会经过连接收据身份校验，不会被误当当前输入。
                 self.busy = false;
                 match &reply.result {
                     Ok(message) => {
@@ -1823,6 +1951,9 @@ impl Proxy {
                     .creation
                     .map(|outcome| self.bind_created_draft(outcome))
                     .unwrap_or(false);
+                // 该门禁接受三类可信事实：动作本身成功、配置已落盘，或新供应商
+                // 创建/保存形成了真实目标。创建结果不确定但返回了可核对配置时，
+                // 下一条支路使用 `creation_pending` 合并文件状态，同时保留表单。
                 if reply.result.is_ok()
                     || reply.synced
                     || creation_saved
@@ -1858,6 +1989,8 @@ impl Proxy {
                     self.startup_sync_open = false;
                 }
                 if reply.tag == "test" {
+                    // 测试报告和当前草稿身份共同决定 Testing/Passed/Failed/
+                    // Incomplete；它不是由查询成功本身推导的持续健康状态。
                     self.connections
                         .finish(&self.cfg, reply.test_feedback.take());
                 }
@@ -1876,6 +2009,8 @@ impl Proxy {
         }
         // One bounded read per settings launch, off the UI thread. Defer the
         // prompt while another editor or action is active.
+        // 以下三个轮询各自用独立 in-flight 标记节流。它们通过 `try_send`
+        // 进入普通 settings worker；队列忙时本轮跳过，不会创建 UI 阻塞等待。
         if !self.startup_checked
             && !self.busy
             && !self.dialog_open
@@ -1942,6 +2077,8 @@ impl Proxy {
             }
         }
         // Persist changed drafts only. Idle ticks never redraw a static window.
+        // 草稿摘要是本 tick 最后一步；`capture` 把输入 Entity 的当前值投影到
+        // `Draft`，但只有摘要变化才执行文件 I/O。静态秒表不会调用 notify。
         self.capture(cx);
         let digest = serde_json::to_string(&self.drafts.providers).unwrap_or_default();
         if digest != self.last_dirty {
@@ -2454,6 +2591,9 @@ impl Proxy {
             return;
         }
         self.page = page;
+        // 供应商页显示已保存供应商的 ID/名称；统计 Entity 自己维护筛选、查询
+        // 和分页，不能直接借用 Proxy 的可变表单状态。`set_visible(false)` 会
+        // 让统计页取消尚未发出的读请求并使旧结果身份失效，已授权写操作保留。
         let providers = self
             .cfg
             .providers
@@ -2752,7 +2892,11 @@ impl Proxy {
 }
 impl Render for Proxy {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        // 区域 1：把 Proxy 的模型列表/选择同步给表格 delegate。模板只在数据
+        // 真正变化时更新，而不是每个 div 各自处理业务状态。
         self.refresh_table(window, cx);
+        // 区域 2：选择顶层页面主体。Statistics 是独立 Entity，Providers 页
+        // 在这里组合当前供应商摘要、模型表和右侧运行信息。
         let sidebar = self.sidebar(window, cx);
         let center = match self.page {
             Page::Providers => self.center(window, cx),
@@ -2781,6 +2925,8 @@ impl Render for Proxy {
         } else {
             center
         };
+        // 区域 3：固定状态栏与随当前页面变化的标题/副标题。Core 健康只由
+        // poll snapshot 推导，不在纯渲染代码中伪造“运行中”。
         let status_bar = self.status_bar();
         let title = match self.page {
             Page::Providers => self.t("连接与模型", "Connections & models"),
@@ -2833,6 +2979,8 @@ impl Render for Proxy {
                     .line_height(px(19.))
                     .text_color(rgb(crate::theme::color::TEXT_3)),
             );
+        // 区域 4：页面主体保持为纵向布局（标题、业务 body、底部状态栏），
+        // 侧栏与内容区共享剩余高度；滚动由子页面/表格处理。
         // Page headings keep their original anchors and total flow height. Actions are
         // positioned separately at the window root, below Kit's modal layers.
         let content = div()
@@ -2867,6 +3015,9 @@ impl Render for Proxy {
                         .child(status_bar),
                 ),
             );
+        // 区域 5：窗口根节点负责快捷键 context、原生标题栏和右上角系统操作。
+        // 这些 click/on_action 处理器仍通过 GPUI Context 修改 Entity；渲染函数
+        // 只负责描述树，后台 Reply 会在 tick 时先合并，再由 notify 触发到这里。
         div()
             .relative()
             .key_context("Proxy")

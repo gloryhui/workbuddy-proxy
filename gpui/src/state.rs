@@ -1,3 +1,10 @@
+//! 设置窗口的纯业务状态：供应商编辑草稿、草稿集合和模型列表选择。
+//!
+//! 这些类型由 `ui::Proxy` 持有并在 GPUI UI 线程修改。`Config` 表示 Core
+//! 已保存的配置，`Draft` 表示当前窗口中尚未应用的一组输入；草稿单独写入
+//! `gpui-drafts.json`，不会因每次键盘输入就调用管理 HTTP。本模块没有 GPUI
+//! 类型，因此也能脱离窗口做确定性测试。
+
 use crate::config::{self, Config};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
@@ -9,14 +16,22 @@ use std::{
 
 #[derive(Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct Draft {
+    /// 用户可见的供应商名称；新建本地草稿时允许为空。
     pub name: String,
+    /// 上游 API key。空值在既有保存语义中有特定含义，不能自动替换为保存值。
     pub key: String,
+    /// 上游基础 URL，协议相关后缀由 Core/管理命令解释。
     pub upstream: String,
+    /// 新旧持久化文件反序列化时缺省为默认协议，便于继续读取旧草稿。
     #[serde(default)]
     pub protocol: crate::upstream_config::UpstreamProtocol,
+    /// 协议专属设置；与 `protocol` 一起构成测试/保存身份的一部分。
     #[serde(default)]
     pub protocol_settings: crate::upstream_config::ProtocolSettings,
+    /// `keep` 表示沿用每条模型自己的思考配置，其他值表示统一覆盖。
     pub effort: String,
+    /// Core `Model` 行的 JSON 投影。这里显式携带当前保存语义认识的 id、名称、
+    /// 模型 ID、思考强度和能力字段；`Value` 不承诺任意未知字段都无损往返。
     pub models: Vec<Value>,
 }
 impl Draft {
@@ -40,15 +55,25 @@ impl Draft {
         }
     }
 
+    /// 生成保存命令。此函数只构造 JSON，不执行 I/O；真正的后台步骤由
+    /// `backend::Backend` 所属 worker 接收，新供应商则由 `provider_create`
+    /// 进入本地创建流程。
     pub fn payload(&self, id: &str) -> Value {
         json!({"command":"save","provider_id":id,"name":self.name,"key":self.key,"upstream":self.upstream,"protocol":self.protocol,"protocol_settings":self.protocol_settings,"reasoning_effort":self.effort,"models":self.models})
     }
 }
 #[derive(Default, Serialize, Deserialize)]
 pub struct Drafts {
+    /// 草稿创建时读取的 `config.json` 指纹。冷启动只在指纹匹配时恢复草稿，
+    /// 防止把外部保存前的旧输入覆盖到新配置。
     pub base: String,
+    /// 当前显示的供应商 ID；空字符串用于“尚无已保存供应商”的页面状态。
     pub selected: String,
+    /// 按供应商 ID 保存的本地编辑快照。`BTreeMap` 的确定性遍历顺序不表示
+    /// 业务优先级。
     pub providers: BTreeMap<String, Draft>,
+    /// 新供应商创建流程。它记录本地临时 ID、返回位置、复制来源及已创建/
+    /// 不确定状态；普通已保存供应商没有该字段，因此通常为 `None`。
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub pending: Option<crate::provider_create::Pending>,
 }
@@ -59,6 +84,11 @@ impl Drafts {
             Sha256::digest(std::fs::read(dir.join("config.json")).unwrap_or_default())
         )
     }
+    /// 载入窗口草稿。文件不存在、超过 4 MiB、JSON 无效或配置指纹已变化时，
+    /// 回退为当前 `Config` 的干净投影；不会在这次读取路径中主动迁移配置。
+    ///
+    /// 恢复后会移除已经失效的供应商和不合法的 pending 创建记录，保留本地尚未
+    /// 创建的草稿，以及仍与 Core 配置/pending 创建记录匹配的编辑。
     pub fn load(dir: &Path, cfg: &Config) -> Self {
         let stored = std::fs::read(dir.join("gpui-drafts.json"))
             .ok()
@@ -101,6 +131,8 @@ impl Drafts {
         });
         loaded
     }
+    /// 从可信的已保存配置建立全部干净草稿。这是“没有本地未保存修改”的
+    /// 基线，而不是 Core 当前路由或运行时状态的副本。
     pub fn from_config(dir: &Path, cfg: &Config) -> Self {
         Self {
             base: Self::fingerprint(dir),
@@ -117,6 +149,9 @@ impl Drafts {
             pending: None,
         }
     }
+    /// 先刷新 `base` 指纹再写 `gpui-drafts.json`，使下次启动能判断草稿是否
+    /// 基于当前配置。`&mut self` 是排他借用，调用期间同一 `Drafts` 不能
+    /// 被另一条 Rust 借用路径同时修改。
     pub fn persist(&mut self, dir: &Path) -> Result<(), String> {
         self.base = Self::fingerprint(dir);
         config::write_json(&dir.join("gpui-drafts.json"), self)
@@ -124,8 +159,12 @@ impl Drafts {
 }
 #[derive(Clone, Default, PartialEq)]
 pub struct Selection {
+    /// 已选模型行号，使用集合保证去重；删除时按逆序处理以保持其余索引稳定。
     pub rows: BTreeSet<usize>,
+    /// Shift 范围选择的锚点行；鼠标点击与键盘扩展共享它。
     pub anchor: usize,
+    /// 键盘操作的活动行。它与 `rows` 分开，才能在取消选中当前行后仍找到
+    /// 下一个编辑目标；没有可用行时为 `None`。
     pub cursor: Option<usize>,
 }
 #[derive(Clone, Copy)]
@@ -136,6 +175,9 @@ pub enum ModelMove {
     Last,
 }
 impl Selection {
+    /// 鼠标/键盘共同的选择入口：`extend` 对应 Shift，`toggle` 对应
+    /// Ctrl/Cmd。本函数只修改 `rows/anchor/cursor`，不修改模型数据或 `Draft`；
+    /// 调用方按具体事件决定何时 `capture` 和重绘。
     pub fn click(&mut self, row: usize, extend: bool, toggle: bool) {
         self.cursor = Some(row);
         if extend {
@@ -190,6 +232,8 @@ impl Selection {
         self.click(target, extend, false);
         Some(target)
     }
+    /// 在当前模型列表长度内删除选中的行。逆序删除避免前面一行的移除导致
+    /// 后面保存的行号偏移，然后清空锚点与活动行。
     pub fn remove(&mut self, models: &mut Vec<Value>) {
         for row in self.rows.iter().rev() {
             if *row < models.len() {

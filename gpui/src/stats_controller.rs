@@ -4,6 +4,10 @@
 //! selects onto these values, so the state machine can be tested without a
 //! window. Everything here is driven by `statistics.rs`; it is not a parallel
 //! implementation kept only for tests.
+//!
+//! `statistics::Statistics` 在 GPUI UI 线程调用这些纯状态函数。它们不联网、
+//! 不入队、也不修改 Entity，只生成查询身份、判断 Reply 是否仍属于当前页面，
+//! 并维护价格草稿与游标历史。网络调用由 `stats_backend` 的独立客户端线程完成。
 
 use crate::stats_dto::{Currency, GroupBy, InputMode, PriceRuleDto, SortMetric, SourceScope};
 use serde_json::{Value, json};
@@ -44,11 +48,16 @@ pub enum StatsTab {
 /// not when the debounce finally issues the next request.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct QueryIdentity {
+    /// 发起查询时的筛选 generation；筛选一改就使旧 Reply 过期。
     pub filter_generation: u64,
+    /// 查询属于 Requests 还是 Groups 列表，避免跨 tab 解码。
     pub tab: StatsTab,
+    /// 分组维度和排序共同决定 cursor 的含义，因此都属于身份的一部分。
     pub group_by: GroupBy,
     pub sort: SortMetric,
+    /// 发起本页时使用的 Core cursor；第一页为 `None`。
     pub cursor: Option<String>,
+    /// scheduler 分配的实际回复序号，0 表示尚未分配/无有效查询。
     pub seq: u64,
 }
 
@@ -80,7 +89,9 @@ impl QueryIdentity {
 /// or overwrite newer data.
 #[derive(Default)]
 pub struct ReplyGate {
+    /// 最近一次发出的列表身份。新请求发布后旧 identity 会被覆盖。
     identity: Option<QueryIdentity>,
+    /// 本地生成 identity 的递增序号，随后由 `replace_seq` 换成 scheduler seq。
     seq: u64,
     /// Shared with the import panel: bounds how often a running scan is polled.
     scan_poll: ScanPollBudget,
@@ -367,6 +378,8 @@ impl ReplyGate {
     /// Invalidates outstanding reads without issuing a new one: used the moment
     /// a filter changes, so a reply that is already in flight cannot land.
     pub fn invalidate(&mut self) {
+        // seq 继续递增而不是归零，确保此前任何携带 identity 的回复都不可能
+        // 再次匹配；身份本身清空后，UI 也能表示当前没有可接受的列表 Reply。
         self.seq += 1;
         self.identity = None;
     }
@@ -428,6 +441,9 @@ pub fn route_reply(
     groups: &ReplyGate,
     tab: StatsTab,
 ) -> ReplyRoute {
+    // `match` 按枚举穷尽处理：Dashboard 比 dashboard_seq，Rows/Groups 同时比
+    // 各自 ReplyGate 与当前 tab。Other 在控制器层放行，因为价格、设置、详情
+    // 和导入资源各有独立 seq/tag 门禁，不能错误套用列表 identity。
     match kind {
         ReplyKind::Dashboard => {
             if seq == dashboard_seq && seq != 0 {
@@ -463,11 +479,15 @@ pub fn route_reply(
 pub struct PriceDraft {
     /// `None` while creating.
     pub price_id: Option<String>,
+    /// Core 价格规则版本，用于拒绝基于旧版本覆盖他人修改；新建时为 0。
     pub expected_revision: i64,
     pub provider_id: String,
     pub upstream_model: String,
     pub currency: Currency,
+    /// 计费模式，决定 cache read/write 字段如何解释。
     pub input_mode: InputMode,
+    /// 以下 rate 输入框保存供人阅读的每百万 Token 金额字符串，空串按 0。
+    /// `submit` 才把它们编码成 Core 使用的整数 nano 单位。
     pub input: String,
     pub output: String,
     pub cache_read: String,
@@ -478,7 +498,7 @@ pub struct PriceDraft {
     pub error: Option<String>,
     /// Reply tag of the save currently in flight.
     pub tag: Option<String>,
-    /// Identifies this draft so a late reply cannot close a newer one.
+    /// 本地草稿代次；结合 `tag` 使迟到回复不能关闭后来打开的新草稿。
     pub generation: u64,
 }
 
@@ -694,6 +714,10 @@ impl<T: Clone> CursorStack<T> {
 
     /// Moves forward; returns the cursor to request.
     pub fn forward(&mut self) -> Option<Option<T>> {
+        // 这里只把 current 压入 history 并返回 next，不会修改 current/next。
+        // 实际发请求前由调用方对新 cursor 调用 `begin_page`；成功响应后再用
+        // `finish_page` 写入新的 next。本类型没有自动失败回滚，调用方必须按
+        // 自己的失败策略处理已改变的 current。
         let next = self.next.clone()?;
         self.history.push(self.current.clone());
         Some(Some(next))
@@ -701,6 +725,9 @@ impl<T: Clone> CursorStack<T> {
 
     /// Moves back; returns the cursor to request.
     pub fn back(&mut self) -> Option<Option<T>> {
+        // 这里弹出 history、把当前 cursor 暂存为 next，并返回上一页 cursor。
+        // 调用方仍需立即 `begin_page(previous)` 才会改变 current；后续 Reply
+        // 再通过 `finish_page` 更新 next。失败时不会由本类型自动恢复旧值。
         let previous = self.history.pop()?;
         self.next = self.current.clone();
         Some(previous)

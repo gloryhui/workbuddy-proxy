@@ -1,3 +1,12 @@
+//! 设置页的供应商/配置命令传输层。
+//!
+//! 上游调用方是 `ui::Proxy` 的按钮、快捷键和轮询逻辑；下游是本机 Core 的
+//! `/_control/action` 管理接口，以及仅在设置进程内执行的供应商创建流程和
+//! 模型目录缓存。`Backend::new` 启动名为 `settings-control` 的标准线程，
+//! 每个 `Job` 在后台按顺序执行；UI 线程只负责 `try_send` 入队，并在
+//! `Proxy::tick` 中非阻塞排空 `Reply`。配置、草稿、Entity 和渲染状态仍归
+//! UI 线程所有，后台线程不会直接调用 `cx.notify()`。
+
 use crate::config::Config;
 use serde_json::{Value, json};
 use std::{
@@ -8,29 +17,64 @@ use std::{
 };
 
 pub struct Job {
+    /// UI 消费回复时使用的动作名，例如 `save`、`test`、`poll`。部分
+    /// `*_restart` 名称会在 worker 中映射回 UI 能识别的标签。
     pub tag: String,
+    /// 按顺序执行的管理命令；通常为“保存草稿 + 同步/测试”等步骤。
     pub steps: Vec<Value>,
 }
 pub struct Reply {
+    /// 已完成的工作类型，决定 `Proxy::tick` 如何合并结果和刷新状态。
     pub tag: String,
+    /// 成功值是 Core `message` 字符串；某些动作的字符串内部仍是 JSON。
+    /// 失败值已包含可直接展示/本地化的 Core 错误边界。
     pub result: Result<String, String>,
+    /// 仅在后续读取成功时存在。`None` 表示不可信任的配置快照，调用方
+    /// 不应拿旧草稿猜测磁盘内容。
     pub config: Option<Config>,
+    /// 除 `poll` 外，普通动作完成后额外读取的实时 Core snapshot；`poll`
+    /// 则直接把本次只读结果解析到这里。`metadata`、`workbuddy_check` 与
+    /// `update_status` 明确不附带 snapshot，因此 `None` 不能解释成 Core
+    /// 不可达，也不能被其他动作照搬为通用失败信号。
     pub snapshot: Option<Value>,
+    /// 最后的配置命令确实已成功落盘（安装/恢复模型或设置端口）。即使
+    /// 随后的进程重启失败，该值仍为真，以便 UI 刷新已提交的配置。
     pub synced: bool,
+    /// 新供应商创建流程的最终状态；普通保存/测试为 `None`。
     pub creation: Option<crate::provider_create::Outcome>,
+    /// 本次请求中成功保存的真实供应商 ID。用于在“保存成功、后续动作
+    /// 失败”时仍允许合并已落盘字段。
     pub saved_provider: Option<String>,
+    /// 显式连接测试的窗口内测试收据；普通请求为 `None`。
     pub test_feedback: Option<crate::provider_connection::Feedback>,
 }
 pub struct Backend {
+    /// 有界同步 channel（容量 8）。UI 使用 `try_send`，排队满时立即把
+    /// 控制权还给界面并显示“后台忙”，不会阻塞渲染线程。
     pub jobs: SyncSender<Job>,
+    /// worker 到 UI 的有界回执队列（容量 8）。UI 在每 250ms tick 中调用
+    /// `try_recv` 排空，完成动作后再更新 `Proxy`。
     pub replies: Receiver<Reply>,
 }
 
+/// 在 `settings-control` 线程内执行一个 Job。
+///
+/// `call` 执行每个管理步骤；任一步失败会立即停止，不会执行剩余步骤。
+/// `restart` 只在一组特定动作的最后配置步骤成功后才调用。返回值的第一项
+/// 是最终用户可见结果，第二项 `committed` 表示配置是否已经成功写盘。
+///
+/// 典型边界：
+/// - 保存后同步失败：保存步骤可能已改变 Core 配置，但 `committed` 为假；
+///   worker 后续仍会读取配置并附带 `saved_provider`，由 UI 决定可合并范围。
+/// - 同步/恢复/端口设置成功、重启失败：返回错误，但 `committed` 为真，
+///   因为错误文案也明确告知用户磁盘配置已经更新。
 fn execute(
     job: &Job,
     mut call: impl FnMut(&Value) -> Result<String, String>,
     restart: impl FnOnce() -> Result<(), String>,
 ) -> (Result<String, String>, bool) {
+    // 所有步骤共享同一顺序。闭包捕获在 worker 线程内执行，因而网络读取和
+    // 文件操作不会占用 GPUI 的 UI/HTTP 回调线程。
     let mut result = Ok(String::new());
     for step in &job.steps {
         result = call(step);
@@ -40,6 +84,8 @@ fn execute(
     }
     let last_command = job.steps.last().and_then(|step| step["command"].as_str());
     let port_change = job.tag == "port_restart";
+    // 只有真正改变 Core 配置的最后一步才能算“已提交”。普通只读查询即使
+    // 成功也不会把草稿当作已保存。
     let committed = matches!(last_command, Some("install" | "restore"))
         || (port_change && last_command == Some("set_port"));
     let restart_after = match job.tag.as_str() {
@@ -84,6 +130,16 @@ fn execute(
 pub fn call(dir: &std::path::Path, payload: &Value) -> Result<String, String> {
     call_detailed(dir, payload).map_err(|failure| failure.message)
 }
+/// 发送一条本机管理命令，并保留“确定失败/结果不确定”的创建语义。
+///
+/// `instance.json` 提供 loopback 端口与本次 Core 实例的管理 key。请求固定
+/// 发往 `127.0.0.1`，禁用环境代理和重定向，避免凭证或配置命令离开本机。
+/// 普通命令最多等待 100 秒；只读快照与 WorkBuddy 地址检查为 3 秒。回复体
+/// 上限为 1 MiB，超过或其他 JSON 解析失败会形成协议错误。
+///
+/// 失败分类不是业务重试策略：连接明确被拒绝等错误标为 `certain`；超时、
+/// 服务端错误或无法判断请求是否已执行的情况标为 `uncertain`。调用方可在
+/// 创建供应商等有副作用操作中据此避免盲目重试。
 fn call_detailed(
     dir: &std::path::Path,
     payload: &Value,
@@ -154,13 +210,22 @@ fn call_detailed(
 }
 impl Backend {
     pub fn new(dir: PathBuf) -> Self {
+        // `sync_channel` 提供有界队列。`(jobs, requests)` 中发送端 `jobs`
+        // 存入 `Backend`，接收端 `requests` 被移动到 worker 闭包；
+        // `(results, replies)` 中 `results` 是 worker 发送端，`replies` 是
+        // UI 持有的接收端。两个线程通过消息传递共享工作，不共享 `Proxy`。
         let (jobs, requests) = mpsc::sync_channel::<Job>(8);
         let (results, replies) = mpsc::sync_channel(8);
         std::thread::Builder::new()
             .name("settings-control".into())
             .stack_size(512 * 1024)
             .spawn(move || {
+                // 该缓存只在 settings worker 生命周期内存在，用于把一次模型
+                // 发现结果复用到后续 metadata 请求；它不是 Core 配置，也
+                // 不会跨进程共享。
                 let mut draft_catalog: Option<crate::draft_discovery::Cache> = None;
+                // `recv()` 阻塞等待 UI 入队。发送端随 `Backend` 一起释放时，
+                // 循环退出，线程自然结束；UI 重绘不依赖该线程执行。
                 while let Ok(job) = requests.recv() {
                     let mut creation = None;
                     let mut saved_provider = None;
@@ -168,6 +233,9 @@ impl Backend {
                     let (mut result, synced) = execute(
                         &job,
                         |step| {
+                            // 少数命令只在设置进程内完成，不直接转发给 Core。
+                            // 新供应商则由 `commit` 先校验、再创建、再绑定真实 ID
+                            // 并保存；全部步骤仍在该 worker 上串行发生。
                             if step["command"] == "ui_discover_models" {
                                 let (ids, cache) = crate::draft_discovery::fetch(step)?;
                                 draft_catalog = Some(cache);
@@ -196,6 +264,8 @@ impl Backend {
                                 if let Some(outcome) = &creation
                                     && payload["provider_id"].as_str() == Some(&outcome.local_id)
                                     && let Some(id) = &outcome.provider_id {
+                                    // UI 草稿先用本地 ID；创建成功后，同一次 Job
+                                    // 的后续测试/保存必须替换成 Core 生成的真实 ID。
                                     payload["provider_id"] = json!(id);
                                 }
                                 if payload["command"] == "model_metadata"
@@ -210,6 +280,8 @@ impl Backend {
                                 } else {
                                     let result=call(&dir, &payload);
                                     if job.tag == "test" && payload["command"] == "test" {
+                                        // 在错误被“已保存但后续失败”包装前捕获测试
+                                        // 报告，避免把保存状态误当作连接测试结论。
                                         test_feedback = Some(crate::provider_connection::Feedback::from_result(
                                             payload["provider_id"].as_str().unwrap_or(""), &result,
                                         ));
@@ -225,8 +297,13 @@ impl Backend {
                     );
                     if saved_provider.is_some()
                         && let Err(error) = &mut result {
+                        // 保存已成功而同步/重启后失败时必须保留这一事实，
+                        // 否则 UI 会把已落盘的配置误当成完全未保存。
                         *error = format!("Provider saved; subsequent action failed: {} / 供应商已保存，后续操作失败：{}",crate::i18n::message(error,false),crate::i18n::message(error,true));
                     }
+                    // `poll` 的 snapshot 来自同一次只读查询；其他动作通常再读
+                    // 一次 snapshot。模型目录、地址检查和更新检查刻意不附带，
+                    // 因为它们不改变展示供应商配置快照的所有权。
                     let snapshot = if matches!(job.tag.as_str(), "metadata" | "workbuddy_check" | "update_status") {
                         None
                     } else if job.tag == "poll" {
@@ -244,6 +321,8 @@ impl Backend {
                             if job.tag == "poll" || (job.tag == "delete" && result.is_err()) {
                                 // Polls only read an existing, bounded, migrated
                                 // configuration. Never initialize or rewrite it.
+                                // 失败删除则用只读读取得到 Core 的实际配置，供 UI
+                                // 把本次操作误以为成功前的界面收敛到可信状态。
                                 crate::config_refresh::existing_config(&dir)
                             } else {
                                 Config::load(&dir).ok()
@@ -253,6 +332,8 @@ impl Backend {
                         };
                     if results
                         .send(Reply {
+                            // 重启类 tag 通过 UI 对外收敛为普通的 install/port/
+                            // restore/startup_install；`synced` 单独保留提交事实。
                             tag: if job.tag == "install_restart" {
                                 "install".into()
                             } else if job.tag == "port_restart" {

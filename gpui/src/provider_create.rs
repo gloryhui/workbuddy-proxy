@@ -1,4 +1,10 @@
-//! UI-owned creation transaction over the unchanged management API.
+//! UI-owned provider creation flow over the unchanged management API.
+//!
+//! 新供应商不是一条单独的 HTTP 命令：设置窗口先维护本地 `Pending`，再由
+//! `backend::Backend` 的 `settings-control` 线程在本模块中完成“预校验 →
+//! 创建/复制 → 重新读取并绑定唯一新 ID → 保存草稿”。这样 Core 不需要知道
+//! GPUI 的临时 ID，同时 UI 能在网络结果不确定时避免自动重试造成重复供应商。
+//! 本模块不持有 Entity；所有状态最终随 `Outcome` 回传给 UI 线程。
 use crate::{
     config::{self, Config, Provider},
     state::Draft,
@@ -10,20 +16,31 @@ pub const COMMAND: &str = "ui_create_provider";
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Pending {
+    /// 设置窗口生成的本地临时供应商 ID，会在 Core 创建成功后绑定到真实 ID。
     pub id: String,
+    /// 取消/完成后应返回的已保存供应商 ID；可能为空。
     pub return_to: String,
+    /// 复制创建时的来源供应商；新建时 `None`。
     pub source_id: Option<String>,
+    /// 创建命令是否已经带回明确成功结果。持久化后用于恢复尚未完成的保存。
     #[serde(default)]
     pub created: bool,
+    /// 上次创建/绑定结果无法确认。该状态阻止自动重试，要求用户先检查列表；
+    /// 普通新建草稿默认是 false。
     #[serde(default)]
     pub uncertain: bool,
 }
 
 pub struct Outcome {
+    /// 原 UI 草稿使用的临时 ID，用于把测试收据和界面选择重绑定到真实行。
     pub local_id: String,
+    /// Core 中已确认的唯一新供应商 ID；创建未确认或未发生时可能为 `None`。
     pub provider_id: Option<String>,
+    /// 映射/重新编号后的最终草稿，可能包含 Core 新生成的 model route ID。
     pub draft: Draft,
+    /// 最后的 `save` 命令是否成功。创建成功但保存失败时仍为 false。
     pub saved: bool,
+    /// 创建是否处于“可能已发生、也可能未发生”的不确定状态。
     pub uncertain: bool,
 }
 
@@ -33,12 +50,14 @@ pub struct Failure {
     pub certain: bool,
 }
 impl Failure {
+    /// 明确证明有副作用的请求没有发生或已被 Core 确定拒绝。
     pub fn certain(message: impl Into<String>) -> Self {
         Self {
             message: message.into(),
             certain: true,
         }
     }
+    /// 请求可能已到达/执行，调用方不能安全地自动重发。
     pub fn uncertain(message: impl Into<String>) -> Self {
         Self {
             message: message.into(),
@@ -47,6 +66,7 @@ impl Failure {
     }
 }
 
+/// 构造 UI 内部 Job step；真正执行发生在一个 `settings-control` 线程中。
 pub fn request(pending: &Pending, draft: &Draft) -> Value {
     json!({"command":COMMAND,"pending":pending,"draft":draft})
 }
@@ -110,6 +130,10 @@ fn apply(
     Ok((provider, mapped))
 }
 
+/// 用同一套 `Config::validate` 规则预演操作后的配置。
+///
+/// `replace` 为 true 时替换已有目标，否则追加新供应商。这里会 `clone` 整份
+/// `Config` 做验证，但不会把 clone 写回磁盘；成功只表示内存投影合法。
 fn validate(cfg: &Config, provider: Provider, replace: bool) -> Result<(), String> {
     let mut projected = cfg.clone();
     if replace {
@@ -121,6 +145,23 @@ fn validate(cfg: &Config, provider: Provider, replace: bool) -> Result<(), Strin
 
 /// Validate before creation; bind exactly one newly generated ID; never retry
 /// an ambiguous create automatically. Retrying a known target only saves it.
+///
+/// 这不是跨多次 HTTP 请求的原子事务，也没有回滚或取消保证。调用方是
+/// `backend::Backend` 的 worker。`read` 重新读取当前落盘配置，
+/// `call` 发出一条管理命令；两者都被串行调用，因此本流程不会与同一 worker
+/// 上的其他设置命令交错。函数返回 UI 可见结果和完整的 `Outcome`，不等待
+/// UI 确认，也不自行轮询列表。
+///
+/// 正常步骤如下：
+/// 1. 拒绝已知 `uncertain` 的创建流程，避免盲目重试。
+/// 2. 读取 before 配置，预演创建结果并做容量/字段校验。
+/// 3. 对新建发送 `add`，对复制发送 `duplicate`。
+/// 4. 重新读取 after 配置，要求相对 before 恰好新增一个供应商，绑定其 ID。
+/// 5. 对新供应商发送最终 `save`。
+///
+/// 失败边界：明确失败保留当前草稿但不标记 uncertain；超时、无效响应、
+/// 重读失败或新增数量无法唯一确定时标记 uncertain；创建成功后的保存失败会
+/// 保留真实 ID 与草稿，使下一轮可以只重试已知目标的保存。
 pub fn commit(
     pending: &Pending,
     draft: &Draft,
@@ -140,6 +181,8 @@ pub fn commit(
         }
         let before = read()?;
         if pending.created {
+            // 明确创建过且有真实 ID：只需按当前磁盘目标重新映射并保存，
+            // 不再次执行 add/duplicate。
             let seed = before
                 .providers
                 .iter()
@@ -149,6 +192,7 @@ pub fn commit(
             validate(&before, projected, true)?;
             outcome.draft = mapped;
         } else {
+            // 复制的来源可能已在窗口打开期间被外部修改；先拒绝身份变化。
             let source = pending
                 .source_id
                 .as_ref()
@@ -172,6 +216,8 @@ pub fn commit(
                 json!({"command":"add","ui":true})
             };
             if let Err(failure) = call(&create) {
+                // 只有明确的 pre-send/client rejection 可以保持结果确定；
+                // 其他失败可能已经创建了供应商，因此保留 uncertain。
                 outcome.uncertain = !failure.certain;
                 return Err(if outcome.uncertain {
                     format!(
@@ -184,6 +230,7 @@ pub fn commit(
                 });
             }
             let after = read().map_err(|_| {
+                // 创建请求已成功返回但无法重读配置，不能猜测新 ID。
                 outcome.uncertain = true;
                 "Creation result unconfirmed; draft retained / 创建结果未确认，草稿已保留"
                     .to_string()
@@ -194,6 +241,8 @@ pub fn commit(
                 .filter(|p| !before.providers.iter().any(|old| old.id == p.id))
                 .collect();
             if added.len() != 1 {
+                // 并发外部操作也可能改变列表。不能拿“最后一个供应商”冒充
+                // 本次创建目标。
                 outcome.uncertain = true;
                 return Err(
                     "Creation result unconfirmed; draft retained / 创建结果未确认，草稿已保留"

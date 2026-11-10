@@ -1,5 +1,12 @@
 //! Read-only reconciliation of live external changes and rejected deletes.
 //! Never initialize a configuration or overwrite an unsaved draft.
+//!
+//! 这些函数不都在同一线程：`backend::Backend` 的 `settings-control` worker
+//! 会用 `existing_config` 读取 poll 或失败删除后的现有文件；
+//! `matches_core` 与 `refresh_drafts` 则由 `ui::Proxy` 在 GPUI UI 线程调用。
+//! worker 对磁盘读取设置大小上限；UI 侧核对内存配置与 Core 快照后才合并草稿。
+//! 本模块不会发送保存请求或直接重绘；`Proxy` 完成合并后调用
+//! `cx.notify()`。
 use crate::{
     config::Config,
     state::{Draft, Drafts},
@@ -9,6 +16,11 @@ use std::{fs::File, io::Read, path::Path};
 
 const MAX_CONFIG_BYTES: u64 = 2 * 1024 * 1024;
 
+/// 只读取一个已经存在且结构合法的配置快照。
+///
+/// `None` 是一个失败边界，而不是“空配置”：文件不存在、超过 2 MiB、旧版
+/// 结构无法按当前 `Config` 解码、校验失败或 local key 为空时，调用方都不能
+/// 用默认值覆盖当前界面。函数不创建、不迁移、不重写文件。
 pub(crate) fn existing_config(dir: &Path) -> Option<Config> {
     let file = File::open(dir.join("config.json")).ok()?;
     let metadata = file.metadata().ok()?;
@@ -31,6 +43,12 @@ pub(crate) fn existing_config(dir: &Path) -> Option<Config> {
     (!cfg.local_key.is_empty()).then_some(cfg)
 }
 
+/// 判断 `after` 是否确实是同一个 Core 实例刚返回的可信配置。
+///
+/// 除配置自身有效和身份 key 一致外，还要求 snapshot 的供应商/模型计数与
+/// `after` 相符，且公开地址必须是严格的 loopback `http`、与配置端口一致、
+/// 路径为 `/v1` 或 `/v1/`，没有用户信息、查询串或片段。任何一项不满足都
+/// 返回 false，防止把陌生或错配的轮询结果合并进编辑界面。
 pub(crate) fn matches_core(before: &Config, after: &Config, snapshot: &Value) -> bool {
     let Some(address) = snapshot["url"]
         .as_str()
@@ -60,6 +78,16 @@ pub(crate) fn matches_core(before: &Config, after: &Config, snapshot: &Value) ->
 /// Retain the user's dirty/editing drafts and local pending item. Clean saved
 /// rows follow the new configuration, and an absent selection moves safely.
 /// Returns whether the currently displayed form actually needs to be reloaded.
+///
+/// 这里用三种事实决定是否保留旧草稿：当前表单是否正在编辑、该草稿是否与
+/// 刷新前配置的干净投影不同、以及它是否属于本地创建流程。正在编辑或已有
+/// 未保存值的内容不会被外部变化覆盖；其余行更新为 `after`。但 `after` 中已
+/// 不存在的供应商会先从 `providers` 中删除，即使该行有未保存输入；只有仍存在
+/// 于 `after`（或属于 pending 创建记录）的行才能由“编辑/脏草稿”规则保留。
+/// 删除当前选中项时只把选择安全地移到第一个有效供应商。
+///
+/// `Clone` 用于比较/保存干净的 `Draft` 快照，但它的代价和深拷贝边界由
+/// `Draft` 的派生实现及字段类型决定，不能把所有 `.clone()` 都当 Java 深拷贝。
 pub(crate) fn refresh_drafts(
     drafts: &mut Drafts,
     before: &Config,

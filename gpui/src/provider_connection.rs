@@ -1,4 +1,10 @@
 //! Window-local receipts for explicit tests, never a live upstream health poll.
+//!
+//! `ui::Proxy` 在用户点击 Test 时记录输入身份，`settings-control` 线程完成
+//! 测试后，UI 在 `Proxy::tick` 中把 `Feedback` 交回本模块。这里保存的只是
+//! 当前设置窗口对一次显式测试的收据；它不会定时探测上游，也不代表供应商
+//! 在任意时刻都健康。草稿、输入 Entity 和本模块的 `Connections` 都归 UI
+//! 线程所有；测试网络调用本身不在 UI 线程执行。
 use crate::{
     config::{Config, Provider},
     diagnostic::TestReport,
@@ -12,8 +18,12 @@ use std::collections::BTreeMap;
 /// Captured at the actual Test step, before the existing save/error decoration.
 /// `TestReport.provider` is a display name, so identity comes from the request.
 pub struct Feedback {
+    /// 取自测试请求而不是报告里的显示名称，避免同名供应商串线。
     pub provider_id: String,
+    /// 只有可解析且 kind 为 `connection_test` 的报告才能参与收据判定。
     report: Option<TestReport>,
+    /// 管理命令的 Result 极性；真实绿色状态还要求报告字段、模型和 HTTP 状态
+    /// 全部验证通过。
     succeeded: bool,
 }
 impl Feedback {
@@ -33,11 +43,16 @@ impl Feedback {
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum Status {
+    /// 没有与当前可见输入完全匹配的有效测试收据。
     #[default]
     Untested,
+    /// 已提交测试且输入身份仍与发起时一致，等待 Reply。
     Testing,
+    /// 显式测试成功，且报告能绑定当前 Core 路由与模型。
     Passed,
+    /// 请求明确失败并带回了可展示的错误原因。
     Failed,
+    /// 命令结束但缺少可验证报告字段，或状态处于成功/失败之间。
     Incomplete,
 }
 
@@ -70,6 +85,11 @@ impl Fields {
             && self.effort == live.effort
     }
 }
+/// 渲染阶段借用的当前可见字段。
+///
+/// `'a` 只约束这些 `&str`/设置引用不能比当前草稿活得更久；它不会复制 key，
+/// 也不会把借用交给异步任务。比较成功状态时，任何名称、凭证、URL、协议、
+/// 设置或统一 effort 变化都会使旧收据失效。
 pub struct LiveFields<'a> {
     pub name: &'a str,
     pub key: &'a str,
@@ -79,27 +99,41 @@ pub struct LiveFields<'a> {
     pub effort: &'a str,
 }
 struct Observed {
+    /// 可见草稿的 SHA-256 身份；字段变化会在 `observe` 时更新。
     visible: [u8; 32],
+    /// 用于在每帧 `view` 中快速比较当前输入；不参与序列化或日志输出。
     fields: Fields,
 }
 struct Attempt {
+    /// 测试发起时的供应商 ID，创建完成后可由 `rebind` 改成真实 ID。
     provider: String,
+    /// 按保存语义规范化后的预期配置摘要；找不到可信保存配置时为 `None`。
     effective: Option<[u8; 32]>,
+    /// 发起时可见草稿摘要，用于区分等待期内的新编辑。
     visible: [u8; 32],
+    /// 测试命令选中的模型行；报告必须能和该模型对应。
     model_index: usize,
 }
 struct Receipt {
+    /// 收据绑定到哪一个可见草稿；输入一变就不再展示。
     visible: [u8; 32],
+    /// 若该测试对应已保存配置，则记录保存后的非临时字段摘要；外部保存漂移
+    /// 会清除收据。
     saved: Option<[u8; 32]>,
     status: Status,
+    /// 报告中真实测试过的模型文本，仅用于当前窗口展示。
     model: String,
+    /// 报告中的 HTTP 状态文本，例如 `HTTP 200`；无可靠报告时为空。
     http: String,
 }
 
 #[derive(Default)]
 pub struct Connections {
+    /// 最近一次实际观察到的可见字段，按供应商 ID 索引。
     observed: BTreeMap<String, Observed>,
+    /// 已完成的显式测试结果，按供应商 ID 索引。
     receipts: BTreeMap<String, Receipt>,
+    /// 同一时间只允许一个显式 Test；UI 在并发时不会再次发送。
     pending: Option<Attempt>,
 }
 
@@ -153,6 +187,13 @@ fn effective_signature(saved: Option<&Provider>, draft: &Draft) -> Option<[u8; 3
 }
 
 impl Connections {
+    /// 记录用户刚发起的 Test，并删除该供应商的旧收据。
+    ///
+    /// `saved` 是已有的保存基线；本地复制草稿可用来源供应商作为 seed。
+    /// `effective_signature` 按保存语义预演字段，但只在显式测试时计算，
+    /// 不在 render 或空闲 tick 中做无关工作。若队列拒绝，`Proxy::test`
+    /// 会以 `feedback=None` 调用 `finish`，结果只能是 Incomplete，不会被
+    /// 当作连接失败。
     pub fn begin(&mut self, id: &str, draft: &Draft, saved: Option<&Provider>, index: usize) {
         self.receipts.remove(id);
         self.observed.insert(
@@ -183,6 +224,7 @@ impl Connections {
         }
     }
 
+    /// 把本地临时创建 ID 的待测/已观察身份改绑到 Core 返回的真实 ID。
     pub fn rebind(&mut self, from: &str, to: &str) {
         if let Some(attempt) = self.pending.as_mut().filter(|a| a.provider == from) {
             attempt.provider = to.into();
@@ -192,6 +234,12 @@ impl Connections {
         }
     }
 
+    /// 合并一个 Test Reply。
+    ///
+    /// 绿色状态需要同时满足：保存配置仍与测试发起时的有效输入一致、反馈
+    /// 请求 ID 相同、报告 kind/供应商/模型/协议/URL/思考强度匹配、管理命令
+    /// 成功且报告原因是空、HTTP 在 2xx。任何字段缺失都会落到 Incomplete。
+    /// Reply 已过期时调用方仍可正常调用；若没有 pending，本函数不改变状态。
     pub fn finish(&mut self, cfg: &Config, feedback: Option<Feedback>) {
         let Some(attempt) = self.pending.take() else {
             return;
@@ -256,6 +304,10 @@ impl Connections {
             })
     }
 
+    /// 根据新的可信配置和草稿集合清除失效收据。
+    ///
+    /// Core 丢失/外部改名/模型能力变化会改变 saved signature；供应商被删除
+    /// 或草稿消失则直接移除观察状态。该函数不发起新测试。
     pub fn reconcile(&mut self, cfg: &Config, drafts: &BTreeMap<String, Draft>) {
         self.receipts.retain(|id, receipt| {
             drafts.contains_key(id)

@@ -6,6 +6,11 @@
 //! `stats_requests` (or `stats_breakdown`) query per filter generation and
 //! discards replies whose generation is stale. It never opens the database and
 //! never blocks the shared settings backend.
+//!
+//! `Statistics` 本身是 GPUI UI 线程上的 Entity；`StatsScheduler` 另起
+//! `statistics-control` 客户端线程，通过本机管理 HTTP 查询 Core。UI 负责筛选
+//! 草稿、generation、分页历史和结果合并，后台只负责按顺序执行已经构造的命令。
+//! 统计页不直接打开 SQLite，也不占用供应商设置使用的 `settings-control` 队列。
 use crate::{
     stats_backend::{JobKey, JobKind, StatsReply, StatsScheduler},
     stats_dto::{
@@ -224,17 +229,22 @@ fn stats_card(id: &'static str) -> Stateful<Div> {
 }
 
 pub struct Statistics {
+    /// 统计页偏好文件所在实例目录；读取/写入偏好不修改 Core 配置。
     preferences_dir: PathBuf,
     saved_preferences: preferences::Preferences,
+    /// 当前展开的概览/明细/汇总/设置视图，以及从设置页返回时恢复的上一个报表页。
     view: preferences::View,
     last_report_view: preferences::View,
     summary_tab: Tab,
     preferences_error: bool,
     zh: bool,
+    /// 由 `Proxy::switch_page` 控制。离开页面会停掉尚未发出的读请求；重新进入
+    /// 会建立新筛选 generation 并加载所需资源。
     visible: bool,
+    /// 统计专用 scheduler，持有到 Core 的短超时查询队列和回复 channel。
     backend: StatsScheduler,
-    /// Sequence of the newest read intent per kind; a reply that does not match
-    /// is stale and must not touch the screen.
+    /// Sequence of the newest dashboard read; a reply that does not match is
+    /// stale and must not touch the overview.
     dashboard_seq: u64,
     /// The WorkBuddy import panel: switch, health line and counters.
     import: crate::workbuddy_import::ImportPanel,
@@ -251,7 +261,7 @@ pub struct Statistics {
     settings_section: usize,
     mapping_from: Entity<InputState>,
     mapping_to: Entity<InputState>,
-    /// The filter generation and the one request it owes.
+    /// 筛选 generation 和一次变化所欠的唯一请求机会。
     coordinator: crate::stats_controller::FilterCoordinator,
     /// The source group (U03): always first in the bar, always exactly one.
     source: crate::source_filter::SourceFilter,
@@ -260,7 +270,7 @@ pub struct Statistics {
     scope_reset_pending: bool,
     /// The advanced capture-method dropdown (U05).
     capture: crate::stats_controller::CaptureFilter,
-    /// Sequence of the last import-status read.
+    /// 最近一次导入状态读的 scheduler seq；旧回复不能覆盖当前状态。
     import_seq: u64,
     /// How many more times the page may poll a running scan.
     import_poll: crate::stats_controller::ScanPollBudget,
@@ -272,15 +282,21 @@ pub struct Statistics {
     /// that a query happened to succeed.
     health: Option<crate::stats_dto::HealthDto>,
     maintenance_poll: Instant,
-    /// Client filter generation; replies with another generation are dropped.
+    /// UI 侧筛选代次。变化时递增并立即使行/组身份失效。
     generation: u64,
+    /// 最近一次真正发出查询的筛选代次，用于状态/诊断；不代表 Reply 已到齐。
     applied: u64,
+    /// 筛选变化后的 250ms debounce 截止时刻；`None` 表示没有待发请求。
     debounce_until: Option<Instant>,
+    /// 报表自动刷新间隔（秒）；0 表示关闭，与后台采集开关无关。
     refresh_interval: u64,
+    /// 最近一次报表请求批次的发起时间，用于避免每个 tick 重复查询。
     last_refresh: Instant,
+    /// 当前筛选对应的 dashboard 请求是否仍在途。
     pending_dashboard: bool,
+    /// 当前 Rows/Groups 列表请求是否仍在途。
     pending_rows: bool,
-    // Filter draft.
+    // 已应用的筛选状态；日期弹层另有 draft 字段，确认后才调用 mark_dirty。
     range: RangePreset,
     provider: String,
     model: String,
@@ -305,6 +321,8 @@ pub struct Statistics {
     capture_select: Entity<ChoiceState>,
     currency_select: Entity<ChoiceState>,
     // Data.
+    // 以下缓存全部属于当前页面。普通查询失败时通常保留旧值并显示 error，
+    // 不会把“查询失败”解释为“没有数据”。
     dashboard: Option<DashboardDto>,
     recent: recent::RecentRead<RequestRowDto>,
     rows: Vec<RequestRowDto>,
@@ -343,6 +361,7 @@ pub struct Statistics {
     loading_dashboard: bool,
     loading_rows: bool,
     error: Option<String>,
+    /// 最近一次成功报表回复的本地 HH:mm 展示文本，不是底层数据时间戳。
     last_updated: Option<String>,
     currency: Currency,
     visible_series: BTreeSet<SeriesKind>,
@@ -369,6 +388,7 @@ pub struct Statistics {
     maintenance_error: Option<String>,
     clear_preview: Option<ClearPreviewDto>,
     clear_token: Option<String>,
+    /// 每次打开价格草稿递增；迟到保存回复只能作用于相同 generation 的草稿。
     draft_generation: u64,
     provider_search: Entity<InputState>,
     model_search: Entity<InputState>,
@@ -377,6 +397,7 @@ pub struct Statistics {
     price_query: String,
     provider_after: Option<String>,
     model_after: Option<String>,
+    /// 价格页的 cursor 历史；与请求明细、汇总分组的分页器彼此独立。
     prices_cursors: crate::stats_controller::CursorStack<String>,
     prices_page_size: i64,
     prices_loading: bool,
@@ -386,6 +407,8 @@ pub struct Statistics {
     model_next: Option<String>,
     provider_seq: u64,
     model_seq: u64,
+    /// 价格、详情、设置和 provider/model 选项各自使用独立 seq，不能被
+    /// dashboard/rows 的回复门禁误当成列表结果。
     prices_seq: u64,
     detail_seq: u64,
     settings_seq: u64,
@@ -413,6 +436,17 @@ impl Statistics {
         if self.zh { zh } else { en }
     }
 
+    /// 由一个已存在的 GPUI Entity Context 创建统计页。
+    ///
+    /// 调用链是 `ui::Proxy::new → Statistics::new`，运行在 UI 线程。这里：
+    /// - 读取统计偏好并创建独立的 `StatsScheduler` 客户端线程；
+    /// - 用 `cx.new` 创建输入、选择器、日历和两个表格子 Entity；
+    /// - 以 `WeakEntity<Statistics>` 交给表格读取父页面，避免所有权环；
+    /// - 启动一个等待“统计 worker 唤醒或 250ms 超时”的 UI task；
+    /// - 恢复偏好、订阅控件事件并建立第一轮筛选 generation。
+    ///
+    /// 初始 `visible` 仍为 false；随后 `Proxy::switch_page` 决定页面是否真正
+    /// 显示，并由 `set_visible` 启动资源查询。这里不会直接访问 SQLite。
     pub fn new(dir: PathBuf, zh: bool, window: &mut Window, cx: &mut Context<Self>) -> Self {
         let preferences = preferences::Preferences::load(&dir);
         let settings_scroll = ScrollHandle::new();
@@ -589,6 +623,9 @@ impl Statistics {
         });
         let timer = cx.spawn_in(window, async move |this, cx| {
             loop {
+                // worker 完成回复时会向容量为 1 的 wake channel 发送信号。
+                // 与 250ms timer 同时等待，先到者触发 tick；因此高频回复会在
+                // 下一次 UI 调度中合并处理，空闲时仍有周期维护轮询。
                 let mut timer =
                     Box::pin(cx.background_executor().timer(Duration::from_millis(250)));
                 let mut notified = Box::pin(wake.recv());
@@ -882,6 +919,8 @@ impl Statistics {
         }
         self.visible = visible;
         if !visible {
+            // 取消尚未从 scheduler 发出的读请求；已经到 Core 的请求无法撤回，
+            // 但回执会因 identity/seq 失效或被 `!visible` 分支丢弃。
             self.persist_preferences();
 
             self.backend.cancel_reads();
@@ -901,7 +940,9 @@ impl Statistics {
             self.loading_rows = false;
         }
         if visible {
-            // Entering the page always reloads: leaving it stops all queries.
+            // 重新进入页面建立新的 dashboard/列表批次，同时刷新健康、设置、
+            // 导入、筛选选项、价格和 provider mode 等独立资源。写请求不会因
+            // 离开页面而从 scheduler 队列中取消。
             self.mark_dirty(cx);
             self.request_health(cx);
             self.request_settings(cx);
@@ -1114,6 +1155,11 @@ impl Statistics {
 
     // ---- requests ---------------------------------------------------------
 
+    /// 生成并提交 dashboard 读意图。
+    ///
+    /// tag 带当前筛选 generation，请求体读取 `filter()`；`submit_read` 返回
+    /// scheduler seq，并存入 `dashboard_seq`。同一 `JobKey::Dashboard` 的旧
+    /// pending read 会被最新 intent 替换，但已发出回复仍要再与最新 seq 比较。
     fn request_dashboard(&mut self, cx: &mut Context<Self>) {
         // The tag carries the filter generation, so a reply is always judged
         // against the filters it was issued for.
@@ -1144,6 +1190,12 @@ impl Statistics {
         cx.notify();
     }
 
+    /// 提交当前请求明细页。
+    ///
+    /// 筛选使用 `frozen_range`，分页起点来自 `rows_cursors`。首次点击下一批时
+    /// 可直接带已知 next cursor；跳往未访问页可能同时发送当前快照与 `page`，
+    /// 由 Core 回显页码。ReplyGate 身份绑定 tab/group/sort/cursor，scheduler
+    /// 尚未返回 seq 时先记录本地 identity，再立即替换成 job seq。
     fn request_rows(&mut self, cx: &mut Context<Self>) {
         let tag = format!("rows-{}", self.generation);
         let mut fields = json!({
@@ -1183,6 +1235,8 @@ impl Statistics {
         cx.notify();
     }
 
+    /// 提交供应商/模型汇总页；它与明细使用不同 cursor 历史和不同 ReplyGate。
+    /// 同一按键上的“下一页”只能推进当前 tab 的分页器，不能移动另一 tab。
     fn request_groups(&mut self, cx: &mut Context<Self>) {
         let tag = format!("rows-{}", self.generation);
         let group_by = match self.tab {
@@ -1225,6 +1279,9 @@ impl Statistics {
         cx.notify();
     }
 
+    /// 读取供应商筛选选项。所有供应商选项读共享 `JobKey::ProviderFilters`，
+    /// 因此较新的搜索/翻页 intent 取代尚未发出的旧供应商读；它与
+    /// `ModelFilters` 是不同的资源，不会互相覆盖。
     fn request_filters(&mut self, cx: &mut Context<Self>) {
         let tag = format!("filters-{}", self.generation);
         let request = crate::stats_backend::command(
@@ -1266,6 +1323,8 @@ impl Statistics {
         let _ = cx;
     }
 
+    /// 读取完整采集健康快照。查询成功只说明管理 API 返回了响应；页面健康
+    /// 徽标和丢失告警只使用这个 DTO，不从 dashboard/rows 的成功推导。
     fn request_health(&mut self, cx: &mut Context<Self>) {
         let tag = format!("health-{}", self.generation);
         let request = crate::stats_backend::command("stats_health", &tag, json!({}));
@@ -1280,6 +1339,7 @@ impl Statistics {
         let _ = cx;
     }
 
+    /// 从价格列表第一页重新加载；价格编辑、同步或删除成功后也走这里。
     fn request_prices(&mut self, cx: &mut Context<Self>) {
         let tag = format!("prices-{}", self.generation);
         self.prices_cursors.reset();
@@ -1457,6 +1517,12 @@ impl Statistics {
         self.refresh_report(true, cx);
     }
 
+    /// 发起一批当前报表读取。
+    ///
+    /// `reset_page=true` 用于显式刷新；周期刷新停在已翻到的页时不会把用户送回
+    /// 第一页。成功通过范围验证后，这里请求 dashboard、导入状态和当前列表，
+    /// 并在 Overview 视图改读独立 RecentRead，最后请求完整 health 快照。
+    /// 每个请求都先进入 scheduler/intent；函数返回不代表数据已更新。
     fn refresh_report(&mut self, reset_page: bool, cx: &mut Context<Self>) {
         // Following the clock can eventually exceed the core's 366 day cap.
         // Keep the last valid data instead of sending an invalid range.
@@ -1496,6 +1562,13 @@ impl Statistics {
         self.request_health(cx);
     }
 
+    /// 统计页每 250ms 或 worker wake 后执行的 UI 协调点。
+    ///
+    /// 顺序是：处理离页/过期预览 → pump 已授权写请求和可见读请求 → 同步控件
+    /// 到筛选值 → debounce 到点发查询 → 周期刷新/子资源轮询 → 排空 Reply。
+    /// `backend.complete` 先释放该 key 的 in-flight，再让 `handle_reply` 检查
+    /// generation/seq/tag。因此即使 Reply 已过期，也不会永久卡住后续同资源
+    /// 请求；而过期内容本身仍不能修改页面。
     pub fn tick(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if !self.visible && self.mapping_ui.open {
             self.close_mapping_state();
@@ -1562,6 +1635,14 @@ impl Statistics {
         }
     }
 
+    /// 把一条已完成后台 Reply 路由到唯一消费者。
+    ///
+    /// Recent 和导入分支先按自己的 seq/generation 过滤；Dashboard、Rows、
+    /// Groups 再由 `route_reply` 检查列表身份和当前 tab；价格、设置、详情、
+    /// provider/model 选项再使用各自 seq/tag。过期回复在任一门槛处直接返回，
+    /// 不清除新请求的 pending 标记，也不展示旧错误。通过身份门槛后的普通
+    /// 解析/查询失败会保留已有页面数据并显示 error；cursor 过期是显式例外，
+    /// 会重置对应分页并从第一页重取。
     fn handle_reply(&mut self, reply: StatsReply, window: &mut Window, cx: &mut Context<Self>) {
         let StatsReply {
             seq,
@@ -1768,6 +1849,10 @@ impl Statistics {
         window: &mut Window,
         cx: &mut Context<Self>,
     ) {
+        // 调用到这里前，`handle_reply` 已通过当前资源身份并完成必要 DTO 校验。
+        // 本函数把成功值写入页面缓存：dashboard 更新汇总；rows/groups 同时写入
+        // Core 返回的 next cursor；settings/prices/detail 等更新各自资源。
+        // 这里不清除无关资源的错误，也不把正确解析等同于采集健康。
         if tag.starts_with("dash-") {
             self.pending_dashboard = false;
             self.loading_dashboard = false;
@@ -2788,6 +2873,8 @@ impl Statistics {
 
     /// Tabs, table and pagination.
     fn details(&self, cx: &mut Context<Self>) -> AnyElement {
+        // 明细区区域：标题/解释 → 可滚动表格 host → 底部分页和列导航。
+        // Requests 与 Groups 使用不同 TableState，但共用同一块卡片容器。
         let table: AnyElement = match self.tab {
             // Studio V2 uses a separate eight-column request log. Aggregate
             // rows retain their native table and existing sort handlers.
@@ -2958,6 +3045,8 @@ impl Statistics {
     }
 
     fn details_pagination(&self, cx: &mut Context<Self>) -> AnyElement {
+        // 分页显示来自当前 tab 的独立 Pager。按钮 disabled 是即时 UI 状态；
+        // 真正导航能否接受还由 `Pager.go` 和当前 loading 状态决定。
         let (page, total, previous, next) = match self.tab {
             Tab::Requests => (
                 self.rows_cursors.page_number(),
@@ -3062,6 +3151,9 @@ impl Render for Statistics {
 
 impl Statistics {
     pub fn render_page(&mut self, cx: &mut Context<Self>) -> AnyElement {
+        // 页面区域：非设置视图先画 view tabs，再画固定筛选栏；下方
+        // `report_body` 根据 Overview/Details/Summary/Settings 选择可滚动主体。
+        // 这里只读取已合并状态，不在 render 中发出查询。
         div()
             .id("statistics-page")
             .flex()

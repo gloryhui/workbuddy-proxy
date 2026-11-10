@@ -4,6 +4,12 @@
 //! requests a snapshot for every job, which is wrong for read-only statistics.
 //! This backend keeps its own bounded queue, its own short timeout and never
 //! touches the configuration, the snapshot or the proxy status.
+//!
+//! 上游是 `statistics::Statistics` 的筛选、翻页和设置操作；下游是本机 Core
+//! 的同一个 `/_control/action` 管理接口。`StatsScheduler::new` 启动
+//! `statistics-control` 标准线程，而 `Statistics` 的 GPUI Entity 仍只在 UI
+//! 上下文修改：后台线程把结果写入 `StatsReply` channel，UI tick 读取后先
+//! 调用 `complete` 释放资源，再由控制器判断是否为当前结果。
 use serde_json::{Value, json};
 use std::{
     path::{Path, PathBuf},
@@ -18,9 +24,10 @@ pub const MAX_REPLY_BYTES: u64 = 1024 * 1024;
 
 /// What a statistics job is for.
 ///
-/// The kind drives scheduler policy: read intents keep only the newest one (a
-/// stale dashboard or page is worthless), while write intents must never be
-/// dropped silently because the user asked for a state change.
+/// The kind drives scheduler policy: read intents are deduplicated by their
+/// more specific `JobKey` (a stale dashboard or page is worthless), while write
+/// intents must never be dropped silently because the user asked for a state
+/// change.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum JobKind {
     Dashboard,
@@ -133,27 +140,42 @@ impl JobKey {
 }
 
 pub struct StatsJob {
+    /// scheduler 单调递增序号，Reply 原样带回；它是去旧的第二道身份，页面
+    /// 还会再校验筛选 generation、tab 和资源。
     pub seq: u64,
+    /// 读资源的身份。相同 `JobKey` 的读 intent 可以合并；`in_flight` 也按它跟踪。
     pub key: JobKey,
+    /// 从 `key` 得到的粗粒度种类，决定读/写策略和 UI 分派。
     pub kind: JobKind,
+    /// Core `request_tag` 及 UI 回复标签；价格、导入等还靠它区分同一 kind。
     pub tag: String,
+    /// 已构造的管理命令；worker 不再重新读取 UI 状态。
     pub request: Value,
 }
 
 pub struct StatsReply {
+    /// 与提交给 worker 的 `StatsJob.seq` 相同。
     pub seq: u64,
+    /// 用于在完成 Reply 时释放同一资源的 `in_flight` 计数。
     pub key: JobKey,
     pub kind: JobKind,
     pub tag: String,
+    /// `call/parse_message` 已把管理 envelope 解开为统计 JSON；格式错误保留
+    /// 为 Err，不能伪装成空列表或零值。
     pub result: Result<Value, String>,
 }
 
-/// Newest read intent per kind plus a bounded FIFO of write intents.
+/// Newest read intent per `JobKey` plus a bounded FIFO of write intents.
 #[derive(Default)]
 struct Pending {
+    /// 每个资源最多保留一个尚未发出的最新读请求；旧请求即使被删除，其已发出
+    /// Reply 也因 seq/identity 不匹配而被 UI 忽略。
     reads: std::collections::HashMap<JobKey, StatsJob>,
+    /// 写操作必须保序且不能被新请求覆盖，因此使用有界 FIFO。
     writes: std::collections::VecDeque<StatsJob>,
+    /// 每个资源尚有多少任务在 worker 中，防止同资源并发覆盖。
     in_flight: std::collections::HashMap<JobKey, usize>,
+    /// scheduler 内部分配 seq 的计数器；默认从 0 开始，提交时先加一再使用。
     next_seq: u64,
 }
 
@@ -162,20 +184,28 @@ pub const MAX_WRITE_BACKLOG: usize = 32;
 
 /// Statistics job scheduler.
 ///
-/// Read intents collapse to the newest one per kind, write intents are queued
-/// and retried until the worker takes them, and `pump` moves work over only
-/// when the channel has room. Every reply carries its `seq`, so a late answer
-/// can never be mistaken for the current one.
+/// Read intents collapse to the newest one per resource `JobKey`, write intents
+/// are queued and retried until the worker takes them, and `pump` moves work
+/// over only when the channel has room. Every reply carries its `seq`, so a
+/// late answer can never be mistaken for the current one.
 pub struct StatsScheduler {
+    /// UI 向 worker 投递任务的有界同步 channel，容量 8。
     jobs: SyncSender<StatsJob>,
+    /// worker 向 UI 投递回执的有界 channel，容量 64。
     replies: Receiver<StatsReply>,
+    /// UI 线程与 tick/pump 共享的待发队列；每次访问只持有短暂互斥锁，
+    /// 锁本身不把任何后台 I/O 包进 UI 线程。
     pending: std::sync::Mutex<Pending>,
+    /// 新任务和完成回复都会触发的单槽异步唤醒 channel。
     wake: async_channel::Sender<()>,
     wake_receiver: async_channel::Receiver<()>,
 }
 
 impl StatsScheduler {
     pub fn new(dir: PathBuf) -> Self {
+        // 任务队列保持较短（8），避免后台积压大量已经过时的读请求；回执
+        // 队列稍大（64）给 UI 在 250ms tick 之间排空结果。`wake` 容量 1，
+        // 一批通知会合并为一个唤醒，不要求 UI 每 250ms 才能发现新结果。
         let (jobs, requests) = mpsc::sync_channel::<StatsJob>(8);
         let (results, replies) = mpsc::sync_channel(64);
         let (wake, wake_receiver) = async_channel::bounded(1);
@@ -184,6 +214,10 @@ impl StatsScheduler {
             .name("statistics-control".into())
             .stack_size(512 * 1024)
             .spawn(move || {
+                // 该客户端线程逐条调用 Core，因此同一次统计查询不会阻塞
+                // GPUI 渲染线程。请求仍先由 Core 的网络 runtime 接收并完成
+                // 鉴权/解析，再交给 Core 的统计处理；这里不能据此认为管理
+                // HTTP 请求拥有与普通请求隔离的 Core 线程。
                 while let Ok(job) = requests.recv() {
                     let result = call(&dir, &job.request);
                     if results
@@ -214,11 +248,16 @@ impl StatsScheduler {
     /// Wake the window on new work and completed replies instead of waiting
     /// for its periodic maintenance timer. Bursts collapse to a single wake.
     pub fn wake_receiver(&self) -> async_channel::Receiver<()> {
+        // `clone` 共享同一个异步 channel 的接收端能力；它不复制任何统计
+        // Entity 或后台结果。
         self.wake_receiver.clone()
     }
 
     /// Queues a read intent, replacing any older intent for the *same resource*.
     pub fn submit_read(&self, key: JobKey, tag: String, request: Value) -> u64 {
+        // 先分配新的 seq 再覆盖同 key 的 intent。即便旧任务已在 worker 中，
+        // UI 之后收到旧 seq 时也会拒绝；`in_flight` 会阻止同 key 的新任务
+        // 同时发出，直到旧 Reply 被 `complete`。
         let mut pending = self.pending.lock().unwrap();
         pending.next_seq += 1;
         let seq = pending.next_seq;
@@ -240,6 +279,8 @@ impl StatsScheduler {
     /// Queues a write intent. Returns `Err` only when the bounded backlog is
     /// full, so the caller can report it instead of losing a save or a clear.
     pub fn submit_write(&self, kind: JobKind, tag: String, request: Value) -> Result<u64, String> {
+        // 写操作不做“latest wins”。队列达到 32 时明确返回错误，让价格、
+        // 设置或清理操作的用户知道没有提交成功。
         let mut pending = self.pending.lock().unwrap();
         if pending.writes.len() >= MAX_WRITE_BACKLOG {
             return Err("statistics are busy; try again".to_owned());
@@ -266,6 +307,9 @@ impl StatsScheduler {
     }
 
     pub fn pump_with_reads(&self, allow_reads: bool) {
+        // 每次循环只短暂锁定 pending，随后在不持锁时 `try_send`。写请求优先
+        // 于读请求；读请求中 rows/recent/groups/detail 优先于后台资源。
+        // `allow_reads=false` 时仍可泵出已授权的写操作。
         loop {
             let next = {
                 let mut pending = self.pending.lock().unwrap();
@@ -297,6 +341,8 @@ impl StatsScheduler {
             let is_read = job.kind.is_read();
             if let Err(returned) = self.jobs.try_send(job) {
                 // Channel full: put the intent back and retry on the next tick.
+                // 放回时保留期间新提交的同 key 读 intent，避免把更新的筛选
+                // 结果替换回旧 job。
                 let std::sync::mpsc::TrySendError::Full(job) = returned else {
                     return;
                 };
@@ -319,6 +365,9 @@ impl StatsScheduler {
 
     /// Marks a reply as handled so its resource can be scheduled again.
     pub fn complete(&self, key: &JobKey) {
+        // 这必须在 UI 处理 Reply 前/同一步调用：它释放 in-flight 名额，
+        // 允许等待中的同资源最新 intent 随后发出。完成本身不保证展示结果，
+        // 过期结果仍由 Statistics 的 identity/generation 门禁丢弃。
         let mut pending = self.pending.lock().unwrap();
         if let Some(count) = pending.in_flight.get_mut(key) {
             *count = count.saturating_sub(1);
@@ -336,6 +385,10 @@ impl StatsScheduler {
     /// Cancel only reads that have not left the scheduler. Authorized writes
     /// retain their order even while the statistics page is hidden.
     pub fn cancel_reads(&self) {
+        // 只清掉尚未从 scheduler 发出的读 intent。已经进入 worker 的请求
+        // 无法撤回；返回后具体由 `Statistics` 各资源的 visibility/tag/seq/
+        // generation 门禁决定，本函数不保证所有隐藏页面的 Reply 都走同一
+        // 分支。写请求不清空，否则用户可能失去已授权的价格、设置或清理操作。
         self.pending.lock().unwrap().reads.clear();
     }
 
@@ -357,10 +410,14 @@ impl StatsScheduler {
     }
 }
 
-/// Sends one statistics command through the local control API./// Sends one statistics command through the local control API.
+/// Sends one statistics command through the local control API.
 ///
 /// Redirects and proxies are disabled on purpose: the call must stay on the
 /// loopback interface and must never be replayed by a proxy.
+///
+/// `directory/instance.json` 决定 loopback 端口和本次 Core 管理 key。所有
+/// 统计查询通常为 3 秒超时；价格目录更新需要访问外部价格源，单独放宽到
+/// 45 秒。响应体最多 1 MiB，禁用重定向和代理，防止管理请求被转发。
 pub fn call(directory: &Path, request: &Value) -> Result<Value, String> {
     let info: Value = serde_json::from_slice(
         &std::fs::read(directory.join("instance.json")).map_err(|_| "Core is not responding")?,
@@ -403,6 +460,10 @@ pub fn call(directory: &Path, request: &Value) -> Result<Value, String> {
 ///
 /// A malformed payload is an error, never an empty value: showing an empty page
 /// would hide a protocol mismatch behind data that merely looks plausible.
+///
+/// 管理层先返回 `{ "message": "<JSON string>" }` 的 envelope；失败时也兼容
+/// `error.message`。只有成功 envelope 才继续解析内层 JSON，畸形内容会显示
+/// 为错误而不是伪造空数据。
 pub fn parse_message(success: bool, data: &Value) -> Result<Value, String> {
     let message = data["message"]
         .as_str()
@@ -417,6 +478,8 @@ pub fn parse_message(success: bool, data: &Value) -> Result<Value, String> {
 
 /// Builds a statistics command with the shared request tag.
 pub fn command(name: &str, tag: &str, fields: Value) -> Value {
+    // `fields` 必须能合并进 JSON 对象才生效。调用方传入的 page/filter 等字段
+    // 会附加到统一 command 与 request_tag 上；此函数只构造值，不入队。
     let mut request = json!({"command": name, "request_tag": tag});
     if let Some(object) = fields.as_object()
         && let Some(target) = request.as_object_mut()
