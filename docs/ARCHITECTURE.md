@@ -22,7 +22,7 @@ v0.1 / v0.2 配置经私有备份迁移；v0.2 按供应商标签、URL 和 Key 
 
 供应商显式选择 Chat Completions、Responses、Anthropic Messages 或 Gemini GenerateContent；WorkBuddy 始终使用本地 Chat。Chat 路径保留原字节转发；另外三种协议经过类型化请求编码、JSON / SSE 增量解析及 Chat 输出转换。原生工具调用 ID 和签名等 opaque 状态保存在有界进程内回放缓存，路由设置变化会使旧状态失效。协议支持与拒绝范围见[使用说明](protocol-compat/USAGE.md)。
 
-核心独占 SQLite 写入；GPUI 通过管理 API 查询。逐请求记录保存供应商 / 模型名称、用量、状态、耗时及冻结的价格和费用摘要；不保存对话、图片、工具参数或 Key。未知用量与不可可靠计算的费用保持 NULL。当前价格表可编辑 / 删除，缺价默认零价，已经开始的请求和历史均不受后续改价影响。明细、汇总、定价与采集设置使用服务端分页；大范围聚合受查询预算约束。统计数据库当前 schema 6，统计 API 2，核心控制协议 8。
+核心独占 SQLite 写入；GPUI 通过管理 API 查询。逐请求记录保存供应商 / 模型名称、用量、状态、耗时及冻结的价格和费用摘要；不保存对话、图片、工具参数或 Key。未知用量与不可可靠计算的费用保持 NULL。当前价格表可编辑 / 删除，缺价默认零价，已经开始的请求和历史均不受后续改价影响。明细、汇总、定价与采集设置使用服务端分页；大范围聚合受查询预算约束。数据库 schema、统计 API 和核心控制协议分别以源码中的 [`SCHEMA_VERSION`](../src/stats/store.rs)、[`API_VERSION`](../src/stats/dto.rs) 与 [`CONTROL_PROTOCOL`](../src/main.rs) 为准，三者独立演进。核心与界面如何协作可从[源码导读](source-guide/README.md)开始。
 
 ## 统一界面与托盘
 
